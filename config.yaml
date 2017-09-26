@@ -1,0 +1,13 @@
+--- # Default tracker configuration
+global:
+  log:
+    verbose: true # true - verbose, false - not verbose, null - middle
+
+Bluetooth:
+  - name: Tracker-1
+    dev: hci0 # Bluetooth device name
+    enabled: true # Up & running
+    visible: true # Visible to device scan
+    encrypt: true # Encrypt bluetooth link
+    pin: null # PIN-code for pairing (up to 16 symbols) - will be generated if not set
+    afh: true # Adaptive Frequency Hopping - to reduce interference with other wireless
