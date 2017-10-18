@@ -1,5 +1,5 @@
 sudo useradd tracker
-sudo usermod -aG audio,dialout,bluetooth tracker
+sudo usermod -aG audio,dialout,bluetooth,gpio tracker
 
 # Sudo access for tracker user to run root operations
 echo "tracker ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/50-onebutton

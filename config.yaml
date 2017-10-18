@@ -11,3 +11,73 @@ Bluetooth:
     encrypt: true # Encrypt bluetooth link
     pin: null # PIN-code for pairing (up to 16 symbols) - will be generated if not set
     afh: true # Adaptive Frequency Hopping - to reduce interference with other wireless
+    signals: # Used in the code to execute the remote module function
+      audio_switch:
+        instance: GPIO
+        socket: audioSwitch
+
+GPIO:
+  - name: GPIO
+    enabled: true
+    listen: # It can listen gpio ports and do some actions when port is changed
+      ignition:
+        pin: 35 # GPIO19
+        signals:
+          - name: Disable LAN & USB
+            when: false
+            module: Power
+            socket: disableUSB
+          - name: Disable Bluetooth
+            when: false
+            module: Bluetooth
+            socket: disableBluetooth
+          - name: Switch WiFi to client mode
+            when: false
+            module: WiFi
+            socket: switchClient
+          - name: Disable Cellural if WiFi found
+            when: false
+            module: WiFi
+            socket: disableCelluralOnConnected
+
+          - name: Enable LAN & USB
+            when: true
+            module: Power
+            socket: enableUSB
+          - name: Enable Bluetooth
+            when: true
+            module: Bluetooth
+            socket: enableBluetooth
+          - name: Switch WiFi to ad-hoc mode
+            when: true
+            module: WiFi
+            socket: switchAdHoc
+          - name: Enable Cellural
+            when: true
+            module: Cellural
+            socket: start
+
+    sockets: # Sockets is used to automatically generate functions that required by signals
+      celluralPowerSwitch:
+        type: switch
+        pin: 13 # GPIO27
+      audioSwitch:
+        type: switch
+        pin: 37 # GPIO26
+
+Cellural:
+  - name: GSMGPS
+    enabled: false
+    dev: /dev/ttyS0
+    net:
+      enabled: true
+      apn: Phone # AT&T apn for 3G
+      user: null # User auth for the APN
+      pass: null # Password auth for the APN
+    gps:
+      enabled: true
+      agps: supl.google.com:7276 # Assistant-GPS url
+    signals:
+      power:
+        instance: GPIO
+        socket: celluralPower

@@ -3,6 +3,14 @@ Tracker
 
 Car media system that allow to listen bluetooth music, track car via GPS and manage car cameras
 
+Requirements
+------------
+* python2.7
+* python-yaml
+* python-dbus
+* python-bluez
+* python-serial
+
 States
 ------
 
@@ -41,8 +49,8 @@ Will save your sdcard & data on accidental poweroff
 
 Will reboot raspberry pi on stuck
 
-Platforms
----------
+Hardware
+--------
 
 ### Raspberry PI 3
 
@@ -51,6 +59,7 @@ Platforms
 * Default: 230mA
 * Maximum: 650mA
 * Powered Off: 100mA
+* Bluetooth music playing: 240-290mA
 
 ##### Optimizations
 
@@ -86,3 +95,25 @@ sudo modprobe brcmfmac brcmutil
 
 * bluealsa - to provide blueatooth audio service
   * bluealsa-aplay "connected device address" - connecting bluetooth media device to default soundcard
+
+### GSM/GPS SIM5320A
+
+It is possible to connect gsm and gps module to track your position and have persistent internet connection.
+This one was tested with "DIYMall SIM5320A 3G GSM GPRS GPS Expansion Board WCDMA + HSDPA" - but any GSM module could be adapted.
+
+#### Power
+
+* GSM board enabled: +60mA
+* GPS enabled: +30mA
+
+#### Configuration
+
+Additional configuration is required to enable communication channel between rpi & module.
+HW UART ttyAMA0 still will be used by bluetooth (and it's good, we need a strong connection) and we can use ttyS0 to interact with our GSM module.
+
+* /boot/config.txt
+```
+# Enabling mini uart to rule the GSM module
+enable_uart=1 # Now UART GPIO pins (GPIO14, GPIO15) will be used by miniUART
+core_freq=250 # Required to have constant baud rates
+```

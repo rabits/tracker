@@ -67,17 +67,23 @@ class Bluetooth(Module):
         manager.RegisterAgent("/tracker/agent", "NoInputNoOutput")
         manager.RequestDefaultAgent("/tracker/agent")
 
+        self._connected_devices = {}
+
         self._bus.add_signal_receiver(self._devicePropertyChanged,
                                       bus_name=BUS_NAME, signal_name='PropertiesChanged',
                                       path_keyword='device_path', interface_keyword='interface')
 
     def stop(self):
         Module.stop(self)
+        for name in self._connected_devices.keys():
+            dev = self._connected_devices.pop(name)
+            dev.kill()
+            dev.poll()
         manager = dbus.Interface(self._bus.get_object(BUS_NAME, "/org/bluez"), BUS_NAME+".AgentManager1")
         manager.UnregisterAgent("/tracker/agent")
 
     def _exec(self, cmd):
-        return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
+        return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def setState(self, val):
         log.info("Set device state to '%s'" % ('up' if val else 'down'))
@@ -119,7 +125,27 @@ class Bluetooth(Module):
         properties = device.GetAll(MEDIA_INTERFACE)
         properties_device = device.GetAll(DEVICE_INTERFACE)
  
-        log.info("Device: %s has %s %s" % (properties_device['Name'], 'connected' if properties['Connected'] else 'disconnected', properties_device['Address']))
-        if properties["Connected"]:
-            log.info('Connecting device to the sound output')
-            self._exec(['bluealsa-aplay', '-vv', properties_device['Address']])
+        if properties['Connected']:
+            if self._connected_devices.has_key(properties_device['Address']):
+                return # Already connected
+            log.info("Device: %s has connected: %s" % (properties_device['Name'], properties_device['Address']))
+
+            log.info('Connecting device audio routing')
+            self._connected_devices[properties_device['Address']] = self._exec(['bluealsa-aplay', properties_device['Address']])
+
+            if len(self._connected_devices) == 1:
+                log.info('Connecting GPIO sound output')
+                self.signal('audio_switch')
+        else:
+            log.info("Device: %s has disconnected: %s" % (properties_device['Name'], properties_device['Address']))
+
+            dev = self._connected_devices.pop(properties_device['Address'])
+            dev.kill()
+            if dev.poll() != None:
+                log.debug('Audio routing application exited with code %d' % dev.poll())
+            else:
+                log.warn('Unable to kill the audio routing application pid: %d' % dev.pid)
+
+            if len(self._connected_devices) < 1:
+                log.info('Disconnecting GPIO sound output')
+                self.signal('audio_switch')
