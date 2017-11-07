@@ -117,3 +117,7 @@ HW UART ttyAMA0 still will be used by bluetooth (and it's good, we need a strong
 enable_uart=1 # Now UART GPIO pins (GPIO14, GPIO15) will be used by miniUART
 core_freq=250 # Required to have constant baud rates
 ```
+
+### ALDL-USB Cable 1320 Electronics
+
+Check ALDL160 [README](doc/ALDL_160baud/README.md) for more info
