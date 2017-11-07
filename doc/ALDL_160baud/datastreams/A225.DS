@@ -1,0 +1,1413 @@
+
+
+
+
+
+
+
+
+                        DATA STREAM A225  SPECIFICATION
+
+
+
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       -------------------------------------------------------
+
+       PCME USAGE:
+            L49    PFI  6.5L         VIN = P  1994  C,K,G   4L60E/MANUAL TRANS.
+            L56    PFI  6.5L TURBO   VIN = S  1994  C,K     4L80E
+            L65    PFI  6.5L TURBO   VIN = F  1994  C,K,P   MANUAL TRANS.
+        *   L49    PFI  6.5L         VIN = P  1995  C,K,G   4L60E/MANUAL TRANS.
+        *   L56    PFI  6.5L TURBO   VIN = S  1995  C,K     4L80E
+        *   L65    PFI  6.5L TURBO   VIN = F  1995  C,K,P   MANUAL TRANS.
+
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM) MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE PCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $6B
+                - MODE           = $01
+                - MESSAGE        = $00
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 20
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM) MESSAGE 1
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $01
+                - SUM CHECK
+
+                THE PCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $90
+                - MODE           = $01
+                - MESSAGE        = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 57
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM) MESSAGE 2
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $02
+                - SUM CHECK
+
+                THE PCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $72
+                - MODE           = $01
+                - MESSAGE        = $02
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 27
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 20
+..HEAD04L ALDL MODE 1 DATA LIST 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1      DGZHFTB1     HISTORY MALFUNCTION WORD 1
+            0     MALF CODE 21  PEDAL POSITION 1 INPUT HIGH
+            1     MALF CODE 19  CRANK POSITION SENSOR FAULT
+            2     MALF CODE 18  ONCE PER CAM LOBE SENSOR FAULT
+            3     MALF CODE 17  HIGH RESOLUTION SENSOR FAULT
+            4     MALF CODE 16  DIGITAL RATIO ADAPTER FAULT
+            5     MALF CODE 15  COOLANT TEMPERATURE SENSOR LOW
+            6     MALF CODE 14  COOLANT TEMPERATURE SENSOR HIGH
+            7     MALF CODE 13  ENGINE SHUT OFF DRIVER FAULT
+  2      DGZHFTB2     HISTORY MALFUNCTION WORD 2
+            0     MALF CODE 29  GLOW PLUG RELAY FAULT
+            1     MALF CODE 28  TRANS PRESSURE SWITCH MANIFOLD
+            2     MALF CODE 27  PEDAL POSITION 2 IN RANGE FAULT
+            3     MALF CODE 26  PEDAL POSITION 2 INPUT LOW
+            4     MALF CODE 25  PEDAL POSITION 2 INPUT HIGH
+            5     MALF CODE 24  TRANS OUTPUT SPEED LOW
+            6     MALF CODE 23  PEDAL POSITION 1 IN RANGE FAULT
+            7     MALF CODE 22  PEDAL POSITION 1 INPUT LOW
+  3      DGZHFTB3     HISTORY MALFUNCTION WORD 3
+            0     MALF CODE 38  BRAKE STUCK OFF
+            1     MALF CODE 37  BRAKE STUCK ON
+            2     MALF CODE 36  RESPONSE TIME TOO LONG
+            3     MALF CODE 35  RESPONSE TIME TOO SHORT
+            4     MALF CODE 34  INJECTION PUMP TIMING STEPPER MOTOR
+            5     MALF CODE 33  MANIFOLD AIR PRESSURE INPUT HIGH
+            6     MALF CODE 32  EGR ERROR
+            7     MALF CODE 31  MANIFOLD AIR PRESSURE INPUT LOW
+..PAGE
+  4      DGZHFTB4     HISTORY MALFUNCTION WORD 4
+            0     MALF CODE 47  AIR TEMPERATURE SENSOR HIGH
+            1     MALF CODE 46  SERVICE ENGINE SOON LIGHT OUTPUT
+            2     MALF CODE 45  EGR VENT OUTPUT FAILED
+            3     MALF CODE 44  EGR PULSE WIDTH OUTPUT FAILED
+            4     MALF CODE 43  FUEL TEMPERATURE LOW (HIGH VOLTAGE)
+            5     MALF CODE 42  FUEL TEMPERATURE HIGH (LOW VOLTAGE)
+            6     MALF CODE 41  BRAKE SWITCH TEST FAIL
+            7     MALF CODE 39  TCC STUCK OFF
+  5      DGZHFTB5     HISTORY MALFUNCTION WORD 5
+            0     MALF CODE 56  INJECTION PUMP CALIBRATION RESISTOR
+            1     MALF CODE 55  PCM A/D FAULT
+            2     MALF CODE 54  TIO FAULT
+            3     MALF CODE 53  SYSTEM VOLTAGE HIGH
+            4     MALF CODE 52  SYSTEM VOLTAGE HIGH-LONG TEST
+            5     MALF CODE 51  PROM ERROR
+            6     MALF CODE 49  SERVICE THROTTLE SOON LIGHT ERROR
+            7     MALF CODE 48  AIR TEMPERATURE SENSOR LOW
+  6      DGZHFTB6     HISTORY MALFUNCTION WORD 6
+            0     MALF CODE 65  PEDAL POSITION 3 IN RANGE FAULT
+            1     MALF CODE 64  PEDAL POSITION 3 INPUT LOW
+            2     MALF CODE 63  PEDAL POSITION 3 INPUT HIGH
+            3     MALF CODE 62  TURBO (COMPRESSOR) BOOST PRESSURE LO
+            4     MALF CODE 61  TURBO (COMPRESSOR) BOOST PRESSURE HI
+            5     MALF CODE 59  TRANS TEMP LOW
+            6     MALF CODE 58  TRANS TEMP HIGH
+            7     MALF CODE 57  PCM 5 VOLT SHORTED
+..PAGE
+  7      DGZHFTB7     HISTORY MALFUNCTION WORD 7
+            0     MALF CODE 74  TRANS INPUT SPEED (R2 ONLY)
+            1     MALF CODE 73  FORCE MOTOR CURRENT
+            2     MALF CODE 72  TRANS OUTPUT SPEED LOSS
+            3     MALF CODE 71  SET/COAST SWITCH FAULT
+            4     MALF CODE 69  TCC STUCK ON
+            5     MALF CODE 68  TRANSMISSION COMPONENT SLIPPING
+            6     MALF CODE 67  TCC ENABLE SOLENOID FAILURE (X1R)
+            7     MALF CODE 66  3-2 DS SOLENOID FAILURE (X1R ONLY)
+  8      DGZHFTB8     HISTORY MALFUNCTION WORD 8
+            0     MALF CODE 83  TCC FAULT
+            1     MALF CODE 82  SHIFT A FAULT
+            2     MALF CODE 81  SHIFT B FAULT
+            3     MALF CODE 79  TRANSMISSION HOT
+            4     MALF CODE 78  TURBO WASTEGATE ERROR
+            5     MALF CODE 77  MNP SWITCH
+            6     MALF CODE 76  RESUME/ACCEL SWITCH FAULT
+            7     MALF CODE 75  SYSTEM VOLTAGE LOW
+  9      DGZHFTB9     HISTORY MALFUNCTION WORD 9
+            0     MALF CODE 92  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 2
+            1     MALF CODE 91  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 1
+            2     MALF CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3     MALF CODE 88  TIMING OFFSET ERROR
+            4     MALF CODE 87  HIGH RATIO
+            5     MALF CODE 86  LOW RATIO
+            6     MALF CODE 85  UNDEFINED RATIO/PSM (R2 ONLY)
+            7     MALF CODE 84  NOT USED
+  10     DGZHFTB10    HISTORY MALFUNCTION WORD 10
+            0     MALF CODE XX  NOT USED
+            1     MALF CODE 99  PEDAL POSITION 2  (5VOLTS REF. FAULT)
+            2     MALF CODE 98  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 8
+            3     MALF CODE 97  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 7
+            4     MALF CODE 96  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 6
+            5     MALF CODE 95  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 5
+            6     MALF CODE 94  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 4
+            7     MALF CODE 93  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 3
+  11     DGZCFTB1     CURRENT MALFUNCTION WORD 1
+            0     MALF CODE 21  PEDAL POSITION 1 INPUT HIGH
+            1     MALF CODE 19  CRANK POSITION SENSOR FAULT
+            2     MALF CODE 18  ONCE PER CAM LOBE SENSOR FAULT
+            3     MALF CODE 17  HIGH RESOLUTION SENSOR FAULT
+            4     MALF CODE 16  DIGITAL RATIO ADAPTER FAULT
+            5     MALF CODE 15  COOLANT TEMPERATURE SENSOR LOW
+            6     MALF CODE 14  COOLANT TEMPERATURE SENSOR HIGH
+            7     MALF CODE 13  ENGINE SHUT OFF DRIVER FAULT
+  12     DGZCFTB2     CURRENT MALFUNCTION WORD 2
+            0     MALF CODE 29  GLOW PLUG RELAY FAULT
+            1     MALF CODE 28  TRANS PRESSURE SWITCH MANIFOLD
+            2     MALF CODE 27  PEDAL POSITION 2 IN RANGE FAULT
+            3     MALF CODE 26  PEDAL POSITION 2 INPUT LOW
+            4     MALF CODE 25  PEDAL POSITION 2 INPUT HIGH
+            5     MALF CODE 24  TRANS OUTPUT SPEED LOW
+            6     MALF CODE 23  PEDAL POSITION 1 IN RANGE FAULT
+            7     MALF CODE 22  PEDAL POSITION 1 INPUT LOW
+  13     DGZCFTB3     CURRENT MALFUNCTION WORD 3
+            0     MALF CODE 38  BRAKE STUCK OFF
+            1     MALF CODE 37  BRAKE STUCK ON
+            2     MALF CODE 36  RESPONSE TIME TOO LONG
+            3     MALF CODE 35  RESPONSE TIME TOO SHORT
+            4     MALF CODE 34  INJECTION PUMP TIMING STEPPER MOTOR
+            5     MALF CODE 33  MANIFOLD AIR PRESSURE INPUT HIGH
+            6     MALF CODE 32  EGR ERROR
+            7     MALF CODE 31  MANIFOLD AIR PRESSURE INPUT LOW
+  14     DGZCFTB4     CURRENT MALFUNCTION WORD 4
+            0     MALF CODE 47  AIR TEMPERATURE SENSOR HIGH
+            1     MALF CODE 46  SERVICE ENGINE SOON LIGHT OUTPUT
+            2     MALF CODE 45  EGR VENT OUTPUT FAILED
+            3     MALF CODE 44  EGR PULSE WIDTH OUTPUT FAILED
+            4     MALF CODE 43  FUEL TEMPERATURE LOW (HIGH VOLTAGE)
+            5     MALF CODE 42  FUEL TEMPERATURE HIGH (LOW VOLTAGE)
+            6     MALF CODE 41  BRAKE SWITCH TEST FAIL
+            7     MALF CODE 39  TCC STUCK OFF
+  15     DGZCFTB5     CURRENT MALFUNCTION WORD 5
+            0     MALF CODE 56  INJECTION PUMP CALIBRATION RESISTOR
+            1     MALF CODE 55  PCM A/D FAULT
+            2     MALF CODE 54  TIO FAULT
+            3     MALF CODE 53  SYSTEM VOLTAGE HIGH
+            4     MALF CODE 52  SYSTEM VOLTAGE HIGH-LONG TEST
+            5     MALF CODE 51  PROM ERROR
+            6     MALF CODE 49  SERVICE THROTTLE SOON LIGHT ERROR
+            7     MALF CODE 48  AIR TEMPERATURE SENSOR LOW
+  16     DGZCFTB6     CURRENT MALFUNCTION WORD 6
+            0     MALF CODE 65  PEDAL POSITION 3 IN RANGE FAULT
+            1     MALF CODE 64  PEDAL POSITION 3 INPUT LOW
+            2     MALF CODE 63  PEDAL POSITION 3 INPUT HIGH
+            3     MALF CODE 62  TURBO (COMPRESSOR) BOOST PRESSURE LO
+            4     MALF CODE 61  TURBO (COMPRESSOR) BOOST PRESSURE HI
+            5     MALF CODE 59  TRANS TEMP LOW
+            6     MALF CODE 58  TRANS TEMP HIGH
+            7     MALF CODE 57  PCM 5 VOLT SHORTED
+  17     DGZCFTB7     CURRENT MALFUNCTION WORD 7
+            0     MALF CODE 74  TRANS INPUT SPEED (R2 ONLY)
+            1     MALF CODE 73  FORCE MOTOR CURRENT
+            2     MALF CODE 72  TRANS OUTPUT SPEED LOSS
+            3     MALF CODE 71  SET/COAST SWITCH FAULT
+            4     MALF CODE 69  TCC STUCK ON
+            5     MALF CODE 68  TRANSMISSION COMPONENT SLIPPING
+            6     MALF CODE 67  TCC ENABLE SOLENOID FAILURE (X1R)
+            7     MALF CODE 66  3-2 DS SOLENOID FAILURE (X1R ONLY)
+  18     DGZCFTB8     CURRRNT MALFUNCTION WORD 8
+            0     MALF CODE 83  TCC FAULT
+            1     MALF CODE 82  SHIFT A FAULT
+            2     MALF CODE 81  SHIFT B FAULT
+            3     MALF CODE 79  TRANSMISSION HOT
+            4     MALF CODE 78  TURBO WASTEGATE ERROR
+            5     MALF CODE 77  MNP SWITCH
+            6     MALF CODE 76  RESUME/ACCEL SWITCH FAULT
+            7     MALF CODE 75  SYSTEM VOLTAGE LOW
+  19     DGZCFTB9     CURRENT MALFUNCTION WORD 9
+            0     MALF CODE 92  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 2
+            1     MALF CODE 91  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 1
+            2     MALF CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3     MALF CODE 88  TIMING OFFSET ERROR
+            4     MALF CODE 87  HIGH RATIO
+            5     MALF CODE 86  LOW RATIO
+            6     MALF CODE 85  UNDEFINED RATIO/PSM (R2 ONLY)
+            7     MALF CODE 84  NOT USED
+  20     DGZCFTB10    CURRENT MALFUNCTION WORD 10
+            0     MALF CODE XX  NOT USED
+            1     MALF CODE 99  PEDAL POSITION 2  (5VOLTS REF. FAULT)
+            2     MALF CODE 98  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 8
+            3     MALF CODE 97  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 7
+            4     MALF CODE 96  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 6
+            5     MALF CODE 95  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 5
+            6     MALF CODE 94  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 4
+            7     MALF CODE 93  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 3
+
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 57
+..HEAD04L ALDL MODE 1 DATA LIST 1
+WORD #   DATA NAME    DESCRIPTION
+
+  1      ADVETRW      RAW ENGINE TEMPERATURE A/D COUNTS (NON-DEFAULTED)
+                       SEE LOOK-UP TABLE
+  2      ADVVIGRW     RAW IGNITION VOLTAGE A/D COUNTS
+                       VOLTS = N/10
+  3      ADVCPRW      RAW COMPRESSOR PRESSURE VOLTAGE (NON-DEFAULTED)(TURBO ONLY)
+                       VOLTS = (N * 5/255)
+                       KPA = (N * 1.360)
+  4      STATUS       SYSTEM STATUS WORD
+            0     1 = FM SHUT OFF DUE TO LOW BATTERY
+            1     NOT USED
+            2     1 = FORCE MOTOR PULSE IN PROGRESS
+            3     1 = POWER IS ON (IGN1 > TRESHOLD)
+                  1 = NV RAM UPDATING IS ALLOWED
+            4     1 = COP2 IS BEING SERVICED
+            5     NOT USED
+            6     1 = DELCO INSTRUMENTATION PROM IS PRESENT
+            7     1 = POWERTRAIN IS IN MOTION (SOME SPEED <> 0)
+  5      DISCOLD      PREVIOUS DIFLAGS
+            0     1 = ALLOWED UPDATE OF TPS HISTORY BUFFER
+            1     NOT USED
+            2     NOT USED
+            3     NOT USED
+            4     NOT USED
+            5     1 = FORCE SECOND GEAR WHEN IN D2 AND NOT MAN.
+            6     NOT USED
+            7     NOT USED
+  6      ALVMD        ALDL CURRENT MODE
+                       MODE = N
+  7      DGVCKCT      CRANK PULSE COUNTER  (NON-DEFAULTED)
+                       N = A/D COUNTS
+  8      ADBARO       BAROMETRIC PRESSURE (MSB)
+  9      ADBARO+1     BAROMETRIC PRESSURE (LSB)
+                       KPA = (MSB + 10.33)/2.71
+  10     SLIP         AMOUNT OF TCC SLIPPAGE (MSB)
+  11     SLIP+1       AMOUNT OF TCC SLIPPAGE (LSB)
+                       RPM = N/8  (N IS SIGNED)
+  12     IOSIDA       IOD PORT A
+            0     GLOW PLUG RELAY           1 = CLOSED  0 = 0PEN
+            1     STEPPER MOTOR INHIBIT     1 = RUN     0 = INHIBIT
+            2     SERVICE THROTTLE LAMP     1 = ON      0 = OFF
+            3     EGR VENT ENABLE           1 = ON      0 = OFF
+            4     SHIFT A                   1 = ON      0 = OFF
+            5     SHIFT B                   1 = ON      0 = OFF
+            6     TCC ENABLE                1 = ON      0 = OFF   (4L60E ONLY)
+            7     FORCE MOTOR ENABLE        1 = ON      0 = OFF
+  13     IOSPA        GMP6 PORT A
+            0     ENGINE SPEED
+            1     INPUT SPEED
+            2     OUT SPEED
+            3     OPTICAL SENSOR
+            4     GMP6 FUEL                 1 = ON      O = OFF
+            5     TIO FUEL                  1 = ON      O = OFF
+            6     TCC PWM                   1 = ON      O = OFF   (4L80E ONLY)
+            7     VEHICLE SPEED DRA PULSE INPUT
+  14     IOSPG        GMP6 PORT G
+            0     ENGINE SHUT OFF RELAY     1 = ON      O = OFF
+            1     STEPPER MOTOR CONTROL W1
+            2     STEPPER MOTOR CONTROL W2
+            3     SXR ENABLE STATUS
+            4     NOT USED
+            5     NOT USED
+            6     NOT USED
+            7     IOR A10 ADDRESS LINE STATUS
+  15     IDSPB        IOD PORT B INPUT DEBOUNCED STATUS REGISTER
+            0     CRUISE ON/OFF SWITCH         1 = ON      0 = OFF
+            1     MAN/NORM/PERF SWITCH 1       1 = CLOSED  0 = OPEN
+            2     MAN/NORM/PERF SWITCH 2       1 = CLOSED  0 = OPEN
+            3     4WD LOW SWITCH               1 = CLOSED  0 = OPEN
+            4     IOD PORT B OUTPUT
+            5     IOD PORT B OUTPUT
+            6     IOD PORT B OUTPUT
+            7     IOD PORT B OUTPUT
+  16     IDSPC        IOD PORT B INPUT DEBOUNCED STATUS REGISTER
+            0     ENGINE CRANK                 1 = ACTIVE  0 = INACTIVE
+            1     BRAKE SWITCH                 1 = CLOSED  0 = OPEN
+            2     BRAKE SWITCH                 1 = CLOSED  0 = OPEN
+            3     PSMX                         1 = YES     0 = NO
+            4     PSMY                         1 = YES     0 = NO
+            5     PSMZ                         1 = YES     0 = NO
+            6     SCSW                         1 = YES     0 = NO
+            7     RASW                         1 = YES     0 = NO
+  17     EGVDKPA      DESIRED EGR PRESSURE SENSOR  (L49,L56 ONLY)
+                       KPA = N * .5
+  18     WGWPWDC      WASTEGATE % DUTY CYCLE  (TURBO ONLY)
+                       % DC = N/2.56
+  19     FUVRATE      FUEL RATE
+                       mm FUEL RATE = N * .3125
+  20     GEAR         CURRENT GEAR OF TRANSMISSION
+                       GEAR = N + 1
+  21     CRVVEHSP     VEHICLE SPEED
+                       MPH = N * .5
+  22     DGVCMCT      CAM PULSE COUNTER  (NON-DEFAULTED)
+                       N = A/D COUNTS
+  23     ADVGPR       GLOW PLUG RELAY FEEDBACK VOLTAGE
+                       VOLTS = N/10
+  24     DSSDC        3-2 DOWNSHIFT % DUTY CYCLE
+                       % DC = N * .39
+  25     TCCMODE      TCC MODE WORD FLAGS
+            0     1 = TCC IS BEING FORCED OFF
+            1     1 = TCC ENABLE SOLENOID VALID
+            2     1 = LOW THRESHOLD FOR COPETCC SELECTED
+            3     1 = USE HYST. FOR VEHICLE SPEED (CHOOSING MIN. THR.)
+            4     1 = TCC IS IN RELEASE MODE, SLIPPING
+            5     1 = TCC IS IN LOCKED-ADJUST MODE
+            6     1 = TCC IS BEING APPLIED
+            7     1 = NEGATIVE SLIP RECENTLY PREVENTS APPLY
+  26     ADVPP1F      PEDAL POSITION 1 SENSOR (FILTERED VALUE)
+                       VOLTS = N * 5/255
+  27     ADVPP1F      PEDAL POSITION 2 SENSOR (FILTERED VALUE)
+                       VOLTS = (256 - N)5/255
+  28     ADVPP1F      PEDAL POSITION 3 SENSOR (FILTERED VALUE)
+                       VOLTS = (256 - N)5/255
+  29     ADVTHROT     THROTTLE POSITION SENSOR (FINAL SCALED VALUE)
+                       (EITHER ADVPP1,ADVPP2 OR ADVPP3)
+                       %TPS = N/2.56
+  30     ADVCPRSP     COMPRESSOR PRESSURE (TURBO BOOST) (DEFAULTED) (TURBO ONLY)
+                       VOLTS = N * 5/255
+                       KPA = N * 1
+  31     ADVEGR       EGR PRESSURE
+                       KPA = N * .5
+  32     ADVFTEMP     FUEL TEMPERATURE  (DEFAULTED)
+                       SEE LOOK-UP TABLE
+  33     ADVGLPGV     GLOW PLUG VOLTAGE
+                       VOLTS = N/10
+  34     ADVATF       AIR TEMPERATURE SENSOR FILTERED (DEFAULTED)
+                       SEE LOOK-UP TABLE
+  35     IDSSODC      IOD SOD STATUS REGISTER
+            0     COOLANT TEMP. PULLUP SELECT    1 = ON  0 = OFF
+            1     TRANS. TEMP. PULLUP SELECT     1 = ON  0 = OFF
+            2     FUEL CALIBRATION TEMP. SELECT  1 = ON  0 = OFF
+            3     CHECK ENGINE LAMP              1 = ON  0 = OFF
+            4     PWM1 RESET                     1 = RESET 0 = NORMAL
+            5     PWM2 RESET                     1 = RESET 0 = NORMAL
+            6     PWM3 RESET                     1 = RESET 0 = NORMAL
+            7     PWM4 RESET                     1 = RESET 0 = NORMAL
+  36     CRVMODE      CRUISE CONTROL MODE
+            0     CRUISE OFF CONDITION
+            1     DISENGAGE CONDITION
+            2     CRUISE STANDBY MODE
+            3     CRUISE ACCELERATED MODE
+            4     CRUISE RESUME MODE
+            5     CRUISE COAST MODE
+            6     CRUISE MODE
+            7     NOT USED
+  37     ILVRPMD      DESIRED IDLE SPEED
+                       RPM = N * 18.75
+  38     ESVRPM       ENGINE SPEED (FINAL)
+                       RPM = N * 18.75
+  39     CRVTGTSP     CRUISE TARGET SPEED
+                       MPH = N * .5
+  40     CRVERROR     CRUISE ERROR MPH
+                       MPH = N * .5
+  41     PRNDLFLG     PRNDL FLAG
+            0     LOW
+            1     DRIVE 2
+            2     DRIVE 3
+            3     DRIVE 4
+            4     NEUTRAL
+            5     REVERSE
+            6     NOT USED
+            7     NOT USED
+  42     MALFCNTR     CURRENT NUMBER OF MALFUNCTIONS PRESENT
+                       N = NUMBER
+  43     DIFLAGS      DISCRETE STATUS FLAGS
+            0     1 = BRAKE ON                         0 = OFF
+            1     1 = A/C COMPRESSOR ENGAGED           0 = DISENGAGED
+            2     1 = POWER ENRICHMENT ACTIVE          0 = INACTIVE
+            3     NOT USED
+            4     1 = KICKDOWN PATTERN ACTIVE          0 = INACTIVE
+            5     1 = FOUR WHEEL DRIVE ACTIVE          0 = INACTIVE
+            6     1 = CRUISE LOW ACTIVE                0 = INACTIVE
+            7     1 = DIAGNOSTIC REQUESTED             0 = NOT REQUESTED
+  44     PROMIDA      ENGINE PROMID (MSB)
+  45     PROMIDA+1    ENGINE PROMID (LSB)
+                       N = PROMID B
+  46     FUVCTAD+1    FUEL CALIBRATION RAW A/D VALUE
+                       N = A/D COUNTS
+  47     FUVTMD       DESIRED INJECTION TIMING
+                       DEG = N * .1
+  48     FUVTM        MEASURED INJECTION TIMING
+                       DEG = N * .1
+  49     FUVPDEG      FUEL PUMP (MSB)
+  50     FUVPDEG+1    FUEL PUMP (LSB)
+                       DEG = N * .088
+  51     EGWPWP       EGR DUTY CYCLE  (L49,L56)
+                       %DC = N/2.56
+  52     CLVTME       CLOSURE TIME (MSB)
+  53     CLVTME+1     CLOSURE TIME (LSB)
+                       MILLI SECS = N * .005
+  54     TMVADVAR     ADVANCE (CAM CRANK) VARIABILITY (MSB)
+  55     TMVADVAR     ADVANCE (CAM CRANK) VARIABILITY (LSB)
+                       DEG = N * .088   (N IS SIGNED)
+  56     DGVRUNTM     ENGINE RUN TIME (MSB)
+  57     DGVRUNTM+1   ENGINE RUN TIME (LSB)
+                       SECS = N * .1
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 27
+..HEAD04L ALDL MODE 1 DATA LIST 2
+WORD #   DATA NAME    DESCRIPTION
+
+  1      ADVATEMP     AIR TEMPERATURE SENSOR  (DEFAULTED)
+                       DEGC = (N * .75) _ 40
+                       DEGF = (N * 1.35) - 40
+  2      ADVBARO      BAROMETOR SENSOR
+                       KPA = N * .5
+  3      ADVDIAG      DIAGNOSTIC
+                       N = MODE
+  4      TMVADVAR     ADVANCE (CAM CRANK) VAVIABILITY
+  5      TMVADVAR+1   ADVANCE (CAM CRANK) VAVIABILITY
+                       DEG = N * .088 (N IS SIGNED)
+  6      ADVFMOTR     FORCE MOTOR
+                       AMPS = N/51.2
+  7      ADVTTEMP     TRANSMISSION TEMPERATURE
+                       DEGC = (N * .75) _ 40
+                       DEGF = (N * 1.35) - 40
+  8      ADVVIGN      IGNITION VOLTAGE
+                       VOLTS = N/10
+  9      ADVV5F       VOLTAGE REFERENCE SENSOR
+                       VOLTS = (N *2.5/255)
+  10     CLVTME       CLOSURE TIME (MSB)
+  11     CLVTME+1     CLOSURE TIME (LSB)
+                       MILLI SECS = N * .005
+  12     ADVGPR       GLOW PLUG RELAY FEEDBACK
+                       VOLTS = N/10
+  13     CRVFUEL      CRUSE FUEL RATE
+                       mm FUEL RATE = N * .3125
+  14     FUVMXTFR     MAXIMUM TRANSIENT FUEL RATE
+                       mm FUEL RATE = N * .3125
+  15     FUVTHREQ     THROTTLE REQUESTED FUEL RATE
+                       mm FUEL RATE = N * .375
+  16     ILVFUEL      IDLE FUEL RATE
+                       FUEL RATE = N * .3125
+  17     GPVDELH      GLOW PLUG NET HEAT GAIN
+                         % GAIN = N/2.56
+  18     GPVHLOSS     GLOW PLUG HEAT LOSS
+                         % GAIN = N/2.56
+  19     NI           TRANSMISSION INPUT SPEED (MSB)
+  20     NI+1         TRANSMISSION INPUT SPEED (LSB)
+                       RPM = N/8
+  21     NO           TRANSMISSION OUTPUT SPEED (MSB)
+  22     NO+1         TRANSMISSION OUTPUT SPEED (LSB)
+                       RPM = N/8
+  23     TCCMODE0     TCC MODE WORD 1
+            0     APPLYING, RELEASING & ON MODE
+            1     SECOND PHASE OF APPLY
+            2     TCC SOLENOID ENABLED
+            3     INSTRUMENTATION
+            4     MANUAL OVERRIDE IN OFF MODE
+            5     INSTRUMENTATION
+            6     SECOND PHASE OF RAMPING DOWN DURING
+                  RELEASEING (R2 TRANSMISSION ONLY)
+            7     NOT USED
+  24     TCCMODE1     TCC MODE WORD 2
+            0     1 = TCC PWM IS ON
+            1     1 = PERFORM RELEASE
+            2     1 = PERFORM APPLY
+            3     1 = MIN. THRESHOLD OCCURRED
+            4     1 = TCC BUS. IS VALID
+            5     1 = NDT OCCURS
+            6     1 = DELAY IS IN PROGRESS
+            7     1 = MIN. THROTTLE OCCURED
+  25     TCCDC        TCC PWM SOLENOID DUTY CYCLE (MSB)
+  26     TCCDC+1      TCC PWM SOLENOID DUTY CYCLE (LSB)
+                       % DC= N/655.36
+  27     ALSMM4CD     ALDL CAN'T DO STATUS REGISTER
+                       N = A/D COUNTS
+..END
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³     RAW ENGINE TABLE                                                        ³
+³                                                                             ³
+³     USE BYTE 35 BIT 0  TO DETERMINE WHICH TABLE TO USE                      ³
+³     0 = USE ENTETMP0 PULL-UP RESISTOR    1 = USE ENTETMP1 PULL-UP RESISTOR  ³
+³                                                                             ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+      PULL-UP RESISTOR (ENTETMP0)    PULL-UP RESISTOR (ENTETMP1)
+      ---------------------------    ----------------------------
+            HOT                           COLD
+
+            ENTETMP0                      ENTETMP1
+            ----                          -----
+            B0 = 0                        B0 = 1
+
+
+
+A/D   DEG C         DEG F            DEG C         DEG F
+---   -----         -----            -----         -----
+
+0     151.3        304.3             151.3        304.3
+1     151.3        304.3             147.2        296.9
+2     151.3        304.3             143.1        289.6
+3     151.3        304.3             139.0        282.2
+4     151.3        304.3             134.9        274.9
+5     151.3        304.3             130.9        267.5
+6     151.3        304.3             126.8        260.2
+7     151.3        304.3             122.7        252.9
+8     151.3        304.3             118.6        245.5
+9     151.3        304.3             114.5        238.2
+10     151.3        304.3             110.5        230.8
+11     151.3        304.3             106.4        223.5
+12     151.3        304.3             102.3        216.2
+13     151.3        304.3             98.2         208.8
+14     151.3        304.3             94.2         201.5
+15     151.3        304.3             90.1         194.1
+16     151.3        304.3             86.0         186.8
+17     151.1        303.9             84.6         184.4
+18     150.9        303.6             83.3         181.9
+19     150.7        303.2             81.9         179.5
+20     150.5        302.9             80.6         177.0
+21     150.3        302.6             79.2         174.6
+22     150.1        302.2             77.8         172.1
+23     149.9        301.9             76.5         169.7
+24     149.8        301.5             75.1         167.2
+25     149.6        301.2             73.8         164.8
+26     149.4        300.9             72.4         162.3
+27     149.2        300.5             71.0         159.9
+28     149.0        300.2             69.7         157.4
+29     148.8        299.9             68.3         155.0
+30     148.6        299.5             67.0         152.5
+31     148.4        299.2             65.6         150.1
+32     148.3        298.9             64.3         147.6
+33     147.0        296.6             63.5         146.2
+34     145.7        294.3             62.7         144.8
+35     144.5        292.0             61.9         143.3
+36     143.2        289.7             61.1         141.9
+37     141.9        287.5             60.3         140.5
+38     140.7        285.2             59.5         139.0
+39     139.4        282.9             58.7         137.6
+40     138.1        280.6             57.9         136.2
+41     136.9        278.3             57.1         134.7
+42     135.6        276.1             56.3         133.3
+43     134.3        273.8             55.5         131.9
+44     133.1        271.5             54.7         130.4
+45     131.8        269.2             53.9         129.0
+46     130.5        267.0             53.1         127.6
+47     129.3        264.7             52.3         126.1
+48     128.0        262.4             51.5         124.7
+49     127.1        260.8             50.9         123.7
+50     126.2        259.2             50.4         122.7
+51     125.3        257.6             49.8         121.7
+52     124.4        256.0             49.3         120.7
+53     123.5        254.4             48.7         119.6
+54     122.7        252.8             48.1         118.6
+55     121.8        251.2             47.6         117.6
+56     120.9        249.6             47.0         116.6
+57     120.0        248.0             46.4         115.6
+58     119.1        246.4             45.9         114.6
+59     118.2        244.8             45.3         113.6
+60     117.3        243.2             44.8         112.6
+61     116.4        241.6             44.2         111.5
+62     115.5        240.0             43.6         110.5
+63     114.6        238.4             43.1         109.5
+64     113.8        236.8             42.5         108.5
+65     113.0        235.5             42.0         107.7
+66     112.3        234.2             41.6         106.8
+67     111.6        233.0             41.1         106.0
+68     110.9        231.7             40.6         105.1
+69     110.2        230.4             40.2         104.3
+70     109.5        229.2             39.7         103.4
+71     108.8        227.9             39.2         102.6
+72     108.1        226.6             38.8         101.8
+73     107.4        225.4             38.3         100.9
+74     106.7        224.1             37.8         100.1
+75     106.0        222.8             37.3         99.2
+76     105.3        221.6             36.9         98.4
+77     104.6        220.3             36.4         97.5
+78     103.9        219.0             35.9         96.7
+79     103.2        217.8             35.5         95.8
+80     102.5        216.5             35.0         95.0
+81     101.9        215.5             34.6         94.2
+82     101.4        214.5             34.2         93.5
+83     100.8        213.5             33.7         92.7
+84     100.3        212.4             33.3         92.0
+85     99.7         211.4             32.9         91.2
+86     99.1         210.4             32.5         90.4
+87     98.6         209.4             32.0         89.7
+88     98.0         208.4             31.6         88.9
+89     97.4         207.4             31.2         88.2
+90     96.9         206.4             30.8         87.4
+91     96.3         205.4             30.4         86.6
+92     95.8         204.4             29.9         85.9
+93     95.2         203.3             29.5         85.1
+94     94.6         202.3             29.1         84.4
+95     94.1         201.3             28.7         83.6
+96     93.5         200.3             28.3         82.8
+97     93.0         199.4             27.9         82.3
+98     92.5         198.4             27.6         81.7
+99     92.0         197.5             27.3         81.1
+100     91.4         196.6             26.9         80.5
+101     90.9         195.7             26.6         79.9
+102     90.4         194.7             26.3         79.3
+103     89.9         193.8             26.0         78.7
+104     89.4         192.9             25.6         78.1
+105     88.9         191.9             25.3         77.5
+106     88.3         191.0             25.0         76.9
+107     87.8         190.1             24.6         76.4
+108     87.3         189.2             24.3         75.8
+109     86.8         188.2             24.0         75.2
+110     86.3         187.3             23.7         74.6
+111     85.8         186.4             23.3         74.0
+112     85.3         185.4             23.0         73.4
+113     84.7         184.5             22.7         72.8
+114     84.2         183.6             22.3         72.2
+115     83.7         182.7             22.0         71.6
+116     83.2         181.7             21.7         71.0
+117     82.7         180.8             21.4         70.4
+118     82.2         179.9             21.0         69.9
+119     81.6         179.0             20.7         69.3
+120     81.1         178.0             20.4         68.7
+121     80.6         177.1             20.0         68.1
+122     80.1         176.2             19.7         67.5
+123     79.6         175.2             19.4         66.9
+124     79.1         174.3             19.1         66.3
+125     78.5         173.4             18.7         65.7
+126     78.0         172.5             18.4         65.1
+127     77.5         171.5             18.1         64.5
+128     77.0         170.6             17.8         64.0
+129     76.6         169.8             17.4         63.4
+130     76.2         169.1             17.1         62.8
+131     75.7         168.3             16.8         62.2
+132     75.3         167.6             16.4         61.6
+133     74.9         166.8             16.1         61.0
+134     74.5         166.0             15.8         60.4
+135     74.0         165.3             15.5         59.8
+136     73.6         164.5             15.1         59.2
+137     73.2         163.8             14.8         58.6
+138     72.8         163.0             14.5         58.0
+139     72.4         162.2             14.1         57.5
+140     71.9         161.5             13.8         56.9
+141     71.5         160.7             13.5         56.3
+142     71.1         160.0             13.2         55.7
+143     70.7         159.2             12.8         55.1
+144     70.3         158.4             12.5         54.5
+145     69.8         157.6             12.2         53.9
+146     69.3         156.8             11.8         53.3
+147     68.8         155.9             11.5         52.7
+148     68.4         155.1             11.2         52.1
+149     67.9         154.2             10.9         51.5
+150     67.4         153.4             10.5         51.0
+151     67.0         152.5             10.2         50.4
+152     66.5         151.7             9.9          49.8
+153     66.0         150.9             9.5          49.2
+154     65.6         150.0             9.2          48.6
+155     65.1         149.2             8.9          48.0
+156     64.6         148.3             8.6          47.4
+157     64.2         147.5             8.2          46.8
+158     63.7         146.6             7.9          46.2
+159     63.2         145.8             7.6          45.6
+160     62.8         144.9             7.3          45.0
+161     62.2         144.0             6.9          44.4
+162     61.7         143.1             6.5          43.7
+163     61.2         142.2             6.1          43.0
+164     60.7         141.2             5.8          42.3
+165     60.2         140.3             5.4          41.7
+166     59.7         139.4             5.0          41.0
+167     59.1         138.5             4.6          40.3
+168     58.6         137.5             4.3          39.7
+169     58.1         136.6             3.9          39.0
+170     57.6         135.7             3.5          38.3
+171     57.1         134.7             3.1          37.6
+172     56.6         133.8             2.8          37.0
+173     56.0         132.9             2.4          36.3
+174     55.5         132.0             2.0          35.6
+175     55.0         131.0             1.6          34.9
+176     54.5         130.1             1.3          34.3
+177     54.0         129.3             0.9          33.7
+178     53.6         128.4             0.6          33.1
+179     53.1         127.6             0.3          32.5
+180     52.6         126.7             -0.1         31.9
+181     52.2         125.9             -0.4         31.3
+182     51.7         125.0             -0.7         30.7
+183     51.2         124.2             -1.0         30.1
+184     50.8         123.3             -1.4         29.5
+185     50.3         122.5             -1.7         28.9
+186     49.8         121.7             -2.0         28.3
+187     49.3         120.8             -2.4         27.8
+188     48.9         120.0             -2.7         27.2
+189     48.4         119.1             -3.0         26.6
+190     47.9         118.3             -3.3         26.0
+191     47.5         117.4             -3.7         25.4
+192     47.0         116.6             -4.0         24.8
+193     46.4         115.5             -4.4         24.0
+194     45.8         114.4             -4.8         23.3
+195     45.2         113.3             -5.3         22.5
+196     44.6         112.2             -5.7         21.8
+197     44.0         111.1             -6.1         21.0
+198     43.3         110.0             -6.5         20.2
+199     42.7         108.9             -7.0         19.5
+200     42.1         107.8             -7.4         18.7
+201     41.5         106.7             -7.8         18.0
+202     40.9         105.6             -8.2         17.2
+203     40.3         104.5             -8.6         16.4
+204     39.7         103.4             -9.1         15.7
+205     39.1         102.3             -9.5         14.9
+206     38.5         101.2             -9.9         14.2
+207     37.9         100.1             -10.3        13.4
+208     37.3         99.1              -10.8        12.6
+209     36.5         97.7              -11.3        11.7
+210     35.8         96.3              -11.8        10.8
+211     35.0         95.0              -12.3        9.9
+212     34.3         93.7              -12.8        8.9
+213     33.5         92.3              -13.3        8.0
+214     32.8         90.9              -13.8        7.1
+215     32.0         89.6              -14.4        6.2
+216     31.3         88.3              -14.9        5.2
+217     30.5         86.9              -15.4        4.3
+218     29.8         85.6              -15.9        3.4
+219     29.0         84.2              -16.4        2.4
+220     28.3         82.8              -16.9        1.5
+221     27.5         81.5              -17.5        0.6
+222     26.8         80.2              -18.0        -0.3
+223     26.0         78.8              -18.5        -1.3
+224     25.3         77.4              -19.0        -2.2
+225     24.1         75.3              -19.8        -3.6
+226     22.9         73.2              -20.6        -5.1
+227     21.7         71.1              -21.4        -6.5
+228     20.6         69.0              -22.2        -7.9
+229     19.4         66.9              -23.0        -9.4
+230     18.2         64.8              -23.8        -10.8
+231     17.0         62.7              -24.6        -12.2
+232     15.9         60.6              -25.4        -13.7
+233     14.7         58.5              -26.2        -15.1
+234     13.5         56.4              -27.0        -16.5
+235     12.4         54.2              -27.8        -18.0
+236     11.2         52.1              -28.6        -19.4
+237     10.0         50.0              -29.4        -20.8
+238     8.8          47.9              -30.2        -22.3
+239     7.7          45.8              -31.0        -23.7
+240     6.5          43.7              -31.8        -25.1
+241     3.6          38.5              -32.3        -26.1
+242     0.7          33.2              -32.8        -27.0
+243     -2.2         28.0              -33.3        -27.9
+244     -5.1         22.8              -33.8        -28.9
+245     -8.0         17.5              -34.3        -29.8
+246     -10.9        12.3              -34.8        -30.7
+247     -13.8        7.1               -35.4        -31.6
+248     -16.8        1.9               -35.9        -32.6
+249     -19.7        -3.4              -36.4        -33.5
+250     -22.6        -8.6              -36.9        -34.4
+251     -25.5        -13.8             -37.4        -35.4
+252     -28.4        -19.1             -37.9        -36.3
+253     -31.3        -24.3             -38.5        -37.2
+254     -34.2        -29.5             -39.0        -38.1
+255     -37.1        -34.8             -39.5        -39.1
+
+
+
+
+
+
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³                                                                            ³
+³                            MANIFOLD AIR TEMP                               ³
+³                             (LOOK-UP TABLE)                                ³
+³    ********************************************************************    ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+                 A/D            DEG C            DEG F
+                 ---            -----            -----
+
+                 000            151.3            304.3
+                 001            146.8            296.2
+                 002            142.3            288.2
+                 003            137.9            280.2
+                 004            133.4            272.2
+                 005            129.0            264.2
+                 006            124.5            256.2
+                 007            120.1            248.1
+                 008            115.6            240.1
+                 009            111.2            232.1
+                 010            106.7            224.1
+                 011            102.3            216.1
+                 012            97.8             208.1
+                 013            93.4             200.0
+                 014            88.9             192.0
+                 015            84.5             184.0
+                 016            80.0             176.0
+                 017            78.6             173.6
+                 018            77.3             171.1
+                 019            75.9             168.7
+                 020            74.6             166.2
+                 021            73.2             163.8
+                 022            71.8             161.3
+                 023            70.5             158.9
+                 024            69.1             156.4
+                 025            67.8             154.0
+                 026            66.4             151.5
+                 027            65.0             149.1
+                 028            63.7             146.6
+                 029            62.3             144.2
+                 030            61.0             141.7
+                 031            59.6             139.3
+                 032            58.3             136.9
+                 033            57.4             135.3
+                 034            56.6             133.8
+                 035            55.7             132.3
+                 036            54.9             130.8
+                 037            54.0             129.3
+                 038            53.2             127.7
+                 039            52.3             126.2
+                 040            51.5             124.7
+                 041            50.7             123.2
+                 042            49.8             121.7
+                 043            49.0             120.1
+                 044            48.1             118.6
+                 045            47.3             117.1
+                 046            46.4             115.6
+                 047            45.6             114.1
+                 048            44.8             112.6
+                 049            44.2             111.6
+                 050            43.7             110.7
+                 051            43.2             109.8
+                 052            42.7             108.8
+                 053            42.2             107.9
+                 054            41.7             107.0
+                 055            41.1             106.1
+                 056            40.6             105.1
+                 057            40.1             104.2
+                 058            39.6             103.3
+                 059            39.1             102.3
+                 060            38.6             101.4
+                 061            38.0             100.5
+                 062            37.5             99.6
+                 063            37.0             98.6
+                 064            36.5             97.7
+                 065            36.0             96.9
+                 066            35.6             96.0
+                 067            35.1             95.2
+                 068            34.6             94.3
+                 069            34.2             93.5
+                 070            33.7             92.6
+                 071            33.2             91.8
+                 072            32.8             90.9
+                 073            32.3             90.1
+                 074            31.8             89.3
+                 075            31.3             88.4
+                 076            30.9             87.6
+                 077            30.4             86.7
+                 078            29.9             85.9
+                 079            29.5             85.0
+                 080            29.0             84.2
+                 081            28.6             83.5
+                 082            28.3             82.8
+                 083            27.9             82.2
+                 084            27.5             81.5
+                 085            27.1             80.8
+                 086            26.8             80.2
+                 087            26.4             79.5
+                 088            26.0             78.8
+                 089            25.6             78.1
+                 090            25.3             77.4
+                 091            24.9             76.8
+                 092            24.5             76.1
+                 093            24.1             75.4
+                 094            23.8             74.8
+                 095            23.4             74.1
+                 096            23.0             73.4
+                 097            22.6             72.7
+                 098            22.3             72.1
+                 099            21.9             71.4
+                 100            21.5             70.7
+                 101            21.1             70.0
+                 102            20.8             69.3
+                 103            20.4             68.7
+                 104            20.0             68.0
+                 105            19.6             67.3
+                 106            19.3             66.7
+                 107            18.9             66.0
+                 108            18.5             65.3
+                 109            18.1             64.6
+                 110            17.8             64.0
+                 111            17.4             63.3
+                 112            17.0             62.6
+                 113            16.8             62.3
+                 114            16.6             61.9
+                 115            16.4             61.6
+                 116            16.3             61.3
+                 117            16.1             60.9
+                 118            15.9             60.6
+                 119            15.7             60.2
+                 120            15.5             59.9
+                 121            15.3             59.6
+                 122            15.1             59.2
+                 123            14.9             58.9
+                 124            14.8             58.5
+                 125            14.6             58.2
+                 126            14.4             57.9
+                 127            14.2             57.5
+                 128            14.0             57.2
+                 129            13.6             56.4
+                 130            13.2             55.7
+                 131            12.7             54.9
+                 132            12.3             54.2
+                 133            11.9             53.4
+                 134            11.5             52.6
+                 135            11.0             51.9
+                 136            10.6             51.1
+                 137            10.2             50.4
+                 138            9.8              49.6
+                 139            9.4              48.8
+                 140            8.9              48.1
+                 141            8.5              47.3
+                 142            8.1              46.6
+                 143            7.7              45.8
+                 144            7.3              45.0
+                 145            6.9              44.5
+                 146            6.6              43.9
+                 147            6.3              43.3
+                 148            5.9              42.7
+                 149            5.6              42.1
+                 150            5.3              41.5
+                 151            5.0              40.9
+                 152            4.6              40.3
+                 153            4.3              39.7
+                 154            4.0              39.1
+                 155            3.6              38.6
+                 156            3.3              38.0
+                 157            3.0              37.4
+                 158            2.7              36.8
+                 159            2.3              36.2
+                 160            2.0              35.6
+                 161            1.6              34.9
+                 162            1.3              34.3
+                 163            0.9              33.6
+                 164            0.5              32.9
+                 165            0.1              32.2
+                 166            -0.3             31.5
+                 167            -0.6             30.9
+                 168            -1.0             30.2
+                 169            -1.4             29.5
+                 170            -1.8             28.9
+                 171            -2.1             28.2
+                 172            -2.5             27.5
+                 173            -2.9             26.8
+                 174            -3.3             26.1
+                 175            -3.6             25.5
+                 176            -4.0             24.8
+                 177            -4.3             24.2
+                 178            -4.7             23.6
+                 179            -5.0             23.0
+                 180            -5.3             22.4
+                 181            -5.6             21.8
+                 182            -6.0             21.3
+                 183            -6.3             20.7
+                 184            -6.6             20.1
+                 185            -7.0             19.5
+                 186            -7.3             18.9
+                 187            -7.6             18.3
+                 188            -7.9             17.7
+                 189            -8.3             17.1
+                 190            -8.6             16.5
+                 191            -8.9             15.9
+                 192            -9.3             15.4
+                 193            -9.7             14.6
+                 194            -10.1            13.8
+                 195            -10.5            13.1
+                 196            -10.9            12.3
+                 197            -11.4            11.6
+                 198            -11.8            10.8
+                 199            -12.2            10.0
+                 200            -12.6            9.3
+                 201            -13.0            8.5
+                 202            -13.5            7.8
+                 203            -13.9            7.0
+                 204            -14.3            6.2
+                 205            -14.7            5.5
+                 206            -15.2            4.7
+                 207            -15.6            4.0
+                 208            -16.0            3.2
+                 209            -16.5            2.3
+                 210            -17.0            1.3
+                 211            -17.5            0.4
+                 212            -18.1            -0.5
+                 213            -18.6            -1.4
+                 214            -19.1            -2.4
+                 215            -19.6            -3.3
+                 216            -20.1            -4.2
+                 217            -20.6            -5.2
+                 218            -21.2            -6.1
+                 219            -21.7            -7.0
+                 220            -22.2            -7.9
+                 221            -22.7            -8.9
+                 222            -23.2            -9.8
+                 223            -23.7            -10.7
+                 224            -24.3            -11.6
+                 225            -25.0            -13.1
+                 226            -25.8            -14.5
+                 227            -26.6            -16.0
+                 228            -27.4            -17.4
+                 229            -28.2            -18.8
+                 230            -29.0            -20.3
+                 231            -29.8            -21.7
+                 232            -30.6            -23.1
+                 233            -31.4            -24.6
+                 234            -32.2            -26.0
+                 235            -33.0            -27.4
+                 236            -33.8            -28.9
+                 237            -34.6            -30.3
+                 238            -35.4            -31.7
+                 239            -36.2            -33.2
+                 240            -37.0            -34.6
+                 241            -37.2            -34.9
+                 242            -37.4            -35.3
+                 243            -37.6            -35.6
+                 244            -37.8            -36.0
+                 245            -37.9            -36.3
+                 246            -38.1            -36.6
+                 247            -38.3            -37.0
+                 248            -38.5            -37.3
+                 249            -38.7            -37.6
+                 250            -38.9            -38.0
+                 251            -39.1            -38.3
+                 252            -39.3            -38.7
+                 253            -39.4            -39.0
+                 254            -39.6            -39.3
+                 255            -39.8            -39.7
+
+
+
+
+
+
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³                                                                            ³
+³                            FUEL TEMPERATURE                                ³
+³                             (LOOK-UP TABLE)                                ³
+³    ********************************************************************    ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+          A/D            DEG C              DEG F
+          ---            -----              -----
+
+          000            107.5              225.5
+          001            106.3              223.3
+          002            105.0              221.0
+          003            103.8              218.8
+          004            102.5              216.5
+          005            101.3              214.3
+          006            100.0              212.0
+          007            98.8               209.8
+          008            97.5               207.5
+          009            96.3               205.3
+          010            95.0               203.0
+          011            93.8               200.8
+          012            92.5               198.5
+          013            91.3               196.3
+          014            90.0               194.0
+          015            88.8               191.8
+          016            87.5               189.5
+          017            85.6               186.1
+          018            83.8               182.8
+          019            81.9               179.4
+          020            80.0               176.0
+          021            78.1               172.6
+          022            76.3               169.3
+          023            74.4               165.9
+          024            72.5               162.5
+          025            70.6               159.1
+          026            68.8               155.8
+          027            66.9               152.4
+          028            65.0               149.0
+          029            63.1               145.6
+          030            61.3               142.3
+          031            59.4               138.9
+          032            57.5               135.5
+          033            56.8               134.2
+          034            56.1               132.9
+          035            55.3               131.6
+          036            54.6               130.3
+          037            53.9               129.0
+          038            53.2               127.7
+          039            52.5               126.4
+          040            51.8               125.2
+          041            51.0               123.9
+          042            50.3               122.6
+          043            49.6               121.3
+          044            48.9               120.0
+          045            48.2               118.7
+          046            47.4               117.4
+          047            46.7               116.1
+          048            46.0               114.8
+          049            45.5               114.0
+          050            45.1               113.1
+          051            44.6               112.3
+          052            44.1               111.4
+          053            43.7               110.6
+          054            43.2               109.7
+          055            42.7               108.9
+          056            42.3               108.1
+          057            41.8               107.2
+          058            41.3               106.4
+          059            40.8               105.5
+          060            40.4               104.7
+          061            39.9               103.8
+          062            39.4               103.0
+          063            39.0               102.1
+          064            38.5               101.3
+          065            38.2               100.7
+          066            37.8               100.1
+          067            37.5               99.4
+          068            37.1               98.8
+          069            36.8               98.2
+          070            36.4               97.6
+          071            36.1               97.0
+          072            35.8               96.3
+          073            35.4               95.7
+          074            35.1               95.1
+          075            34.7               94.5
+          076            34.4               93.9
+          077            34.0               93.3
+          078            33.7               92.6
+          079            33.3               92.0
+          080            33.0               91.4
+          081            32.7               90.9
+          082            32.4               90.4
+          083            32.2               89.9
+          084            31.9               89.4
+          085            31.6               88.9
+          086            31.3               88.4
+          087            31.0               87.9
+          088            30.8               87.3
+          089            30.5               86.8
+          090            30.2               86.3
+          091            29.9               85.8
+          092            29.6               85.3
+          093            29.3               84.8
+          094            29.1               84.3
+          095            28.8               83.8
+          096            28.5               83.3
+          097            28.2               82.8
+          098            27.9               82.3
+          099            27.7               81.8
+          100            27.4               81.3
+          101            27.1               80.8
+          102            26.8               80.3
+          103            26.5               79.8
+          104            26.3               79.3
+          105            26.0               78.7
+          106            25.7               78.2
+          107            25.4               77.7
+          108            25.1               77.2
+          109            24.8               76.7
+          110            24.6               76.2
+          111            24.3               75.7
+          112            24.0               75.2
+          113            23.8               74.8
+          114            23.6               74.4
+          115            23.3               74.0
+          116            23.1               73.6
+          117            22.9               73.2
+          118            22.7               72.8
+          119            22.5               72.4
+          120            22.3               72.1
+          121            22.0               71.7
+          122            21.8               71.3
+          123            21.6               70.9
+          124            21.4               70.5
+          125            21.2               70.1
+          126            20.9               69.7
+          127            20.7               69.3
+          128            20.5               68.9
+          129            20.3               68.5
+          130            20.1               68.1
+          131            19.8               67.7
+          132            19.6               67.3
+          133            19.4               66.9
+          134            19.2               66.5
+          135            19.0               66.1
+          136            18.8               65.8
+          137            18.5               65.4
+          138            18.3               65.0
+          139            18.1               64.6
+          140            17.9               64.2
+          141            17.7               63.8
+          142            17.4               63.4
+          143            17.2               63.0
+          144            17.0               62.6
+          145            16.8               62.2
+          146            16.6               61.8
+          147            16.3               61.4
+          148            16.1               61.0
+          149            15.9               60.6
+          150            15.7               60.2
+          151            15.5               59.8
+          152            15.3               59.5
+          153            15.0               59.1
+          154            14.8               58.7
+          155            14.6               58.3
+          156            14.4               57.9
+          157            14.2               57.5
+          158            13.9               57.1
+          159            13.7               56.7
+          160            13.5               56.3
+          161            13.3               55.9
+          162            13.1               55.5
+          163            12.8               55.1
+          164            12.6               54.7
+          165            12.4               54.3
+          166            12.2               53.9
+          167            12.0               53.5
+          168            11.8               53.2
+          169            11.5               52.8
+          170            11.3               52.4
+          171            11.1               52.0
+          172            10.9               51.6
+          173            10.7               51.2
+          174            10.4               50.8
+          175            10.2               50.4
+          176            10.0               50.0
+          177            9.8                49.5
+          178            9.5                49.1
+          179            9.3                48.7
+          180            9.0                48.2
+          181            8.8                47.8
+          182            8.5                47.3
+          183            8.3                46.8
+          184            8.0                46.4
+          185            7.8                46.0
+          186            7.5                45.5
+          187            7.3                45.0
+          188            7.0                44.6
+          189            6.8                44.2
+          190            6.5                43.7
+          191            6.3                43.3
+          192            6.0                42.8
+          193            5.8                42.3
+          194            5.5                41.9
+          195            5.3                41.5
+          196            5.0                41.0
+          197            4.8                40.5
+          198            4.5                40.1
+          199            4.3                39.7
+          200            4.0                39.2
+          201            3.8                38.8
+          202            3.5                38.3
+          203            3.3                37.8
+          204            3.0                37.4
+          205            2.8                37.0
+          206            2.5                36.5
+          207            2.3                36.0
+          208            2.0                35.6
+          209            1.7                35.0
+          210            1.4                34.5
+          211            1.1                33.9
+          212            0.8                33.3
+          213            0.4                32.8
+          214            0.1                32.2
+          215            -0.2               31.7
+          216            -0.5               31.1
+          217            -0.8               30.5
+          218            -1.1               30.0
+          219            -1.4               29.4
+          220            -1.8               28.9
+          221            -2.1               28.3
+          222            -2.4               27.7
+          223            -2.7               27.2
+          224            -3.0               26.6
+          225            -3.4               25.9
+          226            -3.8               25.3
+          227            -4.1               24.6
+          228            -4.5               23.9
+          229            -4.9               23.2
+          230            -5.3               22.5
+          231            -5.6               21.9
+          232            -6.0               21.2
+          233            -6.4               20.5
+          234            -6.8               19.9
+          235            -7.1               19.2
+          236            -7.5               18.5
+          237            -7.9               17.8
+          238            -8.3               17.1
+          239            -8.6               16.5
+          240            -9.0               15.8
+          241            -9.7               14.6
+          242            -10.4              13.3
+          243            -11.1              12.1
+          244            -11.8              10.9
+          245            -12.4              9.6
+          246            -13.1              8.4
+          247            -13.8              7.1
+          248            -14.5              5.9
+          249            -15.2              4.7
+          250            -15.9              3.4
+          251            -16.6              2.2
+          252            -17.3              0.9
+          253            -17.9              -0.3
+          254            -18.6              -1.5
+          255            -19.3              -2.8
+
+

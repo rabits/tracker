@@ -1,0 +1,581 @@
+
+                        DATA STREAM A167  SPECIFICATION
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       ENGINE   USAGE:
+              2.2L PFI (LN2) (VIN = 4) 1992 1J,1L,7L CARS
+              2.2L PFI (LN2) (VIN = 4) 1993 1J,1L,W,3A,4A CARS
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI - DIRECTIONAL
+
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM) MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $92
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 60
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+ALDL DATA LIST
+NUMBER OF DATA WORDS - 60
+ALDL MODE 1 DATA LIST MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1     MALFFLG1     MALF FLAG WORD 1
+        0      MALF CODE 42 EST ERROR
+        1      MALF CODE 33 MAP ERROR
+        2      MALF CODE 32 EGR ERROR
+        3      MALF CODE 24 VSS ERROR
+        4      MALF CODE 23 MAT ERROR
+        5      MALF CODE 21 TPS ERROR
+        6      MALF CODE 14 COOLANT ERROR
+        7      MALF CODE 13 O2 SENSOR NOT TOGGLING
+  2     MALFFLG2     MALF FLAG WORD 2
+        0      MALF CODE NOT USED
+        1      MALF CODE NOT USED
+        2      MALF CODE NOT USED
+        3      MALF CODE NOT USED
+        4      MALF CODE 66 A/C PRESSURE ERROR
+        5      MALF CODE 51 CHECKSUM OR KKGMID ERROR
+        6      MALF CODE 45 O2 SENSOR RICH
+        7      MALF CODE 44 O2 SENSOR LEAN
+  3     CLDEGRAW     COOLANT VARIABLE FOR SERIAL DATA MODE 4
+                     (NON - DEFAULTED)
+                      DEGREES C = (N*.75)-40
+                      (DEGS F = (1.35*N)-40
+  4     EFIPWD       TIME IN COUNTS THAT EFI REMAINS HIGH (MSB)
+  5     EFIPWD+1     TIME IN COUNTS THAT EFI REMAINS HIGH (LSB)
+                      MSEC. = (MSB*256+LSB)/131.O72
+  6     SATDC        HUD SPARK ADVANCE (MSB) MAGNITUDE
+  7     SATDC+1      NOT USED
+                      DEGREES C = N/256*90
+  8     ADMAPRAW     RAW A/D COUNTS FOR MAP
+                     NON DEFAULTED UPDATES WITH REFERENCE PULSES
+                       VOLTS = N*5/256
+                       KPA = (N + 28.06)/2.71
+  9     ADTHROT      THROTTLE POSITION, A/D COUNTS
+                       VOLTS = N*(5/256)
+  10    NTPSLD       RESCALED TPS, 0 = 0%, 255 = 100%
+                       % THROTTLE = N/2.56
+  11    ADO2AF       FILTERED O2 SENSOR VOLTAGE
+                       MV = N*4.42
+  12    FILTMPH      FILTERED MPH
+                       MPH = N
+                       (kph = 1.61N)
+  13    ISSPMP       IAC PRESET MOTOR POSITION
+                       N = IAC STEPS
+  14    ISDWNA       DESIRED IDLE RPM
+                       RPM = N * 6.25
+  15    ADBAT        BATTERY VOLTAGE, A/D COUNTS
+                       VOLTS = N/10
+
+  16    BLM          BLOCK LEARN MULTIPLIER (0 - 2 MULTIPLIER)
+                       N = COUNTS
+  17    INT          CLOSED LOOP INTEGRATOR
+                       N = COUNTS
+  18    NTRPMX       ENGINE SPEED
+                       RPM = N * 25
+  19    AIRFUEL      DESIRED AIR/FUEL RATIO
+                       AIR/FUEL = N/10
+
+  20    NVMW         NON-VOLITILE MODE WORD
+        0      1 = O2 SENSOR READY
+        1      NOT USED
+        2      1 = IMPROPER SHUTDOWN  0 = PROPER SHUTDOWN
+        3      1 = MALF 51 DETECTED
+        4      NOT USED
+        5      1 = KICKDOWN COMPLETE
+        6      1 = MODE 5 RESPONSE
+        7      1 = IAC KICKDOWN ENABLED
+
+  21    AFTI         TIME OUT AIR/FUEL RATIO * 10
+                       TIME OUT A/F = N/10
+  22    TIME         ENGINE RUNNING TIME (MSB)
+  23    TIME+1       ENGINE RUNNING TIME (LSB)
+                       SECONDS = (MSB * 256 + LSB)
+  24    ACPRESS      A/C PRESSURE TRANSDUCER A/D COUNTS
+                       N = A/D COUNTS
+  25    ADMAT        MANIFOLD ABSOLUTE TEMPERATURE A/D COUNTS
+                       SEE MAT LOOKUP TABLE
+
+  26    FMDDISC          FMD BYTE 1, INPUT DISCRETES
+           0         1 = A/C REQUEST
+           1         1 = FAN REQUEST
+           2         1 = DRIVE,        0 = PARK/NEUTRAL
+           3         NOT USED
+           4         NOT USED
+           5         NOT USED
+           6         NOT USED
+           7         NOT USED
+
+  27    MW1              MODE WORD 1
+           0         1 = IGNITION OFF  0 = IGNITION
+           1         1 = A/C CLUTCH DISABLED BECAUSE OF COOL. TEMP.
+           2         1 = A/C PRESSURE DISABLED
+           3         1 = TURN ON FAN
+           4         1 = TURN ON A/C SOLENOID
+           5         A/F FLAG USED IN AIRFUEL CALCULATION
+           6         1 = 1ST TIME THROUGH A/C LOGIC
+           7         1 = TURN ON TCC/SHIFT LIGHT
+
+  28    MW2              MODE WORD 2
+           0         1 = RPM DERIVATION SPARK IS ACTIVE
+           1         1 = ENGINE IN CRANK
+           2         1 = RUN FUEL
+           3         1 = RUN SPARK
+           4         1 = HIGH RPM/MPH FUEL SHUT-OFF (USED FOR HUD ONLY)
+           5         1 = IN DIAGNOSTIC MODE
+           6         1 = NOT FIRST FALLING EDGE OF REFA
+           7         1 = REF. WAS HI LAST TIME; O = REF. WAS LO LAST TIME
+
+  29    BPWFINAL     BASE PULSE WIDTH (MSB)
+  30    BPWFINAL+1   BASE PULSE WIDTH (LSB)
+                       MSEC = (MSB * 256 + LSB)/65.536
+
+  31    BLMCELL      BLOCK LEARN MULTIPLIER CELL
+                      MULTIPLIER CELL 0 ==> TPS CLOSED, MPH = ZERO
+                      MULTIPLIER CELL 1 ==> TPS CLOSED, MPH > ZERO
+                      MULTIPLIER CELL 2 ==> OPEN THROTTLE
+                      MULTIPLIER CELL 3 ==> WOT
+
+  32    FUELMW2          FUEL MODE WORD 2
+           0         1 = BLM CLOSED THROTTLE
+           1         1 = CLOSED LOOP FUEL CONTROL
+           2         1 = ASYNCH. DECAY IN PROGRESS  (DFCO)
+           3         1 = BLM IS ENABLED
+           4         1 = QUASI-SYNCHRONOUS FUEL MODE (SSSF)
+           5         1 = POWER ENRICHMENT
+           6         1 = O2 SENSOR RICH     0 = O2 SENSOR LEAN
+           7         1 = AFCRANK USED TO INITIALIZE REFCTR
+
+  33    REFPER      TIME BETWEEN REFERENCE PULSES (MSB)
+  34    REFPER+1    TIME BETWEEN REFERENCE PULSES (LSB)
+                       MSEC = (MSB*256+LSB)/65.536
+                       RPM = 1,966,080/(MSB*256 + LSB)
+  35    NVRATIO     RPM/MPH
+                       N = RPM/MPH
+  36    PROMIDA      PROMID (MSB)
+  37    PROMIDA+1    PROMID (LSB)
+
+
+  38    KOPTFID          OPTION FLAG WORD #1
+           0         1 = A/C PRESSURE OPTION SELECTED
+           1         1 = KDFCIAKB IS NEGATIVE
+           2         1 = INITIALIZE A/C BASE MOTOR POSITION VARIABLES
+           3         1 = MANUAL TRANSMISSION  0 = AUTOMATIC TRANSMISSION
+           4         1 = ENABLE ROLLING CLOSED LOOP SPARK STABILIZER
+           5         1 = RPM DERIVATIVE SPARK CONTROL OPTION IS SELECTED
+                     NOTE:RPM DERIVATIVE SPARK CONTROL SHOULD NOT BE
+                     SELECTED OF THE VEHICLE HAS AUTOMATIC TRANSMISSION.
+           6         1 = A/C KICK OPTION IS ENABLED
+           7         NOT USED
+..PAGE
+  39    DIAGMW1          DIAGNOSTIC MODE WORD 1
+           0         MALF 42 1ST PASS FLAG
+           1         MALF 23 DETECTED (MAT HIGH/LOW)
+           2         MALF 21 DETECTED (TPS. HIGH/LOW) - FAST LOOP
+           3         MALF 21 DETECTED (TPS HIGH) - SLOW LOOP
+           4         MALF 33 DETECTED (MAP HIGH)
+           5         MALF 33 DETECTED (MAP LOW)
+           6         MALF 42 DETECTED (ESR ERROR)
+           7         MALF 24 DETECTED (VSS.)
+
+  40    DIAGMW2          DIAGNOSTIC MODE WORD 2
+           0         MALF 13,14,23,44,45 ENABLE (COOLANT,MAT,O2)
+           1         O2 MALF DETECTED (MALF 13,44, OR 45
+           2         MALF 14 DETECTED (COOLANT)
+           3         INT FORCED TO 128 (MALF O2 LOGIC - O2 SENSOR)
+           4         MALF 32 DETECTED (EGR)
+           5         MALF 32 ENABLE FLAG
+           6         NO MALF COUNTER INCREMENTED FLAG
+           7         CHECK ENG. LITE FLAG  (1 = ON)
+
+  41    DIAGMW3          DIAGNOSTIC MODE WORD 3
+           0         NOT USED
+           1         NOT USED
+           2         NOT USED
+           3         NOT USED
+           4         1 = MALF 66 DETECTED (A/C PRESSURE HIGH/LOW
+           5         1 = QDM FAULT DETECTED
+           6         NOT USED
+           7         NOT USED
+
+  42    VE           VOLUMETRIC EFFICIENCY TERM
+                        % = N/2.56
+  43    KKSUM        CHECKSUM FOR ROM (MSB)
+  44    KKSUM+1      CHECKSUM FOR ROM (LSM)
+                        N = CHECKSUM
+  45    KKPGMID      CHECKSUM FOR RAM PROGRAM (MSB)
+  46    KKPGMID+1    CHECKSUM FOR RAM PROGRAM (LSB)
+                        N = CHECKSUM
+  47    NOMALFCT     NO MALFUNCTION COUNTER
+  48    ADBARO       BAROMETER , A/D COUNTS
+                        VOLTS = N*5/256
+                        (KPA = (N + 28.06)/2.71)
+
+
+  49    FMDCTL           INPUT TO FMD FOR CONTROL
+           0         COOLANT SWITCH: 0 = OFF  1 = ON
+           1         COP2 BIT TO COP2 TIMER
+           2         ENABLE EST
+           3         PORT, PIN8 IF ENFPPWM = 1: OPORT PIN8 = DISCRETE =
+                     PORTP8 FP PIN = PWMI.AND. (FUEL PUMP TIMER)
+                     IF ENFPWM = 0: OPORT PIN8 = PWMI FP PIN = FUEL PUMP
+                     TIMER
+           4         ENABLE FUEL PUMP PWM
+           5         DISCRETE OUTPUT TO ODSC
+           6         ENABLE IRQ* INTERRUPT ON TREFB
+           7         0 ==> BYTE 1, 1 ==> BYTE 2
+
+  50    ADTAOFF      BIAS (Q4) FOR AUTO-ZERO NTPSLD,FILTERED A/D COUNTS
+                        % THROTTLE = N/2.56
+  51    EGRCOMP      EGR COMPENSATION FACTOR (0 - 1 MULTIPLIER)
+                        N = COUNTS
+  52    EGRSPARK     SPARK DELTA FOR EGR
+                        DEGREES = value * 90/256
+
+  53    FUELMW1          FUEL MODE WORD 1
+           0         1 = CLOSED LOOP CLOSED THROTTLE
+           1         1 = BLM CELL CHANGE, USED IN CLOSED LOOP LOGIC
+           2         1 = BLM CELL CHANGE, USED IN BLM UPDATE LOGIC
+           3         1 = DFCOTMR HAS BEEN INITIALIZED
+           4         1 = DISPLAY DETECTION OF DECLUTCH ON HUD
+           5         1 = DECLUTCH DETECTED
+           6         1 = DECEL FUEL CUT-OFF
+           7         1 = WAS IN DECEL FUEL CUT-OFF
+
+  54    GEARWORD     CURRENT GEAR (MANUAL TRANSMISSION ONLY)
+  55    NEWMALF1     DIAG. FLAG CONTAINING OLD MALF INFORMATION #1
+  56    NEWMALF2     DIAG. FLAG CONTAINING OLD MALF INFORMATION #2
+  57    SAP+1        2'S COMPLEMENT SPARK ADVANCE
+                        DEGREES = value * 90/256
+  58    ISMPTV       COLD INCREASE TO MOTOER POSITION, STEPS
+  59    ADMAP        A/D COUNTS FOR MAP
+                     DEFAULTED UPDATE CONTINUOUSLY WITH IGN. ON
+                        VOLTS = N*5/256
+                        (kpa = (N + 28.06)/2.71)
+
+  60    FUELMW4          FUEL MODE WORD 4
+           0         1 = ENABLE EGR
+           1         1 = O2 SENSOR RICH (FOR O2 TOGGLE FREQUENCY)
+           2         NOT USED
+           3         NOT USED
+           4         NOT USED
+           5         NOT USED
+           6         NOT USED
+           7         NOT USED
+
+
+⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+≥      MANIFOLD AIR TEMPERATURE VS N   ≥
+≥               (ADMAT)                ≥
+¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+A/D           DEG C         DEG F
+---           -----         -----
+
+ 0             148.3         299.8
+ 1             148.3         299.8
+ 2             148.3         299.8
+ 3             148.3         299.8
+ 4             148.3         299.8
+ 5             148.3         299.8
+ 6             148.3         299.8
+ 7             148.3         299.8
+ 8             148.3         299.8
+ 9             148.3         299.8
+ 10            148.3         299.8
+ 11            148.3         299.8
+ 12            148.3         299.8
+ 13            146           294.8
+ 14            143.8         291.7
+ 15            141.5         286.7
+ 16            139.3         283.6
+ 17            137           278.6
+ 18            134.8         275.5
+ 19            132.5         270.5
+ 20            130.3         267.4
+ 21            128           262.4
+ 22            125.8         259.3
+ 23            123.5         254.3
+ 24            121.3         251.2
+ 25            119           246.2
+ 26            116.8         243.1
+ 27            114.5         238.1
+ 28            112.3         235
+ 29            111.2         232.1
+ 30            110.1         231.1
+ 31            109           228.2
+ 32            107.9         227.2
+ 33            106.9         224.3
+ 34            105.8         222.4
+ 35            104.7         221.4
+ 36            103.6         218.5
+ 37            102.5         217.5
+ 38            101.5         214.6
+ 39            100.4         212.7
+ 40            99.3          211.7
+ 41            98.2          208.8
+ 42            97.2          207.8
+ 43            96.1          204.9
+ 44            95            203
+ 45            94.2          202.5
+ 46            93.4          200.1
+ 47            92.6          199.6
+ 48            91.8          198.2
+ 49            91            195.8
+ 50            90.2          195.3
+ 51            89.4          193.9
+ 52            88.6          191.5
+
+ 53            87.8          191
+ 54            87            189.6
+ 55            86.2          187.2
+ 56            85.4          186.7
+ 57            84.6          185.3
+ 58            83.8          182.9
+ 59            83            182.4
+ 60            82.3          181
+ 61            81.7          179
+ 62            81.1          178
+ 63            80.6          177
+ 64            80            176
+ 65            79.4          175.9
+ 66            78.9          174.9
+ 67            78.3          173.9
+ 68            77.8          172.9
+ 69            77.2          170.9
+ 70            76.6          169.9
+ 71            76.1          168.9
+ 72            75.5          167.9
+ 73            74.9          167.8
+ 74            74.4          166.8
+ 75            73.8          165.8
+ 76            73.3          164.8
+ 77            72.7          162.9
+ 78            72.2          162.9
+ 79            71.7          162
+ 80            71.2          160.1
+ 81            70.7          159.2
+ 82            70.2          159.2
+ 83            69.6          158.3
+ 84            69.1          156.4
+ 85            68.6          156.4
+ 86            68.1          155.5
+ 87            67.6          153.6
+ 88            67.1          152.7
+ 89            66.5          152.7
+ 90            66            151.8
+ 91            65.5          149.9
+ 92            65            149
+ 93            64.5          149.1
+ 94            64.1          147.3
+ 95            63.6          147.4
+ 96            63.1          145.6
+ 97            62.7          145.7
+ 98            62.2          143.9
+ 99            61.7          144
+ 100           61.3          143.2
+ 101           60.8          141.4
+ 102           60.3          141.5
+ 103           59.8          139.7
+ 104           59.4          139.8
+ 105           58.9          138
+ 106           58.4          138.1
+ 107           58            136.3
+ 108           57.5          135.5
+ 109           57.1          134.7
+ 110           56.7          134.9
+ 111           56.2          133.2
+ 112           55.8          133.4
+
+ 113           55.4          131.7
+ 114           55            130.9
+ 115           54.5          131.1
+ 116           54.1          129.4
+ 117           53.7          129.6
+ 118           53.3          127.9
+ 119           52.9          127.1
+ 120           52.4          127.3
+ 121           52            125.6
+ 122           51.6          125.8
+ 123           51.2          124.1
+ 124           50.8          124.3
+ 125           50.4          123.6
+ 126           50            122
+ 127           49.6          121.3
+ 128           49.3          121.6
+ 129           48.9          120.9
+ 130           48.5          119.3
+ 131           48.1          118.6
+ 132           47.8          118.9
+ 133           47.4          118.2
+ 134           47            116.6
+ 135           46.6          115.9
+ 136           46.3          116.2
+ 137           45.9          115.5
+ 138           45.5          113.9
+ 139           45.1          113.2
+ 140           44.8          113.5
+ 141           44.4          112.8
+ 142           44            111.2
+ 143           43.6          110.5
+ 144           43.3          110.8
+ 145           42.9          110.1
+ 146           42.5          108.5
+ 147           42.1          107.8
+ 148           41.8          108.1
+ 149           41.4          107.4
+ 150           41            105.8
+ 151           40.6          105.1
+ 152           40.3          105.4
+ 153           39.9          104.7
+ 154           39.5          103.1
+ 155           39.1          102.4
+ 156           38.8          102.7
+ 157           38.3          101.9
+ 158           37.9          100.2
+ 159           37.5          100.4
+ 160           37.1          98.7
+ 161           36.6          98.9
+ 162           36.2          98.1
+ 163           35.8          96.4
+ 164           35.4          96.6
+ 165           35            94.9
+ 166           34.5          95.1
+ 167           34.1          94.3
+ 168           33.7          92.6
+ 169           33.3          92.8
+ 170           32.8          91.1
+ 171           32.4          91.3
+ 172           32            89.6
+
+ 173           31.6          88.8
+ 174           31.2          89
+ 175           30.7          87.3
+ 176           30.3          87.5
+ 177           29.9          85.8
+ 178           29.5          85
+ 179           29            85.2
+ 180           28.6          83.5
+ 181           28.2          83.7
+ 182           27.8          82
+ 183           27.4          81.2
+ 184           26.9          81.4
+ 185           26.5          79.7
+ 186           26.1          79.9
+ 187           25.7          78.2
+ 188           25.3          78.4
+ 189           24.8          76.6
+ 190           24.3          76.7
+ 191           23.8          74.9
+ 192           23.4          75
+ 193           22.9          73.2
+ 194           22.4          73.3
+ 195           22            71.5
+ 196           21.5          70.7
+ 197           21            70.8
+ 198           20.6          69
+ 199           20.1          69.1
+ 200           19.6          67.3
+ 201           19.2          67.4
+ 202           18.7          65.6
+ 203           18.2          65.7
+ 204           17.8          64.9
+ 205           17.2          62.9
+ 206           16.6          61.9
+ 207           16.1          60.9
+ 208           15.5          59.9
+ 209           14.9          59.8
+ 210           14.4          58.8
+ 211           13.8          57.8
+ 212           13.3          56.8
+ 213           12.7          54.8
+ 214           12.1          53.8
+ 215           11.6          52.8
+ 216           11            51.8
+ 217           10.4          51.7
+ 218           9.899999      50.7
+ 219           9.3           49.7
+ 220           8.8           48.7
+ 221           8             46.3
+ 222           7.2           45.8
+ 223           6.4           43.4
+ 224           5.6           42
+ 225           4.8           41.5
+ 226           4             39.1
+ 227           3.2           37.7
+ 228           2.4           37.2
+ 229           1.6           34.8
+ 230           .8            33.4
+ 231           0             32.9
+ 232          -.8            30.5
+
+ 233          -1.6           29.1
+ 234          -2.4           28.6
+ 235          -3.2           26.2
+ 236          -4             24.8
+ 237          -5.6           21.9
+ 238          -6             21.1
+ 239          -7.8           17.96
+ 240          -8.6           16.52
+ 241          -10            14
+ 242          -11.6          11.12
+ 243          -12            10.4
+ 244          -13.           7.16
+ 245          -16            3.2
+ 246          -17.6          .32
+ 247          -19           -2.2
+ 248          -21.25        -6.25
+ 249          -23.6         -10.48
+ 250          -26.6         -15.88
+ 251          -29.6         -21.28
+ 252          -33.25        -27.85
+ 253          -37.8         -36.04
+ 254          -40           -40
+ 255          -40           -40
+LAYOUT 000
+:ê  XB 
+  Su¶     <_        ˙ \------------------------------------------------------------------------------/----+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+----     STANDARD 2      XB  <

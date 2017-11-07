@@ -1,0 +1,650 @@
+
+
+                        DATA STREAM A232  SPECIFICATION
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       HVAC USAGE:
+                  1995      3,4G - CAR
+
+
+
+       DATA PIN  : READ DATA ON PIN "9" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK      =
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $83
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 45
+                - SUM CHECK
+
+
+        MODE 1 (TRANSMIT ALDL DATA)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $01
+                - SUM CHECK      =
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $6D
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 23
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $02
+                - SUM CHECK      =
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $60
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 10
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $03
+                - SUM CHECK      =
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $62
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 12
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $04
+                - SUM CHECK      =
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $60
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 10
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK      =
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK      =
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 45
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1      HISTORY      HISTORY FAIL FLAGS #1 (1 = CODE SET)
+          7        CODE 8        2ND SUNLOAD SENSOR CIRCUIT
+          6        NOT USED      DEFAULT = 0
+          5        CODE 10       OUTSIDE AIR SENSOR CIRCUIT
+          4        NOT USED      DEFAULT = 0
+          3        NOT USED      DEFAULT = 0
+          2        CODE 13       IN CAR SENSOR CIRCUIT
+          1        NOT USED      DEFAULT = 0
+          0        CODE 15       SUNLOAD SENSOR CIRCUIT
+  2      HISTORY      HISTORY FAIL FLAGS #2 (1 = CODE SET)
+          7        CODE 34       2ND CCP TO PROGRAMMER DATA LOSS
+                  NOTE: BUICK ONLY
+          6        CODE 35       CCP TO PROGRAMMER DATA LOSS (E & C)
+          5        CODE 36       PASSENGER TEMP. POT FAILURE
+                  NOTE: OLDSMOBILE ONLY
+          4        CODE 38       UART DATA LOSS
+          3        NOT USED      DEFAULT = 0
+          2        CODE 40A      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CALIBRATION ERROR
+          1        CODE 40B      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          0        CODE 40C      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+  3      HISTORY      HISTORY FAIL FLAGS #3 (1 = CODE SET)
+          7        CODE 41A      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CALIBRATION ERROR
+          6        CODE 41B      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 41C      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 48       VERY LOW REFRIGERANT PRESSURE
+          3        CODE 49A      DEF / HTR DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          2        CODE 49B      DEF / HTR DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          1        CODE 49C      DEF / HTR DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          0        NOT USED      DEFAULT = 0
+  4      HISTORY      HISTORY FAIL FLAGS #4 (1 = CODE SET)
+          7        CODE 50A      A/C DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          6        CODE 50B      A/C DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 50C      A/C DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 51A      AI DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          3        CODE 51B      AI DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          2        CODE 51C      AI DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          1        CODE 52       PROGRAMMER LOST KAM
+          0        CODE 66       A/C REFRIGERANT LOW
+  5      CURRENT      CURRENT FAIL FLAGS #1 (1 = CODE SET)
+          7        CODE 8        2ND SUNLOAD SENSOR CIRCUIT
+          6        NOT USED      DEFAULT = 0
+          5        CODE 10       OUTSIDE AIR SENSOR CIRCUIT
+          4        NOT USED      DEFAULT = 0
+          3        NOT USED      DEFAULT = 0
+          2        CODE 13       IN CAR SENSOR CIRCUIT
+          1        NOT USED      DEFAULT = 0
+          0        CODE 15       SUNLOAD SENSOR CIRCUIT
+  6      CURRENT      CURRENT FAIL FLAGS #2 (1 = CODE SET)
+          7        CODE 34       2ND CCP TO PROGRAMMER DATA LOSS
+                  NOTE: BUICK ONLY
+          6        CODE 35       CCP TO PROGRAMMER DATA LOSS (E & C)
+          5        CODE 36       PASSENGER TEMP. POT FAILURE
+                  NOTE: OLDSMOBILE ONLY
+          4        CODE 38       UART DATA LOSS
+          3        NOT USED      DEFAULT = 0
+          2        CODE 40A      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CALIBRATION ERROR
+          1        CODE 40B      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          0        CODE 40C      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+  7      CURRENT      CURRENT FAIL FLAGS #3 (1 = CODE SET)
+          7        CODE 41A      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CALIBRATION ERROR
+          6        CODE 41B      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 41C      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 48       VERY LOW REFRIGERANT PRESSURE
+          3        CODE 49A      DEF / HTR DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          2        CODE 49B      DEF / HTR DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          1        CODE 49C      DEF / HTR DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          0        NOT USED      DEFAULT = 0
+  8      CURRENT      CURRENT FAIL FLAGS #4 (1 = CODE SET)
+          7        CODE 50A      A/C DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          6        CODE 50B      A/C DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 50C      A/C DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 51A      AI DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          3        CODE 51B      AI DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          2        CODE 51C      AI DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          1        CODE 52       PROGRAMMER LOST KAM
+          0        CODE 66       A/C REFRIGERANT LOW
+  9      IGNITION #3 VOLTAGE
+            RESOLUTION: 0.0625 V/BIT
+            RANGE: 0 TO 15.9 V
+ 10      AIR MIX DOOR #1 ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = HOT
+ 11      AIR MIX DOOR #1 TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = HOT
+ 12      AIR MIX DOOR #2 ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = HOT
+ 13      AIR MIX DOOR #2 TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = HOT
+ 14      DEF / HTR DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = DEFROST
+ 15      DEF / HTR DOOR TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = DEFROST
+ 16      A/C DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = DEFROST
+ 17      A/C DOOR TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = DEFROST
+ 18      AIR INLET DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = RECIRC
+ 19      AIR INLET DOOR TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = RECIRC
+ 20      SOLAR SENSOR 1 DRIVER SIDE A/D VALUE UNFILTERED
+            RANGE: 0 TO 255      255 = DARK
+ 21      SOLAR SENSOR 2 PASSENGER SIDE A/D VALUE UNFILTERED
+            RANGE: 0 TO 255      255 = DARK
+ 22      COMMANDED BLOWER MOTOR DUTY CYCLE COUNTS
+            RANGE: 0 TO 127      127 = HIGH BLOWER
+ 23      NOT USED                DEFAULT = $00
+ 24      INSIDE AIR TEMPERATURE UNFILTERED
+            RESOLUTION: 1 DEG F / BIT (N-40)
+            RANGE: -40 TO 215 DEG F (DEFAULT VALUES NOT ALLOWED)
+ 25      AMBIENT TEMPERATURE UNFILTERED
+            RESOLUTION: 1 DEG F / BIT (N-40)
+            RANGE: -40 TO 215 DEG F (DEFAULT VALUES NOT ALLOWED)
+ 26      HVAC SET TEMPERATURE
+            RESOLUTION: UNSIGNED BINARY
+            RANGE: 60, 65 TO 85, 90 DEG F
+ 27      PASSENGER TEMPERATURE(+/-PASSENGER OFFSET)
+            RESOLUTION: 2'S COMPLEMENT
+ 28      PASSENGER TEMPERATURE POT VALUE UNFILTERED
+            NOTE: OLDSMOBILE ONLY - BUICK = $00
+             RANGE: 0 TO 255
+ 29      NOT USED                DEFAULT = $00
+ 30      HVAC AIR DELIVERY MODE #
+            RESOLUTION: UNSIGNED BINARY
+                NOTE THE FOLLOWING ARE THE SYSTEM MODES:
+                   0 - RECIRC
+                   1 - A/C
+                   2 - BILEVEL
+                   3 - DEFOG
+                   4 - HEATER
+                ECON MODES
+                   5 - A/C
+                   6 - BILEVEL
+                   7 - DEFOG
+                   8 - HEATER
+                OVERRIDE MODES
+                   9 - NORMAL PURGE
+                   10 - COLD PURGE
+                   11 - A/C PURGE
+                   12 - PURGE EXIT
+                   13 - BLOWER DELAY
+                   14 - SNOW INGESTION
+                MANUAL MODES
+                   15 - OFF
+                   16 - BILEVEL
+                   17 - HEATER
+                   18 - FRONT DEFOG
+                   19 - FRONT DEFROST
+                   20 - UPPER
+                   21 - RECIRC
+ 31      OUTPUT DISCRETE STATES
+          7        REAR DEFOG ZONE #1       1 = ENERGIZED
+          6        REAR DEFOG ZONE #2       1 = ENERGIZED
+          5        NOT USED                 0 = DEFAULT
+          4        REAR DEFOG ZONE SHED     1 = ACTIVATED ZONE OFF
+          3        REAR DEFOG DISABLE       1 = ACTIVATED BOTH ZONES OFF
+          2        NOT USED                 0 = DEFAULT
+          1        HEATED SEATS             1 = ACTIVATED
+          0        AC CLUTCH REQUEST        1 = ENERGIZED
+ 32      INPUT DISCRETE STATES
+          7        NOT USED                 0 = DEFAULT
+          6        NOT USED                 0 = DEFAULT
+          5        TYPE OF VEHICLE          0 = OLDS, 1 = BUICK
+          4        HEATED SEATS IN          1 = ACTIVATED
+          3        E & C DATA BUSS CHECK    1 = PASSED
+          2        OPTION - CJ2 OR C68      0 = C68, 1 = CJ2
+          1        ENGLISH / METRIC         0 = METRIC, 1 = ENGLISH
+          0        TYPE OF BLOWER MOTOR     0 = BRUSHLESS, 1 = BRUSH TYPE
+ 33      HVAC PROGRAM NUMBER A/D
+            RESOLUTION: 1 COUNT / BIT
+            RANGE: 0 TO 255      255 = HOT
+ 34      CONTROL HEAD SOFTWARE ID
+            N = VERSION 0 - 255 FOR ID
+ 35      NOT USED                DEFAULT = $00
+ 36      NOT USED                DEFAULT = $00
+ 37      NOT USED                DEFAULT = $00
+ 38      PROMID (ROM)            (BCD) MSB
+ 39      PROMID (ROM)            (BCD)
+ 40      PROMID (ROM)            (BCD)
+ 41      PROMID (ROM)            (BCD) LSB
+ 42      PROMID (CALIBRATION)    (BCD) MSB
+ 43      PROMID (CALIBRATION)    (BCD)
+ 44      PROMID (CALIBRATION)    (BCD)
+ 45      PROMID (CALIBRATION)    (BCD) LSB
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 23
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 1
+WORD #   DATA NAME    DESCRIPTION
+
+  1      IGNITION 3 VOLTAGE @ HVAC PROGRAMMER
+            RESOLUTION: N * .0625
+  2      AIR MIX DOOR #1 ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = HOT
+  3      AIR MIX DOOR #1 TARGET POSITION A/D VALUE
+            RANGE: 0 TO 255      255 = HOT
+  4      AIR MIX DOOR #2 ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = HOT
+  5      AIR MIX DOOR #2 TARGET POSITION A/D VALUE
+            RANGE: 0 TO 255      255 = HOT
+  6      DEF/HTR DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = DEFROST
+  7      DEF/HTR DOOR TARGET POSITION A/D VALUE
+            RANGE: 0 TO 255      255 = DEFROST
+  8      A/C DOOR ACTUAL A/D UNFILTERD
+            RANGE: 0 TO 255      255 = DEFROST
+  9      A/C DOOR TARGET POSITION A/D VALUE
+            RANGE: 0 TO 255      255 = DEFROST
+ 10      AIR INLET DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = RECIRC
+ 11      AIR INLET DOOR TARGET POSITION A/D VALUE
+            RANGE: 0 TO 255      255 = RECIRC
+ 12      SOLAR SENSOR 1 DRIVER SIDE A/D VALUE UNFILTERED
+            RANGE: 0 TO 255      255 = DARK
+ 13      SOLAR SENSOR 2 PASSENGER SIDE A/D VALUE UNFILTERED
+            RANGE: 0 TO 255      255 = DARK
+ 14      COMMANDED BLOWER MOTOR DUTY CYCLE COUNTS
+            RANGE: 0 TO 127      127 = HIGH BLOWER
+ 15      INSIDE AIR TEMPERAATURE UNFILTERED
+            RESOLUTION: 1 DEG F / BIT (N - 40)
+            RANGE: -40 TO 215 DEG F (DEFAULT VALUES NOT ALLOWED)
+ 16      AMBIENT TEMPERATURE UNFILTERED
+            RESOLUTION: 1 DEG F / BIT (N - 40)
+            RANGE: -40 TO 215 DEG F (DEFAULT VALUES NOT ALLOWED)
+ 17      HVAC SET TEMPERATURE
+            RESOLUTION: UNSIGNED BINARY
+            RANGE: 60,65 TO 85, 90 DEG F
+ 18      PASSENGER TEMPERATURE (+/-PASSENGER OFFSET)
+            RESOLUTION: 2'S COMPLEMENT
+ 19      PASSENGER TEMPERATURE POT VALUE UNFILTERED
+            NOTE: OLDSMOBILE ONLY - BUICK = $00
+             RANGE: 0 TO 255
+ 20      HVAC AIR DELIVERY MODE #
+            RESOLUTION: UNSIGNED BINARY
+            RANGE: SEE NOTE AT END OF ALDL MODE 1 MESSAGE 00
+ 21      OUTPUT DISCRETE STATES
+          7        REAR DEFOG ZONE #1       1 = ENERGIZED
+          6        REAR DEFOG ZONE #2       1 = ENERGIZED
+          5        NOT USED                 0 = DEFAULT
+          4        REAR DEFOG ZONE SHED     1 = ACTIVATED ZONE OFF
+          3        REAR DEFOG DISABLE       1 = ACTIVATED BOTH ZONES OFF
+          2        NOT USED                 0 = DEFAULT
+          1        HEATED SEATS             1 = ACTIVATED
+          0        AC CLUTCH REQUEST        1 = ENERGIZED
+ 22      INPUT DISCRETE STATES
+          7        NOT USED                 0 = DEFAULT
+          6        NOT USED                 0 = DEFAULT
+          5        TYPE OF VEHICLE          0 = OLDS, 1 = BUICK
+          4        HEATED SEATS IN          1 = ACTIVATED
+          3        E & C DATA BUSS CHECK    1 = PASSED
+          2        OPTION - CJ2 OR C68      0 = C68, 1 = CJ2
+          1        ENGLISH / METRIC         0 = METRIC, 1 = ENGLISH
+          0        TYPE OF BLOWER MOTOR     0 = BRUSHLESS, 1 = BRUSH TYPE
+ 23      HVAC PROGRAM NUMBER A/D
+            RESOLUTION: 1 COUNT / BIT
+            RANGE: 0 TO 255      255 = HOT
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 10
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 2
+WORD #   DATA NAME    DESCRIPTION
+
+  1      HISTORY      HISTORY FAIL FLAGS #1 (1 = CODE SET)
+          7        CODE 8        2ND SUNLOAD SENSOR CIRCUIT
+          6        NOT USED      DEFAULT = 0
+          5        CODE 10       OUTSIDE AIR SENSOR CIRCUIT
+          4        NOT USED      DEFAULT = 0
+          3        NOT USED      DEFAULT = 0
+          2        CODE 13       IN CAR SENSOR CIRCUIT
+          1        NOT USED      DEFAULT = 0
+          0        CODE 15       SUNLOAD SENSOR CIRCUIT
+  2      HISTORY      HISTORY FAIL FLAGS #2 (1 = CODE SET)
+          7        CODE 34       2ND CCP TO PROGRAMMER DATA LOSS
+                  NOTE: BUICK ONLY
+          6        CODE 35       CCP TO PROGRAMMER DATA LOSS (E & C)
+          5        CODE 36       PASSENGER TEMP. POT FAILURE
+                  NOTE: OLDSMOBILE ONLY
+          4        CODE 38       UART DATA LOSS
+          3        NOT USED      DEFAULT = 0
+          2        CODE 40A      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CALIBRATION ERROR
+          1        CODE 40B      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          0        CODE 40C      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+  3      HISTORY      HISTORY FAIL FLAGS #3 (1 = CODE SET)
+          7        CODE 41A      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CALIBRATION ERROR
+          6        CODE 41B      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 41C      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 48       VERY LOW REFRIGERANT PRESSURE
+          3        CODE 49A      DEF / HTR DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          2        CODE 49B      DEF / HTR DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          1        CODE 49C      DEF / HTR DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          0        NOT USED      DEFAULT = 0
+  4      HISTORY      HISTORY FAIL FLAGS #4 (1 = CODE SET)
+          7        CODE 50A      A/C DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          6        CODE 50B      A/C DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 50C      A/C DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 51A      AI DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          3        CODE 51B      AI DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          2        CODE 51C      AI DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          1        CODE 52       PROGRAMMER LOST KAM
+          0        CODE 66       A/C REFRIGERANT LOW
+  5      CURRENT      CURRENT FAIL FLAGS #1 (1 = CODE SET)
+          7        CODE 8        2ND SUNLOAD SENSOR CIRCUIT
+          6        NOT USED      DEFAULT = 0
+          5        CODE 10       OUTSIDE AIR SENSOR CIRCUIT
+          4        NOT USED      DEFAULT = 0
+          3        NOT USED      DEFAULT = 0
+          2        CODE 13       IN CAR SENSOR CIRCUIT
+          1        NOT USED      DEFAULT = 0
+          0        CODE 15       SUNLOAD SENSOR CIRCUIT
+  6      CURRENT      CURRENT FAIL FLAGS #2 (1 = CODE SET)
+          7        CODE 34       2ND CCP TO PROGRAMMER DATA LOSS
+                  NOTE: BUICK ONLY
+          6        CODE 35       CCP TO PROGRAMMER DATA LOSS (E & C)
+          5        CODE 36       PASSENGER TEMP. POT FAILURE
+                  NOTE: OLDSMOBILE ONLY
+          4        CODE 38       UART DATA LOSS
+          3        NOT USED      DEFAULT = 0
+          2        CODE 40A      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CALIBRATION ERROR
+          1        CODE 40B      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          0        CODE 40C      AIR MIX DOOR #1 PROBLEM (DRIVER'S SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+  7      CURRENT      CURRENT FAIL FLAGS #3 (1 = CODE SET)
+          7        CODE 41A      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CALIBRATION ERROR
+          6        CODE 41B      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 41C      AIR MIX DOOR #2 PROBLEM (PASSENGER SIDE)
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 48       VERY LOW REFRIGERANT PRESSURE
+          3        CODE 49A      DEF / HTR DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          2        CODE 49B      DEF / HTR DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          1        CODE 49C      DEF / HTR DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          0        NOT USED      DEFAULT = 0
+  8      CURRENT      CURRENT FAIL FLAGS #4 (1 = CODE SET)
+          7        CODE 50A      A/C DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          6        CODE 50B      A/C DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          5        CODE 50C      A/C DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          4        CODE 51A      AI DOOR PROBLEM
+                  NOTE: CALIBRATION ERROR
+          3        CODE 51B      AI DOOR PROBLEM
+                  NOTE: CMD VS. FBK ERROR, OUTSIDE DEADBAND
+          2        CODE 51C      AI DOOR PROBLEM
+                  NOTE: OUTSIDE A/D RANGE ERROR
+          1        CODE 52       PROGRAMMER LOST KAM
+          0        CODE 66       A/C REFRIGERANT LOW
+ 9       OUTPUT DISCRETE STATES
+          7        REAR DEFOG ZONE #1       1 = ENERGIZED
+          6        REAR DEFOG ZONE #2       1 = ENERGIZED
+          5        NOT USED                 0 = DEFAULT
+          4        REAR DEFOG ZONE SHED     1 = ACTIVATED ZONE OFF
+          3        REAR DEFOG DISABLE       1 = ACTIVATED BOTH ZONES OFF
+          2        NOT USED                 0 = DEFAULT
+          1        HEATED SEATS             1 = ACTIVATED
+          0        AC CLUTCH REQUEST        1 = ENERGIZED
+ 10      INPUT DISCRETE STATES
+          7        NOT USED                 0 = DEFAULT
+          6        NOT USED                 0 = DEFAULT
+          5        TYPE OF VEHICLE          0 = OLDS, 1 = BUICK
+          4        HEATED SEATS IN          1 = ACTIVATED
+          3        E & C DATA BUSS CHECK    1 = PASSED
+          2        OPTION - CJ2 OR C68      0 = C68, 1 = CJ2
+          1        ENGLISH / METRIC         0 = METRIC, 1 = ENGLISH
+          0        TYPE OF BLOWER MOTOR     0 = BRUSHLESS, 1 = BRUSH TYPE
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 12
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 3
+WORD #   DATA NAME    DESCRIPTION
+
+ 1       AIR MIX DOOR #1 ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = HOT
+ 2       AIR MIX DOOR #1 TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = HOT
+ 3       AIR MIX DOOR #2 ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = HOT
+ 4       AIR MIX DOOR #2 TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = HOT
+ 5       DEF / HTR DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = DEFROST
+ 6       DEF / HTR DOOR TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = DEFROST
+ 7       A/C DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = DEFROST
+ 8       A/C DOOR TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = DEFROST
+ 9       AIR INLET DOOR ACTUAL A/D UNFILTERED
+            RANGE: 0 TO 255      255 = RECIRC
+ 10      AIR INLET DOOR TARGET POSITION A/D
+            RANGE: 0 TO 255      255 = RECIRC
+ 11      OUTPUT DISCRETE STATES
+          7        REAR DEFOG ZONE #1       1 = ENERGIZED
+          6        REAR DEFOG ZONE #2       1 = ENERGIZED
+          5        NOT USED                 0 = DEFAULT
+          4        REAR DEFOG ZONE SHED     1 = ACTIVATED ZONE OFF
+          3        REAR DEFOG DISABLE       1 = ACTIVATED BOTH ZONES OFF
+          2        NOT USED                 0 = DEFAULT
+          1        HEATED SEATS             1 = ACTIVATED
+          0        AC CLUTCH REQUEST        1 = ENERGIZED
+ 12      INPUT DISCRETE STATES
+          7        NOT USED                 0 = DEFAULT
+          6        NOT USED                 0 = DEFAULT
+          5        TYPE OF VEHICLE          0 = OLDS, 1 = BUICK
+          4        HEATED SEATS IN          1 = ACTIVATED
+          3        E & C DATA BUSS CHECK    1 = PASSED
+          2        OPTION - CJ2 OR C68      0 = C68, 1 = CJ2
+          1        ENGLISH / METRIC         0 = METRIC, 1 = ENGLISH
+          0        TYPE OF BLOWER MOTOR     0 = BRUSHLESS, 1 = BRUSH TYPE
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 10
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 4
+WORD #   DATA NAME    DESCRIPTION
+
+  1      IGNITION 3 VOLTAGE @ HVAC PROGRAMMER
+            RESOLUTION: N * .0625
+  2      SOLAR SENSOR 1 DRIVER SIDE A/D VALUE UNFILTERED
+            RANGE: 0 TO 255      255 = DARK
+  3      SOLAR SENSOR 2 PASSENGER SIDE A/D VALUE UNFILTERED
+            RANGE: 0 TO 255      255 = DARK
+  4      INSIDE AIR TEMPERAATURE UNFILTERED
+            RESOLUTION: 1 DEG F / BIT (N - 40)
+            RANGE: -40 TO 215 DEG F (DEFAULT VALUES NOT ALLOWED)
+  5      AMBIENT TEMPERATURE UNFILTERED
+            RESOLUTION: 1 DEG F / BIT (N - 40)
+            RANGE: -40 TO 215 DEG F (DEFAULT VALUES NOT ALLOWED)
+  6      HVAC SET TEMPERATURE
+            RESOLUTION: UNSIGNED BINARY
+            RANGE: 60,65 TO 85, 90 DEG F
+  7      PASSENGER TEMPERATURE (+/-PASSENGER OFFSET)
+            RESOLUTION: 2'S COMPLEMENT
+  8      PASSENGER TEMPERATURE POT VALUE UNFILTERED
+            NOTE: OLDSMOBILE ONLY - BUICK = $00
+             RANGE: 0 TO 255
+  9      OUTPUT DISCRETE STATES
+          7        REAR DEFOG ZONE #1       1 = ENERGIZED
+          6        REAR DEFOG ZONE #2       1 = ENERGIZED
+          5        NOT USED                 0 = DEFAULT
+          4        REAR DEFOG ZONE SHED     1 = ACTIVATED ZONE OFF
+          3        REAR DEFOG DISABLE       1 = ACTIVATED BOTH ZONES OFF
+          2        NOT USED                 0 = DEFAULT
+          1        HEATED SEATS             1 = ACTIVATED
+          0        AC CLUTCH REQUEST        1 = ENERGIZED
+ 10      INPUT DISCRETE STATES
+          7        NOT USED                 0 = DEFAULT
+          6        NOT USED                 0 = DEFAULT
+          5        TYPE OF VEHICLE          0 = OLDS, 1 = BUICK
+          4        HEATED SEATS IN          1 = ACTIVATED
+          3        E & C DATA BUSS CHECK    1 = PASSED
+          2        OPTION - CJ2 OR C68      0 = C68, 1 = CJ2
+          1        ENGLISH / METRIC         0 = METRIC, 1 = ENGLISH
+          0        TYPE OF BLOWER MOTOR     0 = BRUSHLESS, 1 = BRUSH TYPE
+
+

@@ -1,0 +1,227 @@
+..HEAD02L 1995 CORPORATE SENSING AND DIAGNOSTIC MODULE - SDM-E
+..FOOT63R A296  PAGE ##
+
+                        DATA STREAM A296  SPECIFICATION
+
+
+..PAGE
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   CORPORATE SENSING AND DIAGNOSTIC MODULE (SDM-E)
+   USAGE:  1995      6E,K,Ksp
+
+
+
+   DATA PIN: READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+
+
+..PAGE
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 0)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - CHECKSUM
+
+        THE SDM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $78
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 33
+        - CHECKSUM
+
+MODE 10 (CLEAR MALFUNCTION CODES - TESTER TO SDM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+        THE SDM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+..PAGE
+..HEAD03L ALDL MODE 1 DATA LIST MESSAGE 0
+..HEAD04L NUMBER OF DATA WORDS - 33
+WORD    DESCRIPTION
+
+ 1      IGNITION
+          VOLTS = N/12.75
+ 2      SENSELO
+          VOLTS = N/6.375
+ 3      36V RESERVE
+          VOLTS = N/6.0286
+ 4      DDIF
+          mV = N/.255
+ 5      PDIF
+          mV = N/.255
+ 6      NOT USED
+ 7      NOT USED
+ 8      NOT USED
+ 9      NOT USED
+ 10     WARN LAMP CYCLES
+         B7 - 1 = LAMP ON   0 = LAMP OFF
+         B6-B0  = COUNT
+ 11     WARNING LAMP ON
+ 12     WARNING LAMP ON
+         SEC = 10N
+ 13     DRIVER RESIST.
+          OHMS = N/10
+ 14     PASS. RESIST.
+          OHMS = N/10
+ 15     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   LAMP DRIVER                            1 = EXTERNAL   0 = INTERNAL
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   DEPLOY EVENTS   (see table)    B1  B0  NUMBER
+         0   DEPLOY EVENTS   (see table)    --------------
+                                            0   0   0
+                                            0   1   1
+                                            1   0   2
+                                            1   1   3
+..PAGE
+ 16     ACTIVE FAULT CODE WORD 1
+         7   FAULT CODE 15
+         6   FAULT CODE 16
+         5   FAULT CODE 17
+         4   FAULT CODE 21
+         3   FAULT CODE 22
+         2   FAULT CODE 24
+         1   FAULT CODE 25
+         0   FAULT CODE 26
+ 17     ACTIVE FAULT CODE WORD 2
+         7   FAULT CODE 35
+         6   FAULT CODE 36
+         5   FAULT CODE 37
+         4   FAULT CODE 38
+         3   FAULT CODE 51
+         2   FAULT CODE 52
+         1   FAULT CODE 55
+         0   FAULT CODE 61
+ 18     ACTIVE FAULT CODE WORD 3
+         7   FAULT CODE 62
+         6   FAULT CODE 71
+         5   FAULT CODE 72
+         4   FAULT CODE 73
+         3   FAULT CODE 74
+         2   FAULT CODE 75
+         1   FAULT CODE 76
+         0   FAULT CODE 77
+ 19     ACTIVE FAULT CODE WORD 4
+         7   FAULT CODE 78
+         6   FAULT CODE 79
+         5   FAULT CODE 81
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 20     HISTORY FAULT CODE WORD 1
+         7   FAULT CODE 15
+         6   FAULT CODE 16
+         5   FAULT CODE 17
+         4   FAULT CODE 21
+         3   FAULT CODE 22
+         2   FAULT CODE 24
+         1   FAULT CODE 25
+         0   FAULT CODE 26
+..PAGE
+ 21     HISTORY FAULT CODE WORD 2
+         7   FAULT CODE 35
+         6   FAULT CODE 36
+         5   FAULT CODE 37
+         4   FAULT CODE 38
+         3   FAULT CODE 51
+         2   FAULT CODE 52
+         1   FAULT CODE 55
+         0   FAULT CODE 61
+ 22     HISTORY FAULT CODE WORD 3
+         7   FAULT CODE 62
+         6   FAULT CODE 71
+         5   FAULT CODE 72
+         4   FAULT CODE 73
+         3   FAULT CODE 74
+         2   FAULT CODE 75
+         1   FAULT CODE 76
+         0   FAULT CODE 77
+ 23     HISTORY FAULT CODE WORD 4
+         7   FAULT CODE 78
+         6   FAULT CODE 79
+         5   FAULT CODE 81
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 24     PORT A DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   RWARN                                              1 = COMMANDED ON
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   ADS*                                               0 = CLOSED
+ 25     PORT B DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   WARN                                               1 = COMMANDED ON
+         4   DRIVER SEATBELT                                    0 = BUCKLED
+         3   NOT USED
+         2   NOT USED
+         1   ADSMISS                                            1 = MISSING
+         0   NOT USED
+..PAGE
+ 26     PORT C DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   36 VEN                                             1 = ENABLED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 27     PORT F DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 28     PORT H DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   BWARN                                              1 = ENABLED
+         0   NOT USED
+ 29     ROM ID
+          ID = N
+ 30     VEHICLE ID
+          ID = N    (1-6 CARS; ALPHA TRUCKS)
+ 31     CAL ID
+          ID = N    (ASCII $41 TO $5A)
+ 32     CAL LEVEL
+          LEVEL = N
+ 33     SIR SYSTEM
+

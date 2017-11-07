@@ -1,0 +1,348 @@
+
+                        DATA STREAM A126  SPECIFICATION
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       ENGINE   USAGE:
+              1.6L PFI (LW0)   (VIN=5)   90  R  CAR ONLY
+              1.6L PFI (L01)   (VIN=6)   90  R  CAR ONLY
+              1.6L PFI (LW0)   (VIN=5)   91  R  CAR ONLY
+              1.6L PFI (L01)   (VIN=6)   91  R  CAR ONLY
+              1.6L PFI (L01)   (VIN=6)   92  R  CAR ONLY
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+        MODE 0   (RETURN TO NORMAL MODE)
+                  ALDL REQUEST:
+                  - MESSAGE ID          = $F4
+                  - MESSAGE LENGTH      =  85 + 1 = 86 = $56
+                  - MODE NUMBER         = $00
+                  - CHECKSUM
+
+                  ECM RESPONSE:
+                   NONE
+
+        MODE 1   (TRANSMIT FIXED DATA STREAM)
+                  ALDL REQUEST:
+                  - MESSAGE ID          = $F4
+                  - MESSAGE LENGTH      = $56
+                  - MODE NUMBER         = $01
+                  - CHECKSUM
+
+                  ECM RESPONSE:
+                  - MESSAGE ID          = $F4
+                  - MESSAGE LENGTH      = $7E
+                  - MODE NUMBER         = $01
+                  - DATA BYTE 1
+                       .
+                       .
+                  - DATA BYTE 40
+                  - CHECKSUM
+
+                  - CHECKSUM
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 40
+..HEAD04L ALDL MODE 1  DATA LIST
+WORD #   DATA NAME     DESCRIPTION
+1        MALFFLG1      MALFUNCTION FLAG WORD 1
+         0              MALF CODE 42 EST ERROR
+         1              MALF CODE 33 MAP ERROR
+         2              MALF CODE 32 EGR ERROR
+         3              MALF CODE 24 VSS ERROR
+         4              MALF CODE 23 MAT ERROR
+         5              MALF CODE 21 TPS ERROR
+         6              MALF CODE 14 COOLANT ERROR
+         7              MALF CODE 13 O2 SENSOR NOT TOGGLING
+2        MALFFLG2       MALFUNCTION FLAG WORD 2
+         0              MALF CODE NOT USED
+         1              MALF CODE NOT USED
+         2              MALF CODE NOT USED
+         3              MALF CODE NOT USED
+         4              MALF CODE NOT USED
+         5              MALF CODE 51 CHECKSUM OR KKPGMID MISSING
+         6              MALF CODE 45 O2 SENSOR RICH
+         7              MALF CODE 44 O2 SENSOR LEAN
+ 3       ADCOOL         A/D COUNTS FOR COOLANT TEMP
+                         SEE TABLE 1
+ 4       ADMAT          A/D COUNTS FOR MANIFOLD TEMPERATURE
+                         SEE TABLE 2
+ 5       REFPER         TIME MEASUREMENT FOR THE LATEST REFERENCE PERIOD
+ 6       REFPER+1       TIME MEASUREMENT FOR THE LATEST REFERENCE PERIOD
+                          uSEC = ([N5]*256+([N6])*15.26
+ 7       SAPF           FINAL SPARK ADVANCE RELATIVE TO TDC--2'S COMPLEMENT
+ 8       SAPF+1         FINAL SPARK ADVANCE RELATIVE TO TDC--2'S COMPLEMENT
+                          If Bit 7 of MSB = 0 then result is positive
+                             value = 65536 - ([N7]*256 + [N8])
+                          If Bit 7 of MSB = 1 then result is negative
+                             value = 65536 - ([N7]*256 + [N8])
+                                    DEGREES = VALUE * 90/256
+ 9       ADMAPRAW       RAW A/D COUNTS FOR MAP
+                         VOLTS = N*(5/255)
+10       ADTHROT        A/D COUNTS FOR THROTTLE POSITION
+                         VOLTS = N*(5/255)
+11       NTPSLD         LINEAR THROTTLE POSITION
+                         %TPS = N/2.56
+12       ADO2           A/D COUNTS FOR O2 SENSOR
+                         MILLIVOLTS = N * (1000/226)
+..PAGE
+13       FILTKPH        FILTERED KILOMETERS PER HOUR
+                         KPH = N
+14       ISSPMP         IAC PRESENT MOTOR POSITION
+15       ISDWNA         DESIRED IDLE RPM
+                         N = RPM/12.5
+16       ADBAT          A/D COUNTS FOR IGNITION VOLTAGE
+                         VOLTS = N/10
+17       BLM            BLOCK LEARN MULTIPLIER, RANGE (0-2)
+18       INT            CLOSED LOOP INTEGRATOR VALUE
+19       FMDDISC        FMD BYTE 1, INPUT DISCRETES
+         0    1 = A/C REQUESTED
+         1    NOT USED
+         2    0 = IN PARK/NEUTRAL
+         3    0 = POWER STEERING CRAMP
+         4    NOT USED
+         5    0 = IN DIAGNOSTIC MODE
+         6    NOT USED
+         7    NOT USED
+20       MW1            MODE WORD 1
+         0    1 = IGNITION OFF (0 = IGNITION ON)
+         1    1 = CATALYTIC CONVERTER TEMP WARNING LIGHT ON
+         2    1 = IN DRIVE LAST TIME; 0 = IN P/N LAST TIME
+         3    1 = TURN ON ITAC SOLENOID
+         4    1 = TURN ON A/C SOLENOID
+         5    1 = EGR ON
+         6    NOT USED
+         7    1 = SHIFT LIGHT ON
+21       EFIPWD         THE TIME IN TCNTS THAT EFI REMAINS HIGH
+22       EFIPWD+1       THE TIME IN TCNTS THAT EFI REMAINS HIGH
+********************     mSEC = ([N21]*256 + [N22])/131.072   ***************
+                         10/14/92
+23       AIRFUEL        AIR FUEL RATIO
+                         RATIO = N/10
+24       IACMW1         IAC MODE WORD #1
+         BIT
+         0    1 = MOTOR RESET REQUESTED
+         1    1 = MOTOR RESET IN PROGRESS
+         2    NOT USED
+         3    1 = NON-VOLATILE MEMORY FAILED (NOT AN IAC FLAG)
+         4    1 = C/L IAC IDLE FAST GAIN CONTROL
+         5    1 = ROLLING CLOSED LOOP
+         6    1 = FULL C/L IAC IDLE CONTROL
+         7    1 = DROOP IN RPM; 0 = FLAIR IN RPM
+..PAGE
+25       TIME           ENGINE RUN TIME IN SECONDS
+26       TIME+1         ENGINE RUN TIME IN SECONDS
+                         SEC = ([N25]*256 + [N26])
+27       SDMW
+         0    1 = MODE 4 ACTIVE
+         1    1 = SECOND BYTE TRANSMISSION PENDING
+         2    1 = SERIAL DATA MODE 4 IAC MOTOR RESET REQUEST
+         3    NOT USED
+         4    NOT USED
+         5    1 = SERIAL DATA MODE 5 MESSAGE RECEIVED
+         6    1 = SERIAL DATA MODE 5 ENABLED (CRITERIA MET)
+         7    1 = SERIAL DATA MODE 5 MESSAGE TRANSMITTED
+28       DIAGMW1        DIAGNOSTIC MODE WORD 1
+         0    NOT USED
+         1    MALF 23 DETECTED (MAT HIGH/LOW)
+         2    MALF 21 DETECTED (TPS HIGH/LOW) - FAST LOOP
+         3    MALF 21 DETECTED (TPS HIGH) - SLOW LOOP
+         4    MALF 33 DETECTED (MAP HIGH)
+         5    MALF 33 DETECTED (MAP LOW)
+         6    MALF 42 DETECTED (EST ERROR)
+         7    MALF 24 DETECTED (VSS)
+29       DIAGMW2        DIAGNOSTIC MODE WORD 2
+         0    MALF 13, 14, 23, 44, 45 ENABLED (COOLANT, MAT , O2)
+         1    NOT USED
+         2    MALF 13, 44, 45 DETECTED (O2)
+         3    INT FORCED TO 128 (MALF O2 LOGIC - O2 SENSOR)
+         4    MALF 32 DETECTED (EGR)
+         5    MALF 32 ENABLE FLAG
+         6    NO MALF COUNTER INCREMENTED FLAG
+         7    CHECK ENGINE LIGHT FLAG ( 1 = ON)
+30       MW2            MODE WORD 2
+         0    NOT USED
+         1    1 = ENGINE IN CRANK
+         2    1 = RUN FUEL
+         3    1 = RUN SPARK
+         4    1 = DIAGNOSTIC MODE OLD FLAG
+         ***DIAGNOSTICS MUST BE REQUESTED FOR 2 LOOPS BEFORE BEING ENABLED**
+         5    1 = IN DIAGNOSTICS MODE
+         6    1 = NOT FIRST FALLING EDGE OF REFA
+         7    1 = REF WAS HIGH LAST TIME; 0 = REF WAS LO LAST TIME
+31       ADBARO         BARO IN A/D COUNTS
+                         VOLTS = N*(5/255)
+32       NTRPMX         ENGINE SPEED VARIABLE (RPM)
+                         RPM = N*25
+33       NTRPMX10       ENGINE SPEED VARIABLE
+                         RPM = N*40
+..PAGE
+34       FUELMW2        FUEL MODE WORD 2
+         0    NOT USED
+         1    1 = CLOSED LOOP FUEL CONTROL
+         2    NOT USED
+         3    1 = BLM LEARN IS ENABLED
+         4    1 = QUASI-SYNCHRONOUS FUEL MODE (SSSF)
+         5    1 = POWER ENRICHMENT
+         6    1 = O2 SENSOR RICH; 0 = O2 SENSOR LEAN
+         7    NOT USED
+35       NVMW           NON-VOLATILE MODE WORD
+         0    1 = O2 SENSOR READY
+         1    1 = CLOSED LOOP TIME OK
+         2    1 = IMPROPER SHUTDOWN
+         3    1 = MALF 51 DETECTED
+         4    NOT USED
+         5    NOT USED
+         6    1 = ISALPA DECAY OF KICKDTA IN PROGRESS
+         7    1 = IAC KICKDOWN ENABLED
+36       NEWMALF1       DIAG. FLAG CONTAINING CURRENT MALF INFO. #1
+         0    1 = MALF 42
+         1    1 = MALF 33
+         2    1 = MALF 32
+         3    1 = MALF 24
+         4    1 = MALF 23
+         5    1 = MALF 21
+         6    1 = MALF 14
+         7    1 = MALF 13
+37       NEWMALF2       DIAG. FLAG CONTAINING CURRENT MALF INFO. #2
+         0    NOT USED
+         1    NOT USED
+         2    NOT USED
+         3    NOT USED
+         4    NOT USED
+         5    1 = MALF 51
+         6    1 = MALF 45
+         7    1 = MALF 44
+38       FUELMW3        FUEL MODE WORD 3
+         0    1 = REFERENCE PULSE OCCURRED
+         1    1 = REFERENCE PULSE OCCURRED, CLOSED LOOP LOGIC
+         2    1 = START-UP COOLANT > KADSUCT (WARM)
+         3    1 = ASYNCH DELAY IN PROGRESS (DFCO)
+         4    1 = AFCRANK  USED TO INITIALIZE REFCTR
+         5    1 = REFERENCE PULSE OCCURRED, ENGINE RUNNING LOGIC
+         6    1 = ACCELERATION ENRICHMENT
+         7    1 = DFCO STALL
+..PAGE
+39       FMDCTL         INPUT TO FMD FOR CONTROL
+         0    COOLANT SWITCH: 0 = OFF, 1 = ON
+         1    COP2 BIT TO COP2 TIMER
+         2    ENABLE EST
+         3    PORT, PIN 8
+         4    ENABLE FUEL PUMP PWM
+         5    DISCRETE OUTPUT TO ODSC
+         6    ENABLE IRQ INTERRUPT ON TREFB
+         7    0 = BYTE 1, 1 = BYTE 2
+40       FUELMW1        FUEL MODE WORD 1
+         0    1 = CLOSED THROTTLE
+         1    1 = BLM1 (CLOSED THROT.); 0 = BLM0 (OPEN THROT.)
+              BLM CELL FLAG
+         2    1 = BLM CELL CHANGE, USED IN BLM UPDATE LOGIC
+         3    1 = BLM CELL CHANGE, USED IN CLOSED LOOP LOGIC
+         4    NOT USED
+         5    1 = DECELERATION ENLEANMENT
+         6    1 = DECEL FUEL CUT-OFF
+         7    NOT USED
+
+;******************************************************************************
+;* TABLE 1                                                                    *
+;*           COOLANT TEMPERATURE CONVERSION LOOKUP TABLE                      *
+;*                                                                            *
+;*IMPORTANT  IF BIT 0 OF BYTE 39 IS SET USE AD348 TO FIND TEMPERATURE BUT, IF *
+;*           BIT 0 OF BYTE 39 IS CLEAR THEN ADD 10 TO ADCOOL (BYTE 10) AND    *
+;*           USE AD3998 TO FIND TEMPERATURE.                                  *
+;*                                                                            *
+;******************************************************************************
+;
+;           DEG. C           AD3998           AD348
+;           ------           ------           -----
+;            -40              246              254
+;            -35              243              254
+;            -30              238              253
+;            -25              232              253
+;            -20              225              252
+;            -15              216              251
+;            -10              205              250
+;             -5              193              248
+;              0              180              246
+;              5              165              243
+;             10              150              240
+;             15              135              236
+;             20              120              232
+;             25              105              226
+;             30               92              220
+;             35               80              213
+;             40               69              205
+;             45               59              196
+;             50               50              187
+;             55               43              177
+;             60               37              166
+;             65               31              155
+;             70               27              145
+;             75               23              134
+;             80               20              123
+;             85               17              113
+;             90               15              103
+;             95               13               93
+;            100               11               85
+;            105                9               76
+;            110                8               69
+;            115                7               62
+;            120                6               56
+;            125                6               50
+;            130                5               45
+;            140                4               37
+;            150                3               30
+..PAGE
+;******************************************************************************
+;* TABLE 2                                                                    *
+;*           MANIFOLD ABSOLUTE TEMPERATURE LOOKUP TABLE                       *
+;*                                                                            *
+;******************************************************************************
+;
+;                  DEG C              ADMAT
+;                  -----              -----
+;
+;                   -40                253
+;                   -35                253
+;                   -30                251
+;                   -25                250
+;                   -20                247
+;                   -15                245
+;                   -10                241
+;                    -5                237
+;                     0                231
+;                     5                225
+;                    10                218
+;                    15                209
+;                    20                199
+;                    25                189
+;                    30                177
+;                    35                165
+;                    40                152
+;                    45                139
+;                    50                126
+;                    55                114
+;                    60                102
+;                    65                 92
+;                    70                 81
+;                    75                 72
+;                    80                 64
+;                    85                 56
+;                    90                 50
+;                    95                 44
+;                   100                 39
+;                   105                 34
+;                   110                 30
+;                   115                 26
+;                   120                 23
+;                   125                 21
+;                   130                 18
+;                   135                 16
+;                   140                 14
+;                   145                 13
+;                   150                 12
+

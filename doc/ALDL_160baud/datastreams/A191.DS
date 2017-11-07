@@ -1,0 +1,87 @@
+
+
+
+                        DATA STREAM A191  SPECIFICATION
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+           HVAC:
+            4.3L  (LB4)   (VIN=Z)   93 S,T TRUCK
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+..PAGE
+
+      OVERVIEW
+      --------
+      THERE IS NO MASTER OF ALDL. THEREFORE YOU DON'T HAVE TO ISSUE A MODE
+      8 TO GET COMMUNICATION.
+
+
+
+..PAGE
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $5C
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 06
+                - SUM CHECK
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+..END
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 06
+..HEAD04L ALDL MODE 1 DATA LIST
+WORD #   DATA NAME    DESCRIPTION
+
+  1      KHPARTH      LOW A/C CALIBRATION PART NUMBER
+  2      KHPARTMH     LOW A/C CALIBRATION PART NUMBER
+  3      KHPARTML     LOW A/C CALIBRATION PART NUMBER
+  4      KHPARTL      LOW A/C CALIBRATION PART NUMBER
+  5      HMLFFG1      HVAC MALF FLAG WORD 1
+            0         1 = LOW A/C SYSTEM CHARGE DETECTED
+            1         NOT USED
+            2         NOT USED
+            3         NOT USED
+            4         NOT USED
+            5         NOT USED
+            6         NOT USED
+            7         NOT USED
+  6      HVACDIAG     HVAC MALF FLAG WORD 2
+            0         1 = A/C REQUESTED (INTERACTIVE DIAGNOSTICS)
+            1         1 = A/C FAIL LAMP FLASHING(INT. DIAG.)
+            2         1 = A/C ENABLED RELAY ON (INTERACTIVE DIAG.)
+            3         1 = PRESSURE CYC. SWITCH CLOSED (INT. DIAG.)
+            4         NOT USED
+            5         NOT USED
+            6         NOT USED
+            7         NOT USED
+

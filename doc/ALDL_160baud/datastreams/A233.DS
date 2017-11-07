@@ -1,0 +1,116 @@
+
+                        DATA STREAM A233  SPECIFICATION
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       RAC USAGE:
+                 1994   2,3,4H 3,4C 3W
+                 1995   3,4G
+*                1995   2,3,4H 3,4C 3W
+
+       DATA PIN  : READ DATA ON PIN "M" OF 12 PIN ALDL CONNECTOR
+       DATA PIN  : READ DATA ON PIN "9" OF 16 PIN ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+
+..PAGE
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EB
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK      =
+
+                THE RAC MODULE WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EB
+                - MESSAGE LENGTH = $5D
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 7
+                - SUM CHECK
+
+..PAGE
+..HEAD03L NUMBER OF DATA WORDS - 7
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1      INPUT STATUS BYTE #1
+          7        1 = IGNITION ON
+          6        1 = DOOR CLOSED
+          5        1 = HANDLE SWITCH ACTIVE
+          4        1 = VEHICLE IN PARK
+          3        1 = PROGRAM SWITCH OPEN
+          2        1 = DOOR UNLOCK REQUEST
+          1        1 = DOOR LOCK REQUEST
+          0        1 = THEFT DISARM  (KEY CYLINDER ACTIVE)
+  2      INPUT STATUS BYTE #2
+          7        1 = TAMPER SWITCH OPEN
+          6        1 = TRANSMITTER #1 PROGRAMMED
+          5        1 = RECEIVER DISABLED
+          4        1 = LEVEL III RAC MODULE  0 = LEVEL II RAC
+          3        1 = TRANSMITTER #2 PROGRAMMED
+                   BIT2    BIT1   BIT0
+          ----------------------------
+                   0       0      0         ORIGINAL PROTOTYPE RELEASE
+                   0       0      1         PILOT RELEASE
+                   0       1      0         1ST CHANGE
+                   0       1      1         2ND CHANGE
+                   1       0      0         3RD CHANGE
+                   1       0      1         4TH CHANGE
+                   1       1      0         5TH CHANGE
+                   1       1      1         6TH CHANGE
+  3      OUTPUT STATE BYTE #1
+          7        INTERIOR LAMPS RELAY     0 = ON            1 = OFF
+          6        DAB RELAYS               0 = OFF           1 = ON
+          5        TRUNK RELEASE RELAY      0 = ACTIVE        1 = INACTIVE
+          4        EXTERIOR LIGHTS          0 = ACTIVE        1 = INACTIVE
+          3        HORN RELAY               0 = ACTIVE        1 = INACTIVE
+          2        SECURITY T/T             0 = ON            1 = OFF
+          1        ALL DOOR UNLOCK RELAY    0 = INACTIVE      1 = ACTIVE
+          0        DOOR LOCK RELAY          0 = INACTIVE      1 = ACTIVE
+  4      OUTPUT STATE BYTE #2
+          7        1 = UNENERGIZED DRIVER'S DOOR
+          6        1 = SDL PROGRAM INACTIVE
+          5        1 = THEFT DETERRENT ALARM MODE ACTIVE
+          4        1 = LOCK AND UNLOCK ADL
+          3        NOT USED
+          2        NOT USED
+          1        NOT USED
+          0        NOT USED
+  5      TRANSMITTER STATUS BYTE #1
+          7        1 = UNLOCK CODE ACTIVE
+          6        1 = LOCK CODE ACTIVE
+          5        1 = TRUNK CODE ACTIVE
+          4        NOT USED
+          3        1 = UNLOCK CODE ACTIVE THIS IGN CYCLE
+          2        1 = LOCK CODE ACTIVE THIS IGN CYCLE
+          1        1 = TRUNK CODE ACTIVE THIS IGN CYCLE
+          0        NOT USED
+
+  6      TRANSMITTER STATUS BYTE #2
+          7        1 = UNLOCK CODE ACTIVE
+          6        1 = LOCK CODE ACTIVE
+          5        1 = TRUNK CODE ACTIVE
+          4        NOT USED
+          3        1 = UNLOCK CODE ACTIVE THIS IGN CYCLE
+          2        1 = LOCK CODE ACTIVE THIS IGN CYCLE
+          1        1 = TRUNK CODE ACTIVE THIS IGN CYCLE
+          0        NOT USED
+  7      INPUT STATUS BYTE #3
+          7        1 = CENTRAL LOCK ACTIVE THIS IGN CYCLE
+          6        1 = DOOR JAMB SWITCH CYCLED THIS IGN CYCLE
+          5        1 = HANDLE SWITCH CYCLED THIS IGN CYCLE
+          4        1 = VEHICLE IN PARK SWITCH CYCLED THIS IGN CYCLE
+          3        1 = CENTRAL UNLOCK ACTIVE THIS IGN CYCLE
+          2        1 = DOOR UNLOCK REQUEST CYCLED THIS IGN CYCLE
+          1        1 = DOOR LOCK REQUEST CYCLED THIS IGN CYCLE
+          0        1 = THEFT DISARM (KEY CYLINDER SWITCH) CYCLED THIS IGN CYCLE
+

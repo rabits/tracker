@@ -1,0 +1,287 @@
+
+                        DATA STREAM A193  SPECIFICATION
+
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+            four wheel anti-lock brakes
+              4.3L  (LB4)   (VIN=Z)   94 S,T TRUCK
+*             4.3L  (LB4)   (VIN=Z)   95 S,T TRUCK
+
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+       DATA PIN  : READ DATA ON PIN "9" OF ALDL CONNECTOR   FOR 1995
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+..PAGE
+
+      OVERVIEW
+      --------
+      THERE IS NO MASTER OF ALDL. THEREFORE YOU DON'T HAVE TO ISSUE A MODE
+      8 TO GET COMMUNICATION.
+
+
+
+..PAGE
+        MODE 1 MESSAGE 0
+               (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $5D
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 07
+                - SUM CHECK
+
+        MODE 1 MESSAGE 1
+               (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $01
+                - SUM CHECK
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $64
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 14
+                - SUM CHECK
+..PAGE
+        MODE 1 MESSAGE 2 - 10     HISTORY BLOCK MOST RECENT (2) TO OLDEST (10)
+               (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $02 - $0A
+                - SUM CHECK
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $63
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 13
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 07
+..HEAD04L ALDL MODE 1 MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1               UNFILTERED_ABS_SPEED (LF)
+                    MPH = N
+  2               UNFILTERED_ABS_SPEED (RF)
+                    MPH = N
+  3               UNFILTERED_ABS_SPEED (REAR)
+                    MPH = N
+  4               BRAKE_WORD1
+            0     NOT USED
+            1     NOT USED                                1=TRUE  0=FALSE
+            2     NOT USED                                1=TRUE  0=FALSE
+            3     NOT USED                                1=TRUE  0=FALSE
+            4     COMBO VALVE PRES DIFF                   1=LOW   0=OK
+                  (BRAKE DIFFERENTIAL PRESSURE SWITCH)
+            5     IN FOUR WHEEL DRIVE                     1=TRUE  0=FALSE
+            6     IGNITION 3 ON                           1=TRUE  0=FALSE
+            7     STATE OF BRAKE SWITCH                   1=ON    0=OFF
+  5               BRAKE_WORD2
+            0     ISOLATING ANY CHANNEL                   1=TRUE  0=FALSE
+            1     MODE 4 IN PROGRESS FLAG                 1 = YES 0 = NO
+            2     NOT USED
+            3     NOT USED
+            4     CURRENT HARD FAILURE                    1=TRUE  0=FALSE
+            5     ABS TELLTALE OUTPUT                     1=TRUE  0=FALSE
+            6     ABS TELLTALE FEEDBACK ON                1=TRUE  0=FALSE
+            7     BRAKE TELLTALE OUTPUT                   1=ON    0=OFF
+  6               BRAKE_WORD3
+            0     ISO VALVE ON (LF)                       1=TRUE  0=FALSE
+            1     ISO VALVE ON (RF)                       1=TRUE  0=FALSE
+            2     ISO VALVE ON (REAR)                     1=TRUE  0=FALSE
+            3     PWM VALVE ON (LF)                       1=TRUE  0=FALSE
+            4     PWM VALVE ON (RF)                       1=TRUE  0=FALSE
+            5     PWM VALVE ON (REAR)                     1=TRUE  0=FALSE
+            6     STATE OF ABS RELAY REQUEST              1=CLOSED 0=OPEN
+            7     ABS PUMP REQUESTED ON                   1=ON    0=OFF
+  7               BRAKE_WORD4
+            0     ISO DRIVER FEEDBACK ON (LF)             1=TRUE  0=FALSE
+            1     ISO DRIVER FEEDBACK ON (RF)             1=TRUE  0=FALSE
+            2     ISO DRIVER FEEDBACK ON (REAR)           1=TRUE  0=FALSE
+            3     PWM DRIVER FEEDBACK ON (LF)             1=TRUE  0=FALSE
+            4     PWM DRIVER FEEDBACK ON (RF)             1=TRUE  0=FALSE
+            5     PWM DRIVER FEEDBACK ON (REAR)           1=TRUE  0=FALSE
+            6     STATE OF ABS RELAY                      1=ON    0=OFF
+            7     ABS PUMP REQUESTED ON                   1=TRUE  0=FALSE
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 14
+..HEAD04L ALDL MODE 1 MESSAGE 1
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                 BRAKE_MALFUNCTION_WORD 1
+              0    CODE 21 - RF WHEEL SPEED SENSOR OPEN    1=STORED 0=NOT STORED
+              1    CODE 22 - RF WHEEL SPEED SENSOR MISSING 1=STORED 0=NOT STORED
+              2    CODE 23 - RF WHEEL SPEED SENSOR ERRATIC 1=STORED 0=NOT STORED
+              3    CODE 25 - LF WHEEL SPEED SENSOR OPEN    1=STORED 0=NOT STORED
+              4    CODE 26 - LF WHEEL SPEED SENSOR MISSING 1=STORED 0=NOT STORED
+              5    CODE 27 - LF WHEEL SPEED SENSOR ERRATIC 1=STORED 0=NOT STORED
+              6    CODE 29 - ALL SENSOR DROPOUT            1=STORED 0=NOT STORED
+              7    CODE 36 - SENSOR MISSING REAR           1=STORED 0=NOT STORED
+
+ 2                 BRAKE_MALFUNCTION_WORD 2
+              0    CODE 37 - SENSOR ERRATIC REAR           1=STORED 0=NOT STORED
+              1    CODE 38 - WHEEL SPEED ERROR DETECTED    1=STORED 0=NOT STORED
+              2    CODE 41 - ISO OPEN OR HSD SHORTED (RF)  1=STORED 0=NOT STORED
+              3    CODE 42 - PWM OPEN OR HSD SHORTED (RF)  1=STORED 0=NOT STORED
+              4    CODE 43 - ISO SHORTED OR HSD OPEN (RF)  1=STORED 0=NOT STORED
+              5    CODE 44 - PWM SHORTED OR HSD OPEN (RF)  1=STORED 0=NOT STORED
+              6    CODE 45 - ISO OPEN OR HSD SHORTED (LF)  1=STORED 0=NOT STORED
+              7    CODE 46 - PWM OPEN OR HSD SHORTED (LF)  1=STORED 0=NOT STORED
+
+ 3                 BRAKE_MALFUNCTION_WORD 3
+              0    CODE 47 - ISO SHORTED OR HSD OPEN (LF)  1=STORED 0=NOT STORED
+              1    CODE 48 - PWM SHORTED OR HSD OPEN (LF)  1=STORED 0=NOT STORED
+              2    CODE 51 - ISO OPEN OR HSD SHORTED (REAR)1=STORED 0=NOT STORED
+              3    CODE 52 - PWM OPEN OR HSD SHORTED (REAR)1=STORED 0=NOT STORED
+              4    CODE 53 - ISO SHORTED OR HSD OPEN (REAR)1=STORED 0=NOT STORED
+              5    CODE 54 - PWM SHORTED OR HSD OPEN (REAR)1=STORED 0=NOT STORED
+              6    CODE 61 - NOT USED
+              7    CODE 62 - NOT USED
+
+ 4                 BRAKE_MALFUNCTION_WORD 4
+              0    CODE 63 - NOT USED
+              1    CODE 64 - ABS NOT ACTIVE LOW VOLT       1=STORED 0=NOT STORED
+              2    CODE 65 - ABS RELAY CIRCUIT OPEN        1=STORED 0=NOT STORED
+              3    CODE 66 - ABS REALY CIRCUIT SHORTED     1=STORED 0=NOT STORED
+              4    CODE 67 - ABS PUMP OPEN OR HSD SHORTED  1=STORED 0=NOT STORED
+              5    CODE 68 - ABS PUMP SHORTED OR HSD OPEN  1=STORED 0=NOT STORED
+              6    CODE 69 - ABS ACTIVE LOW VOLT           1=STORED 0=NOT STORED
+              7    CODE 74 - EXCESSIVE ISOLATION TIME      1=STORED 0=NOT STORED
+ 5                 BRAKE_MALFUNCTION_WORD 5
+              0    CODE 81 - BRAKE SWITCH OPEN             1=STORED 0=NOT STORED
+              1    CODE 86 - SHORTED ABS TELLTALE          1=STORED 0=NOT STORED
+              2    NOT USED
+              3    NOT USED
+              4    NOT USED
+              5    NOT USED
+              6    NOT USED
+              7    NOT USED
+
+ 6                 IGNITION_CYCLES_BEFORE_FAULT(MSB)
+..PAGE
+ 7                 IGNITION_CYCLES_BEFORE_FAULT(LSB)
+ 8                 IGNITION_CYCLES_AFTER_FAULT(MSB)
+ 9                 IGNITION_CYCLES_AFTER_FAULT(LSB)
+10                 ABS_STOPS(MSB)
+11                 ABS_STOPS(LSB)
+12                 HISTORY_BLOCK_CHECKSUM
+13                 HISTORY_BLOCK_CHECKSUM
+
+14                 BRAKE_SOFT_MALFUNCTION_WORD1
+              0    CODE 21 SOFT - SENSOR OPEN (RF)         1=STORED 0=NOT STORED
+              1    CODE 22 SOFT - SENSOR MISSING (RF)      1=STORED 0=NOT STORED
+              2    CODE 25 SOFT - SENSOR OPEN (LF)         1=STORED 0=NOT STORED
+              3    CODE 26 SOFT - SENSOR MISSING (LF)      1=STORED 0=NOT STORED
+              4    CODE 36 SOFT - SENSOR MISSING REAR      1=STORED 0=NOT STORED
+              5    CODE 81 SOFT - BRAKE SWITCH OPEN        1=STORED 0=NOT STORED
+              6    MODE 4 IN PROGRESS                      1 = YES  0 = NO
+              7    CODE 75 SOFT - ABS HISTORY MEMORY ERROR 1=STORED 0=NOT STORED
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 13
+..HEAD04L ALDL MODE 1 MESSAGE 2 - 10 HISTORY BLOCK MOST RECENT TO OLDEST
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                 BRAKE_MALFUNCTION_WORD 1
+              0    CODE 21 - SENSOR OPEN (RF)              1=STORED 0=NOT STORED
+              1    CODE 22 - SENSOR MISSING (RF)           1=STORED 0=NOT STORED
+              2    CODE 23 - SENSOR ERRATIC (RF)           1=STORED 0=NOT STORED
+              3    CODE 25 - SENSOR OPEN (LF)              1=STORED 0=NOT STORED
+              4    CODE 26 - SENSOR MISSING (LF)           1=STORED 0=NOT STORED
+              5    CODE 27 - SENSOR ERRATIC (LF)           1=STORED 0=NOT STORED
+              6    CODE 29 - ALL SENSOR DROPOUT            1=STORED 0=NOT STORED
+              7    CODE 36 - SENSOR MISSING REAR           1=STORED 0=NOT STORED
+
+ 2                 BRAKE_MALFUNCTION_WORD 2
+              0    CODE 37 - SENSOR ERRATIC REAR           1=STORED 0=NOT STORED
+              1    CODE 38 - WHEEL SPEED ERROR DETECTED    1=STORED 0=NOT STORED
+              2    CODE 41 - ISO OPEN OR HSD SHORTED (RF)  1=STORED 0=NOT STORED
+              3    CODE 42 - PWM OPEN OR HSD SHORTED (RF)  1=STORED 0=NOT STORED
+              4    CODE 43 - ISO SHORTED OR HSD OPEN (RF)  1=STORED 0=NOT STORED
+              5    CODE 44 - PWM SHORTED OR HSD OPEN (RF)  1=STORED 0=NOT STORED
+              6    CODE 45 - ISO OPEN OR HSD SHORTED (LF)  1=STORED 0=NOT STORED
+              7    CODE 46 - PWM OPEN OR HSD SHORTED (LF)  1=STORED 0=NOT STORED
+
+ 3                 BRAKE_MALFUNCTION_WORD 3
+              0    CODE 47 - ISO SHORTED OR HSD OPEN (LF)  1=STORED 0=NOT STORED
+              1    CODE 48 - PWM SHORTED OR HSD OPEN (LF)  1=STORED 0=NOT STORED
+              2    CODE 51 - ISO OPEN OR HSD SHORTED (REAR)1=STORED 0=NOT STORED
+              3    CODE 52 - PWM OPEN OR HSD SHORTED (REAR)1=STORED 0=NOT STORED
+              4    CODE 53 - ISO SHORTED OR HSD OPEN (REAR)1=STORED 0=NOT STORED
+              5    CODE 54 - PWM SHORTED OR HSD OPEN (REAR)1=STORED 0=NOT STORED
+              6    CODE 61 - NOT USED
+              7    CODE 62 - NOT USED
+ 4                 BRAKE_MALFUNCTION_WORD 4
+              0    CODE 63 - NOT USED
+              1    CODE 64 - ABS NOT ACTIVE LOW VOLT       1=STORED 0=NOT STORED
+              2    CODE 65 - ABS RELAY CIRCUIT OPEN        1=STORED 0=NOT STORED
+              3    CODE 66 - ABS REALY CIRCUIT SHORTED     1=STORED 0=NOT STORED
+              4    CODE 67 - ABS PUMP OPEN OR HSD SHORTED  1=STORED 0=NOT STORED
+              5    CODE 68 - ABS PUMP SHORTED OR HSD OPEN  1=STORED 0=NOT STORED
+              6    CODE 69 - ABS ACTIVE LOW VOLT           1=STORED 0=NOT STORED
+              7    CODE 74 - EXCESSIVE ISOLATION TIME      1=STORED 0=NOT STORED
+
+ 5                 BRAKE_MALFUNCTION_WORD 5
+              0    CODE 81 - BRAKE SWITCH OPEN             1=STORED 0=NOT STORE
+              1    CODE 86 - SHORTED ABS TELLTALE          1=STORED 0=NOT STORE
+              2    NOT USED
+              3    NOT USED
+              4    NOT USED
+              5    NOT USED
+              6    NOT USED
+              7    NOT USED
+..PAGE
+ 6                 IGNITION_CYCLES_BEFORE_FAULT(MSB)
+ 7                 IGNITION_CYCLES_BEFORE_FAULT(LSB)
+ 8                 IGNITION_CYCLES_AFTER_FAULT(MSB)
+ 9                 IGNITION_CYCLES_AFTER_FAULT(LSB)
+10                 ABS_STOPS(MSB)
+11                 ABS_STOPS(LSB)
+12                 HISTORY_BLOCK_CHECKSUM
+13                 HISTORY_BLOCK_CHECKSUM
+
+

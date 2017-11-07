@@ -1,0 +1,399 @@
+
+                        DATA STREAM A235  SPECIFICATION
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       IPC USAGE:
+                 1995         3G - CAR
+
+
+       DATA PIN  : READ DATA ON PIN "1" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5E
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 8
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $01
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5B
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 5
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $02
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5D
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 7
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $03
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5A
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 4
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $04
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $61
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 11
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $05
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $62
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 12
+                - SUM CHECK
+
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - MESSAGE CODE
+                - CHECKSUM
+
+        THE IPC RESPONDS BY TRANSMITTING THE SELECTED NORMAL MODE MESSAGE
+
+
+        MODE 8 (DISABLE NORMAL MODE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - SUM CHECK      =
+
+        MODE 9 (ENABLE NORMAL MODE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $09
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $09
+                - SUM CHECK      =
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK      =
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 8
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+  1      EEPROM PROGRAMMING STATUS
+          7       NOT USED
+          6       NOT USED
+          5       NOT USED
+          4       NOT USED
+          3       NOT USED
+          2       NOT USED
+          1       NOT USED
+          0       1 = EEPROM PROGRAMMING IN PROGRESS
+                  NOTE: ALDL DEVICE MUST WAIT UNTIL THIS BIT IS CLEARED IN
+                        ORDER TO CHECK DATA PROGRAMMED TO EEPROM.  THIS BIT
+                        WILL ALSO BE SET FOR INTERNAL EEPROM WRITES.
+  2      OPTION CONTENT REGISTER #1
+          7       NOT USED
+          6       1 = BOSE RADIO, 0 = NON-BOSE
+          5       1 = COMPACT DISC
+          4       1 = DAYTIME RUNNING LIGHTS
+          3       NOT USED
+          2       1 = SUNROOF
+          1       1 = STEERING WHEEL CONTROLS OPTION
+          0       1 = HEATED SEATS
+  3      OPTION CONTENT REGISTER #2
+          7       NOT USED
+          6       NOT USED
+          5       NOT USED
+          4       NOT USED
+          3       NOT USED
+          2       1 = METRIC / ENABLE EXPORT CODES
+                  0 = ENGLISH / DISABLE EXPORT CODES
+          1       1 = SPEED COMPENSATION ENABLE (SPEED INCREASED BY 5% CAL)
+          0       1 = OVERSPEED WARNING ENABLE
+  4-6    VEHICLE IDENTIFICATION NUMBER - BCD
+  7      S/W RELEASE NUMBER
+  8      S/W CALIBRATION VERSION OF RELEASE #
+          NOTE: $00 = SRD DEFAULT VALUES.
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 5
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 1
+WORD #   DATA NAME    DESCRIPTION
+  1      HISTORY      HISTORY FLAGS #1 (1=ACTIVE, 0=INACTIVE)
+          7       1 = INVALID OPTION CONTENT REGISTER #1
+          6       1 = INVALID OIL CHANGE DATA
+          5       1 = INVALID TRANSMISSION FLUID CHANGE DATA
+          4       1 = INVALID OPTION CONTENT REGISTER #2
+          3       1 = INVALID DATE / TIME (BATTERY DISCONNECT)
+          2       1 = FUEL LEVEL SENSOR OPEN/OR SHORT TO IGN
+          1       1 = OIL PRESSURE SENSOR OPEN (OR SHORT TO IGN)
+          0       1 = REAL TIME CLOCK IC FAILURE
+  2      HISTORY      HISTORY FLAGS #2 (1=ACTIVE, 0=INACTIVE)
+          7       1 = LOSS OF UART A SERIAL DATA
+          6       1 = LOSS OF UART B SLAVE RESPONSE
+          5       1 = KAM FAILURE
+          4       1 = OIL LEVEL SYSTEM FAULT
+          3       NOT USED
+          2       NOT USED
+          1       NOT USED
+          0       NOT USED
+  3      CURRENT      CURRENT FLAGS #1 (1=ACTIVE, 0=INACTIVE)
+          7       1 = INVALID OPTION CONTENT REGISTER #1
+          6       1 = INVALID OIL CHANGE DATA
+          5       1 = INVALID TRANSMISSION FLUID CHANGE DATA
+          4       1 = INVALID OPTION CONTENT REGISTER #2
+          3       1 = INVALID DATE / TIME (BATTERY DISCONNECT)
+          2       1 = FUEL LEVEL SENSOR OPEN (OR SHORT TO IGN)
+          1       1 = OIL PRESSURE SENSOR OPEN (OR SHORT TO IGN)
+          0       1 = REAL TIME CLOCK IC FAILURE
+  4      CURRENT      CURRENT FLAGS #2 (1=ACTIVE, 0=INACTIVE)
+          7       1 = LOSS OF UART A SERIAL DATA
+                  NOTE: INST MPG, AVG MPG, GALLONS USED, OIL LIFE %,
+          6       1 = LOSS OF UART B SLAVE RESPONSE
+          5       1 = KAM FAILURE
+          4       1 = OIL LEVEL SYSTEM FAULT
+          3       NOT USED
+          2       NOT USED
+          1       NOT USED
+          0       NOT USED
+  5      RUNNING RESET COUNTER
+          NOTE: DOES NOT OVERFLOW (MODE 10 RESETS TO ZERO)
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 7
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 2
+WORD #   DATA NAME    DESCRIPTION
+  1      FUEL REMAINING
+          GALLONS = N/10
+  2      OIL PRESSURE
+          PSI = N
+  3      DIM REFERENCE
+          VOLTS = N/10
+  4      DIM LEVEL
+          VOLTS = N/10
+  5      VEHICLE SPEED
+          KPH = N
+          MPH = N/1.61
+  6      TACHOMETER
+          RPM = 50N
+  7      BATTERY VOLTS
+          VOLTS = N/10
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 4
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 3
+WORD #   DATA NAME    DESCRIPTION
+  1      INPUT DISCRETE STATES #1 (1=ACTIVE, 0=INACTIVE)
+          7       RIGHT TURN SIGNAL
+          6       LEFT TURN SIGNAL
+          5       HIGH BEAM
+          4       NOT USED
+          3       NOT USED
+          2       TEST
+          1       DRIVER DOOR AJAR
+          0       PARK BRAKE SWITCH
+  2      INPUT DISCRETE STATES #2 (1=ACTIVE, 0=INACTIVE)
+          7       LOW BRAKE FLUID
+          6       LOW OIL LEVEL
+          5       LOW WASHER FLUID
+          4       NOT USED
+          3       PASSENGER DOOR AJAR
+          2       LEFT REAR DOOR AJAR
+          1       RIGHT REAR DOOR AJAR
+          0       SEAT BELT SWITCH
+  3      INPUT DISCRETE STATES #3 (1=ACTIVE, 0=INACTIVE)
+          7       NOT USED
+          6       NOT USED
+          5       NOT USED
+            NOTE: BITS 4-0 ARE TRANSITION BITS STORED IN RAM WHICH ARE CLEARED
+                  AT POWERUP AND SET WHEN THE INPUT HAS SEEN A TRANSITION.
+          4       1 = RIGHT FRONT DOOR AJAR INPUT TRANSITION
+          3       1 = LEFT FRONT DOOR AJAR INPUT TRANSITION
+          2       1 = RIGHT REAR DOOR AJAR INPUT TRANSITION
+          1       1 = LEFT REAR DOOR AJAR INPUT TRANSITION
+          0       1 = SEAT BELT SWITCH INPUT TRANSITION
+  4      NOT USED
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 11
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 4
+WORD #   DATA NAME    DESCRIPTION
+  1      EEPROM PROGRAMMING STATUS
+          7       NOT USED
+          6       NOT USED
+          5       NOT USED
+          4       NOT USED
+          3       NOT USED
+          2       NOT USED
+          1       NOT USED
+          0       1 = EEPROM PROGRAMMING IN PROGRESS.
+            NOTE: ALDL DEVICE MUST WAIT UNTIL THIS BIT IS CLEARED IN ORDER TO
+                  CHECK DATA PROGRAMMED TO EEPROM.  THIS BIT WILL ALSO BE SET
+                  FOR INTERNAL EEPROM WRITES.
+  2      MILES SINCE LAST OIL CHANGE MSB  EEPROM
+  3      MILES SINCE LAST OIL CHANGE LSB  EEPROM
+          MILES = N
+  4      MONTH OF LAST OIL CHANGE (BCD)   EEPROM
+          7       NOT USED
+          6       NOT USED
+          5       NOT USED
+          4       MONTH MS DIGIT (0-1)
+          3-0     MONTH LS DIGIT (1-9)
+  5      DAY OF LAST OIL CHANGE (BCD)     EEPROM
+          7       NOT USED
+          6-4     DAY OF MONTH MS DIGIT (0-3)
+          3-0     DAY OF MONTH LS DIGIT (0-9)
+  6      YEAR OF LAST OIL CHANGE (BCD) (00-99)    EEPROM
+  7      MILES SINCE LAST TRANS FLUID CHANGE MSB  EEPROM
+  8      MILES SINCE LAST TRANS FLUID CHANGE LSB  EERPOM
+          MILES = N
+  9      MONTH OF LAST TRANS FLUID CHANGE (BCD)   EEPROM
+          7       NOT USED
+          6       NOT USED
+          5       NOT USED
+          4       MONTH MS DIGIT (0-1)
+          3-0     MONTH LS DIGIT (1-9)
+ 10      DAY OF LAST TRANS FLUID CHANGE (BCD)     EEPROM
+          7       NOT USED
+          6-4     DAY OF MONTH MS DIGIT (0-3)
+          3-0     DAY OF MONTH LS DIGIT (0-9)
+ 11      YEAR OF LAST TRANS FLUID CHANGE (BCD) (00-99)      EEPROM
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 12
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 5
+WORD #   DATA NAME    DESCRIPTION
+  1      COOLANT TEMP DRIVEN ANGLE MSB
+  2      COOLANT TEMP DRIVEN ANGLE LSB
+          ANGLE (DEG) = .3512N
+  3      COOLANT TEMP OFFSET
+          ANGLE (DEG) = TBD
+  4      TACHOMETER DRIVEN ANGLE MSB
+  5      TACHOMETER DRIVEN ANGLE LSB
+          ANGLE (DEG) = .3512N
+  6      TACHOMETER OFFSET
+          ANGLE (DEG) = TBD
+  7      SPEED DRIVEN ANGLE MSB
+  8      SPEED DRIVEN ANGLE LSB
+          ANGLE (DEG) = .3512N
+  9      SPEED OFFSET
+          ANGLE (DEG) = TBD
+  10     FUEL DRIVEN ANGLE MSB
+  11     FUEL DRIVEN ANGLE LSB
+          ANGLE (DEG) = .3512N
+  12     FUEL OFFSET
+          ANGLE (DEG) = TBD
+
+

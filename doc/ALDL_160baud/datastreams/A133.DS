@@ -1,0 +1,600 @@
+
+
+                        DATA STREAM A133  SPECIFICATION
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       Four Wheel Anti-lock Brakes
+       Usage:   1990    Chevrolet     L,M,S,T
+                1990    Truck & Bus   L,M,S,T
+                1991    Chevrolet     L,M,S,T
+                1991    Truck & Bus   L,M,S,T
+                1992    Chevrolet     L,M,S,T
+                1992    Truck & Bus   L,M,S,T
+			  1993    Chevrolet     L,M,S,T
+                1993    Truck & Bus   L,M,S,T
+                1993    3T
+
+       DATA PIN  :  H
+
+       BAUD RATE :  9600  (UART serial data)
+
+..PAGE
+
+ Ignition turn on block
+ ----------------------
+  The TOOL must be able to capture data from a key off to on condition
+  because the first 11 frames of data (ignition turn on block) are sent only
+  once at key on. Data for the ignition turn on block is also read on pin H
+  as 8 data bits 1 start bit and 1 stop bit, however, all data is sent in a
+  continuous stream (not 1 character every 5 ms like the normal operating data
+  stream). Note that the very first character sent may not be valid data. The
+  first frame is preceded by two carriage return line feeds (0D 0A 0D 0A).
+  The 3rd frame is terminated by two carriage return line feeds (0D 0A 0D 0A),
+  and the 11th frame is terminated by two carriage return line feeds
+  (0D 0A 0D 0A).
+
+       Controller Identification
+       -------------------------
+        The first frame contains the controller's identification which can be
+        printed on screen as is with no conversions.
+
+
+       Software Revision Level
+       -----------------------
+        The second frame contains the controller's software revision level which
+        can be printed on screen as is with no conversions.
+
+       ROM Checksum
+       ------------
+        The third frame contains checksums of the controller's memory. The first
+        checksum is permanently stored in ROM, and the second checksum is
+        calculated when the ignition is turned on. Both checksums should be
+        the same unless a memory failure has occurred. Characters 2,3,4 & 5
+        of frame 3 should be displayed for the ROM checksum.
+
+       Calculated Checksum
+       -------------------
+        Characters 7,8,9, & 10 of frame 3 should be displayed for the calculated
+        checksum.
+
+
+       History data
+       ------------
+        There is 10 history blocks contained in frames 4 through 11 along with
+        an executive block. The correlation between frame number and frame
+        contents are listed below.
+..PAGE
+ History Frames:
+ ---------------
+  Frame #    Word #      Description
+
+    4         1          Fault Word One     (Block 0)
+    4         2          Fault Word Two     (Block 0)
+    4         3          Fault Word Three   (Block 0)
+    4         4          Ignition Counter 1 (Block 0)
+    4         5          Ignition Counter 2 (Block 0)
+    4         6          ABS Event Counter for History Block 0
+    4         7          Fault Word One     (Block 1)
+    4         8          Fault Word Two     (Block 1)
+    5         1          Fault Word Three   (Block 1)
+    5         2          Ignition Counter 1 (Block 1)
+    5         3          Ignition Counter 2 (Block 1)
+    5         4          ABS Event Counter for History Block 1
+    5         5          Fault Word One     (Block 2)
+    5         6          Fault Word Two     (Block 2)
+    5         7          Fault Word Three   (Block 2)
+    5         8          Ignition Counter 1 (Block 2)
+
+    6         1          Ignition Counter 2 (Block 2)
+    6         2          ABS Event Counter for History Block 2
+    6         3          Fault Word One     (Block 3)
+    6         4          Fault Word Two     (Block 3)
+    6         5          Fault Word Three   (Block 3)
+    6         6          Ignition Counter 1 (Block 3)
+    6         7          Ignition Counter 2 (Block 3)
+    6         8          ABS Event Counter for History Block 3
+
+    7         1          Fault Word One     (Block 4)
+    7         2          Fault Word Two     (Block 4)
+    7         3          Fault Word Three   (Block 4)
+    7         4          Ignition Counter 1 (Block 4)
+    7         5          Ignition Counter 2 (Block 4)
+    7         6          ABS Event Counter for History Block 4
+    7         7          Fault Word One     (Block 5)
+    7         8          Fault Word Two     (Block 5)
+
+    8         1          Fault Word Three   (Block 5)
+    8         2          Ignition Counter 1 (Block 5)
+    8         3          Ignition Counter 2 (Block 5)
+    8         4          ABS Event Counter for History Block 5
+    8         5          Fault Word One     (Block 6)
+    8         6          Fault Word Two     (Block 6)
+    8         7          Fault Word Three   (Block 6)
+    8         8          Ignition Counter 1 (Block 6)
+..PAGE
+    9         1          Ignition Counter 2 (Block 6)
+    9         2          ABS Event Counter for History Block 6
+    9         3          Fault Word One     (Block 7)
+    9         4          Fault Word Two     (Block 7)
+    9         5          Fault Word Three   (Block 7)
+    9         6          Ignition Counter 1 (Block 7)
+    9         7          Ignition Counter 2 (Block 7)
+    9         8          ABS Event Counter for History Block 7
+
+    10        1          Fault Word One     (Block 8)
+    10        2          Fault Word Two     (Block 8)
+    10        3          Fault Word Three   (Block 8)
+    10        4          Ignition Counter 1 (Block 8)
+    10        5          Ignition Counter 2 (Block 8)
+    10        6          ABS Event Counter for History Block 8
+    10        7          Fault Word One     (Block 9)
+    10        8          Fault Word Two     (Block 9)
+
+    11        1          Fault Word Three   (Block 9)
+    11        2          Ignition Counter 1 (Block 9)
+    11        3          Ignition Counter 2 (Block 9)
+    11        4          ABS Event Counter for History Block 9
+    11        5          Block Pointer
+    11        6          Block Pointer Update Counter
+    11        7          Ignition Register
+    11        8          not used
+
+
+ Executive Block
+ ---------------
+   ASCII Codes 22 through 40 of frame 11 form the Executive Block which
+   contains Block Pointer, Block Pointer Update Counter, and Ignition Register.
+
+       Block Pointer
+       -------------
+        ASCII codes 22,23,24, & 25 of frame 11 must first be converted to
+        hexadecimal then to decimal. After conversion, the current history
+        block number is obtained by dividing the decimal block pointer value
+        by 6.
+
+
+       Block Pointer Update Counter
+       ----------------------------
+        The Block Pointer Update Counter counts the number of times the Block
+        Pointer has been reset. ASCII codes 27,28,29, & 30 in frame 11 need to
+        be converted to hexadecimal then to decimal. To get the final count,
+        subtract the resultant decimal Block Pointer Update Counter from 65535.
+
+
+       Ignition Register
+       -----------------
+        Not Defined at this revision level.
+
+
+ History Block Contents and Conversions
+ --------------------------------------
+     Each history block contain 6 words with each word containing 4 ASCII
+     codes.
+
+       History Codes
+       -------------
+        The first 3 words of the block contain history fault status. Each
+        digit of the three words must be checked for codes which can be done
+        by scanning table 3. All codes identified will then be displayed in the
+        proper block under codes.
+
+       Ignition Counter 1
+       ------------------
+        Word 4 of each history block is Ignition Counter 1. These 4 ASCII codes
+        need to be converted to hexadecimal then to decimal. Once converted,
+        subtract the decimal ignition counter from 65535 and multiply by 16 to
+        get the number of ignition cycles prior to a fault being recorded in
+        the history block.
+
+
+       Ignition Counter 2
+       ------------------
+        Word 5 of each history block is Ignition Counter 2. These 4 ASCII codes
+        need to be converted to hexadecimal then to decimal. Once converted,
+        subtract the decimal ignition counter from 65535 and multiply by 16 to
+        get the number of ignition cycles after the fault has been recorded
+        in the history block.
+
+       Anti-Lock Event Counter
+       -----------------------
+        Word 6 of each history block is the Anti-Lock Event Counter. These
+        4 ASCII codes need to be converted to hexadecimal then to decimal.
+        Once converted, subtract the decimal event counter from 65535 to get
+        the number of anti-lock braking events for the history block.
+        in the history block.
+
+
+ Normal operating data stream
+ ----------------------------
+  For the normal operating data stream, data appears on pin H as 8 data bits 1
+  start bit and 1 stop with one 10 bit character transmitted every 5 ms.
+  Characters are organized in frames which contain 31 ASCII Codes. ASCII codes
+  3,8,11,14,17,20,23,26, and 29 are spaces ($20) and are not used. The 30th
+  ASCII code is a carriage return ($0D), and the 31st ASCII code is a line feed
+  ($0A) which marks the end of the frame. The following descriptions reference
+  data by the ASCII code's position in the frame.
+
+ ASCII Codes 1 and 2
+ -------------------
+    These first two ASCII codes should be converted to a two digit decimal
+    number. The number can then be used to determine Brake Status,
+    Drive Status, and Diagnostic codes.
+
+
+ Brake Switch status
+ -------------------
+    Brake switch status is determined by the number derived from the first two
+    codes in the frame. If the number is 12 or 14, the brake switch is off, and
+    if the number is 13 or 15 the brake switch is on. Numbers greater than 15
+    cannot be used to determine brake switch status.
+
+
+ Drive status
+ ------------
+    Drive status is also determined by the number derived from the first two
+    codes in the frame. If the number is a 12 or 13, then the vehicle is in two
+    wheel drive. If the number is a 14 or 15, then the vehicle is in four wheel
+    drive. Numbers greater then 15 cannot be used to determine drive status.
+
+ Diagnostic Codes
+ ----------------
+    If the number derived from the first two codes is greater than 15, it is
+    indicating a fault. For numbers greater than 15, scan table 1
+    to determine if it is a valid diagnostic code. If the code is valid,
+    display it under the current code header on the display screen. If the
+    If the number is not found in table 1 then do no further processing.
+    Information about the codes are listed in table 1.
+
+
+ ASCII Codes 4 through 7
+ -----------------------
+    These 4 ASCII codes must be interpreted individually. If any of the four
+    codes are not the code for zero, then all codes must be displayed.
+    Information about the codes are listed in table 2.
+
+
+ ASCII Codes 9 and 10
+ --------------------
+    The 9th ASCII code should converted to a binary digit and evaluated as
+    described below.
+
+    b0 - Brake telltale                0 = telltale off   1 = telltale on
+    b1 - Left front reset switch       0 = OK             1 = fault
+    b2 - Right front reset switch      0 = OK             1 = fault
+    b3 - Rear reset switch             0 = OK             1 = fault
+
+    The 10th code can be used to determined the state of commanded brake
+    telltale and the state of the ABS telltale as described below.
+
+     Code       Description
+     ----       -----------
+       0        brake telltale commanded off and abs telltale off
+       1        brake telltale commanded off and abs telltale on
+       2        brake telltale commanded on and abs telltale off
+       3        brake telltale commanded on and abs telltale on
+     4-F        Invalid values
+
+ ASCII codes 12,13 and 15,16
+ ---------------------------
+    Currently not used. 
+
+
+ Wheel speed determination
+ -------------------------
+    Left Front
+    ----------
+       ASCII codes 18 and 19 represent a hexadecimal byte which contains
+       wheel speed information. They should first be converted to hexadecimal
+       and then to decimal to get the wheel speed display value.
+
+    Right Front
+    -----------
+       ASCII codes 21 and 22 represent a hexadecimal byte which contains
+       wheel speed information. They should first be converted to hexadecimal
+       and then to decimal to get the wheel speed display value.
+
+    Left Rear
+    ---------
+       ASCII codes 24 and 25 represent a hexadecimal byte which contains
+       wheel speed information. They should first be converted to hexadecimal
+       and then to decimal to get the wheel speed display value.
+
+    Left Front
+    ----------
+       ASCII codes 27 and 28 represent a hexadecimal byte which contains
+       wheel speed information. They should first be converted to hexadecimal
+       and then to decimal to get the wheel speed display value.
+
+
+4WAL EBCM CLEAR CODES COMMAND
+-----------------
+TO clear diagnostic codes:  SEND (ASCII)
+                     1 - "escape"   wait until quiet
+                     2 - "k"        wait 10ms, to allow response
+                     3 - "h"         "     "    "   "     "
+                     4 - "r"
+
+
+..PAGE
+ Table 1 Diagnostic code summary
+ -------------------------------
+  CODE    DESCRIPTION
+  ----    -----------
+  12      BRAKE PEDAL RELEASED, 2 WHEEL DRIVE
+  13      BRAKE PEDAL APPLIED, 2 WHEEL DRIVE
+  14      BRAKE PEDAL RELEASED, 4 WHEEL DRIVE
+  15      BRAKE PEDAL APPLIED, 4 WHEEL DRIVE
+  21      OPEN SENSOR ON RIGHT FRONT
+  22      MISSING DYNAMIC SENSOR SIGNAL ON RIGHT FRONT
+  23      ERRATIC SENSOR SIGNAL ON RIGHT FRONT
+  25      OPEN SENSOR ON LEFT FRONT
+  26      MISSING DYNAMIC SENSOR SIGNAL ON LEFT FRONT
+  27      ERRATIC SENSOR SIGNAL ON LEFT FRONT
+  28      ERRATIC SENSOR SIGNAL, SYSTEM
+  29      ALL SENSOR SIGNALS LOST, SYSTEM
+  31      OPEN SENSOR ON RIGHT REAR
+  32      MISSING DYNAMIC SENSOR SIGNAL ON RIGHT REAR
+  33      ERRATIC SENSOR SIGNAL ON RIGHT REAR
+  35      OPEN SENSOR ON LEFT REAR
+  36      MISSING DYNAMIC SENSOR SIGNAL ON LEFT REAR
+  37      ERRATIC SENSOR SIGNAL ON LEFT REAR
+  38      WHEEL SPEED ERROR, SYSTEM
+  41      OPEN ISOLATION SOLENOID OR SHORTED ECU OUTPUT ON RIGHT FRONT
+  42      OPEN PWM SOLENOID OR SHORTED ECU OUTPUT ON RIGHT FRONT
+  43      SHORTED ISOLATION SOLENOID OR OPEN ECU OUTPUT ON RIGHT FRONT
+  44      SHORTED PWM SOLENOID OR OPEN ECU OUTPUT ON RIGHT FRONT
+  45      OPEN ISOLATION SOLENOID OR SHORTED ECU OUTPUT ON LEFT FRONT
+  46      OPEN PWM SOLENOID OR SHORTED ECU OUTPUT ON LEFT FRONT
+  47      SHORTED ISOLATION SOLENOID OR OPEN ECU OUTPUT ON LEFT FRONT
+  48      SHORTED PWM SOLENOID OR OPEN ECU OUTPUT ON LEFT FRONT
+  51      OPEN ISOLATION SOLENOID OR SHORTED ECU OUTPUT ON REAR
+  52      OPEN PWM SOLENOID OR SHORTED ECU OUTPUT ON REAR
+  53      SHORTED ISOLATION SOLENOID OR OPEN ECU OUTPUT ON REAR
+  54      SHORTED PWM SOLENOID OR OPEN ECU OUTPUT ON REAR
+  61      SHUTTLED OR OPEN-CIRCUIT RESET SWITCH ON RIGHT FRONT
+  62      SHUTTLED OR OPEN-CIRCUIT RESET SWITCH ON LEFT FRONT
+  63      SHUTTLED OR OPEN-CIRCUIT RESET SWITCH ON REAR
+  65      OPEN RELAY CIRCUIT, SYSTEM
+  66      SHORTED RELAY CIRCUIT, SYSTEM
+  67      OPEN MOTOR CIRCUIT OR SHORTED ECU OUTPUT, SYSTEM
+  68      STALLED MOTOR OR OPEN ECU OUTPUT, SYSTEM
+  71      RAM READ/WRITE ERROR, SYSTEM
+  72      ROM CHECKSUM ERROR, SYSTEM
+  73      INOPERATIVE WATCHDOG INHIBIT, SYSTEM
+  74      EXCESSIVE ISOLATION TIME, SYSTEM
+  81      CONTINUOUS BRAKE PEDAL SIGNAL OR OPEN SWITCH CIRCUIT, SYSTEM
+  86      SHORTED 4WAL INDICATOR LAMP, SYSTEM
+  88      SHORTED BRAKE SYSTEM INDICATOR
+..PAGE
+ Table 2 Soft fault summary
+ --------------------------
+  VALVE AND RELAY DIGIT 1
+  -----------------------
+  DIGIT        DESCRIPTION
+  -----        -----------
+    0          NO CODE
+    1          SHORTED REAR ISO VALVE
+    2          SHORTED REAR PWM VALVE
+    3          SHORTED REAR PWM VALVE AND SHORTED REAR ISO VALVE
+    4          SHORTED RELAY
+    5          SHORTED RELAY AND SHORTED REAR ISO VALVE
+    6          SHORTED RELAY AND SHORTED REAR PWM VALVE
+    7          SHORTED RELAY, SHORTED REAR PWM VALVE, AND SHORTED REAR ISO VALVE
+    8          NO CODE
+    9          OPEN REAR ISO VALVE
+    A          OPEN REAR PWM VALVE
+    B          OPEN REAR PWM VALVE AND OPEN REAR ISO VALVE
+    C          OPEN RELAY
+    D          OPEN RELAY AND OPEN REAR ISO VALVE
+    E          OPEN RELAY AND OPEN REAR PWM VALVE
+    F          OPEN RELAY, OPEN REAR PWM VALVE, AND OPEN REAR ISO VALVE
+
+  VALVE AND RELAY DIGIT 2
+  -----------------------
+  DIGIT        DESCRIPTION
+  -----        -----------
+    0          NO CODE
+    1          LEFT FRONT ISO VALVE FAULT
+    2          LEFT FRONT PWM VALVE FAULT
+    3          LEFT FRONT PWM AND LEFT FRONT ISO VALVE FAULTS
+    4          RIGHT FRONT ISO VALVE FAULT
+    5          RIGHT FRONT ISO AND LEFT FRONT ISO VALVE FAULTS
+    6          RIGHT FRONT ISO AND LEFT FRONT PWM VALVE FAULTS
+    7          RIGHT FRONT ISO, LEFT FRONT PWM, AND LEFT FRONT ISO VALVE FAULTS
+    8          RIGHT FRONT PWM VALVE FAULT
+    9          RIGHT FRONT PWM AND LEFT FRONT ISO VALVE FAULTS
+    A          RIGHT FRONT PWM AND LEFT FRONT PWM VALVE FAULTS
+    B          RIGHT FRONT PWM, LEFT FRONT PWM, AND LEFT FRONT ISO VALVE FAULTS
+    C          RIGHT FRONT PWM AND RIGHT FRONT ISO VALVE FAULTS
+    D          RIGHT FRONT PWM, RIGHT FRONT ISO, AND LEFT FRONT ISO VALVE FAULTS
+    E          RIGHT FRONT PWM, RIGHT FRONT ISO, AND LEFT FRONT PWM VALVE FAULTS
+    F          RIGHT FRONT PWM, RIGHT FRONT ISO, LEFT FRONT PWM, AND LEFT FRONT ISO VALVE FAULTS
+..PAGE
+  MOTOR AND SENSOR DIGIT 3
+  ------------------------
+  DIGIT        DESCRIPTION
+  -----        -----------
+    0          NO CODE
+    1          STATIC OPEN IN SENSOR
+    2          MISSING SIGNAL FROM SENSOR
+    3          MISSING SIGNAL AND STATIC OPEN IN SENSOR
+    4          ERRATIC SIGNAL FROM SENSOR
+    5          ERRATIC SIGNAL AND STATIC OPEN IN SENSOR
+    6          ERRATIC SIGNAL AND MISSING SIGNAL FROM SENSOR
+    7          ERRATIC SIGNAL, MISSING SIGNAL, AND STATIC OPEN IN SENSOR
+    8          OPEN MOTOR CIRCUIT
+    9          OPEN MOTOR CIRCUIT WITH STATIC OPEN IN SENSOR
+    A          OPEN MOTOR CIRCUIT WITH MISSING SIGNAL FROM SENSOR
+    B          OPEN MOTOR CIRCUIT WITH MISSING SIGNAL AND STATIC OPEN IN SENSOR
+    C          OPEN MOTOR CIRCUIT WITH ERRATIC SIGNAL FROM SENSOR
+    D          OPEN MOTOR CIRCUIT WITH ERRATIC SIGNAL AND STATIC OPEN IN SENSOR
+    E          OPEN MOTOR CIRCUIT WITH ERRATIC SIGNAL AND MISSING SIGNAL FROM SENSOR
+    F          OPEN MOTOR CIRCUIT WITH ERRATIC SIGNAL, MISSING SIGNAL, AND STATIC OPEN IN SENSOR
+
+  SENSOR LOCATION DIGIT 4
+  -----------------------
+  DIGIT        DESCRIPTION
+  -----        -----------
+    0          NO CODE
+    1          LEFT FRONT
+    2          RIGHT FRONT
+    3          RIGHT FRONT AND LEFT FRONT
+    4          LEFT REAR
+    5          LEFT REAR AND LEFT FRONT
+    6          LEFT REAR AND RIGHT FRONT
+    7          LEFT REAR, RIGHT FRONT, AND LEFT FRONT
+    8          RIGHT REAR
+    9          RIGHT REAR AND LEFT FRONT
+    A          RIGHT REAR AND RIGHT FRONT
+    B          RIGHT REAR, RIGHT FRONT, AND LEFT FRONT
+    C          RIGHT REAR AND LEFT REAR
+    D          RIGHT REAR, LEFT REAR, AND RIGHT FRONT
+    E          RIGHT REAR, LEFT REAR, AND LEFT FRONT
+    F          RIGHT REAR, LEFT REAR, RIGHT FRONT, AND LEFT FRONT
+
+
+
+..PAGE
+ Table 3 History Fault Word Interpretation Table
+ -----------------------------------------------
+
+  Fault word 1 ASCII code 1              Fault word 1 ASCII code 2
+  -------------------------              -------------------------
+  DIGIT        Fault Code('s)            DIGIT        Fault Code('s)
+  -----        --------------            -----        --------------
+    0          invalid                     0          23 27 33 37
+    1          61 62 63                    1          23 33 37
+    2          invalid                     2          27 33 37
+    3          61 63                       3          33 37
+    4          invalid                     4          23 27 33
+    5          62 63                       5          23 33
+    6          invalid                     6          27 33
+    7          63                          7          33
+    8          invalid                     8          23 27 37
+    9          61 62                       9          23 37
+    A          invalid                     A          27 37
+    B          61                          B          37
+    C          invalid                     C          23 27
+    D          62                          D          23
+    E          invalid                     E          27
+    F          no code                     F          no code
+
+
+  Fault word 1 ASCII code 3              Fault word 1 ASCII code 4
+  -------------------------              -------------------------
+  DIGIT        Fault Code('s)            DIGIT        Fault Code('s)
+  -----        --------------            -----        --------------
+    0          22 26 32 36                 0          21 25 31 35
+    1          22 32 36                    1          21 31 35
+    2          26 32 36                    2          25 31 35
+    3          32 36                       3          31 35
+    4          22 26 32                    4          21 25 31
+    5          22 32                       5          21 31
+    6          26 32                       6          25 31
+    7          32                          7          31
+    8          22 26 36                    8          21 25 35
+    9          22 36                       9          21 35
+    A          26 36                       A          25 35
+    B          36                          B          35
+    C          22 26                       C          21 25
+    D          22                          D          21
+    E          26                          E          25
+    F          no code                     F          no code
+
+..PAGE
+  Fault word 2 ASCII code 1              Fault word 2 ASCII code 3
+  -------------------------              -------------------------
+  DIGIT        Fault Code('s)            DIGIT        Fault Code('s)
+  -----        --------------            -----        --------------
+    0          43 44 53 54                 0          47 48 66 68
+    1          44 53 54                    1          48 66 68
+    2          43 53 54                    2          47 48 68
+    3          53 54                       3          48 68
+    4          43 44 54                    4          47 48 66
+    5          44 54                       5          48 66
+    6          43 54                       6          47 48
+    7          54                          7          48
+    8          43 44 53                    8          47 66 68
+    9          44 53                       9          66 68
+    A          43 53                       A          47 68
+    B          53                          B          68
+    C          43 44                       C          47 66
+    D          44                          D          66
+    E          43                          E          47
+    F          no code                     F          no code
+
+
+  Fault word 2 ASCII code 3              Fault word 2 ASCII code 4
+  -------------------------              -------------------------
+  DIGIT        Fault Code('s)            DIGIT        Fault Code('s)
+  -----        --------------            -----        --------------
+    0          41 42 51 52                 0          45 46 65 67
+    1          42 51 52                    1          46 65 67
+    2          41 51 52                    2          45 46 67
+    3          51 52                       3          46 67
+    4          41 42 52                    4          45 46 65
+    5          42 52                       5          46 65
+    6          41 52                       6          45 46
+    7          52                          7          46
+    8          41 42 51                    8          45 65 67
+    9          42 51                       9          65 67
+    A          41 51                       A          45 67
+    B          51                          B          67
+    C          41 42                       C          45 65
+    D          42                          D          65
+    E          41                          E          45
+    F          no code                     F          no code
+
+..PAGE
+  Fault word 3 ASCII code 1              Fault word 3 ASCII code 2
+  -------------------------              -------------------------
+  DIGIT        Fault Code('s)            DIGIT        Fault Code('s)
+  -----        --------------            -----        --------------
+    0          invalid                     0          invalid
+    1          invalid                     1          invalid
+    2          invalid                     2          invalid
+    3          invalid                     3          invalid
+    4          invalid                     4          invalid
+    5          invalid                     5          invalid
+    6          invalid                     6          invalid
+    7          invalid                     7          invalid
+    8          invalid                     8          81 86 88
+    9          invalid                     9          86 88
+    A          invalid                     A          81 88
+    B          invalid                     B          88
+    C          invalid                     C          81 86
+    D          28                          D          86
+    E          invalid                     E          81
+    F          no code                     F          no code
+
+
+  Fault word 3 ASCII code 3              Fault word 3 ASCII code 4
+  -------------------------              -------------------------
+  DIGIT        Fault Code('s)            DIGIT        Fault Code('s)
+  -----        --------------            -----        --------------
+    0          invalid                     0          71 72 73 74
+    1          invalid                     1          72 73 74
+    2          invalid                     2          71 73 74
+    3          invalid                     3          73 74
+    4          invalid                     4          71 72 74
+    5          invalid                     5          72 74
+    6          invalid                     6          71 74
+    7          invalid                     7          74
+    8          invalid                     8          71 72 73
+    9          invalid                     9          72 73
+    A          invalid                     A          71 73
+    B          invalid                     B          73
+    C          29 38                       C          71 72
+    D          29                          D          72
+    E          38                          E          71
+    F          no code                     F          no code
+..PAGE
+LAYOUT 000
+:ê  B 
+  
+Su¶    <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B 
+  
+        <  ?   A   ˙ \---+----+----+----+---------+

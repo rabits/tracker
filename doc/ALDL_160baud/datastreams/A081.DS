@@ -1,0 +1,86 @@
+
+
+
+                        DATA STREAM  A81  SPECIFICATION
+
+       ENGINE  USAGES:
+                88   6.2L DIESEL - LL4 - VIN=J
+                88   6.2L DIESEL - LH6 - VIN=C
+
+
+       DATA PIN  : D
+
+       BAUD RATE : 100
+
+       MODES     : DIAGNOSTIC ENABLE:
+                     MODULATED . . . .  NO
+                     10K . . . . . . .  YES
+                     NORMAL  . . . . .  NO
+                     SHORTED . . . . .  YES
+
+       DEFINITION: DATA STREAMS CONTAIN THE SAME INFORMATION
+                   IN THE SAME FORMAT WITH 16 WORD FORMAT.
+
+..page
+
+  10K MODE
+  DATA STREAM DEFINITION
+  ----------------------
+    WHERE "WORD" IS THE BYTE OF DATA STREAM AS IT IS READ FROM THE VEHICLE
+    AND "BIT" IS THE BIT OF THE BYTE, WHERE 0 IS THE LEAST SIGNIFICANT BIT.
+
+    WORD  BIT   DESCRIPTION
+    ----  ---   ---------------
+    1           BAROMETRIC PRESSURE             N * 0.5 = KPA
+    2           ENGINE RPM                      N * 10 = RPM
+    3           MODE WORD - FLAGMW
+          0      1 = ENGINE SPEED < 2560 RPM
+          1      1 = MINIMUM EGR IS COMMANDED
+          2      1 = EGR IS WITHIN LIMITS
+          3      1 = TCC IS LOCKED UP
+          4      1 = EPR IS CLOSED
+          5      1 = UPDATE BARO PRESSURE AFTER INIT.
+          6      1 = MAX EGR IS COMMANDED
+          7      NOT USED
+    4           DESIRED KPA                     N * 0.5 = KPA
+    5           ACTUAL MEASURED KPA             N * 0.5 = KPA
+    6           EGR SOLENOID PULSE WIDTH        N * 0.9537 = MSC
+    7           VEHICLE SPEED                   N * 0.5 = MPH
+    8           THROTTLE ALPHA
+    9           ANALOG VOLTAGE TO SELECT MODE
+    10          UNSCALED EGR PRESSURE INPUT
+    11          BATTERY VOLTAGE                 N * 0.1 = V
+    12          MALF WORD 1
+          0      MALF CODE 24   VEHICLE SPEED SENSOR
+          1      MALF CODE 23   THOTTLE POSITION SENSOR NOT CALIBRATED
+          2      MALF CODE 22   THROTTLE POSITION SENSOR LOW
+          3      MALF CODE 21   THROTTLE POSITION SENSOR HIGH
+          4      MALF CODE 15   COOLANT TEMPERATURE SENSOR LOW
+          5      MALF CODE 14   COOLANT TEMPERATURE SENSOR HIGH
+          6      NOT DEFINED
+          7      MALF CODE 12   ENGINE SPEED CODE
+    13          MALF WORD 2
+          0      NOT DEFINED
+          1      NOT DEFINED
+          2      NOT DEFINED
+          3      NOT DEFINED
+          4      MALF CODE 33   MAP HI
+          5      MALF CODE 32   EGR LOOP
+          6      MALF CODE 31   MAP LO
+          7      NOT DEFINED
+    14          MALF WORD 3
+          0      NOT DEFINED
+          1      NOT DEFINED
+          2      MALF CODE 53   VREF
+          3      MALF CODE 52   A/D CODE
+          4      MALF CODE 51   PROM ERROR
+          5      NOT DEFINED
+          6      NOT DEFINED
+          7      NOT DEFINED
+    15          PROM ID (MSB)
+    16          PROM ID (LSB)                   (15)*256 + (16) = PROMID
+
+
+
+..page
+

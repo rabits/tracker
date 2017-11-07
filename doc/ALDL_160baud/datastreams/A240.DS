@@ -1,0 +1,216 @@
+
+
+
+                        DATA STREAM A240  SPECIFICATION
+
+
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION TEVES ABS/ASR
+       --------------------------------------------------------
+
+       ABS/ASR USAGE:
+                     1994    2,3,4H 3,4C
+                     1995    3,4G
+*                    1995    2,3,4H 3,4C
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+       DATA PIN  : READ DATA ON PIN "9" OF 16 PIN ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK      = $B1
+
+        MODE 1 (TRANSMIT ALDL DATA LIST)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK      = $AF
+
+
+                THE ABS/ASR CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $5D
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 7
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK      = $A7
+
+                THE ABS/TCS WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK      = $A7
+
+        NORMAL MODE MESSAGE (PCM TO ABS OR ABS/TBS)
+                - MESSAGE ID     = $90
+                - MESSAGE LENGTH = $59
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 4
+                - SUM CHECK
+
+        NORMAL MODE MESSAGE (ABS/TCS TO PCM)
+                - MESSAGE ID     = $91
+                - MESSAGE LENGTH = $59
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 4
+                - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 7
+..HEAD04L ALDL MODE 1 DATA LIST
+WORD #   DATA NAME    DESCRIPTION
+  1      PROGRAM ID (SERVICE PROTOCOL)
+  2      PROGRAM ID (SOFTWARE VERSION)
+  NOTE: IN ALL CASES A VALUE OF 0 EQUALS "CODE NOT SET" AND 1 EQUALS "CODE SET".
+  3      MALFUNCTION CODE FLAG #1
+          7       CODE 21 - FRONT RIGHT SENSOR CIRCUIT OPEN/SHORTED
+          6       CODE 22 - INTERMITTENT SIGNAL, FRONT RIGHT SENSOR
+          5       CODE 23 - MISSING SIGNAL, FRONT RIGHT SENSOR
+          4       NOT USED
+          3       CODE 25 - FRONT LEFT SENSOR CIRCUIT OPEN/SHORTED
+          2       CODE 26 - INTERMITTENT SIGNAL, FRONT LEFT SENSOR
+          1       CODE 27 - MISSING SIGNAL, FRONT LEFT SENSOR
+          0       NOT USED
+  4      MALFUNCTION CODE FLAG #2
+          7       CODE 31 - REAR RIGHT SENSOR CIRCUIT OPEN/SHORTED
+          6       CODE 32 - INTERMITTENT SIGNAL, RIGHT REAR SENSOR
+          5       CODE 33 - MISSING SIGNAL, REAR RIGHT SENSOR
+          4       NOT USED
+          3       CODE 35 - REAR LEFT SENSOR CIRCUIT OPEN/SHORTED
+          2       CODE 36 - INTERMITTENT SIGNAL, REAR LEFT SENSOR
+          1       CODE 37 - MISSING SIGNAL, REAR LEFT SENSOR
+          0       NOT USED
+  5      MALFUNCTION CODE FLAG #3
+          7       CODE 41 - ELECTRICAL DISTURBANCE INLET VALVE
+                                 (CIRCUIT - FRONT RIGHT)
+          6       CODE 42 - ELECTRICAL DISTURBANCE OUTLET VALVE
+                                 (CIRCUIT - FRONT RIGHT)
+          5       CODE 44 - ELECTRICAL DISTURBANCE ISOLATION VALVE SV1
+                                 (CIRCUIT - FRONT LEFT)
+                  NOTE: TCS ONLY
+          4       NOT USED
+          3       CODE 45 - ELECTRICAL DISTURBANCE INLET VALVE
+                                 (CIRCUIT - FRONT LEFT)
+          2       CODE 46 - ELECTRICAL DISTURBANCE OUTLET VALVE
+                                 (CIRCUIT - FRONT LEFT)
+          1       CODE 48 - ELECTRICAL DISTURBANCE ISOLATION VALVE SV2
+                                 (CIRCUIT -FRONT RIGHT)
+                  NOTE: TCS ONLY
+          0        NOT USED
+  6      MALFUNCTION CODE FLAG #4
+          7       CODE 51 - ELECTRICAL DISTURBANCE INLET VALVE
+                                 (CIRCUIT - REAR RIGHT)
+          6       CODE 52 - ELECTRICAL DISTURBANCE OUTLET VALVE
+                                 (CIRCUIT - REAR RIGHT)
+          5       CODE 76 - UART SDL CIRCUIT/SIGNAL
+          4       NOT USED
+          3       CODE 55 - ELECTRICAL DISTURBANCE INLET VALVE
+                                 (CIRCUIT - REAR LEFT)
+          2       CODE 56 - ELECTRICAL DISTURBANCE OUTLET VALVE
+                                 (CIRCUIT - REAR LEFT)
+          1       CODE 77 - DELIVERED TORQUE PWM CIRCUIT/SIGNAL
+                  NOTE: TCS ONLY
+          0       NOT USED
+  7      MALFUNCTION CODE FLAG #5
+          7       NOT USED
+          6       CODE 75 - PCM REQUESTED TCS DISABLE
+                  NOTE: TCS ONLY
+          5       CODE 74 - PMV PRESSURE SWITCH CIRCUIT
+                  NOTE: TCS ONLY
+          4       CODE 62 - PUMP PRESSURE FAULT DURING ABS STOP
+          3       CODE 61 - PUMP MOTOR RUN FAULT
+          2       CODE 71 - CHECKSUM ERROR
+          1       CODE 72 - TRAVEL SWITCH INPUT NOT PROCESSABLE
+          0       CODE 73 - FLUID LEVEL SWITCH INPUT NOT PROCESSABLE
+
+..HEAD02L NORMAL MODE MESSAGE $90
+..HEAD03L NUMBER OF DATA WORDS - 4
+..HEAD04L PCM TO ABS OR ABS/TCS
+WORD #   DATA NAME    DESCRIPTION
+  1      ENGINE RPM
+            RESOLUTION: 25 RPM/BIT
+            RANGE: 0 TO 6375 RPM
+  2      ENGINE IDENTIFIER FOR TCS CALIBRATION
+            3.8L EV6 = $01
+            3.8L SC = $02
+            4.0L NORTHSTAR = $03
+            3.8L ERV6 = $04 (1995 APPLICATION)
+            3.8L ERV6 SC = $05 (PENDING 1996 APPLICATION)
+  3      DELIVERED ENGINE TORQUE VALUE
+            RESOLUTION:.392% (100%/255) PER BIT
+            RANGE: 0 TO 100% TORQUE
+  4      STATUS BITS
+          7       1 = TCS ALLOWED
+          6       1 = TCS NOT FAILED
+          5       1 = TCS ACTIVE
+          4-2     TRANSMISSION GEAR
+                  CODE   DESCRIPTION
+                  ----   -----------
+                   000   REVERSE
+                   001   FIRST
+                   010   SECOND
+                   011   THIRD
+                   100   FOURTH
+                   101   N/A (FIFTH)
+                   110   N/A (SIXTH)
+                   111   PARK/NEUTRAL
+          1       1 = TCC LOCKED
+          0       NOT USED
+
+..HEAD02L NORMAL MODE MESSAGE $91
+..HEAD03L NUMBER OF DATA WORDS - 4
+..HEAD04L ABS/TCS TO PCM
+WORD #   DATA NAME    DESCRIPTION
+  1      VEHICLE SPEED AS COMPUTED BY TCS
+            RESOLUTION:1 KPH
+            RANGE: 0 TO 255 KPH
+  2      STATUS BITS
+          7       1 = BRAKE LIGHTS ON, SWITCH CLOSED
+          6       1 = PEDAL TRAVEL SW OPEN
+          5       1 = ABS ACTIVE
+          4       1 = ABS INHIBITED
+          3       1 = TCS EQUIPPED (IPC EAVESDROP)
+          2       NOT USED
+          1       NOT USED
+          0       NOT USED
+  3      REQUESTED ENGINE TORQUE VALUE
+            RESOLUTION: .392% (100%/255) PER BIT
+            RANGE: 0 TO 100% TORQUE
+  4      STATUS BITS
+          7       1 = TCS FAILED
+          6       1 = TCS ACTIVE (IPC EAVESDROP)
+          5       1 = LT RR WHEEL SPEED SENSOR NOT FAILED
+          4       1 = RT RR WHEEL SPEED SENSOR NOT FAILED
+          3       1 = TCS ALLOWED
+          2       1 = ILLUMINATE "TCS OFF" TELLTALE (IPC EAVESDROP)
+          1       NOT USED
+          0       NOT USED
+
+

@@ -1,0 +1,78 @@
+
+
+ RPO    DISP       VIN       BODY            D/S         D/S DESCRIPTION
+------------------------------------------------------------------------------------
+
+*L26    4.9L       VIN = B   6K              A228        CARRY OVER DATA STREAM
+
+*L37    4.6L       VIN = 9   6E,K            A254        CARRY OVER DATA STREAM
+*LD8    4.6L       VIN = Y   6E,K,Ksp        A254        CARRY OVER DATA STREAM
+
+*L47    4.0L       VIN = C   3G              A255        NEW BUT ALMOST THE SAME AS A254
+
+*L27    3.8L       VIN = L   3,4H,4W         A221        CARRY OVER DATA STREAM
+*L67    3.8L S.C.  VIN = 1   2H,3,4C,4G      A221        CARRY OVER DATA STREAM
+*L36    3.8L       VIN = K   2H,3C,H         A280        NEW DATA STREAM
+                             4C,G,H
+
+*LD2    2.3L       VIN = D   2N 3N           A222        CARRY OVER DATA STREAM
+*LN2    2.2L       VIN = 4   1J,L,W 3A 4A    A269        CARRY OVER DATA STREAM
+
+
+
+*L82    3.1L       VIN = M   1L              A277        NEW DATA STREAM
+*L82    3.1L       VIN = M   2,3,4N          A259        CARRY OVER DATA STREAM
+*L82    3.1L       VIN = M   1,2,3,4W        A260        CARRY OVER DATA STREAM  4T60E TRANS
+*L82    3.1L       VIN = M   1,2,3,4W        A261        CARRY OVER DATA STREAM  AUTO 3 SPEED
+
+*L32    3.4L       VIN = S   1F 2F           A278        NEW DATA STREAM
+
+*L82    3.1L       VIN = M   3A, 4A          A263        CARRY OVER DATA STREAM
+*LQ1    3.4L       VIN = X   1W 2W 3W        A264        CARRY OVER DATA STREAM
+
+*LT5    5.7L       VIN = J   1Y              A207        CARRY OVER DATA STREAM
+
+*LT1    5.7L       VIN = P   1Y 1,2F 1,4B 6D A223        CARRY OVER DATA STREAM
+*L99    4.3L       VIN = W   1B              A223        CARRY OVER DATA STREAM
+
+
+ TRUCK:
+
+ RPO    DISP       VIN       BODY            D/S         D/S DESCRIPTION
+-------------------------------------------------------------------------------------
+*LG6    3.1L       VIN = D   U               A136        CARRY OVER DATA STREAM
+
+*L27    3.8L(3800) VIN = L   U               A221        NEW DATA STREAM
+
+*LB4    4.3L       VIN = Z   P(HD)           A107        CARRY OVER DATA STREAM
+
+*LS0    6.0L       VIN = P   GMT530          A137        CARRY OVER DATA STREAM
+*LR0    7.0L       VIN = M   GMT530          A137        CARRY OVER DATA STREAM
+
+*L03    5.0L       VIN = H   C,K   (MAN)     A179        CARRY OVER DATA STREAM
+*L05    5.7L       VIN = K   C,K,P (MAN)     A179        CARRY OVER DATA STREAM
+
+
+*LB4    4.3L       VIN = Z   C,K,G,P         A219/A220   CARRY OVER DATA STREAM
+*L05    5.7L       VIN = K   C,K,G,P         A219/A220   CARRY OVER DATA STREAM
+*L19    7.4L       VIN = N   C,K,G,P         A219/A220   CARRY OVER DATA STREAM
+*LB4    4.3L       VIN = Z   C,K(HD) (MAN)   A219        CARRY OVER DATA STREAM
+*L19    7.4L       VIN = N   C,K(HD) (MAN)   A219        CARRY OVER DATA STREAM
+
+*L03    5.0L       VIN = H   C,K,G           A217/A218   CARRY OVER DATA STREAM
+*L05    5.7L       VIN = K   C,K,G           A217/A218   CARRY OVER DATA STREAM
+*L35    4.3L       VIN = W   S,T,M,L         A217/A218   CARRY OVER DATA STREAM
+*LB4    4.3L       VIN = Z   G,M,L,S,T,C,K   A217/A218   CARRY OVER DATA STREAM
+*LN2    2.2L       VIN = 4   S               A265/A218   CARRY OVER DATA STREAM
+*LB4    4.3L       VIN = Z   C,K     (MAN)   A217        CARRY OVER DATA STREAM
+
+*LB4    4.3L VCMX  VIN = Z   S/T (MAN)       A192        CARRY OVER DATA STREAM
+
+*L49    6.5L       VIN = P   C,K,G    PCME   A225/A226   CARRY OVER DATA STREAM
+*L56    6.5L TURBO VIN = S   C,K             A225/A226   CARRY OVER DATA STREAM
+*L65    6.5L TURBO VIN = F   C,K,P   (MAN)   A225        CARRY OVER DATA STREAM
+
+*L57    6.5L       VIN = Y   C,K,G    TCM    A268        CARRY OVER DATA STREAM
+
+*L35    4.3L VCMXA VIN = W   S/T             A309        NEW DATA STREAM
+

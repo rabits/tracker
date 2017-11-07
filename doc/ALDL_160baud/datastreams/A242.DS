@@ -1,0 +1,394 @@
+                        DATA STREAM A242  SPECIFICATION
+
+
+..PAGE
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   94' REDESIGN DERM (SIR) DRIVER OR DRIVER/PASSENGER
+   USAGE:
+         1993  M/L
+         1994  3,4C 2,3,4H 3,4A 2,3,4N 1,2,3U 1Y
+               1,2F 6E 6K,Ksp 1L 3,4W G-VAN M/L TRUCK
+         1995  3,4G
+*        1995  1,2F 1L 3,4A 2,3,4N 1,2,3U 1Y
+               M,L,S,T,G TRUCK
+   DATA PIN: READ DATA ON PIN "M" OF ALDL CONNECTOR
+   DATA PIN: READ DATA ON PIN "9" OF 16 PIN ALDL CONNECTOR
+
+   BAUD RATE: 8192
+
+
+..PAGE
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 0)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - CHECKSUM
+
+        THE DERM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $80
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 41
+        - CHECKSUM
+
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 1)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $01
+        - CHECKSUM
+
+        THE DERM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $5C
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 5
+        - CHECKSUM
+
+
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 3)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $03
+        - CHECKSUM
+
+        THE DERM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $5C
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $03
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 5
+        - CHECKSUM
+
+MODE 10 (CLEAR MALFUNCTION CODES - TESTER TO DERM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+        THE DERM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 41
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 0
+WORD    DESCRIPTION
+
+ 1      NOT USED
+ 2      NOT USED
+ 3      NOT USED
+ 4      DRIVER SOURCE
+          VOLTS = N/6.4
+ 5      PASS. SOURCE
+          VOLTS = N/6.4
+ 6      DRIVER  VDIF
+          mV = N/.256
+ 7      DRIVER LOW
+          VOLTS = N/6.4
+ 8      DRIVER 36VLR
+          VOLTS = N/6.4
+ 9      IGNITION
+          VOLTS = N/12.8
+ 10     PASS. VDIF
+          mV = N/.256
+ 11     PASS. LOW
+          VOLTS = N/6.4
+ 12     PASS. 36VLR
+          VOLTS = N/6.4
+ 13     PORT D DISCRETES
+         0   NOT USED
+         1   NOT USED
+         2   NOT USED
+         3   NOT USED
+         4   HYBRID INFL PRES                   0 = LOW PRESSURE  1 = NORMAL
+         5   PASS. SEATBELT                     1 = BUCKLED       0 = UNBUCKLED
+         6   NOT USED
+         7   NOT USED
+ 14     PORT C DISCRETES
+         0   WARNING LAMP FBK                 1 = LAMP ON
+         1   DRIVER SEATBELT                  1 = BUCKLED    0 = UNBUCKLED
+         2   NOT USED
+         3   NOT USED
+         4   CRANK                            1 = INACTIVE   0 = ACTIVE
+         5   1ST LAMP DRIVER                  1 = ON         0 = OFF
+         6   NOT USED
+         7   2ND LAMP DRIVER                  1 = ON         0 = OFF
+ 15     NOT USED
+ 16     PORT A DISCRETES
+         0   ARMING SENSOR                    1 = OPEN       0 = CLOSED
+         1   DISCR SENSORS  Ä¿                1 = OPEN       0 = CLOSED
+         2   DEPLOY COMMAND  ÃÄ logic or      1 = INACTIVE   0 = ACTIVE
+         3   DISCR SENSORS  ÄÙ                1 = OPEN       0 = CLOSED
+         4   NOT USED
+         5   NOT USED
+         6   BACKUP WARNING                   1 = ON         0 = OFF
+         7   DEPLOY COMMANDED                 1 = INACTIVE   0 = ACTIVE
+ 17     DERM STATUS BYTE A
+         0   DERM CONFIG                      SEE CONFIGURATION TABLE
+         1   DERM CONFIG                      SEE CONFIGURATION TABLE
+         2   NOT USED
+         3   CLOCKSPG CONFIG                  1 = OPEN       0 = CLOSED
+         4   NOT USED
+         5   DRIV. SBELT MON.                 1 = ENABLE     0 = DISABLE
+         6   PASS. SBELT MON.                 1 = ENABLE     0 = DISABLE
+         7   HYBRID INFL SW.                  1 = ENABLE     0 = DISABLE
+
+     CONFIGURATION TABLE
+     -------------------
+      B1 B0  CONFIG
+      -- --  ------
+      0  0   DRIVER/PASSENGER
+      0  1   DRIVER ONLY
+      1  0   SERVICE
+      1  1   NOT ALLOWED
+
+ 18     DERM STATUS BYTE B
+         0   NOT USED
+         1   NOT USED
+         2   NOT USED
+         3   NOT USED
+         4   NOT USED
+         5   SD TELLTALE                      1 = ENABLE     0 = DISABLE
+         6   NOT USED
+         7   NOT USED
+ 19     ACTIVE FAULT CODE WORD 1
+         7   FAULT CODE 14
+         6   FAULT CODE 15
+         5   FAULT CODE 16
+         4   FAULT CODE 17
+         3   FAULT CODE 18
+         2   FAULT CODE 19
+         1   FAULT CODE 21
+         0   FAULT CODE 22
+ 20     ACTIVE FAULT CODE WORD 2
+         7   FAULT CODE 23
+         6   FAULT CODE 24
+         5   FAULT CODE 25
+         4   FAULT CODE 26
+         3   FAULT CODE 28
+         2   FAULT CODE 31
+         1   FAULT CODE 34
+         0   FAULT CODE 35
+ 21     ACTIVE FAULT CODE WORD 3
+         7   FAULT CODE 36
+         6   FAULT CODE 37
+         5   FAULT CODE 42
+         4   FAULT CODE 43
+         3   FAULT CODE 44
+         2   FAULT CODE 51
+         1   FAULT CODE 52
+         0   FAULT CODE 53
+ 22     ACTIVE FAULT CODE WORD 4
+         7   FAULT CODE 54
+         6   FAULT CODE 55
+         5   FAULT CODE 61
+         4   FAULT CODE 62
+         3   FAULT CODE 71
+         2   FAULT CODE 73
+         1   FAULT CODE 74
+         0   FAULT CODE 75
+ 23     ACTIVE FAULT CODE WORD 5
+         7   FAULT CODE 76
+         6   FAULT CODE 81
+         5   FAULT CODE 82
+         4   FAULT CODE NOT USED
+         3   FAULT CODE NOT USED
+         2   FAULT CODE NOT USED
+         1   FAULT CODE NOT USED
+         0   FAULT CODE NOT USED
+ 24     NOT USED
+ 25     NOT USED
+ 26     NOT USED
+ 27     NOT USED
+ 28     NOT USED
+ 29     HISTORY FAULT CODE WORD 1
+         7   FAULT CODE 14
+         6   FAULT CODE 15
+         5   FAULT CODE 16
+         4   FAULT CODE 17
+         3   FAULT CODE 18
+         2   FAULT CODE 19
+         1   FAULT CODE 21
+         0   FAULT CODE 22
+ 30     HISTORY FAULT CODE WORD 2
+         7   FAULT CODE 23
+         6   FAULT CODE 24
+         5   FAULT CODE 25
+         4   FAULT CODE 26
+         3   FAULT CODE 28
+         2   FAULT CODE 31
+         1   FAULT CODE 34
+         0   FAULT CODE 35
+ 31     HISTORY FAULT CODE WORD 3
+         7   FAULT CODE 36
+         6   FAULT CODE 37
+         5   FAULT CODE 42
+         4   FAULT CODE 43
+         3   FAULT CODE 44
+         2   FAULT CODE 51
+         1   FAULT CODE 52
+         0   FAULT CODE 53
+ 32     HISTORY FAULT CODE WORD 4
+         7   FAULT CODE 54
+         6   FAULT CODE 55
+         5   FAULT CODE 61
+         4   FAULT CODE 62
+         3   FAULT CODE 71
+         2   FAULT CODE 73
+         1   FAULT CODE 74
+         0   FAULT CODE 75
+ 33     HISTORY FAULT CODE WORD 5
+         7   FAULT CODE 76
+         6   FAULT CODE 81
+         5   FAULT CODE 82
+         4   FAULT CODE 83
+         3   FAULT CODE 84
+         2   FAULT CODE NOT USED
+         1   FAULT CODE NOT USED
+         0   FAULT CODE NOT USED
+ 34     NOT USED
+ 35     NOT USED
+ 36     NOT USED
+ 37     NOT USED
+ 38     NOT USED
+ 39     DRIVER RESIST.
+         OHMS = N/10
+ 40     PASS. RESIST.
+         OHMS = N/10
+ 41     ROM ID
+         7   NOT USED
+         6-0 SEQUENTIAL NUMBER OF LIBRARY RELEASE
+              $06 = PROTOTYPE
+              $87 = PILOT
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 5
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 1
+WORD    DESCRIPTION
+
+ 1      ACTIVE FAULT CODE WORD 1
+         7   FAULT CODE 14
+         6   FAULT CODE 15
+         5   FAULT CODE 16
+         4   FAULT CODE 17
+         3   FAULT CODE 18
+         2   FAULT CODE 19
+         1   FAULT CODE 21
+         0   FAULT CODE 22
+ 2      ACTIVE FAULT CODE WORD 2
+         7   FAULT CODE 23
+         6   FAULT CODE 24
+         5   FAULT CODE 25
+         4   FAULT CODE 26
+         3   FAULT CODE 28
+         2   FAULT CODE 31
+         1   FAULT CODE 34
+         0   FAULT CODE 35
+ 3      ACTIVE FAULT CODE WORD 3
+         7   FAULT CODE 36
+         6   FAULT CODE 37
+         5   FAULT CODE 42
+         4   FAULT CODE 43
+         3   FAULT CODE 44
+         2   FAULT CODE 51
+         1   FAULT CODE 52
+         0   FAULT CODE 53
+ 4      ACTIVE FAULT CODE WORD 4
+         7   FAULT CODE 54
+         6   FAULT CODE 55
+         5   FAULT CODE 61
+         4   FAULT CODE 62
+         3   FAULT CODE 71
+         2   FAULT CODE 73
+         1   FAULT CODE 74
+         0   FAULT CODE 75
+ 5      ACTIVE FAULT CODE WORD 5
+         7   FAULT CODE 76
+         6   FAULT CODE 81
+         5   FAULT CODE 82
+         4   FAULT CODE NOT USED
+         3   FAULT CODE NOT USED
+         2   FAULT CODE NOT USED
+         1   FAULT CODE NOT USED
+         0   FAULT CODE NOT USED
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 5
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 3
+WORD    DESCRIPTION
+
+ 1      HISTORY FAULT CODE WORD 1
+         7   FAULT CODE 14
+         6   FAULT CODE 15
+         5   FAULT CODE 16
+         4   FAULT CODE 17
+         3   FAULT CODE 18
+         2   FAULT CODE 19
+         1   FAULT CODE 21
+         0   FAULT CODE 22
+ 2      HISTORY FAULT CODE WORD 2
+         7   FAULT CODE 23
+         6   FAULT CODE 24
+         5   FAULT CODE 25
+         4   FAULT CODE 26
+         3   FAULT CODE 28
+         2   FAULT CODE 31
+         1   FAULT CODE 34
+         0   FAULT CODE 35
+ 3      HISTORY FAULT CODE WORD 3
+         7   FAULT CODE 36
+         6   FAULT CODE 37
+         5   FAULT CODE 42
+         4   FAULT CODE 43
+         3   FAULT CODE 44
+         2   FAULT CODE 51
+         1   FAULT CODE 52
+         0   FAULT CODE 53
+ 4      HISTORY FAULT CODE WORD 4
+         7   FAULT CODE 54
+         6   FAULT CODE 55
+         5   FAULT CODE 61
+         4   FAULT CODE 62
+         3   FAULT CODE 71
+         2   FAULT CODE 73
+         1   FAULT CODE 74
+         0   FAULT CODE 75
+ 5      HISTORY FAULT CODE WORD 5
+         7   FAULT CODE 76
+         6   FAULT CODE 81
+         5   FAULT CODE 82
+         4   FAULT CODE 83
+         3   FAULT CODE 84
+         2   FAULT CODE NOT USED
+         1   FAULT CODE NOT USED
+         0   FAULT CODE NOT USED
+

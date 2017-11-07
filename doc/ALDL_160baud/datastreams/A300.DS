@@ -1,0 +1,183 @@
+..HEAD02L 1996 CORPORATE SENSING AND DIAGNOSTIC MODULE - SDM-AI
+..FOOT63R A300  PAGE ##
+
+                        DATA STREAM A300  SPECIFICATION
+
+
+..PAGE
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   CORPORATE SENSING AND DIAGNOSTIC MODULE (SDM AI)
+   USAGE:    1995              1M
+
+
+
+   DATA PIN: READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+
+
+..PAGE
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 0)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - CHECKSUM
+
+        THE SDM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $75
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 30
+        - CHECKSUM
+
+MODE 10 (CLEAR MALFUNCTION CODES - TESTER TO SDM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+        THE SDM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+..PAGE
+..HEAD03L ALDL MODE 1 DATA LIST MESSAGE 0
+..HEAD04L NUMBER OF DATA WORDS - 30
+WORD    DESCRIPTION
+
+ 1      IGNITION
+          VOLTS = N/12.75
+ 2      SENSELO
+          VOLTS = N/10.2
+ 3      36 VLR
+          VOLTS = N/10.2
+ 4      DRIVER VDIF
+          mV = N/.512
+ 5      PASS. VDIF
+          mV = N/.512
+ 6      NOT USED
+ 7      NOT USED
+ 8      NOT USED
+ 9      NOT USED
+ 10     NOT USED
+ 11     NOT USED
+ 12     DRIVER RESIST.
+          OHMS = N/38.4
+ 13     PASS. RESIST.
+          OHMS = N/38.4
+ 14     NOT USED
+ 15     ACTIVE FAULT CODE WORD 1
+         7   FAULT CODE 15
+         6   FAULT CODE 16
+         5   FAULT CODE 17
+         4   FAULT CODE 18
+         3   FAULT CODE 19
+         2   FAULT CODE 21
+         1   FAULT CODE 22
+         0   FAULT CODE 24
+..PAGE
+ 16     ACTIVE FAULT CODE WORD 2
+         7   FAULT CODE 25
+         6   FAULT CODE 26
+         5   FAULT CODE 35
+         4   FAULT CODE 36
+         3   FAULT CODE 37
+         2   FAULT CODE 38
+         1   FAULT CODE 39
+         0   FAULT CODE 40
+ 17     ACTIVE FAULT CODE WORD 3
+         7   FAULT CODE 51
+         6   FAULT CODE 53
+         5   FAULT CODE 61
+         4   FAULT CODE 71
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 18     HISTORY FAULT CODE WORD 1
+         7   FAULT CODE 15
+         6   FAULT CODE 16
+         5   FAULT CODE 17
+         4   FAULT CODE 18
+         3   FAULT CODE 19
+         2   FAULT CODE 21
+         1   FAULT CODE 22
+         0   FAULT CODE 24
+ 19     HISTORY FAULT CODE WORD 2
+         7   FAULT CODE 25
+         6   FAULT CODE 26
+         5   FAULT CODE 35
+         4   FAULT CODE 36
+         3   FAULT CODE 37
+         2   FAULT CODE 38
+         1   FAULT CODE 39
+         0   FAULT CODE 40
+ 20     HISTORY FAULT CODE WORD 3
+         7   FAULT CODE 51
+         6   FAULT CODE 53
+         5   FAULT CODE 61
+         4   FAULT CODE 71
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 21          NOT USED
+ 22          NOT USED
+..PAGE
+ 23     ROM ID
+          ID = N
+ 24     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   ADS                               1 = ACTIVE       0 = INACTIVE
+ 25     DISCRETE STATUS
+         7  NOT USED
+         6  NOT USED
+         5  NOT USED
+         4  NOT USED
+         3  NOT USED
+         2  RAM                                1 = ACTIVE       0 = INACTIVE
+         1  ROM                                1 = ACTIVE       0 = INACTIVE
+         0  TEST                               1 = ACTIVE       0 = INACTIVE
+ 26     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   DRIVER SEATBELT                   1 = BUCKLED      0 = UNBUCKLED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   BACKUP WARNING                    1 = ENABLED      0 = DISABLED
+ 27     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 28     PLATFORM ID
+          ID = N
+ 29     CAL LEVEL
+          LEVEL = N
+ 30     NOT USED
+

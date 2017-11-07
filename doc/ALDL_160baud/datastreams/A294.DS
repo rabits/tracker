@@ -1,0 +1,430 @@
+..HEAD02L 1995 SMART CLUSTER DATA DEFINITION
+..FOOT63C PAGE ##
+
+
+
+
+                        DATA STREAM A294  SPECIFICATION
+
+
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       IPC USAGE:
+               1995    1,2J
+
+
+
+       DATA PIN  : READ DATA ON PIN "9" OF 16 PIN DLC
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+        IPC OVERVIEW
+        ------------
+          The IPC is the master of  ALDL. When an ALDL tester is used
+          to gather ALDL data, it should gain master ship of ALDL by issuing
+          a mode 8 to the IPC. Once the tester has gained mastership, it's the
+          testers responsibility to schedule and command normal mode messages
+          from the IPC to maintain normal system functionality while gathering
+          ALDL data from any module on the data link.
+
+ NOTE: THE IPC REQUIRES 10MS MINIMUM OF NON-UART ACTIVITY AFTER RECEIPT OF THE
+       FINAL BYTE OF A NORMAL MESSAGE THAT RESULTED FORM A MODE 7 COMMAND.
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+        MODE 1 MESSAGE 0 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $00
+                - CHECK SUM
+
+                THE IPC WILL RESPOND WITH MODE 1:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5B
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 5
+                - CHECK SUM
+
+        MODE 1 MESSAGE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $01
+                - CHECK SUM
+
+                THE IPC WILL RESPOND WITH MODE 1:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5E
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 8
+                - CHECK SUM
+
+        MODE 1 MESSAGE 2 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $02
+                - CHECK SUM
+
+                THE IPC WILL RESPOND WITH MODE 1:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $5F
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 9
+                - CHECK SUM
+
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - MESSAGE CODE
+                - CHECKSUM
+
+        THE IPC RESPONDS BY TRANSMITTING THE SELECTED NORMAL MODE MESSAGE
+
+  SCHEDULER TIMING:
+           $40    EVERY 120MS
+           $90    EVERY 3S
+           $A4    EVERY 700MS
+
+
+        MODE 8 (DISABLE NORMAL MODE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - SUM CHECK      =
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - CHECKSUM
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - SUM CHECK
+
+
+..PAGE
+..HEAD03L ALDL MODE 1 MESSAGE 0
+..HEAD04L NUMBER OF DATA WORDS - 5
+ WORD#  DESCRIPTION
+
+ 1      PROM IDENTIFICATION NUMBER (MSB)
+ 2      PROM IDENTIFICATION NUMBER (LSB)
+                        ID = N
+ 3      HISTORY FAIL FLAG 1
+          0    MALF CODE H1 LOSS OF ECM SERIAL DATA
+          1    MALF CODE H2 LOSS OF DERM SERIAL DATA
+          2    MALF CODE H3 LOSS OF ABS SERIAL DATA
+          3    MALF CODE H4 MRD FAILED ENABLE DUE TO BAD RCODE
+          4    MALF CODE H5 MRD: SHORT DETECTED
+          5    MALF CODE H6 MRD: BAD TIMING >= 3 TIMES
+          6    MALF CODE H7 MRD: RCODE UNPROGRAMMED
+          7    MALF CODE H8 NOT USED
+ 4      CURRENT FAIL FLAG 1
+          0    MALF CODE C1 MRD: SHORT DETECTED THIS IGNITION CYCLE
+          1    MALF CODE C2 MRD: BAD RCODE DETECTED THIS IGNITION CYCLE
+          2    MALF CODE C3 MRD: BAD TIMING DETECTED THIS IGNITION CYCLE
+          3    MALF CODE C4 MRD: RCODE UNPROGRAMMED
+          4    MALF CODE C5 MRD: FAIL ENABLE
+          5    MALF CODE C6 NOT USED
+          6    MALF CODE C7 NOT USED
+          7    MALF CODE C8 NOT USED
+
+ 5      CLUSTER CONFIGURATION BYTE                   TABLE A
+          0    SEE TABLE A                           -------
+          1    SEE TABLE A                           B1  B0  STATE
+          2    SEE TABLE B                           ----------------------
+          3    SEE TABLE B                           0   0   CHEVROLET BASE
+          4    0 = DRL (DAY TIME RUNNING LAMPS)      0   1   CHEVROLET GAGE
+          5    1 = CHECK ENGINE LIGHT ON :2.3L       1   0   PONTIAC GAGE
+          6    1 = CHECK ENGINE LIGHT ON :2.2L       1   1   NONE
+          7    NOT USED
+
+                                                     TABLE B
+                                                     -------
+                                                     B3  B2  STATE
+                                                     ----------------------
+                                                     0   0   MANUAL
+                                                     0   1   3 SPEED AUTO
+                                                     1   0   4 SPEED AUTO
+                                                     1   1   NANUAL
+..PAGE
+..HEAD03L ALDL MODE 1 MESSAGE 1
+..HEAD04L NUMBER OF DATA WORDS - 8
+ WORD#  DESCRIPTION
+
+ 1      INPUT SWITCH STATUS
+          0    NOT USED
+          1    NOT USED
+          2    NOT USED
+          3    A/C REQUEST INPUT SWITCH                     1 = REQUESTED
+          4    PARK BRAKE INPUT SWITCH                      1 = APPLIED
+          5    CRANK LOW INPUT SWITCH                       1 = ACTIVE
+          6    NOT USED
+          7    ETS DISABLE INPUT SWITCH (PONTIAC 4SPD AUTO) 0 = OFF 1 = ENGAGED
+
+ 2     I/O STATUS
+          0    NOT USED
+          1    NOT USED
+          2    NOT USED
+          3    NOT USED
+          4    DAY TIME RUNNING LAMP RELAY (CANADIAN)       1 = ACTIVE
+          5    NOT USED
+          6    VTD OPTION                                   1 = PRESENT
+          7    DRL OPTION                                   1 = PRESENT
+
+ 3     FUEL SENDER INPUT (A/D)
+          EMPTY = APPROXIMATELY 0
+ 4     HIGH BEAM INPUT (A/D)
+          HI BEAM = APPROXIMATELY 255
+ 5     LOW BEAM INPUT (A/D)
+          LO BEAM = APPROXIMATELY 255
+ 6     ILLUMINATION DIMMING INPUT (A/D)
+ 7     IGNITION REFERENCE VOLTAGE
+          VOLTS = .0639N
+ 8     VEHICLE SPEED
+          MPH = N
+
+..PAGE
+..HEAD03L ALDL MODE 1 MESSAGE 2
+..HEAD04L NUMBER OF DATA WORDS - 9
+ WORD#  DESCRIPTION
+
+ 1      COOLANT TEMP OFFSET 1
+ 2      COOLANT TEMP OFFSET 2
+ 3      COOLANT TEMP OFFSET 3
+ 4      TACH OFFSET 1
+ 5      TACH OFFSET 2
+ 6      TACH OFFSET 3
+ 7      SPEED OFFSET 1
+ 8      SPEED OFFSET 2
+ 9      SPEED OFFSET 3
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $40
+..HEAD04L
+
+  MESSAGE ID     = $40
+  MESSAGE LENGTH = $5B
+  DATA BYTE 1      BIT STATUS                                TABLE C
+                    0  MINIMUM GEAR REQUESTED. SEE TABLE C   -------
+                    1  MINIMUM GEAR REQUESTED. SEE TABLE C   B2  B1  B0  GEAR
+                    2  MINIMUM GEAR REQUESTED. SEE TABLE C   -----------------
+                    3  1 = EVO HWSS MOVEMENT                 0   0   1   1
+                    4  1 = ENHANCED TRACTION SYSTEM ENABLED  0   1   0   2
+                    5  not used                              0   1   1   3
+                    6  1 = REVERSE ROTATE ACTIVE             1   0   0   4
+                    7  1 = A/C REQUEST ON
+
+  DATA BYTE 2      not used
+  DATA BYTE 3      not used
+  DATA BYTE 4      ENHANCED TRACTION SYSTEM TORQUE REDUCTION REQUEST
+  DATA BYTE 5      FUEL LEVEL INFO A/D
+  DATA BYTE 6      ROUGH ROAD INFO
+  CHECK SUM
+
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $41
+..HEAD04L
+
+  MESSAGE ID     = $41
+  MESSAGE LENGTH = $5E
+  DATA BYTE 1      GAGE TELLTALE STATUS
+                    0  1 = VOLTS TELLTALE ON
+                    1  not used
+                    2  1 = UPSHIFT TELLTALE ON
+                    3  1 = CHECK OIL TELLTALE ON
+                    4  1 = LOW OIL PRESSURE TELLTALE ON
+                    5  1 = LOW COOLANT TELLTALE ON
+                    6  not used
+                    7  1 = COOLANT MALFUNCTION ACTIVE
+
+  DATA BYTE 2      COOLANT TEMPERATURE    øC = .75N - 40
+  DATA BYTE 3      ENGINE SPEED MSB
+  DATA BYTE 4      ENGINE SPEED MSB       RPM = N
+  DATA BYTE 5      BIT STATUS
+                    0  PRNDL STATUS SEE TABLE D
+                    1  PRNDL STATUS SEE TABLE D
+                    2  PRNDL STATUS SEE TABLE D
+                    3  NOT USED
+                    4  NOT USED
+                    5  NOT USED
+                    6  1 = IGNITION 1 OFF
+                    7  REFERENCE SYNC BIT  1 = SYNC'D
+           TABLE D
+           -------
+           B2  B1  B0  J 3-SPD   J 4-SPD    MANUALS
+           ----------------------------------------
+           0   0   0   BLANK     BLANK      BLANK
+           0   0   1   BLANK     1          X
+           0   1   0   1         2          X
+           0   1   1   2         3          X
+           1   0   0   D         D          X
+           1   0   1   N         N          X
+           1   1   0   R         R          X
+           1   1   1   P         P          X
+
+  DATA BYTE 6      BIT STATUS
+                    0  ENGINE TYPE SEE TABLE E
+                    1  ENGINE TYPE SEE TABLE E
+                    2  ENGINE TYPE SEE TABLE E
+                    3  = 0
+                    4  TRANSMISSION TYPE SEE TABLE F
+                    5  TRANSMISSION TYPE SEE TABLE F
+                    6  = 0
+                    7  = 0
+       TABLE E                                 TABLE F
+       -------                                 -------
+       B2  B1  B0  ENGINE                      B5  B4  TRANS
+       --------------------                    -------------
+       0   0   0   NOT USED                    0   0   INVALID
+       0   0   1   L06                         0   1   5 SPD MAN
+       0   1   0   LN2                         1   0   3 SPD AUTO
+       0   1   1   INVALID                     1   1   4 SPD AUTO
+       1   0   0   LD2
+       1   0   1   INVALID
+
+  DATA BYTE 7      BIT STATUS
+                    0  ACTUAL GEAR SEE TABLE G
+                    1  ACTUAL GEAR SEE TABLE G
+                    2  ACTUAL GEAR SEE TABLE G
+                    3  1 = ETS UPSHIFT ONLY
+                    4  1 = ETS ENABLED
+                    5  1 = REDUCED SPARK AUTHORITY    0 = NORMAL
+                    6  1 = NVM FAILED
+                    7  NOT USED
+       TABLE G
+       -------
+       B2  B1  B0  GEAR
+       -------------------------
+       0   0   0   REVERSE
+       0   0   1   GEAR 1
+       0   1   0   GEAR 2
+       0   1   1   GEAR 3
+       1   0   0   GEAR 4
+       1   0   1   GEAR 5 MANUAL
+       1   1   0   GEAR 6 MANUAL
+       1   1   1   PARK/NEUTRAL
+
+  DATA BYTE 8      DELIVERED TORQUE INDICATION
+  DATA BYTE 9      F-TERMINAL A/D VOLTAGE(DUTY CYCLE INDICATION)
+  CHECK SUM
+
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $90
+..HEAD04L
+
+  MESSAGE ID     = $90
+  MESSAGE LENGTH = $56
+  DATA BYTE 1      BIT STATUS
+                    0  NOT USED
+                    1  1 = ETS SWITCH OPEN OR ABSENT
+                    2  1 = PARK BRAKE ENGAGED
+                    3  1 = ENGINE RUN
+                    4  NOT USED
+                    5  NOT USED
+                    6  NOT USED
+                    7  NOT USED
+
+  CHECK SUM
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $91
+..HEAD04L
+
+  MESSAGE ID     = $91
+  MESSAGE LENGTH = $58
+  DATA BYTE 1      BIT STATUS                                TABLE H
+                    0  MINIMUM GEAR REQUESTED. SEE TABLE H   -------
+                    1  MINIMUM GEAR REQUESTED. SEE TABLE H   B2  B1  B0  GEAR
+                    2  MINIMUM GEAR REQUESTED. SEE TABLE H   -----------------
+                    3  1 = EVO HWSS MOVEMENT                 0   0   1   1
+                    4  1 = ENHANCED TRACTION SYSTEM ENABLED  0   1   0   2
+                    5  1 = BRAKE TELLTALE REQUESTED ON       0   1   1   3
+                    6  1 = ABS TELLTALE REQUESTED ON         1   0   0   4
+                    7  1 = ETS OFF TELL TALE REQUESTED ENABLE
+
+  DATA BYTE 2      TORQUE REDUCTION REQUESTED (PERCENT)
+  DATA BYTE 3      ROUGH ROAD INFO
+  CHECK SUM
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $A4
+..HEAD04L
+
+  MESSAGE ID     = $A4
+  MESSAGE LENGTH = $56
+  DATA BYTE 1      BIT STATUS
+                    0  1 = SIR LED DIAGNOSTICS OK
+                    1  = 0
+                    2  = 0
+                    3  1 = SMART CLUSTER APPLICATION
+                    4  = 0
+                    5  = 0
+                    6  = 0
+                    7  = 0
+
+  CHECK SUM
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $A5
+..HEAD04L
+
+  MESSAGE ID     = $A5
+  MESSAGE LENGTH = $56
+  DATA BYTE 1      BIT STATUS
+                    0  1 = SIR TELLTALE REQUESTED ON
+                    1  NOT USED
+                    2  1 = SEAT BELT LATCHED
+                    3  NOT USED
+                    4  NOT USED
+                    5  NOT USED
+                    6  NOT USED
+                    7  NOT USED
+
+  CHECK SUM
+..PAGE
+..HEAD03L NORMAL MODE MESSAGE $30
+..HEAD04L
+
+  MESSAGE ID     = $30
+  MESSAGE LENGTH = $57
+  DATA BYTE 1      DIMMING VOLTAGE  VOLTS = .06392N
+  DATA BYTE 2      IGNITION VOLTAGE  VOLTS = .06392N
+  CHECK SUM
+
+

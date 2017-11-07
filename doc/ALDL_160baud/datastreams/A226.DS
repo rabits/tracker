@@ -1,0 +1,630 @@
+
+
+
+
+
+
+
+
+                        DATA STREAM A226  SPECIFICATION
+
+
+
+
+..PAGE
+
+       SPECIFICATIONS FOR TRANSMISSION CONTROL DATA STREAM INFORMATION
+       ---------------------------------------------------------------
+       PCME TCM USAGE:
+            L49    PFI  6.5L         VIN = P  1994  C,K,G   4L60E/MANUAL TRANS.
+            L56    PFI  6.5L TURBO   VIN = S  1994  C,K
+         *  L49    PFI  6.5L         VIN = P  1995  C,K,G   4L60E/MANUAL TRANS.
+         *  L56    PFI  6.5L TURBO   VIN = S  1995  C,K     4L80E
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM) MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $92
+                - MODE           = $01
+                - MESSAGE        = $00
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 59
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM) MESSAGE 1
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $01
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $91
+                - MODE           = $01
+                - MESSAGE        = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 58
+                - SUM CHECK
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 59
+..HEAD04L ALDL MODE 1 DATA LIST 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1      CURMALF1     CURRENT MALFUNCTION WORD 1
+            0     MALF CODE 21  PEDAL POSITION 1 INPUT HIGH
+            1     MALF CODE 19  CRANK POSITION SENSOR FAULT
+            2     MALF CODE 18  ONCE PER CAM LOBE SENSOR FAULT
+            3     MALF CODE 17  HIGH RESOLUTION SENSOR FAULT
+            4     MALF CODE 16  DIGITAL RATIO ADAPTER FAULT
+            5     MALF CODE 15  COOLANT TEMPERATURE SENSOR LOW
+            6     MALF CODE 14  COOLANT TEMPERATURE SENSOR HIGH
+            7     MALF CODE 13  ENGINE SHUT OFF DRIVER FAULT
+  2      CURMALF2     CURRENT MALFUNCTION WORD 2
+            0     MALF CODE 29  GLOW PLUG RELAY FAULT
+            1     MALF CODE 28  TRANS PRESSURE SWITCH MANIFOLD
+            2     MALF CODE 27  PEDAL POSITION 2 IN RANGE FAULT
+            3     MALF CODE 26  PEDAL POSITION 2 INPUT LOW
+            4     MALF CODE 25  PEDAL POSITION 2 INPUT HIGH
+            5     MALF CODE 24  TRANS OUTPUT SPEED LOW
+            6     MALF CODE 23  PEDAL POSITION 1 IN RANGE FAULT
+            7     MALF CODE 22  PEDAL POSITION 1 INPUT LOW
+  3      CURMALF3     CURRENT MALFUNCTION WORD 3
+            0     MALF CODE 38  BRAKE STUCK OFF
+            1     MALF CODE 37  BRAKE STUCK ON
+            2     MALF CODE 36  RESPONSE TIME TOO LONG
+            3     MALF CODE 35  RESPONSE TIME TOO SHORT
+            4     MALF CODE 34  INJECTION PUMP TIMING STEPPER MOTOR
+            5     MALF CODE 33  MANIFOLD AIR PRESSURE INPUT HIGH
+            6     MALF CODE 32  EGR ERROR
+            7     MALF CODE 31  MANIFOLD AIR PRESSURE INPUT LOW
+  4      CURMALF4     CURRENT MALFUNCTION WORD 4
+            0     MALF CODE 47  AIR TEMPERATURE SENSOR HIGH
+            1     MALF CODE 46  SERVICE ENGINE SOON LIGHT OUTPUT
+            2     MALF CODE 45  EGR VENT OUTPUT FAILED
+            3     MALF CODE 44  EGR PULSE WIDTH OUTPUT FAILED
+            4     MALF CODE 43  FUEL TEMPERATURE LOW (HIGH VOLTAGE)
+            5     MALF CODE 42  FUEL TEMPERATURE HIGH (LOW VOLTAGE)
+            6     MALF CODE 41  BRAKE SWITCH TEST FAIL
+            7     MALF CODE 39  TCC STUCK OFF
+  5      CURMALF5     CURRENT MALFUNCTION WORD 5
+            0     MALF CODE 56  INJECTION PUMP CALIBRATION RESISTOR
+            1     MALF CODE 55  PCM A/D FAULT
+            2     MALF CODE 54  TIO FAULT
+            3     MALF CODE 53  SYSTEM VOLTAGE HIGH
+            4     MALF CODE 52  SYSTEM VOLTAGE HIGH-LONG TEST
+            5     MALF CODE 51  PROM ERROR
+            6     MALF CODE 49  SERVICE THROTTLE SOON LIGHT ERROR
+            7     MALF CODE 48  AIR TEMPERATURE SENSOR LOW
+  6      CURMALF6     CURRENT MALFUNCTION WORD 6
+            0     MALF CODE 65  PEDAL POSITION 3 IN RANGE FAULT
+            1     MALF CODE 64  PEDAL POSITION 3 INPUT LOW
+            2     MALF CODE 63  PEDAL POSITION 3 INPUT HIGH
+            3     MALF CODE 62  TURBO (COMPRESSOR) BOOST PRESSURE LO
+            4     MALF CODE 61  TURBO (COMPRESSOR) BOOST PRESSURE HI
+            5     MALF CODE 59  TRANS TEMP LOW
+            6     MALF CODE 58  TRANS TEMP HIGH
+            7     MALF CODE 57  PCM 5 VOLT SHORTED
+  7      CURMALF7     CURRENT MALFUNCTION WORD 7
+            0     MALF CODE 74  TRANS INPUT SPEED (R2 ONLY)
+            1     MALF CODE 73  FORCE MOTOR CURRENT
+            2     MALF CODE 72  TRANS OUTPUT SPEED LOSS
+            3     MALF CODE 71  SET/COAST SWITCH FAULT
+            4     MALF CODE 69  TCC STUCK ON
+            5     MALF CODE 68  TRANSMISSION COMPONENT SLIPPING
+            6     MALF CODE 67  TCC ENABLE SOLENOID FAILURE (X1R)
+            7     MALF CODE 66  3-2 DS SOLENOID FAILURE (X1R ONLY)
+  8      CURMALF8     CURRRNT MALFUNCTION WORD 8
+            0     MALF CODE 83  TCC FAULT
+            1     MALF CODE 82  SHIFT A FAULT
+            2     MALF CODE 81  SHIFT B FAULT
+            3     MALF CODE 79  TRANSMISSION HOT
+            4     MALF CODE 78  TURBO WASTEGATE ERROR
+            5     MALF CODE 77  MNP SWITCH
+            6     MALF CODE 76  RESUME/ACCEL SWITCH FAULT
+            7     MALF CODE 75  SYSTEM VOLTAGE LOW
+  9      CURMALF9     CURRENT MALFUNCTION WORD 9
+            0     MALF CODE 92  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 2
+            1     MALF CODE 91  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 1
+            2     MALF CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3     MALF CODE 88  TIMING OFFSET ERROR
+            4     MALF CODE 87  HIGH RATIO
+            5     MALF CODE 86  LOW RATIO
+            6     MALF CODE 85  UNDEFINED RATIO/PSM (R2 ONLY)
+            7     MALF CODE 84  NOT USED
+  10     MALFCNTR     CURRENT NUMBER OF MALFUNCTIONS PRESENT
+                       N = NUMBER
+  11     ADVPP1F       PEDAL POSITION 1 SENSOR (FILTERED VALUE)
+                       VOLTS = N * 5/255
+  12     ADVPP1F       PEDAL POSITION 2 SENSOR (FILTERED VALUE)
+                       VOLTS = (256 - N)5/255
+  13     ADVPP1F       PEDAL POSITION 3 SENSOR (FILTERED VALUE)
+                       VOLTS = (256 - N)5/255
+  14     ADVTHROT     THROTTLE POSITION SENSOR (FINAL SCALED VALUE)
+                       (EITHER ADVPP1,ADVPP2 OR ADVPP3)
+                       %TPS = N/2.56
+  15     TRVSNTPS     SYNTHETIC THROTTLE POSITION
+                       %TPS = N/2.56
+  16     PRESSURE     CURRENT TORQUE SIGNAL PRESSURE
+                       PSI = N
+  17     CURRENT      REFERENCE CURRENT FORCE MOTOR
+                       AMPS = N/51.2
+  18     CURRACT      FORCE MOTOR FEEDBACK CURRENT
+                       AMPS = N/51.2
+  19     FMDC         FORCE MOTOR DUTY CYCLE
+                       % = N/2.56
+  20     PRNDLFLG     PRNDL FLAG
+            0     LOW
+            1     DRIVE 2
+            2     DRIVE 3
+            3     DRIVE 4
+            4     NEUTRAL
+            5     REVERSE
+            6     NOT USED
+            7     NOT USED
+  21     ADBAT        BATTERY VOLTAGE
+                        VOLTS = N/10
+  22     TCCDC        TCC PWM SOLENOID DUTY CYCLE (MSB)
+  23     TCCDC+1      TCC PWM SOLENOID DUTY CYCLE (LSB)
+                       % = N/655.36
+  24     RATIO        TRANSMISSION (INPUT SPEED)/(OUTPUT SPEED)  NI/NO (MSB)
+  25     RATIO+1      TRANSMISSION (INPUT SPEED)/(OUTPUT SPEED)  NI/NO (LSB)
+                       RATIO = N/16384
+  26     GEAR         CURRENT GEAR OF TRANSMISSION
+                       GEAR = N + 1
+  27     CURADPT      CURRENT ADAPTIVE MODIFIER
+                       MODIFIER = N
+  28     CURCELL      CURRENT ADAPTIVE MODIFIER INDEX WITHIN TABLE
+                       CELL = N
+  29     ERROR12      ERROR BETWEEN DESIRED AND ACTUAL SHIFT TIMES FOR LATEST
+                      1-2 UPSHIFT  1=1/32 SEC
+                       SECS. = N/40
+  30     ERROR23      ERROR BETWEEN DESIRED AND ACTUAL SHIFT TIMES FOR LATEST
+                      2-3 UPSHIFT  1=1/32 SEC
+                       SEC = N/40
+  31     SLIP         AMOUNT OF TCC SLIPPAGE (MSB)
+  32     SLIP+1       AMOUNT OF TCC SLIPPAGE (LSB)
+                       RPM = N/8  (N IS SIGNED)
+  33     TIME12       TIME OF LATEST 1-2 UPSHIFT    1=1/32 SEC
+                       SEC = N/40
+  34     TIME23       TIME OF LATEST 2-3 UPSHIFT    1=1/32 SEC
+                       SEC = N/40
+  35     DIFLAGS      BIT STATUS WORD
+            0     1 = BRAKE ON
+            1     1 = AIR CONDITIONING COMPRESSOR ENGAGED
+            2     1 = POWER ENRICHMENT ACTIVE
+            3     NOT USED
+            4     1 = KICKDOWN PATTERN ACTIVE
+            5     1 = FOUR WHEEL DRIVE LOW ACTIVE
+            6     1 = CRUISE  LOW ACTIVE
+            7     1 = DIAGNOSTICS REQUESTED
+  36     IDWPA        IOD PORT A
+            0     GLOW PLUG RELAY            0 = 0PEN    1 = CLOSED
+            1     STEPPER MOTOR INHIBIT      0 = INHIBIT 1 = RUN
+            2     SERVICE THROTTLE LAMP      0 = OFF     1 = ON
+            3     EGR VENT ENABLE            0 = ENABLED 1 = DISABLED
+            4     SHIFTA                     0 = OFF     1 = ON
+            5     SHIFTB                     0 = OFF     1 = ON
+            6     TCC ENABLE                 0 = OFF     1 = ON
+            7     FORCE MOTOR ENABLE         0 = OFF     1 = ON
+  37     IDWPC        IOD PORT C
+            0     ENGINE CRANK RELAY         0 = NOT ENGAGED   1 = ENGAGED
+            1     BRAKE RELAY                0 = OPEN          1 = CLOSED
+            2     BRAKE INVERSE RELAY        0 = OPEN          1 = CLOSED
+            3     PSMX                       0 = OFF           1 = ON
+            4     PSMY                       0 = OFF           1 = ON
+            5     PSMZ                       0 = OFF           1 = ON
+            6     SCSW                       0 = OFF           1 = ON
+            7     RASW                       0 = OPEN          1 = CLOSED
+  38     PROMIDB      TRANSMISSION PROMID (MSB)
+  39     PROMIDB+1    TRANSMISSION PROMID (LSB)
+                       N = PROMID B
+  40     DSSDC        3-2 PWM SOL % DUTY CYCLE
+                       % = N / 2.56
+  41     FAULTFLG     DISCRETE FAULT FLAGS
+            0     1 = SHIFT SOLENOID A DETECTED
+            1     1 = SHIFT SOLENOID B DETECTED
+            2     1 = TCC PWM FAULT DETECTED
+            3     1 = TCC ENABLE FAULT DETECTED
+            4     1 = 3-2 DOWNSHIFT FAULT DETECTED
+            5     NOT USED
+            6     NOT USED
+            7     NOT USED
+  42     SHIFTED      SHIFT WORD
+            0     1 = SLOPE OF DERIVATIVE IS NEGATIVE
+            1     1 = DERIVATIVE SHIFT STARTED
+            2     NOT USED
+            3     NOT USED
+            4     1 = SHIFT HAS STARTED
+            5     1 = 2-4 JUMP SHIFT WHEN PRNDL = D3
+            6     NOT USED
+            7     1 = SHIFT IS COMPLETE
+  43     COOLDEGA     NORMALIZED ENGINE TEMPERATURE check for N
+                       DEGC = (N * .75) - 40
+                       DEGF = (N * 1.35) - 40
+  44     TRANSDEGA    NORMALIZED TRANSMISSION FLUID TEMPERATURE
+                       DEGC = (N * .75) - 40
+                       DEGF = (N * 1.35) - 40
+  45     TCCSTAT      TCC MODE WORD FLAGS
+            0     1 = RANGE CONTINGENCY FORCED TCC OFF
+            1     1 = MINIMUM THROTTLE CONTINGENCY FORCED TCC OFF
+            2     NOT USED
+            3     1 = BRAKE ON FORCED TCC OFF
+            4     1 = NEGATIVE DELTA THROTTLE FORCED TCC OFF
+            5     1 = TCC IS IN LOCK-ADJUST MODE
+            6     1 = AC CONTINGENCY FORCED TCC OFF
+            7     1 = SLIP CONTINGENCY FORCED TCC OFF
+  46     ADAPTABL     ADAPTABILITY STATUS
+            0     1 = ADAPTABLE SHIFT IN PROGRESS
+            1     1 = HOT MODE
+            2     1 = THROTTLE OUT OF RANGE
+            3     1 = LONG SHIFT BEFORE ADAPT
+            4     1 = VEHICLE SPEED CHANGED TO MUCH
+            5     1 = ADAPT CELL AT MAXIUM VALUE
+            6     1 = LAST LOOP WAS STANDARD ADAPT
+            7     1 = THROTTLE CHANGED TOO MUCH
+  47     TEMPMW       TEMPERATURE STATUS MODE WORD
+            0     1 = COLD TEMPERATURE THRESHOLD
+            1     1 = HOT TEMPERATURE THRESHOLD
+            2     1 = HOT ENGINE TEMPERATURE
+            3     NOT USED
+            4     NOT USED
+            5     NOT USED
+            6     NOT USED
+            7     NOT USED
+  48     NE           ENGINE SPEED(MSB)
+  49     NE+1         ENGINE SPEED(LSB)
+                       RPM = N/8
+  50     NI           TRANSMISSION INPUT SPEED (MSB)
+  51     NI+1         TRANSMISSION INPUT SPEED (LSB)
+                       RPM = N/8
+  52     NT           FILTERED TURBINE SPEED (MSB)
+  53     NT+1         FILTERED TURBINE SPEED (LSB)
+                       RPM = N/8
+  54     VEHSPEED     VEHICLE SPEED (FILTERED)
+                       MPH = N/2
+  55     CRVVEHSP     VEHICLE SPEED (MSB)
+  56     CRVVEHSP     VEHICLE SPEED (LSB)
+                       MPH = N
+  57     NORAWA       RAW OUTPUT SPEED(MSB)
+  58     NORAWA+1     RAW OUTPUT SPEED(LSB)
+                       RPM = N/8
+  59     STATUS       SYSTEM STATUS WORD
+            0     1 = FM SHUT OFF DUE TO LOW BATTERY
+            1     NOT USED
+            2     1 = FORCE MOTOR PULSE IN PROGRESS
+            3     1 = POWER IS ON (IGN1 > TRESHOLD)
+                  1 = NV RAM UPDATING IS ALLOWED
+            4     1 = COP2 IS BEING SERVICED
+            5     NOT USED
+            6     1 = DELCO INSTRUMENTATION PROM IS PRESENT
+            7     1 = POWERTRAIN IS IN MOTION (SOME SPEED <> 0)
+
+
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 58
+..HEAD04L ALDL MODE 1 DATA LIST 1
+WORD #   DATA NAME    DESCRIPTION
+
+  1      EADPT2       PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  2      EADPT2+1     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  3      EADPT2+2     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  4      EADPT2+3     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  5      EADPT2+4     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  6      EADPT2+5     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  7      EADPT2+6     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  8      EADPT2+7     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  9      EADPT2+8     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  10     EADPT2+9     PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  11     EADPT2+10    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  12     EADPT2+11    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  13     EADPT2+12    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  14     EADPT2+13    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  15     EADPT2+14    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                       PSI = N/4
+  16     EADPT2+15    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                        PSI = N/4
+  17     EADPT2+16    PRESSURE MODIFIER (ADAPTIVE) - 2nd GEAR
+                        PSI = N/4
+  18     EADPT3       PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  19     EADPT3+1     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  20     EADPT3+2     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  21     EADPT3+3     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  22     EADPT3+4     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  23     EADPT3+5     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  24     EADPT3+6     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  25     EADPT3+7     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  26     EADPT3+8     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  27     EADPT3+9     PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  28     EADPT3+10    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  29     EADPT3+11    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  30     EADPT3+12    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  31     EADPT3+13    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  32     EADPT3+14    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                       PSI = N/4
+  33     EADPT3+15    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                        PSI = N/4
+  34     EADPT3+16    PRESSURE MODIFIER (ADAPTIVE) - 3RD GEAR
+                        PSI = N/4
+  35     ADPTSTAT     ADAPTABILITY STATUS
+            0     1 = ADAPTABLE SHIFT IN PROGRESS
+            1     1 = LOW BARO FOR ADAPTABLE SHIFT
+            2     1 = LONGDLY BEFORE SHIFT FOR ADAPT
+            3     1 = LONG SHIFT BEFORE ADAPT
+            4     1 = RUN THROUGH ADAPT
+            5     1 = STANDARD ADAPT
+            6     1 = LAST LOOP WAS STANDARD ADAPT
+            7     NOT USED
+  36     LSTADEL      LAST CHANGE TO ADAPTIVE MODIFIER
+                       PSI = N/4
+  37     CURADPT      CURRENT ADAPTIVE MODIFIER
+                       MODIFIER = N
+  38     CURCELL      CURRENT ADAPTIVE MODIFIER INDEX WITHIN TABLE
+                       CELL = N
+  39     CURMALF1     CURRENT MALFUNCTION WORD 1
+            0     MALF CODE 21  PEDAL POSITION 1 INPUT HIGH
+            1     MALF CODE 19  CRANK POSITION SENSOR FAULT
+            2     MALF CODE 18  ONCE PER CAM LOBE SENSOR FAULT
+            3     MALF CODE 17  HIGH RESOLUTION SENSOR FAULT
+            4     MALF CODE 16  DIGITAL RATIO ADAPTER FAULT
+            5     MALF CODE 15  COOLANT TEMPERATURE SENSOR LOW
+            6     MALF CODE 14  COOLANT TEMPERATURE SENSOR HIGH
+            7     MALF CODE 13  ENGINE SHUT OFF DRIVER FAULT
+  40     CURMALF2     CURRENT MALFUNCTION WORD 2
+            0     MALF CODE 29  GLOW PLUG RELAY FAULT
+            1     MALF CODE 28  TRANS PRESSURE SWITCH MANIFOLD
+            2     MALF CODE 27  PEDAL POSITION 2 IN RANGE FAULT
+            3     MALF CODE 26  PEDAL POSITION 2 INPUT LOW
+            4     MALF CODE 25  PEDAL POSITION 2 INPUT HIGH
+            5     MALF CODE 24  TRANS OUTPUT SPEED LOW
+            6     MALF CODE 23  PEDAL POSITION 1 IN RANGE FAULT
+            7     MALF CODE 22  PEDAL POSITION 1 INPUT LOW
+  41     CURMALF3     CURRENT MALFUNCTION WORD 3
+            0     MALF CODE 38  BRAKE STUCK OFF
+            1     MALF CODE 37  BRAKE STUCK ON
+            2     MALF CODE 36  RESPONSE TIME TOO LONG
+            3     MALF CODE 35  RESPONSE TIME TOO SHORT
+            4     MALF CODE 34  INJECTION PUMP TIMING STEPPER MOTOR
+            5     MALF CODE 33  MANIFOLD AIR PRESSURE INPUT HIGH
+            6     MALF CODE 32  EGR ERROR
+            7     MALF CODE 31  MANIFOLD AIR PRESSURE INPUT LOW
+
+  42     CURMALF4     CURRENT MALFUNCTION WORD 4
+            0     MALF CODE 47  AIR TEMPERATURE SENSOR HIGH
+            1     MALF CODE 46  SERVICE ENGINE SOON LIGHT OUTPUT
+            2     MALF CODE 45  EGR VENT OUTPUT FAILED
+            3     MALF CODE 44  EGR PULSE WIDTH OUTPUT FAILED
+            4     MALF CODE 43  FUEL TEMPERATURE LOW (HIGH VOLTAGE)
+            5     MALF CODE 42  FUEL TEMPERATURE HIGH (LOW VOLTAGE)
+            6     MALF CODE 41  BRAKE SWITCH TEST FAIL
+            7     MALF CODE 39  TCC STUCK OFF
+  43     CURMALF5     CURRENT MALFUNCTION WORD 5
+            0     MALF CODE 56  INJECTION PUMP CALIBRATION RESISTOR
+            1     MALF CODE 55  PCM A/D FAULT
+            2     MALF CODE 54  TIO FAULT
+            3     MALF CODE 53  SYSTEM VOLTAGE HIGH
+            4     MALF CODE 52  SYSTEM VOLTAGE HIGH-LONG TEST
+            5     MALF CODE 51  PROM ERROR
+            6     MALF CODE 49  SERVICE THROTTLE SOON LIGHT ERROR
+            7     MALF CODE 48  AIR TEMPERATURE SENSOR LOW
+  44     CURMALF6     CURRENT MALFUNCTION WORD 6
+            0     MALF CODE 65  PEDAL POSITION 3 IN RANGE FAULT
+            1     MALF CODE 64  PEDAL POSITION 3 INPUT LOW
+            2     MALF CODE 63  PEDAL POSITION 3 INPUT HIGH
+            3     MALF CODE 62  TURBO (COMPRESSOR) BOOST PRESSURE LO
+            4     MALF CODE 61  TURBO (COMPRESSOR) BOOST PRESSURE HI
+            5     MALF CODE 59  TRANS TEMP LOW
+            6     MALF CODE 58  TRANS TEMP HIGH
+            7     MALF CODE 57  PCM 5 VOLT SHORTED
+
+  45     CURMALF7     CURRENT MALFUNCTION WORD 7
+            0     MALF CODE 74  TRANS INPUT SPEED (R2 ONLY)
+            1     MALF CODE 73  FORCE MOTOR CURRENT
+            2     MALF CODE 72  TRANS OUTPUT SPEED LOSS
+            3     MALF CODE 71  SET/COAST SWITCH FAULT
+            4     MALF CODE 69  TCC STUCK ON
+            5     MALF CODE 68  TRANSMISSION COMPONENT SLIPPING
+            6     MALF CODE 67  TCC ENABLE SOLENOID FAILURE (X1R)
+            7     MALF CODE 66  3-2 DS SOLENOID FAILURE (X1R ONLY)
+  46     CURMALF8     CURRRNT MALFUNCTION WORD 8
+            0     MALF CODE 83  TCC FAULT
+            1     MALF CODE 82  SHIFT A FAULT
+            2     MALF CODE 81  SHIFT B FAULT
+            3     MALF CODE 79  TRANSMISSION HOT
+            4     MALF CODE 78  TURBO WASTEGATE ERROR
+            5     MALF CODE 77  MNP SWITCH
+            6     MALF CODE 76  RESUME/ACCEL SWITCH FAULT
+            7     MALF CODE 75  SYSTEM VOLTAGE LOW
+  47     CURMALF9     CURRENT MALFUNCTION WORD 9
+            0     MALF CODE 92  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 2
+            1     MALF CODE 91  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 1
+            2     MALF CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3     MALF CODE 88  TIMING OFFSET ERROR
+            4     MALF CODE 87  HIGH RATIO
+            5     MALF CODE 86  LOW RATIO
+            6     MALF CODE 85  UNDEFINED RATIO/PSM (R2 ONLY)
+            7     MALF CODE 84  NOT USED
+  48     CURMALF10    CURRENT MALFUNCTION WORD 10
+            0     MALF CODE XX  NOT USED
+            1     MALF CODE 99  99  PEDAL POSITION 2  (5VOLTS REF. FAULT)
+            2     MALF CODE 98  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 8
+            3     MALF CODE 97  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 7
+            4     MALF CODE 96  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 6
+            5     MALF CODE 95  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 5
+            6     MALF CODE 94  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 4
+            7     MALF CODE 93  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 3
+  49     DGZHFTB1     HISTORY MALFUNCTION WORD 1
+            0     MALF CODE 21  PEDAL POSITION 1 INPUT HIGH
+            1     MALF CODE 19  CRANK POSITION SENSOR FAULT
+            2     MALF CODE 18  ONCE PER CAM LOBE SENSOR FAULT
+            3     MALF CODE 17  HIGH RESOLUTION SENSOR FAULT
+            4     MALF CODE 16  DIGITAL RATIO ADAPTER FAULT
+            5     MALF CODE 15  COOLANT TEMPERATURE SENSOR LOW
+            6     MALF CODE 14  COOLANT TEMPERATURE SENSOR HIGH
+            7     MALF CODE 13  ENGINE SHUT OFF DRIVER FAULT
+  50     DGZHFTB2     HISTORY MALFUNCTION WORD 2
+            0     MALF CODE 29  GLOW PLUG RELAY FAULT
+            1     MALF CODE 28  TRANS PRESSURE SWITCH MANIFOLD
+            2     MALF CODE 27  PEDAL POSITION 2 IN RANGE FAULT
+            3     MALF CODE 26  PEDAL POSITION 2 INPUT LOW
+            4     MALF CODE 25  PEDAL POSITION 2 INPUT HIGH
+            5     MALF CODE 24  TRANS OUTPUT SPEED LOW
+            6     MALF CODE 23  PEDAL POSITION 1 IN RANGE FAULT
+            7     MALF CODE 22  PEDAL POSITION 1 INPUT LOW
+  51     DGZHFTB3     HISTORY MALFUNCTION WORD 3
+            0     MALF CODE 38  BRAKE STUCK OFF
+            1     MALF CODE 37  BRAKE STUCK ON
+            2     MALF CODE 36  RESPONSE TIME TOO LONG
+            3     MALF CODE 35  RESPONSE TIME TOO SHORT
+            4     MALF CODE 34  INJECTION PUMP TIMING STEPPER MOTOR
+            5     MALF CODE 33  MANIFOLD AIR PRESSURE INPUT HIGH
+            6     MALF CODE 32  EGR ERROR
+            7     MALF CODE 31  MANIFOLD AIR PRESSURE INPUT LOW
+
+  52     DGZHFTB4     HISTORY MALFUNCTION WORD 4
+            0     MALF CODE 47  AIR TEMPERATURE SENSOR HIGH
+            1     MALF CODE 46  SERVICE ENGINE SOON LIGHT OUTPUT
+            2     MALF CODE 45  EGR VENT OUTPUT FAILED
+            3     MALF CODE 44  EGR PULSE WIDTH OUTPUT FAILED
+            4     MALF CODE 43  FUEL TEMPERATURE LOW (HIGH VOLTAGE)
+            5     MALF CODE 42  FUEL TEMPERATURE HIGH (LOW VOLTAGE)
+            6     MALF CODE 41  BRAKE SWITCH TEST FAIL
+            7     MALF CODE 39  TCC STUCK OFF
+  53     DGZHFTB5     HISTORY MALFUNCTION WORD 5
+            0     MALF CODE 56  INJECTION PUMP CALIBRATION RESISTOR
+            1     MALF CODE 55  PCM A/D FAULT
+            2     MALF CODE 54  TIO FAULT
+            3     MALF CODE 53  SYSTEM VOLTAGE HIGH
+            4     MALF CODE 52  SYSTEM VOLTAGE HIGH-LONG TEST
+            5     MALF CODE 51  PROM ERROR
+            6     MALF CODE 49  SERVICE THROTTLE SOON LIGHT ERROR
+            7     MALF CODE 48  AIR TEMPERATURE SENSOR LOW
+  54     DGZHFTB6     HISTORY MALFUNCTION WORD 6
+            0     MALF CODE 65  PEDAL POSITION 3 IN RANGE FAULT
+            1     MALF CODE 64  PEDAL POSITION 3 INPUT LOW
+            2     MALF CODE 63  PEDAL POSITION 3 INPUT HIGH
+            3     MALF CODE 62  TURBO (COMPRESSOR) BOOST PRESSURE LO
+            4     MALF CODE 61  TURBO (COMPRESSOR) BOOST PRESSURE HI
+            5     MALF CODE 59  TRANS TEMP LOW
+            6     MALF CODE 58  TRANS TEMP HIGH
+            7     MALF CODE 57  PCM 5 VOLT SHORTED
+
+  55     DGZHFTB7     HISTORY MALFUNCTION WORD 7
+            0     MALF CODE 74  TRANS INPUT SPEED (R2 ONLY)
+            1     MALF CODE 73  FORCE MOTOR CURRENT
+            2     MALF CODE 72  TRANS OUTPUT SPEED LOSS
+            3     MALF CODE 71  SET/COAST SWITCH FAULT
+            4     MALF CODE 69  TCC STUCK ON
+            5     MALF CODE 68  TRANSMISSION COMPONENT SLIPPING
+            6     MALF CODE 67  TCC ENABLE SOLENOID FAILURE (X1R)
+            7     MALF CODE 66  3-2 DS SOLENOID FAILURE (X1R ONLY)
+  56     DGZHFTB8     HISTORY MALFUNCTION WORD 8
+            0     MALF CODE 83  TCC FAULT
+            1     MALF CODE 82  SHIFT A FAULT
+            2     MALF CODE 81  SHIFT B FAULT
+            3     MALF CODE 79  TRANSMISSION HOT
+            4     MALF CODE 78  TURBO WASTEGATE ERROR
+            5     MALF CODE 77  MNP SWITCH
+            6     MALF CODE 76  RESUME/ACCEL SWITCH FAULT
+            7     MALF CODE 75  SYSTEM VOLTAGE LOW
+  57     DGZHFTB9     HISTORY MALFUNCTION WORD 9
+            0     MALF CODE 92  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 2
+            1     MALF CODE 91  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 1
+            2     MALF CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3     MALF CODE 88  TIMING OFFSET ERROR
+            4     MALF CODE 87  HIGH RATIO
+            5     MALF CODE 86  LOW RATIO
+            6     MALF CODE 85  UNDEFINED RATIO/PSM (R2 ONLY)
+            7     MALF CODE 84  NOT USED
+  58     DGZHFTB10    HISTORY MALFUNCTION WORD 10
+            0     MALF CODE XX  NOT USED
+            1     MALF CODE 99  99  PEDAL POSITION 2  (5VOLTS REF. FAULT)
+            2     MALF CODE 98  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 8
+            3     MALF CODE 97  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 7
+            4     MALF CODE 96  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 6
+            5     MALF CODE 95  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 5
+            6     MALF CODE 94  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 4
+            7     MALF CODE 93  ACB MODIFIER OUT OF LIMITS FOR CYLINDER 3
+

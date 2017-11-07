@@ -1,0 +1,177 @@
+
+                        DATA STREAM A236  SPECIFICATION
+
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       IPC USAGE:
+              1995             4G   CAR
+
+
+
+       DATA PIN  :  READ DATA ON PIN "9" OF ALDL CONNECTOR
+
+       BAUD RATE :  8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$00
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$59
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 3
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 1
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$01
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$62
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 12
+                - SUM CHECK
+
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - MESSAGE CODE
+                - CHECKSUM
+
+        THE IPC RESPONDS BY TRANSMITTING THE SELECTED NORMAL MODE MESSAGE
+
+        MODE 8 (DISABLE NORMAL MODE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - SUM CHECK      =
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F2
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - SUM CHECK      =
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - CHECKSUM
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - SUM CHECK
+
+
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 03
+..HEAD04L ALDL MODE 1 MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+ 1                    EEPROM PROGRAMMING STATUS
+         0      1 = EEPROM PROGRAMMING IN PROGRESS
+         1      NOT USED
+         2      NOT USED
+         3      NOT USED
+         4      NOT USED
+         5      NOT USED
+         6      NOT USED
+         7      NOT USED
+ 2                 OPTION CONTENT BYTE
+         0      1 = SPEED COMPENSATION (+5%)    0 = NO COMPENSATION
+         1      1 = METRIC                      0 = ENGLISH
+         2      NOT USED
+         3      NOT USED
+         4      NOT USED
+         5      NOT USED
+         6      NOT USED
+         7      NOT USED
+ 3                 SOFTWARE CALIBRATION VERSION OR RELEASE #
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 12
+..HEAD04L ALDL MODE 1 MESSAGE 1
+WORD #     DESCRIPTION
+
+ 1         HISTORY FLAGS #1
+            0      1 = EEPROM ERROR: INVALID VEHICLE USAGE REGISTER
+            1      1 = EEPROM ERROR: INVALID ODOMETER
+            2      1 = FUEL LEVEL SENSOR FAILURE
+            3      NOT USED
+            4      1 = KAM ERROR
+            5      1 = LOSS OF UART SERIAL DATA
+            6      NOT USED
+            7      NOT USED
+ 2         CURRENT FLAGS #1
+            0      1 = EEPROM ERROR: INVALID VEHICLE USAGE REGISTER
+            1      1 = EEPROM ERROR: INVALID ODOMETER
+            2      1 = FUEL LEVEL SENSOR FAILURE
+            3      NOT USED
+            4      1 = KAM ERROR
+            5      1 = LOSS OF UART SERIAL DATA
+            6      NOT USED
+            7      NOT USED
+ 3         DIM LEVEL
+            VOLTS = N/10
+ 4         DIM REFERENCE
+            VOLTS = N/10
+ 5         VEHICLE SPEED
+            KPH = N
+            (MPH = N/1.61)
+ 6         TACHOMETER
+            RPM = 50N
+ 7         RUNNING RESET COUNTER (MODE 10 RESETS TO ZERO)
+ 8         FUEL REMAINING
+            GALLONS = N/10
+ 9         NOT USED
+ 10        VOLTAGE
+            VOLTS = N/10
+ 11        ENGINE TEMPERATURE
+            DEG C = .75N - 40
+ 12        DISCRETE INPUT STATUS #1
+            0      NOT USED
+            1      NOT USED
+            2      NOT USED
+            3      NOT USED
+            4      1 = PARK LAMPS ACTIVE
+            5      NOT USED
+            6      1 = TRIP RESET SWITCH ACTIVE
+            7      1 = HIGH BEAM ACTIVE
+

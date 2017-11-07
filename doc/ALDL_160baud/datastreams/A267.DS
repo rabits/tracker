@@ -1,0 +1,292 @@
+
+                        DATA STREAM A267  SPECIFICATION
+
+
+
+
+..FOOT61R PAGE##
+..PAGE
+
+
+       SPECIFICATIONS FOR ENGINE DATA STREAM INFORMATION
+       IN THE 1993 PCM-6 DIESEL VEHICLES WITH A 4L60E TRANSMISSION.
+       ------------------------------------------------------------
+       ENGINE:
+       USAGE:  LH6         6.2L       VIN = C   C,K,G
+
+
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                TCM RESPONSE:
+                  NONE
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $91
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 59
+                - SUM CHECK
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 59
+..HEAD04L ALDL MODE 1 DATA LIST
+WORD #   DATA NAME    DESCRIPTION
+
+  1      PROMIDA      PROM ID (MSB)
+  2      PROMIDA+1    PROM ID (LSB)
+                       ID = N
+  3                   NOT USED
+  4                   NOT USED
+  5                   NOT USED
+  6      MALFFLG1     MALFUNCTION WORD 1
+            0     MALF CODE 21  THROTTLE POSITION HIGH
+            1     MALF CODE 19  NOT USED
+            2     MALF CODE 18  NOT USED
+            3     MALF CODE 17  NOT USED
+            4     MALF CODE 16  2002 PPM VEH. SPEED SENSOR FAILURE
+            5     MALF CODE 15  COOLANT SENSOR LOW TEMPERATURE
+            6     MALF CODE 14  COOLANT SENSOR HIGH TEMPERATURE
+            7     MALF CODE 13  OXYGEN SENSOR                         (MASKED)
+  7      MALFFLG2     MALFUNCTION WORD 2
+            0     MALF CODE 29  NOT USED
+            1     MALF CODE 28  PRESSURE SWITCH MANIFOLD
+            2     MALF CODE 27  NOT USED
+            3     MALF CODE 26  NOT USED
+            4     MALF CODE 25  MAT SENSOR HIGH                       (MASKED)
+            5     MALF CODE 24  VEHICLE SPEED SENSOR
+            6     MALF CODE 23  MAT SENSOR LOW
+            7     MALF CODE 22  THROTTLE POSITION LOW
+  8      MALFFLG3     MALFUNCTION WORD 3
+            0     MALF CODE 38  BRAKE OFF
+            1     MALF CODE 37  BRAKE ON
+            2     MALF CODE 36  NOT USED
+            3     MALF CODE 35  IAC FAILURE                           (MASKED)
+            4     MALF CODE 34  MAP SENSOR LOW                        (MASKED)
+            5     MALF CODE 33  MAP SENSOR HIGH
+            6     MALF CODE 32  EGR FAILURE
+            7     MALF CODE 31  GOVERNOR MALFUNCTION
+  9      MALFFLG4     MALFUNCTION WORD 4
+            0     MALF CODE 47  NOT USED
+            1     MALF CODE 46  VATS FAILURE                          (MASKED)
+            2     MALF CODE 45  OXYGEN SENSOR RICH                    (MASKED)
+            3     MALF CODE 44  OXYGEN SENSOR LEAN                    (MASKED)
+            4     MALF CODE 43  ESC FAILURE                           (MASKED)
+            5     MALF CODE 42  EST MONITOR                           (MASKED)
+            6     MALF CODE 41  1X (CAM PULSE) SENSOR FAILURE         (MASKED)
+            7     MALF CODE 39  TCC OFF
+  10     MALFFLG5     MALFUNCTION WORD 5
+            0     MALF CODE 56  NOT USED
+            1     MALF CODE 55  ADU ERROR                             (MASKED)
+            2     MALF CODE 54  FUEL PUMP RELAY MALFUNCTION           (MASKED)
+            3     MALF CODE 53  SYSTEM VOLTAGE HIGH
+            4     MALF CODE 52  SYSTEM VOLTAGE HIGH-LONG TEST
+            5     MALF CODE 51  PROM ERROR                            (MASKED)
+            6     MALF CODE 49  NOT USED
+            7     MALF CODE 48  NOT USED
+  11     MALFFLG6     MALFUNCTION WORD 6
+            0     MALF CODE 65  NOT USED
+            1     MALF CODE 64  BAROMETRIC PRESSURE SENSOR LOW
+            2     MALF CODE 63  BAROMETRIC PRESSURE SENSOR HIGH
+            3     MALF CODE 62  TURBO BOOST SENSOR LOW                (MASKED)
+            4     MALF CODE 61  TURBO BOOST SENSOR HIGH               (MASKED)
+            5     MALF CODE 59  TRANSMISSION TEMPERATURE LOW
+            6     MALF CODE 58  TRANSMISSION TEMPERATURE HIGH
+            7     MALF CODE 57  NOT USED
+  12     MALFFLG7     MALFUNCTION WORD 7
+            0     MALF CODE 74  INPUT SPEED SENSOR
+            1     MALF CODE 73  FORCE MOTOR CURRENT
+            2     MALF CODE 72  OUTPUT SPEED LOSS
+            3     MALF CODE 71  ENGINE SPEED LOW
+            4     MALF CODE 69  TCC ON
+            5     MALF CODE 68  TRANSMISSION COMPONENT SLIPPING
+            6     MALF CODE 67  TCC EN QDM2/SOLENOID FAILURE
+            7     MALF CODE 66  3-2 DS QDM2/SOLENOID FAILURE
+  13     MALFFLG8     MALFUNCTION WORD 8
+            0     MALF CODE 83  TCC SOLENOID FAILURE
+            1     MALF CODE 82  SHIFT SOLENOID A FAILURE
+            2     MALF CODE 81  SHIFT SOLENOID B FAILURE
+            3     MALF CODE 79  TRANSMISSION HOT
+            4     MALF CODE 78  NOT USED
+            5     MALF CODE 77  MNP SWITCH
+            6     MALF CODE 76  NOT USED
+            7     MALF CODE 75  SYSTEM VOLTAGE LOW
+  14     MALFFLG9     MALFUNCTION WORD 9
+            0     MALF CODE 92  NOT USED
+            1     MALF CODE 91  NOT USED
+            2     MALF CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3     MALF CODE 88  NOT USED
+            4     MALF CODE 87  SOLENOID B STUCK OFF
+            5     MALF CODE 86  SOLENOID B STUCK ON
+            6     MALF CODE 85  RATIO-UNDEFINED REGION
+            7     MALF CODE 84  NOT USED
+  15     COOLDEGA     NORMALIZED ENGINE TEMPERATURE  NON-DEFAULTED
+                       DEGREES C = N*.75 - 40
+                       (deg F = 1.35N - 40)
+  16     ADBAT        BATTERY VOLTAGE
+                       VOLTS = N/10
+  17     ADTHROT      THROTTLE POSITION
+                       VOLTS = 5N/256
+  18     ADMAP        MANIFOLD ABSOLUTE PRESSURE SENSOR A/D COUNTS
+                         VOLTS = 5N/255
+                         (kPa = (N + 28.06)/2.71)
+  19                  NOT USED
+  20     STATUS       SYSTEM STATUS WORD
+            0          1 = FM SHUT OFF DUE TO LOW BATTERY VOLTAG
+            1          NOT USED
+            2          1 = FORCE MOTOR PULSE IN PROGRESS
+            3          1 = POWER IS ON/NV RAM UPDATING IS ALLOWED
+            4          1 = COP2 IS BEING SERVICED
+            5          NOT USED
+            6          1 = DELCO INSTRUMENTATION PROM IS PRESENT
+            7          1 = POWERTRAIN IS IN MOTION (SOME SPEED <> 0
+
+
+  21     SDMW         SERIAL DATA MODE WORD
+            0          1 = IN MODE 10 OF ALDL (MESSAGE ID = $F5)
+            1          1 = IN MODE 10 OF ALDL (MESSAGE ID = $F4)
+            2          1 = TRANSMISSION DIAGNOSTICS DISABLED
+            3          1 = not used
+            4          1 = not used
+            5          1 = TRANSMIT OVERRUN HAS OCCURRED
+            6          1 = TRANSMISSION IN PROGRESS
+            7          1 = SECOND BYTE TRANSMISSION PENDING
+
+  22     MWBG         MINOR LOOP MODE WORD
+            0          NOT USED
+            1          1 = IGNITION OFF
+            2          1 = CHECK ENGINE LIGHT COMMANED ON (STATUS)
+            3          NOT USED
+            4          NOT USED
+            5          NOT USED
+            6          NOT USED
+            7          NOT USED
+
+  23     MW1          MINOR LOOP MODE WORD 1
+            0          1 = POWERDOWN IN PROGRESS
+            1          CHECK ENGINE LIGHT DELAY FLAG
+            2          1 = LOOP RAN OVER 6.25 MSEC
+            3          1 = DIAGNOSTIC SWITCH IN FACTORY TEST POS.
+            4          1 = DIAGNOSTIC SWITCH IN DIAGNOSTIC POSITIO
+            5          NOT USED
+            6          1 = HIGH BATTERY VOLTAGE
+            7          1 = ENGINE RUNNING
+
+  24                  NOT USED
+  25     IODPORTC     I/O PORT C
+            0          1 = A/C REQUEST
+            1          1 = BRAKE SWITCH          (BRAKE PRESSED)
+            2          RANGE 1                   1=HI  0=LOW
+            3          RANGE 2                   1=HI  0=LOW
+            4          RANGE 3                   1=HI  0=LOW
+            5          NOT USED
+            6          NOT USED
+            7          FOUR WHEEL DRIVE LOW      1=ON
+
+  PRNDL TABLE:
+
+                 RANGE1    RANGE2  RANGE3  GEAR
+                 ------------------------------
+                   0         1       1     LOW
+                   1         1       1     DRIVE2
+                   1         1       0     DRIVE3
+                   1         0       0     DRIVE4
+                   1         0       1     P/N
+                   0         0       1     REVERSE
+
+  26                  NOT USED
+  27     ADBARO                N = BARO A/D COUNTS
+                       VOLTS = N * (5/256)
+                       (kpa = (N + 28.06)/2.71)
+  28                  NOT USED
+  29                  NOT USED
+  30     TCCMODE      TCC MODE WORD FLAGS
+            0          1 = TCC IS BEING FORCED OFF
+            1          1 = TCC ENABLE SOLENOID VALID
+            2          1 = LOW THRESHOLD FOR COPETCC SELECTED
+            3          1 = USE HYST FOR VEH SPD (CHOOSING MIN THR)
+            4          1 = TCC IS IN RELEASE MODE, SLIPPING
+            5          1 = TCC IS IN LOCK-ADJUST MODE
+            6          1 = TCC IS BEING APPLIED
+            7          1 = NEGATIVE SLIP RECENTLY PREVENTS APPLY
+
+  31                  NOT USED
+  32     IODPORTB     I/O PORT B
+            0          SHIFT A
+            1          SHIFT B
+            2          OUT PUT COMPARE 3 SYNC SIGNAL
+            3          EGR SOLCT SYNC SIGNAL BIT
+            4          H/W SYNC ENABLE                   1 = ENABLE
+            5          FORCE MOTOR ENABLE
+            6          NOT USED
+            7          NOT USED
+  33                  NOT USED
+  34                  NOT USED
+  35                  NOT USED
+  36                  NOT USED
+  37                  NOT USED
+  38     SUCT         START UP COOLANT
+                       DEGREES C = N*.75 - 40
+                       (deg F = 1.35N - 40)
+  39     $FFFF        ENGINE RUN TIME (MSB)
+  40     TIMEENG      ENGINE RUN TIME (LSB)
+                       SEC = N
+  41                  NOT USED
+  42                  NOT USED
+  43                  NOT USED
+  44                  NOT USED
+  45                  NOT USED
+  46                  NOT USED
+  47                  NOT USED
+  48                  NOT USED
+  49                  NOT USED
+  50                  NOT USED
+  51                  NOT USED
+  52                  NOT USED
+  53                  NOT USED
+  54                  NOT USED
+  55                  NOT USED
+  56                  NOT USED
+  57                  NOT USED
+  58                  NOT USED
+  59                  NOT USED
+
+
+

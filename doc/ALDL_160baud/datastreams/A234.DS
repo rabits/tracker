@@ -1,0 +1,418 @@
+
+                        DATA STREAM A234  SPECIFICATION
+
+                                  REVISION 1
+
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       IPC USAGE:
+              1994             3C,H CAR
+*             1995             3C,H CAR
+
+
+
+       DATA PIN  :  READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE :  8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$00
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$5C
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 6
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 1
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$01
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$5D
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 7
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 2
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$02
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$5D
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 7
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 3
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$03
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$5C
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 6
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 4
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$04
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$6A
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 20
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 5
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$05
+                - SUM CHECK
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$5E
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 8
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - CHECKSUM
+
+                THE IPC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F2
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - SUM CHECK
+
+
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 06
+..HEAD04L ALDL MODE 1 MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+ 1                    EEPROM PROGRAMMING STATUS
+         0      1 = EEPROM PROGRAMMING IN PROGRESS
+         1      EEPROM FAULT DURING ERASE OR WRITE
+         2      NOT USED
+         3      NOT USED
+         4      NOT USED
+         5      NOT USED
+         6      NOT USED
+         7      NOT USED
+ 2                 OPTION CONTENT BYTE
+         0      1 = CLUSTER WITH DIC            0 = CLUSTER WITHOUT DIC
+         1      1 = TACHOMETER CLUSTER          0 = VF CLUSTER
+         2      1 = METRIC/ENABLE EXPORT CODES  0 = ENGLISH/DISABLE EXPORT CODES
+         3      1 = OVERSPEED WARNING ENABLED   0 = OVERSPEED WARNING DISABLED
+         4      1 = Y67 ENABLED                 0 = Y67 DISABLED
+         5      NOT USED
+         6      NOT USED
+         7      1 = OPTION CONTENT PROGRAMED
+ 3                 SOFTWARE RELEASE NUMBER
+ 4                 SOFTWARE CALIBRATION VERSION OF RELEASE #
+                    0 = SRD DEFAULT VALUES
+ 5                 MSB OF THE PRODUCTION EPROM (PROGRAMMED) DEVICE
+ 6                 LSB OF THE PRODUCTION EPROM (PROGRAMMED) DEVICE
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 07
+..HEAD04L ALDL MODE 1 MESSAGE 1
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                    CURRENT FLAGS #1 (RAM)
+         0      1 = ABS TO IPC UART MESSAGE PROBLEM
+         1      1 = DERM TO IPC UART MESSAGE PROBLEM
+         2      1 = HVAC TO IPC UART MESSAGE PROBLEM
+         3      1 = PCM TO IPC UART MESSAGE PROBLEM
+         4      1 = PRNDL ERROR
+         5      1 = TFE PROBLEM
+         6      1 = HIGH BATTERY VOLTAGE
+         7      1 = LOW BATTERY VOLTAGE
+ 2                    CURRENT FLAGS #2 (RAM)
+         0      1 = OIL SENDER PROBLEM
+         1      1 = FUEL SENDER PROBLEM (DIAGNOSTIC DISABLED)
+         2      1 = LAMP MONITOR LINK PROBLEM
+         3      1 = CLEAN KEY - WAIT 3 MINUTES
+         4      1 = PARK BRAKE SET
+         5      1 = LOW BRAKE FLUID
+         6      1 = LOW OIL PRESSURE
+         7      1 = ENGINE HOT (STOP ENGINE)
+ 3                    CURRENT FLAGS #3 (RAM)
+         0      NOT USED
+         1      NOT USED
+         2      NOT USED
+         3      NOT USED
+         4      NOT USED
+         5      NOT USED
+         6      1 = CHANGE OIL NOW
+         7      1 = RTC IC FAILURE
+ 4                    HISTORY FLAGS #1 (KAM)
+         0      1 = ABS TO IPC UART MESSAGE PROBLEM
+         1      1 = DERM TO IPC UART MESSAGE PROBLEM
+         2      1 = HVAC TO IPC UART MESSAGE PROBLEM
+         3      1 = PCM TO IPC UART MESSAGE PROBLEM
+         4      1 = PRNDL ERROR
+         5      1 = TFE PROBLEM
+         6      1 = HIGH BATTERY VOLTAGE
+         7      1 = LOW BATTERY VOLTAGE
+ 5                    HISTORY FLAGS #2 (KAM)
+         0      1 = OIL SENDER PROBLEM
+         1      1 = FUEL SENDER PROBLEM (DIAGNOSTIC DISABLED)
+         2      1 = LAMP MONITOR LINK PROBLEM
+         3      1 = CLEAN KEY - WAIT 3 MINUTES
+         4      1 = PARK BRAKE SET
+         5      1 = LOW BRAKE FLUID
+         6      1 = LOW OIL PRESSURE
+         7      1 = ENGINE HOT (STOP ENGINE)
+ 6                    HISTORY FLAGS #3 (KAM)
+         0      NOT USED
+         1      NOT USED
+         2      NOT USED
+         3      NOT USED
+         4      NOT USED
+         5      NOT USED
+         6      1 = CHANGE OIL NOW
+         7      1 = RTC IC FAILURE
+ 7              RUNNING RESET COUNTER
+                        DOES NOT OVERFLOW (MODE 10 RESETS TO ZERO)
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 07
+..HEAD04L ALDL MODE 1 MESSAGE 2
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                    FUEL REMAINING
+                       GALLONS = N/10
+ 2                    OIL PRESSURE
+                       PSI = N
+                      (NOTE: FOR DIC CLUSTER ONLY)
+ 3                    DIM REFERENCE
+                       VOLTS = N/10    (PARK LAMP ON WHEN N = 255)
+ 4                    DIM LEVEL
+                       VOLTS = N/10    (FULL BRIGHT WHEN N = 255)
+ 5                    VEHICLE SPEED
+                       KPH = N
+                       (MPH = N/1.61)
+ 6                    TACHOMETER
+                       RPM = 50N
+ 7                    BATTERY VOLTAGE
+                       (IGN3 - UNLOCK)
+                          VOLTS = N/10
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 06
+..HEAD04L ALDL MODE 1 MESSAGE 3
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                    INPUT DISCRETE STATES #1 (1 = ACTIVE, 0 = INACTIVE)
+         0      LOW OIL LEVEL
+         1      LOW BRAKE FLUID
+         2      PARK BRAKE SWITCH
+         3      CLUSTER TEST
+         4      TT SPARE 1
+         5      NOT USED
+         6      LEFT TURN SIGNAL
+         7      RIGHT TURN SIGNAL
+ 2                    INPUT DISCRETE STATES #2 (1 = ACTIVE, 0 = INACTIVE)
+         0      PRNDLC
+         1      PRNDLB
+         2      PRNDLA
+         3      REAR DOOR AJAR
+         4      PASSENGER DOOR AJAR
+         5      DRIVER DOOR AJAR
+         6      LOW COOLANT LEVEL
+         7      LOW WASHER FLUID
+ 3                    INPUT DISCRETE STATES #3 (1 = ACTIVE, 0 = INACTIVE)
+         0      FASTEN SEAT BELT SWITCH
+         1      OIL PRESSURE SWITCH
+                  (FOR NON-DIC CLUSTERS)
+         2      OFF/RECALL SWITCH
+         3      SET/RESET SWITCH
+         4      MODE SWITCH
+         5      SELECT SWITCH
+         6      SPARE INPUT TO MICRO
+         7      PRNDLP
+ 4                    INPUT DISCRETE STATES #4
+                        (BITS ARE CLEARED AT POWER UP OR MODE 4)
+         0      NOT USED
+         1      1 = REAR DOOR AJAR INPUT TRANSITION
+         2      1 = DRIVER DOOR AJAR INPUT TRANSITION
+         3      1 = PASSENGER DOOR AJAR INPUT TRANSITION
+         4      1 = OFF/RECALL SWITCH INPUT TRANSITION
+         5      1 = SET/RESET SWITCH INPUT TRANSITION
+         6      1 = SELECT SWITCH INPUT TRANSITION
+         7      1 = TOGGLE SWITCH INPUT TRANSITION
+ 5                    LAMP MONITOR STATUS
+         0      1 = BACKUP LAMP OUT
+         1      1 = FRONT TURN LAMP OUT
+         2      1 = TAIL LAMP OUT
+         3      1 = FRONT PARK LAMP OUT
+         4      1 = REAR LAMP OUT
+         5      1 = LOW BEAM LAMP OUT
+         6      1 = CENTER STOP LAMP OUT
+         7      1 = HIGH BEAM LAMP OUT
+ 6                    LAMP MONITOR STATUS
+         0      NOT USED
+         1      NOT USED
+         2      NOT USED
+         3      NOT USED
+         4      NOT USED
+         5      LAMP MONITOR INPUT TO IPC
+         6      1 = WRONG VEHICLE TYPE (VALID ONLY WHEN B7 = 0)
+         7      1 = LAMP MONITOR MODULE HAS NOT BEEN INITIALIZED
+
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 20
+..HEAD04L ALDL MODE 1 MESSAGE 4
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                    COOLANT TEMPERATURE DRIVEN ANGLE (MSB)
+ 2                    COOLANT TEMPERATURE DRIVEN ANGLE (LSB)
+                       ANGLE (DEG) = .3512N
+ 3                    COOLANT TEMPERATURE OFFSET 1
+ 4                    COOLANT TEMPERATURE OFFSET 2
+ 5                    COOLANT TEMPERATURE OFFSET 3
+                       ANGLE (DEG) = .3512N
+ 6                    TACHOMETER DRIVEN ANGLE (MSB)
+ 7                    TACHOMETER DRIVEN ANGLE (LSB)
+                       ANGLE (DEG) = .3512N
+ 8                    TACHOMETER OFFSET 1
+ 9                    TACHOMETER OFFSET 2
+ 10                   TACHOMETER OFFSET 3
+                       ANGLE (DEG) = .3512N
+ 11                   SPEEDOMETER DRIVEN ANGLE (MSB)
+ 12                   SPEEDOMETER DRIVEN ANGLE (LSB)
+                       ANGLE (DEG) = .3512N
+ 13                   SPEED DRIVEN OFFSET 1
+ 14                   SPEED DRIVEN OFFSET 2
+ 15                   SPEED DRIVEN OFFSET 3
+                       ANGLE (DEG) = .3512N
+ 16                   FUEL DRIVEN ANGLE (MSB)
+ 17                   FUEL DRIVEN ANGLE (LSB)
+                       ANGLE (DEG) = .3512N
+ 18                   FUEL OFFSET 1
+ 19                   FUEL OFFSET 2
+ 20                   FUEL OFFSET 3
+                       ANGLE (DEG) = .3512N
+..page
+..HEAD02L ALDL IPC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 08
+..HEAD04L ALDL MODE 1 MESSAGE 5
+WORD #   DATA NAME    DESCRIPTION
+
+ 1                    PROCESSOR BURN IN DATE CODE MSB
+         7 - 4    LAST DIGIT OF CALE DAR YEAR
+         3 - 0    MONTH ($1 = JANUARY, $C = DECEMBER)
+ 2                    PROCESSOR BURN-IN DATE CODE LSB
+         7        NOT USED
+         6        NOT USED
+         5        NOT USED
+         4 - 0    DAY OF MONTH
+ 3                    PROCESSOR BURN-IN RESULT CODE MSB
+         0        0 = BURN-IN TESTED, 1 = NOT BURN-IN TESTED
+         1        NOT USED
+         2        NOT USED
+         3        PORTS 1                       0 = OK, 1 = FAILED
+         4        PORTS 2                       0 = OK, 1 = FAILED
+         5        PORTS 3                       0 = OK, 1 = FAILED
+         6        PORTS 4                       0 = OK, 1 = FAILED
+         7        A/D CHANNEL 1                 0 = OK, 1 = FAILED
+ 4                    PROCESSOR BURN-IN RESULT CODE LSB
+         0        A/D CHANNEL 2                 0 = OK, 1 = FAILED
+         1        A/D CHANNEL 3                 0 = OK, 1 = FAILED
+         2        A/D CHANNEL 4                 0 = OK, 1 = FAILED
+         3        A/D CHANNEL 5                 0 = OK, 1 = FAILED
+         4        A/D CHANNEL 6                 0 = OK, 1 = FAILED
+         5        A/D CHANNEL 7                 0 = OK, 1 = FAILED
+         6        A/D CHANNEL 8                 0 = OK, 1 = FAILED
+         7        EEPROM CHECKSUM
+ 5                    CLUSTER PRE-BURN-IN DATE CODE MSB
+         7 - 4    LAST DIGIT OF CALENDAR YEAR
+         3 - 0    MONTH ($1 = JANUARY, $C = DECEMBER)
+ 6                    CLUSTER PRE-BURN-IN DATE CODE LSB
+         7        NOT USED
+         6        NOT USED
+         5        NOT USED
+         4 - 0    DAY OF MONTH
+ 7                    CLUSTER POST-BURN-IN DATE CODE MSB
+         7 - 4    LAST DIGIT OF CALENDAR YEAR
+         3 - 0    MONTH ($1 = JANUARY, $C = DECEMBER)
+ 8                    CLUSTER POST-BURN-IN DATE CODE LSB
+         7        NOT USED
+         6        NOT USED
+         5        NOT USED
+         4 - 0    DAY OF MONTH
+

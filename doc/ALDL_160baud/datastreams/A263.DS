@@ -1,0 +1,782 @@
+
+                        DATA STREAM A263  SPECIFICATION
+
+
+..PAGE
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   ENGINE USAGE:
+       3.1L  SFI  (L82) (VIN = M)    1994   3,4A
+*      3.1L  SFI  (L82) (VIN = M)    1995   3,4A
+
+
+
+   DATA PIN: READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+
+
+..PAGE
+MODE 0  (RETURN TO NORMAL MODE)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $00
+        - MESSAGE CHECKSUM
+
+        ECM RESPONSE:
+         NORMAL MESSAGES
+
+
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 0)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $99
+        - MODE NUMBER           = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 67
+        - CHECKSUM
+
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 1)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $01
+        - CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $60
+        - MODE NUMBER           = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 10
+        - CHECKSUM
+
+MODE 7  (COMMAND MESSAGE NORMAL MODE MESSAGE)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $07
+        - MESSAGE ID            = $45, $4A, OR $F0
+        - CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE REQUESTED WITH NORMAL MESSAGE
+
+MODE 8  (DISABLE NORMAL COMMUNICATIONS)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $08
+        - CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $08
+        - CHECKSUM
+..PAGE
+MODE 9  (ENABLE NORMAL COMMUNICATIONS)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $09
+        - CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $09
+        - CHECKSUM
+
+
+MODE 10 (CLEAR MALFUNCTION CODES - TESTER TO ECM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 0
+..HEAD04C 67 DATA WORDS
+WORD#  DATA NAME     DESCRIPTION
+ 1     PROMIDA       FIRST PROM I.D. WORD (MSB)
+ 2     PROMIDA+1     SECOND PROM I.D. WORD (LSB)
+                      ID = N
+ 3     COOLDEGA      COOLANT TEMPERATURE (NON-DEFAULTED)
+                      DEG C = .75N - 40
+ 4     ADATSCSD      ATS SENSOR RAW A/D COUNTS
+                      SEE LOOK-UP TABLE
+                      V = 5(256 - N)/256
+ 5     ADTHROT       THROTTLE POSITION
+                      VOLTS = 5N/255
+ 6     NTPSLD        THROTTLE POSITION LOAD AXIS VARIABLE
+                      % = N/2.55
+ 7     NEWRFPER      PRESENT MINOR LOOP REFERENCE PERIOD (MSB)
+ 8     NEWRFPER+1    PRESENT MINOR LOOP REFERENCE PERIOD (LSB)
+                      mS = N/65.536
+                      RPM = 1,310,720/N
+ 9     ISSPMP        IAC PRESENT MOTOR POSITION
+                      N = COUNTS
+ 10    ISESDD        DESIRED IDLE SPEED
+                      RPM = 12.5N
+ 11    RAWDSPFL      RAW VALUE OF DISPFLOW FOR ALDL (MSB)
+ 12    RAWDSPFL+1    RAW VALUE OF DISPFLOW FOR ALDL (LSB)
+                      GRAMS/SEC. = N/256
+ 13    LV8           FILTERED ENGINE LOAD VARIABLE
+                      COUNTS = LOAD INDICATION
+ 14    SAP           TOTAL UNLIMITED SPARK ADVANCE REL. TO TDC (MSB)
+ 15    SAP+1         TOTAL UNLIMITED SPARK ADVANCE REL. TO TDC (LSB)
+                      DEG = 90N/256       (N IS SIGNED)
+ 16    OLDPA3        ECU PA3 COUNTER VALUE FROM LAST MINOR LOOP
+                      N = COUNTER
+ 17    NOCKRTD       RETARD DUE TO KNOCK
+                      DEG = 45N/256
+ 18    ADO2AF        MINOR LOOP VALUE OF ADO2A
+                      mV = 4.44N
+ 19    ACNTDEL       CROSS COUNTS IN LAST SECOND
+                      N = O2 TOGGLES SINCE LAST SAMPLE
+ 20    BLM           BLOCK LEARN MULTIPLIER,RANGE 0-2.0 (FILTERED)
+                      N = COUNTS
+ 21    CORRCL        BASE PULSE CLOSED LOOP CORRECTION
+                      N = COUNTS
+ 22    BLMCELL       BLOCK LEARN MULTIPLIER CELL NUMBER,0-15
+                      N = COUNTS
+ 23    NVMW2         NON-VOLATILE MODE WORD 2
+           0           NOT USED
+           1           NOT USED
+           2           1 = STEPPER MOTOR CRUISE PRESENT ON VEHICLE
+           3           NOT USED
+           4           NOT USED
+           5           1 = MALF 755A (F31 SOLENOID B FAILED OFF)
+           6           1 = MALF 755B (F31 SOLENOID B FAILED ON)
+           7           1 = S.E.S. LIGHT ON AT STALL
+ 24    ADBAT         BATTERY VOLTAGE
+                      V = N/10
+ 25    PURGEDC       PURGE DUTY CYCLE VALUE = DC COUNTS/16
+                      % DC = N/2.56
+ 26    M341CNTR      TIMER FOR MALF 341 (INTERMITTENT CAM SIGNAL)
+                      N = COUNTS
+ 27    BADCYL        BAD CYLINDER NUMBER
+                      N = CYLINDER
+ 28    CAMFLAG
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           NOT USED
+           4           NOT USED
+           5           1 = CAM PULSE SEEN DURING CRANK
+           6           1 = CAM PULSE SEEN
+           7           1 = CAM PULSE SEEN - USED FOR CYLCNTR
+ 29    TIME          ENGINE RUN TIME (MSB)
+ 30    TIME+1        ENGINE RUN TIME (LSB)
+                      SEC = N
+ 31    ALDLMW2       ALDL DATASTREAM PACKED BIT WORD
+           0           NOT USED
+           1           1= SMC ENGAGED
+           2           NOT USED
+           3           1= ENGINE RUNNING
+           4           NOT USED
+           5           NOT USED
+           6           1= RICH/LEAN FLAG (1=RICH, 0=LEAN)
+           7           1= CLOSED LOOP
+ 32    ALDLMW1       MISC STATUS WORD SENT OUT OVER ALDL LINE
+           0           NOT USED
+           1           1 = EGR1 (SMALL) SOLENOID IS ON
+           2           1 = EGR2 (MEDIUM) SOLENOID IS ON
+           3           1 = EGR3 (LARGE) SOLENOID IS ON
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 33    FMDBYTE1      FMD BYTE 1 MODE WORD
+           0           PRNDL P
+           1           PRNDL C
+           2           PRNDL B
+           3           PRNDL A
+           4           A CAR - CRUZ STATUS FOR SMCC I  (0 = ENGAGED)
+           5           NOT USED
+           6           0 = TCC BRAKE PRESSED
+           7           1 = AIR CONDITIONER REQUESTED
+
+  PRNDL DECODE TABLE
+  ------------------
+  INP P   INP A   INP B   INP C    PRNDL POSITION
+  -----   -----   -----   -----    --------------
+    1       1       0       0      DRIVE 4
+    1       0       1       0      DRIVE 2
+    1       0       0       1      REVERSE
+    0       1       1       0      LOW
+    0       1       0       1      NEUTRAL
+    0       0       1       1      PARK
+    0       0       0       0      DRIVE 3
+
+
+ 34    FMDINST       FMD INPUT STATUS WORD
+           0           1 = PARK/NEUTRAL MODE
+           1           0 = IN 2ND GEAR
+           2           0 = IN 3RD GEAR
+           3           0 = IN 4TH GEAR
+           4           0 = IN 5TH GEAR (MANUAL TRANSMISSION)
+           5           NOT USED
+           6           1 = TCC BRAKE PRESSED
+           7           0 = A/C REQUEST
+ 35    QDMMW         QDM FAULT AND OTHER STATUS BITS
+           0           NOT USED
+           1           0 = QDM FAULT 1
+           2           0 = QDM FAULT 2
+           3           NOT USED
+           4           1 = A/C WAS ON THIS CRANK (DUE TO SLUGGING)
+           5           NOT USED
+           6           NOT USED
+           7           A/C CLUTCH STATUS        1 = CLUTCH ON
+ 36    LCCPMW        LCC & CCP MODE WORD
+           0           1 = CCP PURGE ON
+           1           1 = FAN1 ON
+           2           1 = RPM HIGH IN P/N
+           3           1 = TCC LOCKED
+           4           1 = FAN2 ON
+           5           NOT USED
+           6           1 = USE TABLE F7MAXTRQ FOR 3RD GEAR TORQ MANAGEMENT
+           7           1 = NORMAL A/C REQUEST HAS TURNED A/C ON AT STARTUP
+ 37    RAWMPH        VEHICLE SPEED
+                      MPH = N
+                      KPH = 1.61N
+ 38    PRNDL         TRANSMISSION STATE WORD (PRNDL)
+           0           INVALID
+           1           1 = LOW
+           2           1 = DRIVE2
+           3           1 = DRIVE3
+           4           1 = DRIVE4
+           5           1 = NEUTRAL
+           6           1 = REVERSE
+           7           1 = PARK
+ 39    GEAR          CURRENT COMMANDED GEAR
+                      GEAR = N
+ 40    FDSLIP        FILTERED SLIP BETWEEN TCC INPUT AND OUTPUT
+                      RPM = 2N - 255
+ 41    TCCDC         TCC DUTY CYCLE
+                      %DC = N/2.55
+ 42    TCCPWMMW      TCCPWM MODE WORD
+           0           1 = APPLY MODE
+           1           1 = ON MODE
+           2           1 = RELEASE MODE
+           3           1 = OFF MODE
+           4           1 = POSITIVE DELTA TPS RELEASE OF TCC
+           5           1 = TCCRAMP IS NEGATIVE
+           6           1 = TCC SLIP REQUESTED FOR A/C ENGAGEMENT
+           7           1 = ABSOLUTE SLIP HAS EXCEEDED KLOCKH
+ 43    TESTBYTE      THIS BYTE IS RESERVED FOR TESTING FOR STACK OVERWRITE
+ 44    TESTBYTE      THIS BYTE IS RESERVED FOR TESTING FOR STACK OVERWRITE
+ 45    ACPRES        A/C FREON PRESSURE IN A/D COUNTS
+                      PSI = 1.92N - 26.88
+ 46    TRANDEGA      TRANSMISSION TEMPERATURE (NON - DEFAULTED)
+                      DEG C = .75N - 40
+ 47    NOVERV+1      N/V RATIO
+                      N = RPM/MPH
+ 48    TESTBYTE      THIS BYTE IS RESERVED FOR TESTING FOR STACK OVERWRITE
+ 49    MALFFLG1      HISTORY MALF FLAG WORD 1
+           0           P0123 - TPS VOLTAGE HIGH
+           1           NOT USED
+           2           P0341 - CAM SIGNAL ERROR
+           3           P0321 - IC 24X SIGNAL ERROR
+           4           P1630 - SYSTEM VOLTAGE ERROR
+           5           P0117 - ENGINE COOLANT TEMP. LOW
+           6           P0118 - ENGINE COOLANT TEMP. HIGH
+           7           P0134 - HO2S ERROR
+ 50    MALFFLG2      HISTORY MALF FLAG WORD 2
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           P1640 - QDM A ERROR
+           4           P0113 - IAT SENSOR HIGH
+           5           P0502 - VSS CKT. SIGNAL ERROR
+           6           P0112 - IAT SENSOR LOW
+           7           P0122 - TPS VOLTAGE LOW
+ 51    MALFFLG3      HISTORY MALF FLAG WORD 3
+           0           P0703 - TCC BRAKE SW. ERROR
+           1           P0501 - VSS CKT. NO SIGNAL
+           2           P0755 - SSB ERROR
+           3           NOT USED
+           4           P0101 - MAF SENSOR ERROR
+           5           NOT USED
+           6           P0705 - TRANS. RANGE SW. ERROR
+           7        *  NOT USED
+ 52    MALFFLG4      HISTORY MALF FLAG WORD 4
+           0           P0712 - TFT SENSOR CKT HIGH (LOW TEMP.)
+           1           P0713 - TFT SENSOR CKT LOW (HIGH TEMP.)
+           2           P0132 - HO2S SYSTEM RICH
+           3           P0131 - HO2S SYSTEM LEAN
+           4           P0325 - KS CIRCUIT ERROR
+           5           P1350 - IC EST BYPASS ERROR
+           6           P0342 - CAM SENSOR ERROR
+           7           P0740 - TCC ERROR
+ 53    MALFFLG5      HISTORY MALF FLAG WORD 5
+           0           P1650 - QDM B ERROR
+           1           P1405 - EGR3 SOLENOID ERROR
+           2           P1404 - EGR2 SOLENOID ERROR
+           3           P1403 - EGR1 SOLENOID ERROR
+           4           P1361 - IC EST ERROR
+           5           P1623 - PROM ERROR
+           6           NOT USED
+           7           NOT USED
+ 54    MALFFLG6      HISTORY MALF FLAG WORD 6
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           NOT USED
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 55    MALFFLG7      HISTORY MALF FLAG WORD 7
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           P1530 - A/C PRESS. SENSOR ERROR
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 56    MALFFLG8      HISTORY MALF FLAG WORD 8
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           NOT USED
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 57     CURMALF1     CURRENT MALF FLAG WORD 1
+           0           P0123 - TPS VOLTAGE HIGH
+           1           NOT USED
+           2           P0341 - CAM SIGNAL ERROR
+           3           P0321 - IC 24X SIGNAL ERROR
+           4           P1630 - SYSTEM VOLTAGE ERROR
+           5           P0117 - ENGINE COOLANT TEMP. LOW
+           6           P0118 - ENGINE COOLANT TEMP. HIGH
+           7           P0134 - HO2S ERROR
+ 58     CURMALF2     CURRENT MALF FLAG WORD 2
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           P1640 - QDM A ERROR
+           4           P0113 - IAT SENSOR HIGH
+           5           P0502 - VSS CKT. SIGNAL ERROR
+           6           P0112 - IAT SENSOR LOW
+           7           P0122 - TPS VOLTAGE LOW
+ 59     CURMALF3     CURRENT MALF FLAG WORD 3
+           0           P0703 - TCC BRAKE SW. ERROR
+           1           P0501 - VSS CKT. NO SIGNAL
+           2           P0755 - SSB ERROR
+           3           NOT USED
+           4           P0101 - MAF SENSOR ERROR
+           5           NOT USED
+           6           P0705 - TRANS. RANGE SW. ERROR
+           7           NOT USED
+ 60     CURMALF4     CURRENT MALF FLAG WORD 4
+           0           P0712 - TFT SENSOR CKT HIGH (LOW TEMP.)
+           1           P0713 - TFT SENSOR CKT LOW (HIGH TEMP.)
+           2           P0132 - HO2S SYSTEM RICH
+           3           P0131 - HO2S SYSTEM LEAN
+           4           P0325 - KS CIRCUIT ERROR
+           5           P1350 - IC EST BYPASS ERROR
+           6           P0342 - CAM SENSOR ERROR
+           7           P0740 - TCC ERROR
+ 61     CURMALF5     CURRENT MALF FLAG WORD 5
+           0           P1650 - QDM B ERROR
+           1           P1405 - EGR3 SOLENOID ERROR
+           2           P1404 - EGR2 SOLENOID ERROR
+           3           P1403 - EGR1 SOLENOID ERROR
+           4           P1361 - IC EST ERROR
+           5           P1623 - PROM ERROR
+           6           NOT USED
+           7           NOT USED
+ 62     CURMALF6     CURRENT MALF FLAG WORD 6
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           NOT USED
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 63     CURMALF7     CURRENT MALF FLAG WORD 7
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           P1530 - A/C PRESS. SENSOR ERROR
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 64     CURMALF8     CURRENT MALF FLAG WORD 8
+           0           NOT USED
+           1           NOT USED
+           2           NOT USED
+           3           NOT USED
+           4           NOT USED
+           5           NOT USED
+           6           NOT USED
+           7           NOT USED
+ 65     TESTBYTE     THIS BYTE IS RESERVED FOR TESTING FOR STACK OVERWRITE
+ 66     BPW          BASE PULSE WIDTH (MSB)
+ 67     BPW+1        BASE PULSE WIDTH (LSB)
+                      mS = N/65.536
+
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 1
+..HEAD04C 10 DATA WORDS
+WORD#  DATA NAME     DESCRIPTION
+ 1     NTPSLD        THROTTLE POSITION LOAD AXIS VARIABLE
+                      % = N/2.55
+ 2     COOLDEG       COOLANT TEMPERATURE (DEFAULTED)
+                      DEG C = .75N - 40
+ 3     NTRPMX        ENGINE SPEED
+                      RPM = 25N
+ 4     QDMMW         QDM FAULT AND OTHER STATUS BITS
+           0           NOT USED
+           1           0 = QDM FAULT1*
+           2           0 = QDM FAULT2*
+           3           1 = LOW OIL LEVEL LIGHT ON
+           4           1 = A/C WAS ON THIS CRANK (DUE TO SLUGGING)
+           5           NOT USED
+           6           NOT USED
+           7           A/C CLUTCH STATUS         1 = CLUTCH ON
+ 5     TESTBYTE      THIS BYTE IS RESERVED FOR TESTING FOR STACK OVERWRITE
+ 6     PIDMW2        IDLE AIR CONTROL MODE WORD
+           0           1 = A/C SLUGGING TEMPERATURES MET
+           1           1 = MOTOR HAS BEEN AT 0 DURING RESET
+           2           1 = MOTOR RESET IN PROGRESS
+           3           1 = AIRFLOW > COMMAND AIR FLOW
+           4           1 = RESET COMPLETE
+           5           1 = DO NOT ADD HOT START IDLE SPEED OFFSET
+           6           1 = STEPPER MOTOR CRUISE ENGAGED
+           7           1 = ASYNC A.E. DISABLED
+ 7     MWFA          FUEL AIR MODE WORD
+           0           1 = TCC SLIP IS OK FOR A/C ENGAGEMENT
+           1           1 = DECEL FUEL CUTOFF ENABLED
+           2           BL ADDRESS CHANGE FLAG (1 = CHANGE)
+           3           DELAY BLM UPDATE (1 = BL ADDRESS CHANGE)
+           4           1 = REVERSE TO DRIVE CHANGE (OR DRIVE TO REVERSE)
+           5           PE FLAG (1 = PE IS ACTIVE)
+           6           HIGH LIMIT FUEL CUTOFF ENABLED
+           7           1 = INCREMENT ODOMETER (USED BY ENG. PERF. MILEAGE)
+ 8     MWFA1         FUEL AIR MODE WORD 1
+           0           200 MSEC. OLD P/N BIT FROM FMDINST  1 = P/N
+           1           LEARN CONTROL ENABLE FLAG (1=ENABLE STORE,0=DISABLE)
+           2           1 = FATI FILTER ACTIVE
+           3           1 = O/L F/A WAS RICHER THAN KCLRATIO
+           4           1 = FATC FILTER ACTIVE
+           5           1 = FORCE LOW PULSE RESULT OPEN LOOP
+           6           RICH-LEAN FLAG (1=RICH,0=LEAN)
+           7           CLOSED LOOP FLAG (1=CLOSED LOOP, 0=OPEN LOOP)
+ 9     LCCPMW        LCC & CCP MODE WORD
+           0           1 = CCP PURGE ON
+           1           1 = FAN1 ON
+           2           1 = RPM HIGH IN P/N
+           3           1 = TCC LOCKED
+           4           1 = FAN2 ON
+           5           1 = POWER STEERING PRESURE SWITCH CRAMP
+           6           1 = USE TABLE F7MAXTRQ FOR 3RD GEAR TORQ MANAGEMENT
+           7           1 = NORMAL A/C REQUEST HAS TURNED A/C ON AT STARTUP
+ 10    SDPDW1        SERIAL DATA PACKED DISCRETE WORD 1
+           0           1 = ERROR FREE TRANSMISSION ON UART LINK
+           1           1 = ALDL XMIT NEEDED (RESPONSE TO A RECEIVED ALDL MSG
+           2           1 = CLEAR MALF CODES
+           3           1 = ALDL MODE 8
+           4           1 = DO CHECKSUM ONLY
+           5           1 = ALDL TESTER IN CONTROL OF LINK
+           6           1 = CLEAR NON-VOLITAL RAM (REQUESTED BY HUD)
+           7           NOT USED
+..PAGE
+..HEAD03C AIR TEMPERATURE CONVERSION TABLE
+..HEAD04C
+;ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+;³                                TABLE 1                                      ³
+;³                       MANIFOLD AIR TEMPERATURE VS AD                        ³
+;³                              (ADATSCSD)                                     ³
+;ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+   A/D                    DEG C                    DEG F
+   ---                    -----                    -----
+    0                     -40.0                    -40.0
+    1                     -39.0                    -38.2
+    2                     -38.0                    -36.5
+    3                     -37.0                    -34.7
+    4                     -36.1                    -32.9
+    5                     -35.1                    -31.1
+    6                     -34.1                    -29.4
+    7                     -33.1                    -27.6
+    8                     -32.1                    -25.8
+    9                     -31.1                    -24.1
+    10                    -30.2                    -22.3
+    11                    -29.2                    -20.5
+    12                    -28.2                    -18.7
+    13                    -27.2                    -17.0
+    14                    -26.2                    -15.2
+    15                    -25.2                    -13.4
+    16                    -24.3                    -11.6
+    17                    -23.5                    -10.2
+    18                    -22.7                    -8.8
+    19                    -21.9                    -7.3
+    20                    -21.1                    -5.9
+    21                    -20.3                    -4.5
+    22                    -19.5                    -3.0
+    23                    -18.7                    -1.6
+    24                    -17.9                    -0.2
+    25                    -17.1                    1.3
+    26                    -16.3                    2.7
+    27                    -15.5                    4.1
+    28                    -14.7                    5.6
+    29                    -13.9                    7.0
+    30                    -13.1                    8.4
+    31                    -12.3                    9.9
+    32                    -11.5                    11.3
+    33                    -10.9                    12.3
+    34                    -10.4                    13.3
+    35                    -9.8                     14.3
+    36                    -9.3                     15.4
+    37                    -8.7                     16.4
+    38                    -8.1                     17.4
+    39                    -7.6                     18.4
+    40                    -7.0                     19.4
+    41                    -6.4                     20.4
+    42                    -5.9                     21.4
+    43                    -5.3                     22.4
+    44                    -4.8                     23.5
+    45                    -4.2                     24.5
+    46                    -3.6                     25.5
+    47                    -3.1                     26.5
+    48                    -2.5                     27.5
+    49                    -2.1                     28.3
+    50                    -1.7                     29.0
+    51                    -1.2                     29.8
+    52                    -0.8                     30.5
+    53                    -0.4                     31.3
+    54                    0.0                      32.1
+    55                    0.5                      32.8
+    56                    0.9                      33.6
+    57                    1.3                      34.3
+    58                    1.7                      35.1
+    59                    2.1                      35.9
+    60                    2.6                      36.6
+    61                    3.0                      37.4
+    62                    3.4                      38.1
+    63                    3.8                      38.9
+    64                    4.3                      39.7
+    65                    4.7                      40.4
+    66                    5.1                      41.2
+    67                    5.5                      41.9
+    68                    5.9                      42.7
+    69                    6.4                      43.4
+    70                    6.8                      44.2
+    71                    7.2                      45.0
+    72                    7.6                      45.7
+    73                    8.0                      46.5
+    74                    8.5                      47.2
+    75                    8.9                      48.0
+    76                    9.3                      48.8
+    77                    9.7                      49.5
+    78                    10.2                     50.3
+    79                    10.6                     51.0
+    80                    11.0                     51.8
+    81                    11.3                     52.4
+    82                    11.7                     53.0
+    83                    12.0                     53.6
+    84                    12.3                     54.2
+    85                    12.6                     54.8
+    86                    13.0                     55.3
+    87                    13.3                     55.9
+    88                    13.6                     56.5
+    89                    14.0                     57.1
+    90                    14.3                     57.7
+    91                    14.6                     58.3
+    92                    14.9                     58.9
+    93                    15.3                     59.5
+    94                    15.6                     60.1
+    95                    15.9                     60.7
+    96                    16.3                     61.3
+    97                    16.6                     61.9
+    98                    17.0                     62.6
+    99                    17.4                     63.3
+    100                   17.8                     64.0
+    101                   18.1                     64.6
+    102                   18.5                     65.3
+    103                   18.9                     66.0
+    104                   19.3                     66.7
+    105                   19.6                     67.3
+    106                   20.0                     68.0
+    107                   20.4                     68.7
+    108                   20.8                     69.3
+    109                   21.1                     70.0
+    110                   21.5                     70.7
+    111                   21.9                     71.4
+    112                   22.3                     72.1
+    113                   22.6                     72.6
+    114                   22.9                     73.2
+    115                   23.2                     73.8
+    116                   23.6                     74.4
+    117                   23.9                     75.0
+    118                   24.2                     75.6
+    119                   24.5                     76.2
+    120                   24.9                     76.8
+    121                   25.2                     77.4
+    122                   25.5                     78.0
+    123                   25.9                     78.5
+    124                   26.2                     79.1
+    125                   26.5                     79.7
+    126                   26.8                     80.3
+    127                   27.2                     80.9
+    128                   27.5                     81.5
+    129                   27.9                     82.2
+    130                   28.3                     82.8
+    131                   28.6                     83.5
+    132                   29.0                     84.2
+    133                   29.4                     84.9
+    134                   29.8                     85.6
+    135                   30.1                     86.2
+    136                   30.5                     86.9
+    137                   30.9                     87.6
+    138                   31.3                     88.3
+    139                   31.6                     88.9
+    140                   32.0                     89.6
+    141                   32.4                     90.3
+    142                   32.8                     90.9
+    143                   33.1                     91.6
+    144                   33.5                     92.3
+    145                   33.9                     93.0
+    146                   34.3                     93.7
+    147                   34.6                     94.3
+    148                   35.0                     95.0
+    149                   35.4                     95.7
+    150                   35.8                     96.3
+    151                   36.1                     97.0
+    152                   36.5                     97.7
+    153                   36.9                     98.4
+    154                   37.3                     99.1
+    155                   37.6                     99.7
+    156                   38.0                     100.4
+    157                   38.4                     101.1
+    158                   38.8                     101.8
+    159                   39.1                     102.4
+    160                   39.5                     103.1
+    161                   39.9                     103.9
+    162                   40.3                     104.6
+    163                   40.8                     105.4
+    164                   41.2                     106.1
+    165                   41.6                     106.9
+    166                   42.0                     107.7
+    167                   42.5                     108.4
+    168                   42.9                     109.2
+    169                   43.3                     109.9
+    170                   43.7                     110.7
+    171                   44.1                     111.5
+    172                   44.6                     112.2
+    173                   45.0                     113.0
+    174                   45.4                     113.7
+    175                   45.8                     114.5
+    176                   46.3                     115.3
+    177                   46.8                     116.2
+    178                   47.3                     117.1
+    179                   47.8                     118.0
+    180                   48.3                     119.0
+    181                   48.8                     119.9
+    182                   49.3                     120.8
+    183                   49.9                     121.7
+    184                   50.4                     122.7
+    185                   50.9                     123.6
+    186                   51.4                     124.5
+    187                   51.9                     125.5
+    188                   52.4                     126.4
+    189                   53.0                     127.3
+    190                   53.5                     128.2
+    191                   54.0                     129.2
+    192                   54.5                     130.1
+    193                   55.1                     131.2
+    194                   55.7                     132.3
+    195                   56.3                     133.4
+    196                   56.9                     134.5
+    197                   57.5                     135.6
+    198                   58.2                     136.7
+    199                   58.8                     137.8
+    200                   59.4                     138.9
+    201                   60.0                     140.0
+    202                   60.6                     141.1
+    203                   61.2                     142.2
+    204                   61.8                     143.3
+    205                   62.4                     144.4
+    206                   63.0                     145.5
+    207                   63.6                     146.6
+    208                   64.3                     147.6
+    209                   65.1                     149.2
+    210                   65.9                     150.7
+    211                   66.8                     152.2
+    212                   67.6                     153.7
+    213                   68.5                     155.2
+    214                   69.3                     156.8
+    215                   70.2                     158.3
+    216                   71.0                     159.8
+    217                   71.8                     161.3
+    218                   72.7                     162.8
+    219                   73.5                     164.4
+    220                   74.4                     165.9
+    221                   75.2                     167.4
+    222                   76.1                     168.9
+    223                   76.9                     170.4
+    224                   77.8                     171.9
+    225                   79.3                     174.7
+    226                   80.8                     177.5
+    227                   82.4                     180.3
+    228                   83.9                     183.1
+    229                   85.5                     185.9
+    230                   87.0                     188.7
+    231                   88.6                     191.4
+    232                   90.1                     194.2
+    233                   91.7                     197.0
+    234                   93.2                     199.8
+    235                   94.8                     202.6
+    236                   96.3                     205.4
+    237                   97.9                     208.1
+    238                   99.4                     210.9
+    239                   101.0                    213.7
+    240                   102.5                    216.5
+    241                   105.5                    222.0
+    242                   108.6                    227.5
+    243                   111.6                    233.0
+    244                   114.7                    238.4
+    245                   117.7                    243.9
+    246                   120.8                    249.4
+    247                   123.8                    254.9
+    248                   126.9                    260.4
+    249                   129.9                    265.9
+    250                   133.0                    271.3
+    251                   136.0                    276.8
+    252                   139.1                    282.3
+    253                   142.1                    287.8
+    254                   145.2                    293.3
+    255                   148.2                    298.8
+
+

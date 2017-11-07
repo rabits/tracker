@@ -1,0 +1,370 @@
+
+..FOOT62r PAGE ##
+..FOOT63r DATA STREAM A157
+..FOOT64r B.HENSON
+
+
+                        Data Stream A157   Specification
+
+
+
+..page
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+
+       CAR LINE:    1991      OLDSMOBILE C - CAR
+                    1992      OLDSMOBILE C & H - CAR
+                    1993      OLDSMOBILE C & H - CAR
+
+
+
+       DATA PIN:    M  FOR 91'
+                    L  FOR 92'
+
+       BAUD RATE:   8192 BAUD  BI-DIRECTIONAL
+
+..page
+       DIC OVERVIEW
+       ------------
+          THE DRIVER INFORMATION CENTER MODULE (DIC) IS A SLAVE MODULE WITH
+          THE ECM BEING THE MASTER. THE MASTER MUST FIRST BE PUT TO SLEEP
+          BEFORE COMMUNICATIONS CAN BE ESTABLISHED WITH THE DIC.
+
+          FOR 92' PIN L HAS NO MASTER.
+
+
+..PAGE
+..HEAD02L
+..HEAD03L ALDL MODING
+..HEAD04L
+       MODE 0  (RETURN TO NORMAL MODE)
+               ALDL REQUEST:
+               - MESSAGE ID            = $F2
+               - MESSAGE LENGTH        = $56
+               - MODE NUMBER           = $00
+               - MESSAGE CHECKSUM
+
+               THE DIC CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+               - MESSAGE ID            = $F2
+               - MESSAGE LENGTH        = $56
+               - MODE NUMBER           = $00
+               - MESSAGE CHECKSUM
+
+
+       MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 0)
+               ALDL REQUEST:
+               - MESSAGE ID            = $F2
+               - MESSAGE LENGTH        = $57
+               - MODE NUMBER           = $01
+               - MESSAGE NUMBER        = $00
+               - CHECKSUM
+
+               THE DIC CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+               - MESSAGE ID            = $F2
+               - MESSAGE LENGTH        = $6A
+               - MODE NUMBER           = $01
+               - DATA BYTE 1
+                 .
+                 .
+                 .
+               - DATA BYTE 19
+               - CHECKSUM
+
+
+       MODE 10 (CLEAR MALFUNCTION CODES)
+               ALDL REQUEST:
+               - MESSAGE ID            = $F2
+               - MESSAGE LENGTH        = $56
+               - MODE NUMBER           = $0A
+               - CHECKSUM
+
+               THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+               - MESSAGE ID            = $F2
+               - MESSAGE LENGTH        = $56
+               - MODE NUMBER           = $0A
+               - CHECKSUM
+
+
+..page
+..HEAD02L
+..HEAD03L DIC MODE 1 - DATA LIST
+..HEAD04L NUMBER OF DATA WORDS - 19
+Byte     Name       Description
+
+ 1       DMVDMPC    INTERIOR LIGHT LEVEL (CLUSTER DIMMING) (1% PER BIT)
+                     0% TO 99% OF FULL INTENSITY
+ 2       FUVFUFL    FUEL LEVEL
+                     GALLONS = N/10
+ 3       OPVOPFL    OIL PRESSURE
+                     PSI = N
+ 4       NOT USED
+ 5       PRPID      PROM IDENTIFICATION (FIRST TWO BCD DIGITS)
+ 6       PRPID+1    PROM IDENTIFICATION (SECOND TWO DIGITS) - SOFTWARE VERSION
+                     ID = YY.XX       YY - FIRST 2 DIGITS  XX - SECOND 2 DIGITS
+ 7       DGZCFTB    CURRENT FAILURE FLAGS BYTE 1
+           7         57  ENGINE RPM WARNING
+           6         39  HOT....STOP ENGINE
+           5         38  HOT....IDLE ENGINE
+           4         51  OIL PRESSURE LOW
+           3         05  TRACTION CONTROL
+           2         48  CHECK OIL LEVEL
+           1         19  COOLANT LEVEL LOW
+           0         12  BRAKE FLUID LOW
+ 8       DGZCFTB+1  CURRENT FAILURE FLAGS BYTE 2
+           7         33  CHECK CHARGE SYSTEM
+           6         54  ECM DATA LINK PROB
+           5         44  LAMP MOD LINK PROB
+           4         10  BATTERY VOLTS LOW
+           3         09  BATTERY VOLTS HIGH
+           2         37  HIGH BEAM LAMP OUT
+           1         41  LOW BEAM LAMP OUT
+           0         15  CENTER STOP LAMP OUT
+ 9       DGZCFTB+2  CURRENT FAILURE FLAGS BYTE 3
+           7         60  REAR STOP LAMP OUT
+           6         66  TAIL LAMP OUT
+           5         08  BACK-UP LAMP OUT
+           4         59  REAR LAMP OUT
+           3         61  REAR TURN LAMP OUT
+           2         29  FRONT TURN LAMP OUT
+           1         28  FRONT PARK LAMP OUT
+           0         27  BATTERY RECONNECTED (KAM CHECKSUM ERROR)
+ 10      DGZCFTB+3  CURRENT FAILURE FLAGS BYTE 4
+           7         71  PLEASE CLEAN KEY AND TRY AFTER 3 MINUTES
+           6         03  PASS KEY MALFUNCTION
+           5         02  COOLANT SENSOR PROB
+           4         91  OIL PRES SENDER PROB
+           3         92  FUEL SENDER PROBLEM
+           2         55  PARK BRAKE ON
+           1         26  DRIVER DOOR AJAR
+           0         56  PASSENGER DOOR AJAR
+..page
+ 11      DGZCFTB+4  CURRENT FAILURE FLAGS BYTE 5
+           7         58  REAR DOOR AJAR
+           6         42  LOW FUEL
+           5         93  LOW FUEL RANGE
+           4         16  CHANGE OIL NOW
+           3         18  CHANGE OIL ddd MI   ddd - NUMERICAL VALUE
+           2         73  WASHER FLUID LOW
+           1         68  TRIP COMPLETE
+           0         NOT USED
+ 12      DGZHFTB    HISTORY FAILURE FLAGS BYTE 1
+           7         57  ENGINE RPM WARNING
+           6         39  HOT....STOP ENGINE
+           5         38  HOT....IDLE ENGINE
+           4         51  OIL PRESSURE LOW
+           3         05  TRACTION CONTROL
+           2         48  CHECK OIL LEVEL
+           1         19  COOLANT LEVEL LOW
+           0         12  BRAKE FLUID LOW
+ 13      DGZHFTB+1  HISTORY FAILURE FLAGS BYTE 2
+           7         33  CHECK CHARGE SYSTEM
+           6         54  ECM DATA LINK PROB
+           5         44  LAMP MOD LINK PROB
+           4         10  BATTERY VOLTS LOW
+           3         09  BATTERY VOLTS HIGH
+           2         37  HIGH BEAM LAMP OUT
+           1         41  LOW BEAM LAMP OUT
+           0         15  CENTER STOP LAMP OUT
+ 14      DGZHFTB+2  HISTORY FAILURE FLAGS BYTE 3
+           7         60  REAR STOP LAMP OUT
+           6         66  TAIL LAMP OUT
+           5         08  BACK-UP LAMP OUT
+           4         59  REAR LAMP OUT
+           3         61  REAR TURN LAMP OUT
+           2         29  FRONT TURN LAMP OUT
+           1         28  FRONT PARK LAMP OUT
+           0         27  BATTERY RECONNECTED (KAM CHECKSUM ERROR)
+ 15      DGZHFTB+3  HISTORY FAILURE FLAGS BYTE 4
+           7         71  PLEASE CLEAN KEY AND TRY AFTER 3 MINUTES
+           6         03  PASS KEY MALFUNCTION
+           5         02  COOLANT SENSOR PROB
+           4         91  OIL PRES SENDER PROB
+           3         92  FUEL SENDER PROBLEM
+           2         55  PARK BRAKE ON
+           1         26  DRIVER DOOR AJAR
+           0         56  PASSENGER DOOR AJAR
+ 16      DGZHFTB+4  HISTORY FAILURE FLAGS BYTE 5
+           7         58  REAR DOOR AJAR
+           6         42  LOW FUEL
+           5         93  LOW FUEL RANGE
+           4         16  CHANGE OIL NOW
+           3         18  CHANGE OIL ddd MI   ddd - NUMERICAL VALUE
+           2         73  WASHER FLUID LOW
+           1         68  TRIP COMPLETE
+           0         NOT USED
+
+ 17      ALVFLG3    STATUS FLAG #1
+           7         BRAKE FLUID LEVEL          1 = LOW           0 = OK
+           6         PARK BRAKE                 1 = ON            0 = OFF
+           5         DRIVER DOOR AJAR           1 = OPEN          0 = CLOSED
+           4         PASSENGER DOOR AJAR        1 = OPEN          0 = CLOSED
+           3         REAR DOOR AJAR             1 = OPEN          0 = CLOSED
+           2         WASHER FLUID LEVEL         1 = LOW           0 = OK
+           1         ALTERNATOR FAULT STATUS    1 = FAULT         0 = OK
+           0         PARK LAMP INPUT            1 = ON            0 = OFF
+ 18      ALVFLG4    STATUS FLAG #2
+           7         OIL LEVEL                  1 = LOW           0 = OK
+           6         CLUSTER TYPE               1 = VF            0 = TOURING
+           5         COOLANT LEVEL              1 = LOW           0 = OK
+           4         EXPORT STRAP               1 = DOMESTIC      0 = EXPORT
+           3         FUEL LEVEL                 1 = LOW           0 = OK
+           2         TRACTION CONTROL INPUT     1 = ACTIVE        0 = INACTIVE
+           1         LAMP MONITOR INITIALIZE    1 = B0 INVALID    0 = B0 VALID
+           0         LAMP MONITOR CONFIGURATION 1 = INVALID       0 = OLDSMOBILE
+ 19      ALVFLG5    STATUS FLAG #3
+           7         ENGLISH/METRIC             1 = ENGLISH       0 = METRIC
+           6         TEST SWITCH                1 = ACTIVE        0 = INACTIVE
+           5         TRIP ODOMETER RESET SW.    1 = ACTIVE        0 = INACTIVE
+           4         TRIP ODOMETER SELECT SW.   1 = ACTIVE        0 = INACTIVE
+           3         COLUMN 4 SWITCH INPUT      1 = ACTIVE        0 = INACTIVE
+           2         COLUMN 3 SWITCH INPUT      1 = ACTIVE        0 = INACTIVE
+           1         COLUMN 2 SWITCH INPUT      1 = ACTIVE        0 = INACTIVE
+           0         COLUMN 1 SWITCH INPUT      1 = ACTIVE        0 = INACTIVE
+
+
+ Note: Byte 19 bits 0-3 represent the state of the switches on the DIC.
+       Since there are 3 rows of 4 switches multiplexed together, the row
+       you want to work with must first be defined. By using mode 4 command
+       byte 7 bits 4-6, you can activate the row. Only one row at a time
+       can be activated. If more than one row is activated at one time the
+       lower number row will take priority. Row one is the top most row, row
+       two is the middle row, and row 3 is the bottom most row. Once a row
+       has been activated bits 0-3 in byte 19 of the mode 1 response will
+       define the state of the switches in that row. The switch will only
+       show active if some one is physically depressing one of the four
+       switches in the activated row. (see mode 4 command byte 7 and note below)
+..page
+..HEAD02L
+..HEAD03L DIC MESSAGE TABLE
+..HEAD04L
+
+       Message #      Message #
+       Decimal        hexidecimal          ACTUAL MESSAGE TEXT
+       ---------      -----------         --------------------
+           00            $00               (ALL SEGMENTS OFF)
+           01            $01               (SEGMENT CHECK - ALL ON)
+           02            $02              _COOLANT_SENDER_PROB
+           03            $03              PASS_KEY_MALFUNCTION
+           04            $04              __AM(1)____PM(2)____
+           05            $05              _TRAC_CONTROL_ACTIVE
+           06            $06              _AVG_SPEED_ddd_MPH__
+           07            $07              _AVG_SPEED_ddd_KPH__
+           08            $08              __BACK-UP_LAMP_OUT__
+           09            $09              _BATTERY_VOLTS_HIGH_
+           10            $0A              _BATTERY_VOLTS_LOW__
+           11            $0B              _BATTERY_dd.d_VOLTS_
+           12            $0C              __BRAKE_FLUID_LOW___
+           13            $0D              _BRAKE_LINING_WORN__
+           14            $0E              _BRAKE_PRESSURE_LOW_
+           15            $0F              CENTER_STOP_LAMP_OUT
+           16            $10              ___CHANGE_OIL_NOW___
+           17            $11              _CHANGE_OIL_dddd_KM_
+           18            $12              _CHANGE_OIL_ddd_MI__
+           19            $13              _COOLANT_LEVEL_LOW__
+           20            $14              ___COOLANT_ddd_ªF___
+           21            $15              ___COOLANT_ddd_ªC___
+           22            $16              ___DAY?__MM/DD/YY___
+           23            $17              __DIAGNOSTIC_MODE___
+           24            $18              _DISTANCE?__dddd_KM_
+           25            $19              _DISTANCE?__dddd_MI_
+           26            $1A              _DRIVER_DOOR_AJAR___
+           27            $1B              BATTERY_RECONNECTED_
+           28            $1C              FRONT_PARK_LAMP_OUT_
+           29            $1D              FRONT_TURN_LAMP_OUT_
+           30            $1E              _____CHANGE_OIL_____
+           31            $1F              _FUEL_RANGE_ddd_KM__
+           32            $20              _FUEL_RANGE_ddd_MI__
+           33            $21              CHECK_CHARGE_SYSTEM_
+           34            $22              ____GOOD_AFTERNOON__
+           35            $23              _____GOOD_EVENING___
+           36            $24              ____GOOD_MORNING____
+           37            $25              _HIGH_BEAM_LAMP_OUT_
+           38            $26              _HOT...IDLE_ENGINE__
+           39            $27              _HOT...STOP_ENGINE__
+           40            $28              ____HOUR?__HH:MM____
+           41            $29              _LOW_BEAM_LAMP_OUT__
+           42            $2A              ______LOW_FUEL______
+           43            $2B              ___LOW_FUEL_RANGE___
+           44            $2C              _LAMP_MON_LINK_PROB_
+           45            $2D              __MINUTE?__HH:MM____
+           46            $2E              MONITORED_SYSTEMS_OK
+           47            $2F              _MONTH?__MM/DD/YY___
+           48            $30              __CHECK_OIL_LEVEL___
+           49            $31              _______71_&_72______
+           50            $32              ___OIL_LIFE_ddd%____
+           51            $33              __OIL_PRESSURE_LOW__
+           52            $34              OIL_PRESSURE_ddd_PSI
+           53            $35              OIL_PRESSURE_ddd_KPA
+           54            $36              _ECM_DATA_LINK_PROB_
+           55            $37              ___PARK_BRAKE_ON____
+           56            $38              PASSENGER_DOOR_AJAR_
+           57            $39              _ENGINE_RPM_WARNING_
+           58            $3A              ___REAR_DOOR_AJAR___
+           59            $3B              ___REAR_LAMP_OUT____
+           60            $3C              _REAR_STOP_LAMP_OUT_
+           61            $3D              _REAR_TURN_LAMP_OUT_
+           62            $3E              _______RESET________
+           63            $3F              _a_bb_c_dd_ee_ff_g_h  (see note)
+           64            $40              ____VERSION_d.d_____
+           65            $41              TACHOMETER_dddd_RPM_
+           66            $42              ___TAIL_LAMP_OUT____
+           67            $43              _________dd_________
+           68            $44              ___TRIP_COMPLETE____
+           69            $45              __TRIP_OVER_7_DAYS__
+           70            $46              TRIP_FUNCTION_RESET_
+           71            $47              PLEASE_CLEAN_KEY_AND
+           72            $48              _TRY_AFTER_3_MINUTES
+           73            $49              __WASHER_FLUID_LOW__
+           74            $4A              __YEAR?__MM/DD/YY___
+           75            $4B              ___DAY_MONTH_DATE___
+           76            $4C              __dd_INST_L/100_KM__
+           77            $4D              __dd_INST_MI/GAL____
+           78            $4E              _dd.d_AVG_L/100_KM__
+           79            $4F              __dd.d_AVG_MI/GAL___
+           80            $50              _TRIP_ODO_ddd.d_KM__
+           81            $51              _TRIP_ODO_ddd.d_MI__
+           82            $52              ddd.d__GALLONS_USED_
+           83            $53              ddddd.d_LITERS_USED_
+           84            $54              ___dddd_MI_TO_DEST__
+           85            $55              __ddddd_KM_TO_DEST__
+           86            $56              _HH:MM+_TIME_TO_DEST
+           87            $57              ____HH:MM:SS_xx_____
+           88            $58              __HH:MM:SS_ELAPSED__
+           89            $59              __ETA_DAY_HH:MM_xx__
+           90            $5A              ALL_WARNINGS_CLEARED
+           91            $5B              OIL_PRES_SENDER_PROB
+           92            $5C              _FUEL_SENDER_PROBLEM
+           93            $5D              ___FUEL_RANGE_LOW___
+           94            $5E              dd.d_GALLONS_REMAIN_
+           95            $5F              _dd.d_LITERS_REMAIN_
+
+..page
+ NOTE:          d = Numerical digit
+                ª = Degree symbol
+         DD/MM/YY = Numerical day/month/year
+            HH:MM = Numerical hout:minute
+                + = displayed when value is above range
+               SS = Numerical seconds
+               XX = AM or PM or blank
+              DAY = Day of the week (3 letter)
+             DATE = Numerical day
+            MONTH = Month (spelled out)
+                _ = Blank character
+
+ NOTE: on message #63 _a_bb_c_dd_ee_ff_g_h
+
+       This is the self diagnostic mode of the DIC. This message is activated
+       by entering 8192 in the distance to destination mode. Once this is done
+       message #63 will be displayed where
+       a = "E" in English mode, "M" in metric mode.
+      bb = "OK" with no lamp outages, "NO: with one or more lamps out.
+       c = "H" with park lamps on, "L" with park lamps off.
+      dd = Dimming level, 0 to 99% of maximum intensity.
+      ee = Fuel level, 0 to 99% of full.
+      ff = Oil pressure, 0 to 99% of maximum pressure.
+       g = Vehicle speed sensor state, "H" - high, "L" - low.
+       h = DIC Function Switch test "0" to "9" for switches 0 through 9, "E"
+           for ENTER and "R" for RESET.
+
+

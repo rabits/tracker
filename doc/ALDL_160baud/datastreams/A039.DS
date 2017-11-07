@@ -1,0 +1,298 @@
+
+
+                         DATA STREAM A39  SPECIFICATION
+
+   ENGINE USAGE:
+              2.8L PFI SD(LB6)   (VIN=W)   88  "J" CARS
+
+   DATA PIN: READ DATA ON PIN "L"/"M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+              This is a GMP4 FULL FUNCTION ECM.
+      
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENTGH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $5A
+                - MODE           = $00
+                - SUM CHECK
+
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $56
+                - MODE           = $01
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $95
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 63
+                - SUM CHECK
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 63
+..HEAD04L ALDL MODE 1:OPEN AND SHORTED MODE
+..HEAD05L WORD  BIT   LOCATION
+..page
+
+   WORD BIT  DESCRIPTION                           EQUATION
+   1         PROMIDA (MSB)
+   2         PROMIDB (LSB)                          PROM = (N1*256+N2)
+   3         MALFUNCTION WORD 1
+        0     MALF CODE 24 VEHICLE SPEED SENSOR LOW
+        1     MALF CODE 23 MAT SENSOR OPEN
+        2     MALF CODE 22 THROTTLE POSITION LOW
+        3     MALF CODE 21 THROTTLE POSITION HIGH
+        4     MALF CODE 15 COOLANT SENSOR LOW
+        5     MALF CODE 14 COOLANT SENSOR HIGH
+        6     MALF CODE 13 OXYGEN SENSOR
+        7     MALF CODE 12 NO REFERENCE PULSES
+   4         MALFUNCTION WORD 2
+³       0     MALF CODE 42 EST MONITOR ERROR
+        1     MALF CODE 41 CYLINDER SELECT ERROR
+        2     MALF CODE 35 IAC ERROR HIGH
+        3     MALF CODE 34 MAP SENSOR LOW
+        4     MALF CODE 33 MAP SENSOR HIGH
+        5     MALF CODE 32 EVRV/EGR
+        6     MALF CODE 31 FUEL INJECTOR MALF
+        7     MALF CODE 25 HI MANIFOLD AIR TEMPERATURE
+   5         MALFUNCTION WORD 3
+        0     MALF CODE 55 ADU ERROR
+        1     MALF CODE 54 FUEL PUMP VOLTAGE LOW
+        2     MALF CODE 53 HIGH BATTERY VOLTAGE
+        3     MALF CODE 26 QDM FAULT
+        4     MALF CODE 51 PROM ERROR
+        5     MALF CODE 45 O2 SENSOR RICH
+        6     MALF CODE 44 O2 SENSOR LEAN
+        7     MALF CODE 43 ESC FAILURE
+   6         MALFUNCTION WORD 4
+        0     (CODE 67)
+        1     (CODE 66)
+        2     (CODE 65)
+        3     (CODE 64)
+        4     (CODE 63)
+        5     (CODE 62)
+        6     MALF CODE 61 DEGRADED O2 SENSOR
+        7     MALF CODE 56 CORROSIVITY/ ADD COOLANT
+
+..PAGE
+
+   7       COOLANT TEMPERATURE                      N = (DEG C + 40)*256/192
+   8       START UP COOLANT TEMPERATURE             N = (DEGC + 40)*256/192
+   9       THROTTLE POSITION                        VOLTS = N/51
+   10      RESCALED TPS
+   11      ENGINE SPEED                             RPM = N*25
+   12      FILTERED RPM WHILE CRANKING (MSB)
+   13      FILTERED RPM WHILE CRANKING (LSB) RPM=((N13*256)+N14)*4.6875
+   14      TIME BETWEEN REFERENCE PULSES (MSB)
+   15      TIME BETWEEN REFERENCE PULSES (LSB)      USEC=(N15*256+N16)*15.26
+   16      DELTA NUMBER OF REFERENCE PULSES         SECONDS = N/80
+   17      FILTERED MPH   (MSB)
+   18      FILTERED MPH   (LSB)                     MPH=(N18*256+N19)
+   19      OXYGEN SENSOR                            MILLIVOLTS = N*4.44
+   20      O2 CROSS COUNTS
+   21      BASE PULSE FINE CORRECTION
+   22      BASE PULSE COURSE CORRECTION(BLM)
+   23      BLOCK LEARN MULTIPLIER CELL              N = BLM CELL #
+   24      CLOSED LOOP INTEGRATOR
+   25      IAC MOTOR POSITION                       N = # IAC STEPS
+   26      IDLE SPEED STEPS COMMAND, DIRECTION      0<N<128 N = # STEPS
+                                                    128<N<256 N = #STEPS +128
+   27      DESIRED IDLE RPM                         RPM = N*12.5
+   28      BAROMETER                                VOLTS = N * .0196
+   29      MANIFOLD ABSOLUTE PRESSURE               VOLTS = N * .0196
+   30      AIR TEMPERATURE SENSOR                   SEE TABLE #1
+   31      FUEL PUMP RELAY,PRIMARY POWER SWITCH     VOLTS = N/10
+   32      EGR DUTY CYCLE                           % DUTY CYCLE = N/2.56
+   33      EGR POSITION SENSOR
+   34      BATTERY VOLTAGE                          VOLTS = N/10
+   35      TOTAL ASYNCHRONOUS PULSE WIDTH (MSB)
+   36      TOTAL ASYNCHRONOUS PULSE WIDTH (LSB)
+   37      MASS  AIR FLOW                           G/S = N
+   38      TOTAL UNLIMITED SPARK ADVANCE REL TO TDC (MSB)
+   39      TOTAL UNLIMITED SPARK ADVANCE REL TO TDC (LSB)
+              double byte value in 2's complement representation
+              If Bit 7 of MSB = 0  then result is positive
+                 value = (N38*256 + N39)
+              If Bit 7 of MSB = 1  then result is negative
+                 value = 65536 - (N38*256 + N39)
+                                                    DEGREES = value * 90/256
+   40      UNLIMITED SPARK ADVANCE REL TO REF PULSE
+                                                    DEGREES = value * 90/256
+   41      DESIRED AIR/FUEL VALUE
+   42      BASE PULSE WIDTH (MSB)
+   43      BASE PULSE WIDTH (LSB)                  MSEC=(N42*256+N43)*.0153
+   44      CORROSIVITY SENSOR VOLTAGE
+   45      CANISTER PURGE DUTY CYCLE
+   46      RETARD DUE TO KNOCK                      DEGREES = N*90/256
+..PAGE
+   47      N/V RATIO                                N = RPM/MPH
+   48      ENGINE RUN TIME(MSB)
+   49      ENGINE RUN TIME(LSB)                     SEC = N49*256+N50
+   50      CATALYTIC CONVERTER TEMPERATURE          DEG C=(N*3)+300
+   51      ROLLOVER COUNTER FOR RETARD DUE TO KNOCK
+   52      STATUS OF SC1 OUTPUT DISCRETES
+         0  1 = SERIAL DATA TRANSMIT ENABLE
+         1  NOT USED
+         2  NOT USED
+         3  TCC                                     1 = TCC LOCKED
+         4  1 = VSS DEFINED BY VSS1, 0 = VSS DEFINED BY VSS2
+         5  VSS CHIP SELA
+         6  VSS CHIP SELB
+         7  VSS CHIP SELC
+   53      STATUS OF SC1 INPUT DISCRETES MODE WORD
+         0  0 = QDM FAULT B INDICATED
+         1  0 = BRAKE DEPRESSED
+         2  NOT USED
+         3  NOT USED
+         4  NOT USED
+         5  NOT USED
+         6  NOT USED
+         7  SECOND FAN REQUEST
+   54      SERIAL DATA MODE WORD 1
+         0  ADVANCE FLAG                             1 = ADVANCE
+         1  1 = VEHICLE MOVING
+         2  INTERRUPT SERVICE EXECUTION EXCEEDED 6.25 MS
+         3  1 = MALF 35 DETECTED
+         4  0 = ROAD SPEED 1ST TIME FLAG
+         5  A/C CLUTCH FLAG                         1 = DISABLE
+         6  1 = BYPASS CHECK ENABLED (EST MONITOR)
+         7  1 = ENGINE RUNNING
+   55      SERIAL DATA MODE WORD 2
+         0  FUEL SHUT OFF BECAUSE OF LOW OIL PRESSURE
+         1  ROAD SPEED FILTER EXERCISE FLAG
+         2  1 = REFERENCE PULSE OCCURED (6.25 MS CHECK)
+         3  1 = DIAGNOSTIC SWITCH IN FACTORY TEST POSITION
+         4  1 = DIAGNOSTIC SWITCH IN DIAGNOSTIC POSITION
+         5  1 = DIAGNOSTIC SWITCH IN ALDL POSITION
+         6  1 = DISABLE SOLENOID DISCRETES
+         7  1 = IDLE CONDITIONS MET (BLM LOGIC)
+..PAGE
+   56      MODE WORD 2
+         0  1 = LOOP TIMING FLAG FOR TIMING ERROR LOGIC
+         1  1 = SYNCH MAP READ WITH 2X REF. PULSES ENABLED
+         2  1 = 6X ENABLE CRITERIA MET LAST 6.25 MS LOOP
+         3  1 = HIGHWAY SPARK ADVANCE MODE ACTIVE
+         4  1 = EGR ON
+         5  1 = A/C DISENGAGED AT HIGH RPM
+         6  1 = REF PULSE OCCURED (USED FOR FILTRPM LOGIC)
+         7  1 = ESC ACTIVE
+   57      LCC & CCP MODE WORD
+         0  1 = ENGINE TORQUE MANAGEMENT MODE
+         1  1 = ESC ENABLED BY COOLANT AND DELTA COOLANT TEST
+         2  1 = REF PULSE OCCURED FLAG
+         3  1 = SAM FILTERING ACTIVE
+         4  1 = USING N/V TIME THRESHOLD IN A/C WOT LOGIC
+         5  1 = SERIAL DATA PROBLEM
+         6  1 = FIRST TIME RUN FUEL
+         7  1 = 4/2 OR 3/2 DOWNSHIFT DETECTED  (DISABLE A/C)
+   58      FMD BYTE 1 MODE WORD
+         0  1 = SHIFT LIGHT ON
+         1  CHECK ENGINE LIGHT DELAY FLAG
+         2  1 = LAUNCH MODE
+         3  MALF 42A REPEAT FLAG
+         4  TCC MPH HYST BIT (FOR FORCING TCC TO LOCK AT HI MPH)
+         5  FIRST TIME HOT FLAG
+         6  NOT USED
+         7  TRANSMISSION LOCKED FLAG ( 1 = LOCKUP ENABLED)
+   59      MODE WORD 1
+         0  PARK/NEUTRAL                            1 = DRIVE
+         1  3RD GEAR                                1 = IN 3RD GEAR
+         2  4TH GEAR                                1 = IN 4TH GEAR
+         3  P/S CRAMP
+         4  NOT USED
+         5  NOT USED
+         6  V5 COOLING FAN DSICRETE                 1 = FAN REQUESTED
+         7  AIR CONDITIONER                         1 = A/C REQUESTED
+   60      NON VOLITILE MODE WORD
+         0  02 SENSOR READY FLAG                    1 = READY
+         1  CLOSED LOOP TIMER O.K. FLAG             1 = TIMER O.K.
+         2  1 = VSS SENSOR DETERMINED RUNNING TIME EXCEEDED
+         3  IMPROPER SHUTDOWN FLAG                  1 = IMPROPER
+         4  1 = A/D FAILURE
+         5  1 = SPEED SENSOR OPTICAL    0 = SPD SENSOR MAGNETIC
+         6  1 = IAC MOTOR RESET ENABLED
+         7  1 = MALF 42 FAIL FLAG (EST MONITOR)
+   61      ALCL MODE WORD
+         0  1 = ALDL MODE 4
+         1  1 = ALDL MODE 4 INIT
+         2  NOT USED
+         3  FIRST C/L PASS THRU FIELD SERVICE MODE  1 = DONE
+         4  FIELD SERVICE MODE, 02 TRANSISTION
+         5  ONE SECOND FLAGE (SYMMETRICAL)
+         6  FIELD SERVICE MODE 200 MS FLAG
+         7  1 = ALDL MODE
+..PAGE
+   62      MAJOR LOOP MODE WORD
+         0  F4 TBL FLG  0 = EGR,
+         1  A/C WAS ON FLAG
+         2  ALDL MODE 4 MOTOR RESET COMPLETE        1 = COMPLETE
+         3  DECEL FUEL CUTOFF FLAG                  1 = DFCO ENABLED
+         4  ALDL MOTOR RESET COMPLETE
+         5  MOTOR RESET HAS STARTED
+         6  NON-VOLTILE MEMORY BOMBED
+         7  1 = CLOSED TPS FLAG
+   63      AIR FUEL MODE WORD
+         0  1 = CRANKED IN CLEAR FLOOD MODE
+         1  1 = LEARN ENABLED
+         2  SLOW O2 RICH LEAN FLAG
+         3  1 = FUEL BEING INJECTED WITH EACH REF PULSE
+         4  QUASI-SYNCHNONOUS PULSE FLAG
+         5  1 = FIRST TIME CLOSED LOOP FLAG
+         6  RICH/LEAN FLAG                          1 = RICH
+         7  CLOSED LOOP FLAG                        1 = CLOSED LOOP
+..head02
+..head03
+..head04
+..head05
+..PAGE
+
+   TABLE # 1  MAT TEMPERATURE
+
+
+               A/D                     DEGREES
+              COUNTS                   CELCIUS
+              -------                  -------
+              256                       -40.00
+              252                       -34.00
+              236                        -4.00
+              220                         8.75
+              204                        17.75
+              188                        25.25
+              172                        32.00
+              156                        38.75
+              140                        44.75
+              124                        50.75
+              108                        57.50
+               92                        65.00
+               76                        73.25
+               60                        82.25
+               44                        95.00
+               28                       112.25
+               12                       148.25
+                0                       151.00
+
+READING IN DEGRESS:  SUBTRACT 12 FROM THE CTS RAW A/D COUNTS THAT IS
+                     EQUAL TO THE DEGRESS, THEN GO BACK TO THE CTS
+                     CONVERSION TABLE WITH THIS VALUE FOR A RESULT.
+
+..PAGE
+LAYOUT 000
+:  B 
+  
+Su¦    <_        ú \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

@@ -1,0 +1,344 @@
+07/06/93      CLAIRFY USAGE AND OPEN MODE MESSAGE.                     B.HENSON
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   ENGINE USAGE:
+         2.0l TBI  (LL8) (VIN = 1)   88' J - CAR
+         2.0l TBI  (LL8) (VIN = 1)   88' L - CAR  LAST 6 VIN DIGITS > 500000
+         2.0l TBI  (LL8) (VIN = 1)   89' J,L - CAR
+
+   DATA PIN: READ DATA ON PIN "L"/"M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+              This is a GMP4 MID - FUNCTION ECM.
+              This is NOT the same as the GM30 ECM.
+
+    MODES:    10k     63 BYTES
+              SHORTED 22 BYTES
+              OPEN    22 BYTES
+
+..PAGE
+        TO REQUEST MODES FROM THE ECM:
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENTGH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                ONCE IN NORMAL MODE THE ECM WILL TRANSMIT THE FOLLOWING
+                MESSAGE:
+                - MESSAGE ID     = $14
+                - MESSAGE LENGTH = $6B
+                - BYTE 1
+                  .
+                  .
+                - BYTE 22
+                - SUM CHECK
+
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $56
+                - MODE           = $01
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $95
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 63
+                - SUM CHECK
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 63
+..HEAD04L ALDL 10k  MODE
+..HEAD05L WORD  BIT   LOCATION
+..page
+
+   1         PROMIDA (MSB)
+   2         PROMIDB (LSB)                          PROM = (N1*256+N2)
+   3         MALFUNCTION WORD 1
+        0    MALF CODE 23 MAT SENSOR OPEN
+        1     MALF CODE 22 TPS LOW
+        2     MALF CODE 21 TPS HIGH
+        3     (CODE 16)    NOT USED
+        4     MALF CODE 15 CTS LOW
+        5     MALF CODE 14 CTS HIGH
+        6     MALF CODE 13 OXYGEN SENSOR
+        7     MALF CODE 12 NO REFERENCE PULSES
+   4         MALFUNCTION WORD 2
+        0     (CODE 35)    NOT USED
+        1     MALF CODE 34 MAP SENSOR LOW
+        2     MALF CODE 33 MAP SENSOR HIGH
+        3     MALF CODE 32 EGR
+        4     (CODE 31)    NOT USED
+        5     (CODE 26)    NOT USED
+        6     MALF CODE 25 MAT SENSOR SHORTED
+        7     MALF CODE 24 VEHICLE SPEED SENSOR
+   5         MALFUNCTION WORD 3
+        0     MALF CODE 51 MEMORY ERROR
+        1     (CODE 46)    NOT USED
+        2     MALF CODE 45 OXYGEN SENSOR RICH
+        3     MALF CODE 44 OXYGEN SENSOR LEAN
+        4     MALF CODE 43 EQU CODE 42A
+        5     MALF CODE 42 EST MONITOR ERROR
+        6     (CODE 41)    NOT USED
+        7     (CODE 36)    NOT USED
+   6         MALFUNCTION WORD 4
+        0     (CODE 63)    NOT USED
+        1     (CODE 62)    NOT USED
+        2     (CODE 61)    NOT USED
+        3     (CODE 56)    NOT USED
+        4     MALF CODE 55 SAD ERROR
+        5     (CODE 54)    NOT USED
+        6     (CODE 53)    NOT USED
+        7     (CODE 52)    NOT USED
+   7         MALFUNCTION WORD 5
+        0                  NOT USED
+        1                  NOT USED
+        2                  NOT USED
+        3                  NOT USED
+        4                  NOT USED
+        5     (CODE 66)    NOT USED
+        6     (CODE 65)    NOT USED
+        7     (CODE 64)    NOT USED
+
+
+..PAGE
+
+³  8       COOLANT TEMPERATURE (NOT DEFAULTED)       DEG C = .75N - 40
+   9       COOLANT TEMPERATURE (DEFAULTED)           N = (DEG C + 40)*256/192
+   10      START UP COOLANT TEMPERATURE              N = (DEGC+40)*256/192
+   11      THROTTLE POSITION                         VOLTS = N * .0196
+   12      RESCALED TPS                              % THROTTLE = N/2.56
+   13      ENGINE SPEED                              RPM = N*25
+   14      CRANK RPM                                 N=3.125 RPM/BIT
+   15      TIME BETWEEN REFERENCE PULSES (MSB)
+   16      TIME BETWEEN REFERENCE PULSES (LSB)      USEC=(N15*256+N16)*15.26
+   17      DELTA NUMBER OF REFERENCE PULSES         N=DELTA # OF PULSES
+   18      FILTERED SPEED                           MPH=N
+   19      NOT USED
+   20      OXYGEN SENSOR                            MILLIVOLTS=N*4.44
+   21      RICH/LEAN TRANSITION COUNTER
+   22      BASE PULSE FINE CORRECTION
+   23      BASE PULSE COURSE CORRECTION
+   24      BLOCK LEARN MULTIPLIER CELL              N = BLM CELL #
+   25      CLOSED LOOP INTEGRATOR
+   26      IAC MOTOR POSITION                       N = # IAC STEPS
+   27      IAC DESIRED MOTOR POSITION               N = # IAC STEPS
+   28      CURRENT DESIRED IDLE RPM                 RPM = N*12.5
+   29      BAROMETER                                VOLTS = N * .0196
+   30      MANIFOLD ABSOLUTE PRESSURE               VOLTS = N * .0196
+   31      ESTIMATED MANIFOLD RUNNER TEMP (MSB)   <WHEN N = (N31*256+N32)
+   32      ESTIMATED MANIFOLD RUNNER TEMP (LSB)   < N=(DEG C +40)*256/192
+   33      INSTANTANEOUS MAT                        N=A/D COUNTS
+   34      INSTANTANEOUS MAT                        N=(DEG C +40)*256/192
+   35      BATTERY VOLTAGE                         VOLTS = N/10
+   36      MASS AIR FLOW                           N = GRAMS/SECOND
+   37      UNLIMITED SPARK ADVANCE REL TO TDC (MSB)
+   38      UNLIMITED SPARK ADVANCE (LSB)
+              double byte value in 2's complement representation
+              If Bit 7 of MSB = 0  then result is positive
+                 value = (N37*256 + N38)
+              If Bit 7 of MSB = 1  then result is negative
+                 value = 65536 - (N37*256 + N38)
+                                                    DEGREES = value * 90/256
+   39      UNLIMITED SPARK ADVANCE REL TO REF PULSE(MSB)
+   40      UNLIMITED SPARK ADVANCE (LSB)
+              double byte value in 2's complement representation
+              If Bit 7 of MSB = 0  then result is positive
+                 value = (N39*256 + N40)
+              If Bit 7 of MSB = 1  then result is negative
+                 value = 65536 - (N39*256 + N40)
+                                                    DEGREES = value * 90/256
+   41      BASE PULSE WIDTH (MSB)
+   42      BASE PULSE WIDTH (LSB)                  MSEC=(N41*256+N42)/65.536
+ ***: THIS READING SHOULD BE THE DIFFERENCE BETWEEN THE LAST TWO READINGS.
+      TAKE CURRENT DATA STREAM READING SUBTRACT LAST DATA STREAM READING FOR
+      ACTUAL MS VALUE.  FOR FIRST DATA STREAM, THAT READING IS THE MS VALUE.
+..PAGE
+   43      DESIRED A/F RATIO                       A/F = N/10
+   44      CRANK A/F RATIO                         A/F = N/10
+   45      RUNNING TIME OF FUEL DELIVERED (MSB)
+   46      RUNNING TIME OF FUEL DELIVERED (LSB)
+                                                  MSEC =(N45*256+N46)/65.536
+   47      ENGINE RUNNING TIME (MSB)
+   48      ENGINE RUNNING TIME (LSB)                SEC =(N47*256+N48)
+   49      100 ms DELTA BATTERY VOLTAGE OF PPSW    VOLTS = N/10
+   50      CURRENT GEAR
+   51      CATALYTIC CONVERTER TEMPERATURE (MSB)   <WHEN N = (N51*256+N52)
+   52      CATALYTIC CONVERTER TEMPERATURE (LSB)   <DEG C=(N*3)+300
+   53      FMD#1 SERIAL INPUT
+         0  COOLANT SWITCH                          0=4K PULL UP/1=348 PULLUP
+         1  COP2 BIT TO COP2 TIMER
+         2  ENABLE EST
+         3  PORT, PIN8
+         4  ENABLE FUEL PUMP PWM
+         5  DISCRETE OUTPUT TO ODSC
+         6  ENABLE IRQ INTERUPT ON TREFB
+         7  0 = BYTE1,  1 = BYTE2
+   54      CRUISE CONTROL MODE WORD 1
+         0  1 = CRUISE CONTROL INHIBITED
+         1  CURRENT VACUUM SOLENOID STATE
+         2  1 = HIGH MPH GAINS SELECTED
+         3  CURRENT VENT SOLENOID STATE
+         4  1 = BRAKE PUSHED (DEBOUNCED)
+         5  1 = S/C SWITCH PUSHED (DEBOUNCED)
+         6  1 = R/A SWITCH PUSHED (DEBOUNCED)
+         7  1 = CRUISE CONTROL ENABLED
+   55      CRUISE CONTROL MODE WORD 2
+         0  1 = IN COAST MODE
+         1  1 = IN RESUME MODE
+         2  1 = IN ACCEL MODE
+         3  1 = CRUISE NOT ALLOWED
+         4  1 = SOLENOIDS IN HOLD MODE (VENT ON, VAC OFF)
+         5  1 = SOLENOIDS IN VENT MODE (VENT OFF, VAC ON)
+         6  1 = SOLENOIND IN FILL MODE (VEN ON, VAC ON)
+         7  1 = CRUISE CONTROL ENABLED
+   56      MODE WORD
+         0  EXECUTION TIME ERROR TEST FLAG
+         1  MALF 54 DETECT FLAG FOR FUEL PUMP DIAGNOSTIC
+         2  REFERENCE PULSE OCCURRED
+         3  NOT USED
+         4  DIAGNOSTI SWITCH IN DIAGNOSTIC POSITION
+         5  NOT USED
+         6  HIGH BATTERY VOLTAGE
+         7  FUEL PUMP BYPASS FLAG
+..PAGE
+   57      LCC MODE WORD
+         0  COOLANT FAN FLAG                        1 = ON
+         1  NOT USED
+         2  NOT USED
+         3  NOT USED
+         4  NOT USED
+         5  1 = EGR IS ASSUMED TO BE ON
+         6  NOT USED
+         7  TRANSMISSION LOCKED FLAG                1 = LOCKUP ENABLE
+   58      FMD BYTE 1 MODE WORD
+         0  PARK/NEUTRAL                            0 = P/N
+         1  SPARK ADJUST INPUT                      0 = CLOSED
+         2  0 = POWER STEERING CRAMP
+         3  CRUISE ENABLE ON/OFF SWITCH
+         4  CRUISE BRAKE SWITCH
+         5  CRUISE SET/COAST SWITCH
+         6  CRUISE RESUME/ACCEL SWITCH
+         7  AIR CONDITIONER                         1 = A/C REQUEST
+   59      MODE WORD 1
+         0  ADVANCE FLAG                            0 = ADV   1 = RET
+         1  CHECK ENGINE LIGHT DELAY FLAG
+         2  0 = DELTAMAT HAS BEEN CALCULATED FOR CURRENT 16 SEC INT
+         3  A/C COOOLANT ENABLE FLAG                1 = ENABLED
+         4  HIGHWAY MODE                            1 = ENABLED
+         5  A/C DISABLED                            1 = SOLENOID OFF
+         6  BYPASS CHECK ENABLED
+         7  1 = AMBIENT HAS BEEN SET TO MATDEG
+   60      NON VOLITILE MODE WORD
+         0  02 SENSOR READY FLAG                    1 = READY
+         1  NOT USED
+         2  A/C STARTUP COOLANT DELAY EXPIRED       1 = EXPIRED
+         3  IMPROPER SHUTDOWN FLAG                  1 = IMPROPER
+         4  NOT USED
+         5  IAC KICKDOWN ENABLE FLAG                1 = ENABLED
+         6  NOT USED
+         7  MALF 42 FAIL FLAG (EST MONITOR)
+   61      ALCL MODE WORD
+         0  NOT USED
+         1  NOT USED
+         2  FIELD SERVICE MODE
+         3  FIRST C/L PASS THRU FIELD SERVICE MODE  1 = DONE
+         4  FIELD SERVICE MODE, 02 TRANSISTION
+         5  ONE SECOND FLAGE (SYMMETRICAL)
+         6  200 MSEC TOGGLE BIT FOR 2.5 HZ FSM FLASH RATE
+         7  NOT USED
+   62      MAJOR LOOP MODE WORD
+         0  RICH/LEAN FLAG                          1 = RICH
+         1  1 = HIGH RPM FUEL CUTOFF
+         2  NOT USED
+         3  DECEL FUEL CUTOFF FLAG                  1 = DFCO ENABLED
+         4  SCL IDLE INT RESET FLAG
+         5  NOT USED
+         6  N.V. MEMORY BOMBED
+         7  NOT USED
+   63      AIR FUEL MODE WORD
+         0  CLEAR FLOOD FLAG                        1 = CRANKED IN C/F
+         1  LEARN CONTROL ENABLE FLAG               1 = ENABLE
+         2  "NOT IN GEAR" FLAG                      1 = NOT IN GEAR
+         3  ACSTAT FLAG FOR ACPSCT FLAG COMPARISON
+         4  ASYNCHRONOUS PULSE FLAG
+         5  AE DELTA THROTTLE FLAG
+         6  RICH/LEAN FLAG                          1 = RICH
+         7  CLOSED LOOP FLAG                        1 = CLOSED LOOP
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 22
+..HEAD04L ALDL  OPEN, SHORTED, 3.9K MODES
+..HEAD05L WORD  BIT   LOCATION
+..page
+   01      ENGINE SPEED VARIABLE                    RPM = N*25
+   02      CLOSED LOOP INTEGRATOR
+   03      BLOCK LEARN MULTIPLIER
+   04      THROTTLE POSITION SENSOR LOAD
+   05      IAC PRESENT MOTOR POSITION               N = IAC MOTOR STEPS
+   06      IAC DESIRED MOTOR POSITION               N = IAC MOTOR STEPS
+   07      1 ATMOSPHERE MANIFOLD PRESSURE           VOLTS = N * .0196
+   08      THROTTLE POSITION                        VOLTS = N * .0196
+   09      OXYGEN SENSOR VARIABLE                   VOLTS = N/226
+   10      COOLANT TEMPERATURE                      DEG C = N*192/256 - 40
+   11      MANIFOLD ABSOLUTE TEMPERATURE            DEG C = (N*90/256) - 40
+   12      BATTERY VOLTAGE                          VOLTS = N/10
+   13      FILTERED MPH                             MPH = N
+   14      BASE PULSE WIDTH (MSB)
+   15      BASE PULSE WIDTH (LSB)             MSEC = (N36*256+N37)/65.536
+   16      AIR FUEL MODE WORD #1
+         0  CLEAR FLOOD FLAG                        1 = CRANKED IN C/F
+         1  LEARN CONTROL ENABLE FLAG               1 = ENABLE
+         2  "NOT IN GEAR" FLAG                      1 = NOT IN GEAR
+         3  ACSTAT FLAG FOR ACPSCT FLAG COMPARISON
+         4  ASYNCHRONOUS PULSE FLAG
+         5  AE DELTA THROTTLE FLAG
+         6  RICH/LEAN FLAG                          1 = RICH
+         7  CLOSED LOOP FLAG                        1 = CLOSED LOOP
+   17      FMD BYTE 1 MODE WORD
+         0  PARK/NEUTRAL                            0 = P/N
+         1  SPARK ADJUST INPUT                      0 = CLOSED
+         2  0 = POWER STEERING CRAMP
+         3  CRUISE ENABLE ON/OFF SWITCH
+         4  CRUISE BRAKE SWITCH
+         5  CRUISE SET/COAST SWITCH
+         6  CRUISE RESUME/ACCEL SWITCH
+         7  AIR CONDITIONER                         1 = A/C REQUEST
+   18      MODE WORD 1
+         0  ADVANCE FLAG                            0 = ADV   1 = RET
+         1  CHECK ENGINE LIGHT DELAY FLAG
+         2  0 = DELTAMAT HAS BEEN CALCULATED FOR CURRENT 16 SEC INT
+         3  A/C COOOLANT ENABLE FLAG                1 = ENABLED
+         4  HIGHWAY MODE                            1 = ENABLED
+         5  A/C DISABLED                            1 = SOLENOID OFF
+         6  BYPASS CHECK ENABLED
+         7  1 = AMBIENT HAS BEEN SET TO MATDEG
+   19      RICH/LEAN TRANSITION COUNTER
+   20      LCC & CCP MODE WORD
+         0  COOLANT FAN FLAG                        1 = ON
+         1  NOT USED
+         2  NOT USED
+         3  NOT USED
+         4  NOT USED
+         5  1 = EGR IS ASSUMED TO BE ON
+         6  NOT USED
+         7  TRANSMISSION LOCKED FLAG                1 = LOCKUP ENABLE
+   21      NOT USED
+   22      NOT USED
+

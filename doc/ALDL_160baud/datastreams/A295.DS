@@ -1,0 +1,194 @@
+..HEAD02L 1995 CORPORATE SENSING AND DIAGNOSTIC MODULE - SDM-B
+..FOOT63R A295  PAGE ##
+
+                        DATA STREAM A295  SPECIFICATION
+
+
+..PAGE
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   CORPORATE SENSING AND DIAGNOSTIC MODULE (SDM B)
+   USAGE:  1995      2,3,4W
+
+
+
+
+   DATA PIN: READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+
+
+..PAGE
+MODE 1  (TRANSMIT FIXED DATA STREAM MESSAGE 0)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - CHECKSUM
+
+        THE SDM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $74
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 29
+        - CHECKSUM
+
+
+MODE 10 (CLEAR MALFUNCTION CODES - TESTER TO SDM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+        THE SDM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $FA
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+
+..PAGE
+..HEAD03L NUMBER OF DATA WORDS - 29
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 0
+WORD    DESCRIPTION
+
+ 1      IGNITION
+          VOLTS = N/12.75
+ 2      SENSELO
+          VOLTS = N/6.375
+ 3      36 VEN
+          VOLTS = N/6.0714
+ 4      DRIVER VDIF
+          mV = N/.255
+ 5      PASS. VDIF
+          mV = N/.255
+ 6      NOT USED
+ 7      NOT USED
+ 8      NOT USED
+ 9      DRIVER RESIST.
+          OHMS = N/10
+ 10     PASSENGER RESIST.
+          OHMS = N/10
+ 11     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   LAMP DRIVER                            1 = EXTERNAL   0 = INTERNAL
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 12     ACTIVE FAULT CODE WORD 1
+         7   FAULT CODE 15
+         6   FAULT CODE 16
+         5   FAULT CODE 17
+         4   FAULT CODE 21
+         3   FAULT CODE 22
+         2   FAULT CODE 24
+         1   FAULT CODE 25
+         0   FAULT CODE 26
+ 13     ACTIVE FAULT CODE WORD 2
+         7   FAULT CODE 35
+         6   FAULT CODE 36
+         5   FAULT CODE 37
+         4   FAULT CODE 38
+         3   FAULT CODE 51
+         2   FAULT CODE 52
+         1   FAULT CODE 55
+         0   FAULT CODE 61
+..page
+ 14     ACTIVE FAULT CODE WORD 3
+         7   FAULT CODE 62
+         6   FAULT CODE 71
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 15     HISTORY FAULT CODE WORD 1
+         7   FAULT CODE 15
+         6   FAULT CODE 16
+         5   FAULT CODE 17
+         4   FAULT CODE 21
+         3   FAULT CODE 22
+         2   FAULT CODE 24
+         1   FAULT CODE 25
+         0   FAULT CODE 26
+ 16     HISTORY FAULT CODE WORD 2
+         7   FAULT CODE 35
+         6   FAULT CODE 36
+         5   FAULT CODE 37
+         4   FAULT CODE 38
+         3   FAULT CODE 51
+         2   FAULT CODE 52
+         1   FAULT CODE 55
+         0   FAULT CODE 61
+ 17     HISTORY FAULT CODE WORD 3
+         7   FAULT CODE 62
+         6   FAULT CODE 71
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 18          NOT USED
+ 19          NOT USED
+ 20     ROM ID
+          ID = N
+ 21     DISCRETE STATUS
+         7   ARMING SENSOR                          1 = OVERLAP    0 = NO OVERLAP
+         6   NOT USED
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   ADS*                                   1 = NOT CLOSED 0 = CLOSED
+         0   NOT USED
+..page
+ 22     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   BACKUP WARNING                         1 = ACTIVE     0 = INACTIVE
+         4   NOT USED
+         3   36 VEN                                 1 = ACTIVE     0 = INACTIVE
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 23     DISCRETE STATUS
+         7   ENRD*                               *  0 = ACTIVE     1 = INACTIVE
+         6   WARN                                   1 = ACTIVE     0 = INACTIVE
+         5   RWARN                                  1 = ACTIVE     0 = INACTIVE
+         4   WARN1FB                                1 = ACTIVE     0 = INACTIVE
+         3   DSBFB*            03-02-94 b.henson -> 0 = ACTIVE     1 = INACTIVE
+         2   CRNAKF*                             *  0 = ACTIVE     1 = INACTIVE
+         1   NOT USED
+         0   ADSMISS                                1 = OTHERWISE  0 = ADS PRESENT
+ 24     DISCRETE STATUS
+         7   NOT USED
+         6   NOT USED
+         5   NOT USED
+         4   NOT USED
+         3   NOT USED
+         2   NOT USED
+         1   NOT USED
+         0   NOT USED
+ 25     VEHICLE ID
+          ID = N          ($01 - CAR)
+ 26     PLATFORM ID
+          ID = N          ($57 - W CAR)
+ 27     CAL LEVEL
+          LEVEL = N
+ 28     NOT USED
+ 29     NOT USED
+

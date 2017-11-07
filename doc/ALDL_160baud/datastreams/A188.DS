@@ -1,0 +1,283 @@
+                                
+                         
+
+                        DATA STREAM A188  SPECIFICATION
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       ENGINE   USAGE:
+              4.3L  (LB4)   (VIN=Z)   93 S,T TRUCK
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+..PAGE
+
+      OVERVIEW
+      --------
+      THERE IS NO MASTER OF ALDL. THEREFORE YOU DON'T HAVE TO ISSUE A MODE
+      8 TO GET COMMUNICATION.
+
+
+
+
+
+..PAGE
+MODE 1  (TRANSMIT FIXED DATA STREAM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - MESSAGE CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $90
+        - MODE NUMBER           = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 58
+        - CHECKSUM
+
+MODE 10 (CLEAR MALFUNCTION CODES)
+        ALDL REQUEST:
+        - MESSAGE ID     = $F4
+        - MESSAGE LENGTH = $56
+        - MODE           = $0A
+        - CHECKSUM
+
+
+        THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID     = $F4
+        - MESSAGE LENGTH = $56
+        - MODE           = $0A
+        - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 58
+..HEAD04L ALDL MODE 1 DATA LIST
+WORD DATA NAME    DESCRIPTION
+
+ 1   KEPARTH       ENGINE CALIBRATION PART NUMBER
+ 2   KEPARTMH      ENGINE CALIBRATION PART NUMBER
+ 3   KEPARTML      ENGINE CALIBRATION PART NUMBER
+ 4   KEPARTL       ENGINE CALIBRATION PART NUMBER
+ 5   KDPARTH       DRA CALIBRATION PART NUMBER
+ 6   KDPARTMH      DRA CALIBRATION PART NUMBER
+ 7   KDPARTML      DRA CALIBRATION PART NUMBER
+ 8   KDPARTL       DRA CALIBRATION PART NUMBER
+ 9   MALFFLG1      ENGINE MALF FLAG WORD 1
+              0    CODE 24 - VEHICLE SPEED SENSOR
+              1    CODE 23 - NOT USED
+              2    CODE 22 - THROTTLE POSITION LOW
+              3    CODE 21 - THROTTLE POSITION HIGH
+              4    CODE 15 - COOLANT SENSOR LOW TEMPERATURE
+              5    CODE 14 - COOLANT SENSOR HIGH TEMPERATURE
+              6    CODE 13 - OXYGEN SENSOR
+              7    CODE 12 - NO REFERENCE PULSES
+10   MALFFLG2      ENGINE MALF FLAG WORD 2
+              0    CODE 42 - EST MONITOR
+              1    CODE 39 - ESC LINE SHORTED TO GROUND
+              2    CODE 38 - ESC LINE OPEN
+              3    CODE 34 - MAP SENSOR LOW
+              4    CODE 33 - MAP SENSOR HIGH
+              5    CODE 32 - EGR FAILURE
+              6    CODE 27 - QDM2 MALFUNTION
+              7    CODE 26 - QDM1 MALFUNTION
+11   MALFFLG3      ENGINE MALF FLAG WORD 3
+              0    CODE 55 - VOLATILE RAM TEST FAILURE
+              1    CODE 54 - FUEL PUMP RELAY MALFUNTION
+              2    CODE 53 - NOT USED
+              3    CODE 52 - CAL-PAK MISSING
+              4    CODE 51 - PROM ERROR
+              5    CODE 45 - OXYGEN SENSOR RICH
+              6    CODE 44 - OXYGEN SENSOR LEAN
+              7    CODE 43 - ESC FAILURE
+12   COOLDEGA      COOLANT TEMPERASTURE
+                     DEG. C = (N * .75) - 40
+                     (DEG F = 1.35N - 40)
+13   ADBAT         BATTERY VOLTAGE AD COUNTS
+                     VOLTS = N / 10
+14   ADTHROT       THROTTLE POSITION
+*                    VOLTS = N * (5/256)
+15   ADMAP         MANIFOLD ABSOLUTE PRESSURE
+                     VOLTS = N * (5/256)
+                     KPA = (N + 28.06)/2.71)
+16   FILTMPH       FILTERED MILES PER HOUR
+                     MPH = N
+17   AIRFLOW       ENGINE AIRFLOW
+                     RATIO = N / 10
+18   INT           CLOSED LOOP INTEGRATOR
+                     N = INTERGRATER COUNTS
+19   BLM           BLOCK LEARN MULTIPLIER
+*                    N = MULTIPLIER
+20   BLMCELL       CURRENT BLOCK LEARN MULTIPLIER CELL
+                     N = BLOCK LEARN CELL
+21   BPWFINAL      FINAL BASE PULSE WIDTH (MSB)
+22   BPWFINAL+1    FINAL BASE PULSE WIDTH (LSB)
+                     MSEC = (MSB*256+LSB)/65.536
+23   ADO2A         OXYGEN SENSOR VARIABLE
+                     MV = N *  4.42
+24   IDDPORTC      IOD PORT C
+              0    1 = A/C MODE REQUESTED
+              1    0 = BRAKE PEDAL DEPRESSED
+              2    0 = PARK/NEUTRAL   1 = DRIVE GEAR
+              3    0 = IN HIGH GEAR
+              4    1 = IGNITION 3 PRESENT
+              5    0 = BRAKE SYSTEM FAILURE (COMBO VALVE)
+              6    1 = IN FOUR WHEEL DRIVE MODE
+              7    1 = A/C PRESSURE CYCLING SWITCH CLOSED
+25   DESSPD        DESIRED IDLE SPEED
+                     RPM = N * 12.6
+26   ERGDC         EGR SOL. STATES
+                     % = N/2.56
+27   ISSPMP        IDLE SPEED,PRESENT IAC MOTOR POSITION
+                     N = IAC MOTOR STEPS
+28   ALDLCNTR      OXYGEN SENSOR RICH/LEAN TRANSITION COUNTER
+                     N = CROSS COUNTS
+29   SAPFINAL      TOTAL UNLIMITED SPARK (MSB)
+30   SAPFINAL+1    TOTAL UNLIMITED SPARK (LSB)
+           double byte value in 2's complement representation
+           If Bit 7 of MSB = 0  then result is positive
+              value = (MSB*256 + LSB)
+           If Bit 7 of MSB = 1  then result is negative
+              value = 65536 - (MSB*256 + LSB)
+                     DEGREES = VALUE * 90/256
+31   NTRPMX        ENGINE SPEED (RPM)
+                     RPM = N * 25
+32   TIMEENG       ENGINE RUNNING TIME SECONDS (MSB)
+33   TIMEENG+1     ENGINE RUNNING TIME SECONDS (LSB)
+                     SECONDS = MSB * 256 + LSB
+34   NTPSLD        RESCALED TPS
+                     % = N/2.56
+35   ADBAROF       BARO,A/D COUNTS
+                     VOLTS = N * 5/256
+                     KPA = (N + 28.06)/2.71)
+36   NMAPLD        1 ATMOSPHERE MAP LOAD VARIABLE
+                     KPA = N + 64 /3.2
+37   PPSWVLT       BATTERY VOLTAGE FROM PPSW,A/D COUNTS
+                     VOLTS = N / 10
+38   COOLTSU       START UP COOLANT TEMPERATURE
+                     DEG C = N * .75 - 40
+39   ISDSMP        IDLE SPEED DESIRED MOTOR POSITION
+                     N = IAC MOTOR STEPS
+40   OLDRFPER      TIME BETWEEN REFERENCE PULSES (MSB)
+41   OLDRFPER+1    TIME BETWEEN REFERENCE PULSES (LSB)
+                     mSEC = (MSB*256+LSB)/65.536
+42   SAREFFNL      SPARK REL TO REFERENCE PULSE (MSB)
+43   SAREFFNL+1    SPARK REL TO REFERENCE PULSE (LSB)
+          double byte value in 2's complement representation
+          If Bit 7 of MSB = 0  then result is positive
+             value = (MSB*256 + LSB)
+          If Bit 7 of MSB = 1  then result is negative
+             value = 65536 - (MSB*256 + LSB)
+                    DEGREES = VALUE * 90/256
+44   PA2OLD        KNOCK COUNTS (MSB)
+45   PA2OLD+1      NOT USED
+                     COUNTS = MSB*256+LSB
+46   APPW          ASYCHRONOUS PULSE WIDTH (MSB)
+47   APPW+1        ASYCHRONOUS PULSE WIDTH (LSB)
+                     MSEC = N /65.536
+48   FNVFLAGS      NON-VOLATILE FUEL FLAG WORD 1
+              0    O2 SENSOR READY FLAG                 1 = FLAG
+              1    CLOSED LOOP TIMER O.K. FLAG          1 = TIMER
+              2    NOT USED
+              3    IMPROPER SHUTDOWN FLAG               1 = IMPROPER 0 =PROPER
+              4    HOT RESTART PROCEEDING FLAG
+              5    AE BELTS THROTTLE ENABLE FLAG        1 = ENABLE
+              6    NOT USED
+              7    NOT USED
+49   STATUS        SYSTEM STATUS WORD
+              0    1 = VDI INSTRUMENTATION PRESENT
+              1    1 = AED INSTRUMENTATION PRESENT
+              2    1 = DELCO INSTRUMENTATION PRESENT
+              3    1 = POWE5R IS ON (IGN1 > THERSHOLD)
+                    (1 = NV RAM UPDATING IS ALLOWED)
+              4    NOT USED
+              5    NOT USED
+              6    NOT USED
+              7    NOT USED
+50   FTFLAGS1      FLAGWORD
+51   RPFLAGS1      REFERENCE PULSE WIDTH FLAG WORD 1
+              0    1 = ENGINE HAS RUN ONCE SINCE RESET
+              1    1 = REFERENCE PULSE OCCURRED (6.25mS CHECK)
+              2    1st REF. FLAG (1 = REFERENCE PERIOD IS VALID)
+              3    NOT USED
+              4    NOT USED
+              5    NOT USED
+              6    NOT USED
+              7    1 = ENGINE RUNNING
+52   SPFLAGS2      SPARK FLAG WORD 2
+              0    1 = ESC ACTIVITY TEST PASSED (CODE 43)
+              1    ESC SECOND FAIL FLAG (CODE 43)
+              2    NOT USED
+              3    ESC FIRST FAIL FLAG (CODE 43)
+              4    ESC 43 READY FOR SECONDS P.E.
+              5    RETARD /ADVANCE FLAG (1=RETARD)
+              6    1 = FIRST M42A TEST GOOD
+              7    1 = MALF 42A LOCKED IN (EST FAILURE)
+53   ADFLAG1       A/D FLAG 1
+              0    1 = IGNITION OFF
+              1    1 = DIAGNOSTIC INPUT AT 3.9K(FACTORY TEST)
+              2    1 = DIAGNOSTIC INPUT GROUNDED(DIAGNOSTIC/FLD. SRV.)
+              3    1 = DIAGNOSTIC INPUT AT 10K(ALDL MODE)
+              4    1 = A/D CONVERTER TIMED OUT
+              5    1 = COP 2 NOT SEING TOGGLED (4K COOLANT PULL-UP)
+              6    NOT USED
+              7    NOT USED
+54   FFLAGS1       FUEL FLAG WORD 1
+              0    DFCO PAUSE BYPASS FLAG
+              1    EGR DIAGNOSTIC INTERGRATOR RESET FLAG
+              2    AE FIRST TIME FLAG
+              3    SLOW RICH/LEAN FLAG (1=RICH)
+              4    RICH/LEAN FLAG (1=RICH)
+              5    CLOSED LOOP FOR OPEN LOOP IDLE FLAG
+              6    'IN C/L AT LEAST ONCE RESTART' FLAG
+              7    CLOSED LOOP FLAG (1=CLOSED LOOP)
+55   FFLAGS3       FUEL FLAG WORD 3
+              0    LEARN CONTROL ENALBE FLAG (1=ENABLE STORE)
+              1    COLD PARK TO DRIVE A/F DECAY INTERRUPT DONE FLAG
+              2    ASYNCRONOUS PULSE MODE FLAG (AP FLAG)
+              3    1 = IDLE CONDITIONS PRESENT
+              4    1 = IN TOP SPEED FUEL SHUT OFF MODE
+              5    OLD STATE OF A/C FOR TRANSIENT MAP FILTERING
+              6    OLD STATE OF TCC FOR TRANSIENT MAP FILTERING
+              7    1 = TRANSIENT MAP FILTERING ACTIVE
+56   SPFLAGS1      SPARK FLAG WORD 1
+              0    1 = NOT 1st TIME ENGINE RUN
+              1    RPM ERROR SIGN FOR IDLE SPARK 1 = NEGATIVE
+              2    1 = SKIP FLAGGING MALF 42(IN MODE 4 CONTROL)
+              3    1 = MAJOR LOOP EST MONITOR ENABLED (42B CHECK)
+              4    1 = START UP SPARK FILTER DONE
+              5    NOT USED
+              6    1 = CRANKED IN CLEAR FLOOD MODE
+              7    1 = BURST KNOCK RETARD ACTIVE
+57   ICFLAGS2      IAC FLAG WORD 2
+              0    IGNITION OFF IAC RESET FLAG
+              1    1 = COLD START THROTTLE KICKER ENABLED
+              2    DFCO IAC FAST FILTER FLAG
+              3    1 = IAC MOTOR POSITION DECAY IN PROGRESS
+              4    RPM ERROR SIGN 1 = HIGH RPM, 0 = LOW RPM
+              5    1 = LOW BATTERY DETECTED (SHUT OFF IAC COILS)
+              6    1 = IAC MOTOR MOVING
+              7    1 = PREVIOUS IAC RESET REQUESTED IN MODE 4
+58   DDFLAGS1      DISCRETE OUTPUT FLAG WORD 1
+              0    1 = HIGH BATTERY VOLTAGE
+              1    NOT USED
+              2    NOT USED
+              3    NOT USED
+              4    NOT USED
+              5    NOT USED
+              6    NOT USED
+              7    NOT USED
+LAYOUT 000
+:ê  B 
+  
+Su¶    <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

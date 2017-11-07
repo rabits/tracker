@@ -1,0 +1,152 @@
+                        Data Stream A132   Specification
+
+
+
+..page
+       Specifications for  data stream information
+       -------------------------------------------
+
+
+           1992 Buick H-car
+           1992 Buick C-car
+           93 4C,H 3,4B-CARS
+           94 4B,C,H-CARS
+
+    data pin  : read data on pin "M" of ALDL connector
+
+    baud rate : 8192 baud
+
+..page
+
+                       COMMUNICATIONS INFORMATION
+                      ----------------------------
+
+The `Engine Oil Life Monitor' (EOLM) is a slave on the serial data link with the
+ECM as the master. The scan tool (T-100) must gain mastership of the data link
+before it can communicate with the EOLM. To do this the scan tool must listen
+for the ECM's F0 poll and then respond with a mode 8 command to disable normal
+ECM communications.
+
+
+After quieting the ECM, the scan tool can get data for display by
+requesting the mode one data list from the EOLM, and then reading the response
+message.
+
+
+
+          Mode 1 - Transmit ALDL data list
+
+            Scan Tool to EOLM:
+            -----------------------------
+            Message ID:               $E6
+            Message length:           $57
+            Mode number:              $01
+            Message number:           $00
+            Message checksum:         $xx
+
+
+
+
+
+            EOLM response to Scan Tool:
+            -----------------------------
+            Message ID:               $E6
+            Message length:           $5F
+            Mode number:              $01
+            Data byte 1               $xx
+               .
+               .
+               .
+            Data byte 9               $xx
+            Message checksum          $xx
+
+..page
+
+          Mode 10 - Clear Malfunction Codes
+
+            Scan Tool to EOLM:
+            -----------------------------
+            Message ID:               $E6
+            Message length:           $56
+            Mode number:              $0A
+            Message checksum          $xx
+
+
+
+
+
+            EOLM response to Scan Tool:
+            -----------------------------
+            None.
+..page
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 9
+..HEAD04L ALDL MODE 1 DATA LIST
+Byte     Description
+
+ 1       Current Malfunction Word 1                             (1=code set)
+    7     code 17 Reset switch on longer than 60 seconds
+    6     code 16 not used
+    5     code 15 Telltale Lamp/Driver Interface short to battery
+    4     code 14 EEPROM error
+    3     code 13 Loss of ECM serial communications
+    2     code 12 Loss of valid vehicle speed from ECM
+    1     code 11 Loss of valid coolant temperature from ECM
+    0     code 10 not used (History code only)
+
+ 2       Current Malfunction Word 2                             (1=code set)
+    7     code 27 Telltale Lamp/Driver Interface open or short to ground
+    6     code 26 not used
+    5     code 25 Power-down circuit malfunction
+    4     code 24 not used
+    3     code 23 Internal ignition detection circuit malfunction
+    2     code 22 Watchdog circuit malfunction
+    1     code 21 not used
+    0     code 20 not used
+
+ 3       History Malfunction Word 1                             (1=code set)
+    7     code 17 Reset switch on longer than 60 seconds
+    6     code 16 not used
+    5     code 15 Telltale Lamp/Driver Interface short to battery
+    4     code 14 EEPROM error
+    3     code 13 Loss of ECM serial communications
+    2     code 12 Loss of valid vehicle speed from ECM
+    1     code 11 Loss of valid coolant temperature from ECM
+    0     code 10 Running Reset malfunction
+
+ 4       History Malfunction Word 2                             (1=code set)
+    7     code 27 Telltale Lamp/Driver Interface open or short to ground
+    6     code 26 not used
+    5     code 25 Power-down circuit malfunction
+    4     code 24 not used
+    3     code 23 Internal ignition detection circuit malfunction
+    2     code 22 Watchdog circuit malfunction
+    1     code 21 not used
+    0     code 20 not used
+
+ 5       Input Status Word
+    7     Oil change reset switch     0=off     1=on
+    6     not used
+    5     not used
+    4     engine I.D.             engine I.D. table
+    3     engine I.D.             ---------------------------
+    2     engine I.D.             b4 b3 b2 b1 b0       engine
+    1     engine I.D.              0  0  0  0  0       3800
+    0     engine I.D.              0  0  0  0  1       4.5L
+                                   0  0  0  1  0       EV6
+                                   0  0  0  1  1       3.4L
+..page
+ 6       Oil-Life revolutions remaining (msb)
+
+ 7       Oil-Life revolutions remaining (lsb)
+          revolutions = 256msb + lsb
+
+ 8       Reverse Odometer Mileage (msb)
+
+ 9       Reverse Odometer Mileage (msb)
+          odometer = 256msb + lsb
+
+
+..page
+
+

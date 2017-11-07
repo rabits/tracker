@@ -1,0 +1,137 @@
+* BYTE 7 CODE POSITION CHANGE 05/24/93 B.HENSON
+
+                        DATA STREAM A155  SPECIFICATION
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       USAGE: 1991      BUICK C-CAR
+              1991      3C-CAR
+              1992      H-CARS
+              1992      3,4C-CARS
+              1993      H,3,4C,6C CARS
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+        ABS CONTROLLER OVERVIEW
+        -----------------------
+          The ABS controller is a slave device. In order to communicate with
+          the ABS controller, the master of ALDL must first be put to sleep
+          with a mode 8 command. Once the matter has been put to sleep,
+          communications can be established with the ABS controller.
+
+MODE 0  (RETURN TO NORMAL MODE)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F9
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $00
+        - MESSAGE CHECKSUM
+
+        RESPONSE:
+        ---------
+        There is no transmitted response message, however the ABS warning
+        light will stop flashing.
+
+
+MODE 1  (TRANSMIT FIXED DATA STREAM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F9
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - MESSAGE CHECKSUM
+
+
+        THE ABS CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F9
+        - MESSAGE LENGTH        = $5D
+        - MODE NUMBER           = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 7
+        - CHECKSUM
+
+
+
+MODE 10 (CLEAR MALFUNCTION CODES - TESTER TO ABS CONTROLLER)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F9
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+        THE ABS CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F9
+        - MESSAGE LENGTH        = $56
+        - MODE NUMBER           = $0A
+        - CHECKSUM
+
+
+..PAGE
+..HEAD02L ABS ALDL MODE 1 DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 7
+..HEAD04L
+
+        1    Program ID
+        2    Program ID
+        3    Malfunction Code Flag #1 (1 = code set, 0 = code NOT set)
+             BIT 7     Code 21 RF SPEED SENSOR CIRCUIT OPEN
+                 6     Code 22 RF SPEED SENSOR SIGNAL ERRATIC
+                 5     Code 23 RF WHEEL SPEED IS 0 MPH
+                 4     Undefined Not Used
+                 3     Code 25 LF SPEED SENSOR CIRCUIT OPEN
+                 2     Code 26 LF SPEED SENSOR SIGNAL ERRATIC
+                 1     Code 27 LF WHEEL SPEED IS 0 MPH
+                 0     Undefined Not Used
+        4    Malfunction Code Flag #2 (1 = code set, 0 = code NOT set)
+             BIT 7     Code 31 RR SPEED SENSOR CIRCUIT OPEN
+                 6     Code 32 RR SPEED SENSOR SIGNAL ERRATIC
+                 5     Code 33 RR WHEEL SPEED IS 0 MPH
+                 4     Undefined Not Used
+                 3     Code 35 LR SPEED SENSOR CIRCUIT OPEN
+                 2     Code 36 LR SPEED SENSOR SIGNAL ERRATIC
+                 1     Code 37 LR WHEEL SPEED IS 0 MPH
+                 0     Undefined Not Used
+        5    Malfunction Code Flag #3 (1 = code set, 0 = code NOT set)
+             BIT 7     Code 41 RF INLET VALVE CIRCUIT
+                 6     Code 42 RF OUTLET VALVE CIRCUIT
+                 5     Code 44 LF ISOLATION CRT (SV1)
+                 4     Undefined Not Used
+                 3     Code 45 LF INLET VALVE CIRCUIT
+                 2     Code 46 LF OUTLET VALVE CIRCUIT
+                 1     Code 48 RF ISOLATION VALUE CRT (SV2)
+                 0     Undefined Not Used
+        6    Malfunction Code Flag #4 (1 = code set, 0 = code NOT set)
+             BIT 7     Code 51 RR INLET VALVE CIRCUIT
+                 6     Code 52 RR OUTLET VALVE CIRCUIT
+                 5     Undefined Not Used
+                 4     Undefined Not Used
+                 3     Code 55 LR INLET VALVE CIRCUIT
+                 2     Code 56 LR OUTLET VALVE CIRCUIT
+                 1     Undefined Not Used
+                 0     Undefined Not Used
+
+
+        7    Malfunction Code Flag #5 (1 = code set, 0 = code NOT set)
+             BIT 7     Undefined Not Used
+                 6     Undefined Not Used
+                 5     Code 74 PMV PRESSURE SWITCH CIRCUIT
+*                4     Code 62 PUMP FAULT IN ABS STOP
+*                3     Code 61 PUMP TEST FAULT
+                 2     Code 71 EBCM CHECKSUM ERROR
+                 1     Code 72 TRAVEL SWITCH INPUT
+                 0     Code 73 FLUID LEVEL SWITCH CIRCUIT
+
+
+
+
+    NOTE: All codes latch and will not reset until the ignition is cycled.
+          The exception to this is codes 43, 47, 53 and 57.  These codes
+          will turn the warning light on.  If the condition goes away the
+          light will turn off.
+

@@ -1,0 +1,257 @@
+
+                        DATA STREAM A192  SPECIFICATION
+
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       ENGINE   USAGE:
+              4.3L  (LB4)   (VIN=Z)   94 S,T TRUCK
+           *  4.3L  (LB4)   (VIN=Z)   95 S,T TRUCK
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+..PAGE
+
+      OVERVIEW
+      --------
+      THERE IS NO MASTER OF ALDL. THEREFORE YOU DON'T HAVE TO ISSUE A MODE
+      8 TO GET COMMUNICATION.
+
+
+
+
+
+..PAGE
+MODE 1  MESSAGE 0
+        (TRANSMIT FIXED DATA STREAM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - MESSAGE CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $82
+        - MODE NUMBER           = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 44
+        - CHECKSUM
+
+MODE 1  MESSAGE 1
+        (TRANSMIT FIXED DATA STREAM)
+        ALDL REQUEST:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $57
+        - MODE NUMBER           = $01
+        - MESSAGE NUMBER        = $00
+        - MESSAGE CHECKSUM
+
+        THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID            = $F4
+        - MESSAGE LENGTH        = $7C
+        - MODE NUMBER           = $01
+        - DATA BYTE 1
+          .
+          .
+
+        - DATA BYTE 37
+        - CHECKSUM
+
+
+MODE 10 (CLEAR MALFUNCTION CODES)
+        ALDL REQUEST:
+        - MESSAGE ID     = $F4
+        - MESSAGE LENGTH = $56
+        - MODE           = $0A
+        - CHECKSUM
+
+
+        THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+        - MESSAGE ID     = $F4
+        - MESSAGE LENGTH = $56
+        - MODE           = $0A
+        - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 44
+..HEAD04L ALDL MODE 1 MESSAGE 0
+WORD      DESCRIPTION
+
+ 1        ENG_MALFUNCTION_WORD1
+     0    CODE 107 - MAP CIRCUIT VOLTAGE LOW            1=ENABLED 0=DISABLED
+     1    CODE 108 - MAP CIRCUIT VOLTAGE HIGH           1=ENABLED 0=DISABLED
+     2    CODE 117 - COOLANT SENSOR CIRCUIT-LOW TEMP    1=ENABLED 0=DISABLED
+     3    CODE 118 - COOLANT SENSOR CIRCUIT-HIGH TEMP   1=ENABLED 0=DISABLED
+     4    CODE 122 - TPS CIRCUIT VOLTAGE LOW            1=ENABLED 0=DISABLED
+     5    CODE 123 - TPS CIRCUIT VOLTAGE HIGH           1=ENABLED 0=DISABLED
+     6    CODE 136 - O2 LEAN EXHAUST INDICATED          1=ENABLED 0=DISABLED
+     7    CODE 137 - O2 RICH EXHAUST INDICATED          1=ENABLED 0=DISABLED
+ 2        ENG_MALFUNCTION_WORD2
+     0    CODE 139 - OXYGEN SENSOR CIRCUIT OPEN         1=ENABLED 0=DISABLED
+     1    CODE 227 - ESC SENSOR CIRCUIT SHORT TO GROUND 1=ENABLED 0=DISABLED
+     2    CODE 228 - ESC SENSOR CIRCUIT OPEN            1=ENABLED 0=DISABLED
+     3    CODE 296 - EST CIRCUIT FAULT                  1=ENABLED 0=DISABLED
+     4    CODE 300 - EGR SYSTEM FAULT                   1=ENABLED 0=DISABLED
+     5    CODE 400 - NO VSS INPUT                       1=ENABLED 0=DISABLED
+     6    CODE 520 - NOT USED
+     7    CODE 521 - VCM MALFUNCTION                    1=ENABLED 0=DISABLED
+ 3        ENG_MALFUNCTION_WORD3
+     0    CODE 571 - SYSTEM OVERVOLTAGE                 1=ENABLED 0=DISABLED
+     1    CODE 574 - FUEL PUMP CIRCUIT VOLTAGE LOW      1=ENABLED 0=DISABLED
+     2    CODE 580 - QDM1 CIRCUIT FAULT                 1=ENABLED 0=DISABLED
+     3    CODE 585 - QDM2 QDSM CIRCUIT FAULT            1=ENABLED 0=DISABLED
+     4    NOT USED
+     5    NOT USED
+     6    NOT USED
+     7    NOT USED
+ 4        COOLANT_TEMPERATURE
+            DEG. C = (N * .75) - 40.5
+            (DEG F = 1.35N - 40)
+ 5        IGNITION_1_VOLT
+            VOLTS = N / 10
+ 6        THROTTLE_POSITION
+            VOLT = N / 10
+ 7        THROTTLE %
+            % = N
+ 8        MANIFOLD_PRESSURE_VOLT
+            KPA = N /2
+ 9        FILTERED_VEHICLE_SPEED
+            MPH = N
+10        AIR_FUEL_RATIO
+            RATIO = N / 10
+11        FUEL_INTEGRATOR
+            MSEC = N
+12        BLOCK_LEARN
+            FACTOR = N
+13        BLOCK_LEARN_CELL
+            N = BLOCK LEARN CELL
+14        BASE_PULSE_WIDTH (MSB)
+15        BASE_PULSE_WIDTH (LSB)
+            MSEC = N/65.536
+..PAGE
+16        O2_SENSOR_VOLT
+           MILLIVOLTS = N * 5
+17        DESIRED_IDLE_SPEED
+            RPM = N * 25
+18        EGR_DUTY_CYCLE
+            % = N/2
+19        PRESENT_MOTOR_POSITION
+            N = IAC MOTOR STEPS
+20        ALDL_RICH_LEAN_COUNTER
+            N = CROSS COUNTS
+21        SPARK_ADVANCE_FROM_TDC (MSB)
+22        SPARK_ADVANCE_FROM_TDC (LSB)
+            DEGREES = N / 16   (N IS SIGNED)
+23        ENGINE_SPEED(MSB)
+24        ENGINE_SPEED(LSB
+            RPM = N * 10
+25        ENGINE_RUN_TIME (MSB)
+26        ENGINE_RUN_TIME (LSB)
+            SECONDS = N
+27        FUEL_PUMP_VOLTAGE
+            VOLT = N/10
+28        STARTUP_COOLANT_TEMPERATURE
+            DEG C = N * .75 - 40.5
+29        DESIRED_MOTOR_POSITION
+            N = STEPS
+30        LAST_MINOR_LOOP_REF_PERIOD (MSB)
+31        LAST_MINOR_LOOP_REF_PERIOD (LSB)
+            mSEC = N / 50
+32        SPARK_ADVANCE_FROM_REF(MSB)
+33        SPARK_ADVANCE_FROM_REF(LSB)
+            DEGREES = N/16
+34        ESC_ACTIVITY(MSB)
+35        ESC_ACTIVITY(LSB)
+            SECONDS=N/50
+36        ESC_SPARK_ADVANCE_MODIFIER(MSB)
+37        ESC_SPARK_ADVANCE_MODIFIER(LSB)
+            DEGREES = N/16
+38        TOTAL_ASYNCH_PULSE_WIDTH (MSB)
+39        TOTAL_ASYNCH_PULSE_WIDTH (LSB)
+            MSEC = N / 10
+40        TIME_OUT_AIR_FUEL_RATIO
+            RATIO = N/10
+..PAGE
+41        BAROMETRIC_PRESSURE
+            KPA = N / 2
+42        ENGINE_STATUS_WORD1
+     0    O2 SENSOR READY FLAG                    1=READY 0=NOT READY
+     1    CLOSED LOOP TIMER O.K. FLAG             1=OK    0=NOT OK
+     2    BLOCK LEARN ENABLE                      1=YES   0=NO
+     3    ENGINE IDLE                             1=IDLE  0=NOT
+     4    RICH LEAN INDICATOR                     1=RICH  0=LEAN
+     5    1 CLOSED LOOP SINCE RESTART             1=YES   0=NO
+     6    CLOSED LOOP FUEL                        1=YES   0=NO
+     7    NOT USED
+43        ENGINE STATUS WORD 2
+     0    FIRST REFERENCE                         1=VALID 0=NOT
+     1    ENGINE RUNNING                          1=TRUE  0=FALSE
+     2    ADVANCE                                 1=ADV   0=RET
+     3    NOT USED
+     4    NOT USED
+     5    NOT USED
+     6    NOT USED
+     7    NOT USED
+44        SYSTEM STATUS WORD 2
+     0    DIAG SW IN DIAG MODE                    1=TRUE  0=FALSE
+     1    AC REQUESTED                            1=YES   0=NO
+     2    IGNITION 1 ON                           1=TRUE  0=FALSE
+     3    LOW BATTERY                             1=YES   0=NO
+     4    HIGH BATTERY                            1=YES   0=NO
+     5    BRAKE ON                                1=TRUE  0=FALSE
+     6    NOT USED
+     7    NOT USED
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 37
+..HEAD04L ALDL MODE 1 MESSAGE 1
+WORD     DESCRIPTION
+
+ 1       OPERATING_SYS_PART_NO
+ 2       OPERATING_SYS_PART_NO
+ 3       OPERATING_SYS_PART_NO
+ 4       OPERATING_SYS_PART_NO
+ 5       ENGINE_CALN
+ 6       ENGINE_CALN
+ 7       ENGINE_CALN
+ 8       ENGINE_CALN
+ 9       VEH_SPD_CALN
+10       VEH_SPD_CALN
+11       VEH_SPD_CALN
+12       VEH_SPD_CALN
+13       ELEK_BRK_CALN
+14       ELEK_BRK_CALN
+15       ELEK_BRK_CALN
+16       ELEK_BRK_CALN
+17       HVAC_SYS_CALN
+18       HVAC_SYS_CALN
+19       HVAC_SYS_CALN
+20       HVAC_SYS_CALN
+21       VIN
+22       VIN
+23       VIN
+24       VIN
+25       VIN
+26       VIN
+27       VIN
+28       VIN
+29       VIN
+30       VIN
+31       VIN
+32       VIN
+33       VIN
+34       VIN
+35       VIN
+36       VIN
+37       VIN
+

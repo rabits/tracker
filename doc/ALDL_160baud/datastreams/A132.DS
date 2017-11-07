@@ -1,0 +1,122 @@
+
+
+
+                        Data Stream A132   Specification
+
+
+       Specifications for  data stream information
+       -------------------------------------------
+
+
+           1992  Buick H-car
+           1992  Oldsmobile H-car
+           1992  Pontiac H-car
+           1992  Buick   C-car
+         * 1993  3,4C 2,3,4H-CAR
+
+    data pin  : read data on pin "M" of ALDL connector
+                READ DATA ON PIN "L" OF ALDL CONNECTOR FOR 1992
+
+    baud rate : 8192 baud  bi-directional
+
+..page
+                       COMMUNICATIONS INFORMATION
+                      ----------------------------
+
+The `Remote Accessory Control Module' (RAC) is a slave on the serial data link
+with the ECM as the master. The scan tool (T-100) must gain mastership of the
+data link before it can communicate with the RAC module. To do this the scan
+tool must listen for the ECM's F0 poll and then respond with a mode 8 command
+to disable normal ECM communications.
+
+
+After quieting the ECM, the scan tool can get data for display by
+requesting the mode one data list from the RAC module, and then reading the
+response message.
+
+
+
+          Mode 1 - Transmit ALDL data list
+
+            Scan Tool to RAC:
+            -----------------------------
+            Message ID:               $EB
+            Message length:           $57
+            Mode number:              $01
+            Message number:           $00
+            Message checksum:         $xx
+
+
+
+
+
+            RAC response to Scan Tool:
+            -----------------------------
+            Message ID:               $EB
+            Message length:           $5A
+            Mode number:              $01
+            Data byte 1               $xx
+               .
+               .
+               .
+            Data byte 4               $xx
+            Message checksum          $xx
+
+..page
+
+..HEAD02L
+..HEAD03L MODE 1 - DATA LIST
+..HEAD04L NUMBER OF DATA WORDS - 4
+
+
+Byte     Description
+
+ 1       Input status word 1
+    7     ignition status                                1 = on       0 = off
+    6     door jamb switch status                        1 = off      0 = on
+    5     door handle switch status                      1 = off      0 = on
+    4     park switch status                             1 = on       0 = off
+    3     program request (ALDL pin G grounded)          1 = off      0 = on
+    2     door unlock request                            1 = on       0 = off
+    1     door lock request                              1 = on       0 = off
+    0     unlock request by key in cylinder              1 = off      0 = on
+
+ 2       Input status word 2
+    7     tamper switch                                  1 = off      0 = on
+    6     receiver programmed status                     1 = off      1 = on
+    5     not used
+    4     RAC level                                      1 = III      0 = II
+    3     not used
+    2     RAC receiver change level          change level
+    1     RAC receiver change level          --------------------------
+    0     RAC receiver change level          b2 b1 b0          level
+                                              0  0  0          O.R.
+                                              0  0  1          P.R.
+                                              0  1  0          1st
+                                              0  1  1          2nd
+                                              1  0  0          3rd
+                                              1  0  1          4th
+                                              1  1  0          5th
+                                              1  1  1          6th
+
+ 3       Output status word 1
+    7     interior light relay status                    1 = off      0 = on
+    6     delayed accessory bus relay status             1 = on       0 = off
+    5     trunk release relay                            1 = off      0 = on
+    4     exterior light relay                           1 = off      0 = on
+    3     horn relay                                     1 = off      0 = on
+    2     security telltale relay                        1 = off      0 = on
+    1     all doors relay                                1 = on       0 = off
+    0     door lock relay                                1 = on       0 = off
+
+ 4       Output status word 2
+    7     driver's door unlock relay                     1 = off      0 = on
+    6     SDL receiver program enable mode               1 = off      0 = on
+    5     not used
+    4     not used
+    3     not used
+    2     not used
+    1     not used
+    0     not used
+
+

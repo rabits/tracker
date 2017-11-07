@@ -1,0 +1,275 @@
+                        DATA STREAM A122  SPECIFICATION
+
+       SPECIFICATIONS FOR  BCM DATA STREAM INFORMATION
+       -----------------------------------------------
+
+       CAR LINE:
+              1990 DEVILLE/FLEETWOOD  VIN = C
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+..PAGE
+NOTE: BCM DATA STREAM INFORMATION IS OBTAINED FROM THE ECM USING THE FOLLOWING.
+
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $01 (BCM DATA LIST DEVILLE ONLY)
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH BCM DATA LIST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $6B
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 21
+                - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL BCM DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 21
+..HEAD04L ALDL MODE 1 MESSAGE 1 *ALDLTB* DATA LIST
+WORD #   DATA NAME    DESCRIPTION
+
+1        SDSR1        DIAGNOSTIC STATUS REGISTER TO ECM
+           0            NOT USED
+           1            NOT USED
+           2            NOT USED
+           3            NOT USED
+           4            NOT USED
+           5            NOT USED
+           6            FREON FAULT             1 = FAULT
+           7            ALDL FLAG               1 = ACTIVE
+2        SDSR2        BCM STATUS REGISTER TO ECM
+           0            GREEN ENGINE LESS THAN 48 MILES  1 = GREEN ENGINE
+           1            CCP HIGH KEY STATUS              1 = YES
+           2            ECM NB MEMORY FAILURE ACK FLAGE  1 = YES
+           3            CCP LOW DEY STATUS               1 = ON
+           4            CCP ECON KEY STATUS              1 = ON
+           5            CLEAR DIAGNOSTICS FLAG           1 = YES
+           6            HOLD DIAGNOSTICS FLAG            1 = YES
+           7            DIAGNOSTICS ACTIVE FLAG          1 = ACTIVE
+3        SDSR3        BCM STATUS REGISTER TO ECM
+           0            HIGH ELECTRICAL LOAD             1 = ON
+           1            A/C CLUTCH                       1 = ON
+           2            A/C POSSIBLE CONDITION           1 = YES
+           3            SEE TABLE
+           4            SEE TABLE
+           5            GREEN ENGINE LESS THAN 500 MI    1 = GREEN
+           6            COOLER KEY BUTTON STATUS         1 = ON
+           7            WARMER KEY BUTTON STATUS         1 = ON
+
+              DESCRIPTION           BIT4    BIT3
+              COOLANT FAN HIGH        1       1
+              ILLEGAL                 1       0
+              COOLANT FAN LOW         0       1
+              COOLANT FAN OFF         0       0
+
+4        NOATCOR      OUTSIDE TEMP (CLAMPED @ 127 DEG F)
+                        DEG F = N - 40
+5        ACVHI        A/C HIGH SIDE TEMP
+                        DEG C = N - 40
+6        DGHYTB       BCM MALFUNCTION WORD 1
+           0      MALF CODE F32   ECM/BCM COMMUNICATIONS LINK
+           1      MALF CODE F31   FDC/BCM COMMUNICATION LINK
+           2      MALF CODE F30   CCP/BCM COMMUNICATION LINK
+           3      MALF CODE       NOT USED
+           4      MALF CODE F13   IN-CAR TEMP
+           5      MALF CODE F12   A/C LOW SIDE TEMP
+           6      MALF CODE F11   A/C HIGH SIDE TEMP
+           7      MALF CODE F10   OUTSIDE TEMP
+..PAGE
+7        DGHYTB+1     BCM MALFUNCTION WORD 2
+           0      MALF CODE F51   PROM NOT PRESENT (HISTORY ONLY)
+           1      MALF CODE F49   FORCED COMPRESSOR OFF (HISTORY ONLY)
+           2      MALF CODE F48   VERY LOW FREON PRESSURE
+           3      MALF CODE F47   VERY LOW FREON CONDITION
+           4      MALF CODE F46   LOW FREON CONDITION
+           5      MALF CODE F43   HEATED WINDSHIELD
+           6      MALF CODE F41   ENGINE COOLANT FAN
+           7      MALF CODE F40   AIR MIX DOOR
+8        FDCIN12B     FDC SWITCH STATUS
+                        AFTER ANDING WITH $F8 THE FOLLOWING SET BITS INDICATE
+           3            1 = RESET MODE
+           4            1 = FUEL USED MODE
+           5            1 = TRIP AVERAGE MODE
+           6            1 = INSTANTANEOUS MODE
+           7            1 = RANGE MODE
+9        CCSR1A       CCP KEY STATUS REGISTER 1A
+                        THE FOLLOWING SET BITS INDICATE
+           0            1 = REAR DEFROST
+           1            1 = FRONT DEFROST
+           2            1 = AUTO
+           3            1 = ECON
+           4            1 = OFF
+           5            1 = OUTSIDE TEMP
+           6            1 = WARMER
+           7            1 = COOLER
+**** NOTE: ONLY ONE BIT WILL SET IN THIS BYTE AT ANY GIVEN TIME. A SET BIT MEANS
+           THAT THAT SELECTION IS ON AND THE REMAINING SELECTIONS ARE OFF.
+10       PLATCH       PROGRAMMER STATUS
+           0            AIR MIX DOOR INHIBIT    0 = ON        1 = OFF
+           1            AIR MIX DOOR REVERSE    0 = COOL      1 = HEAT
+           2            MODE SOLENOID DOWN      0 = HEATER    1 = OFF
+           3            DEFROST SOLENOID        0 = AC        1 = DEFROST
+           4            RECIRCULATE SOLENOID    0 = RECIRC    1 = OUTSIDE
+≥          5            WATER VALVE SOLENOID    0 = OFF       1 = ON
+           6            REAR DEFROST            0 = ON        1 = OFF
+           7            MODE SOLENOID UP        0 = AC/DEF    1 = OFF
+11       ADVIGN1      IGNITION #1 A/D COUNTS
+                        V = N * 16.3/255
+..PAGE
+12       ADVFGLV      FUEL LEVEL A/D COUNTS
+
+         FUEL LEVEL CONVERSION
+    ----------------------------------
+     T(X1)        TABLE VALUE
+       0              8
+       1              14
+       2              20
+       3              29
+       4              41          Interpolation program
+       5              54          (Y = displayed output in gallons)
+       6              69          ---------------------------------
+       7              89          F = BYTE 12
+       8              113         V = BYTE 11
+       9              132         X = [(F * 256)/V]
+       10             148         A = 10
+       11             160         I = 16
+       12             167         XT = X/I
+       13             172         X1 = INT (XT)
+       14             176         XF = XT - X1
+       15             179  Y = [T(X1) + XF * {T(X1 + 1) - T(X1)}] /A
+       16             181
+
+13       ADVACLO      A/C LOW SIDE A/C COUNTS
+
+       A/C TEMPERATURE CONVERSION
+    ----------------------------------
+     T(X1)        TABLE VALUE
+       0              239
+       1              210
+       2              173
+       3              150
+       4              134         Interpolation program
+       5              121         (Y = displayed output Degrees Fahrenheit)
+       6              110         -----------------------------------------
+       7              100         F = BYTE 13
+       8              90          XT = F/16
+       9              81          X1 = INT (XT)
+       10             72          XF = XT - X1
+       11             62          Y = [T(X1) - XF * {T(X1) - T(X1 + 1)}] - 40
+       12             52
+       13             40
+       14             26
+       15             4
+       16             0
+
+..PAGE
+14       ADVINC       INSIDE TEMP A/D COUNTS
+
+      INSIDE TEMPERATURE CONVERSION
+    ----------------------------------
+     T(X1)        TABLE VALUE
+       0              255
+       1              241
+       2              205
+       3              182
+       4              164         Interpolation program
+       5              150         (Y = displayed output Degrees Fahrenheit)
+       6              138         -----------------------------------------
+       7              127         F = BYTE 14
+       8              117         XT = F/16
+       9              107         X1 = INT (XT)
+       10             97          XF = XT - X1
+       11             87          Y = [T(X1) - XF * {T(X1) - T(X1 + 1)}] - 40
+       12             76
+       13             64
+       14             48
+       15             24
+       16             0
+
+..PAGE
+15       ADVAMD       AIR MIX DOOR FEEDBACK
+
+         AIR MIX DOOR POSITION
+          COUNTS vs. DEGREES
+
+             COUNTS   DOOR POS(DEG)
+            -------------------------
+
+               0       90
+               3       70
+               4       63
+              26       59
+              34       56
+              42       53
+              50       50
+              59       47
+              69       43
+              77       40
+              79       36
+             104        29
+             113        26
+             124        22
+             131        19
+             141        16
+             152        12
+             162         9
+             173         5
+             182         4
+             191         3
+             220         2
+             255         0
+
+16       ADVDIMLO     DIM A/D COUNTS
+                        % = ([N16]/[N17])*100
+17       ADVDIMHI     DIM REFERENCE LEVEL A/D COUNTS
+                        V = N*16.3/255
+..PAGE
+18       ADVOAT       OUTSIDE AIR TEMP A/D COUNTS
+       A/C TEMPERATURE CONVERSION
+    ----------------------------------
+     T(X1)        TABLE VALUE
+       0              239
+       1              210
+       2              173
+       3              150
+       4              134         Interpolation program
+       5              121         (Y = displayed output Degrees Fahrenheit)
+       6              110         -----------------------------------------
+       7              100         F = BYTE 18
+       8              90          XT = F/16
+       9              81          X1 = INT (XT)
+       10             72          XF = XT - X1
+       11             62          Y =  T(X1) - XF * {T(X1) - T(X1 + 1)}
+       12             52
+       13             40
+       14             26
+       15             4
+       16             0
+
+19       IDSR1        INPUT DISCRETE STATUS
+           0            1 = WATER IN FUEL (OBSOLETE)
+           1            NOT USED
+≥          2            LOW PRESSURE INPUT   1 = LOW   0 = OK
+           3            NOT USED
+≥          4            METRIC SWITCH INPUT   1 = ON (METRIC)  0 = OFF (ENGLISH)
+           5            PHOTO CELL INPUT
+           6            DOOR JAMB INPUT       1 = OPEN     0 = CLOSED
+           7            PARK SWITCH INPUT
+20       PRWID1       PROM I. D. WORD 1 (MSB)
+21       PRWID2       PROM I. D. WORD 2 (LSB)
+                        ID = MSB*256 + LSB
+LAYOUT 000
+:ê  B 
+  
+Su¶   <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

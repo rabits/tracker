@@ -1,0 +1,482 @@
+
+                        DATA STREAM A51   SPECIFICATION
+
+       ENGINE  USAGES:
+                4.1L DFI - LC7 - (7) - 87 88  'V' CAR ONLY
+
+       DATA PIN:        L/M
+
+       BAUD RATE :      8192
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 40   
+..HEAD04L ALDL MODE  
+..HEAD05L WORD  BIT   DESCRIPTION
+    1           ECM PROMID (MSB)
+    2           ECM PROMID (LSB)
+    3           ECM MALF CODES WORD 1
+           0     MALF CODE 19   SHORTED FUEL PUMP CIRCUIT
+           1      NOT USED
+           2     MALF CODE 17   LEFT O2 SENSOR NOT READY
+           3     MALF CODE 16   GENERATOR VOLTAGE OUT OF RANGE
+           4     MALF CODE 15   OPEN COOLANT SENSOR
+           5     MALF CODE 14   SHORTED COOLANT SENSOR
+           6     MALF CODE 13   RIGHT O2 SENSOR NOT READY
+           7     MALF CODE 12   NO DISTRIBUTOR SIGNAL
+    4           ECM MALF CODES WORD 2
+           0     MALF CODE 27   OPEN THROTTLE SWITCH
+           1     MALF CODE 26   SHORTED THROTTLE SWITCH
+           2      NOT USED
+           3     MALF CODE 24   SPEED SENSOR CIRCUIT
+           4     MALF CODE 23   EST/BYPASS CIRCUIT PROBLEM
+           5     MALF CODE 22   OPEN TPS CIRCUIT
+           6     MALF CODE 21   SHORTED TPS CIRCUIT
+           7     MALF CODE 20   OPEN FUEL PUMP CIRCUIT
+    5           ECM MALF CODES WORD 3
+           0      NOT USED
+           1     MALF CODE 34   MAP SENSOR SIGNAL TOO HIGH
+           2      NOT USED
+           3     MALF CODE 32   OPEN MAP SENSOR
+           4     MALF CODE 31   SHORTED MPA SENSOR
+           5     MALF CODE 30   ISC CIRCUIT PROBLEM
+           6     MALF CODE 29   SHORTED 3RD GEAR SWITCH OR OPEN 2-3 SHIFT
+                                SOLENOID
+           7     MALF CODE 28   OPEN 3RD GEAR SWITCH CIRCUIT OR SHORTED 2-3
+                                SHIFT SOLENOID
+    6           ECM MALF CODES WORD 4
+           0     MALF CODE 43   LEFT OXYGEN SENSOR SIGNAL RICH
+           1     MALF CODE 42   LEFT OXYGEN SENSOR SIGNAL LEAN
+           2     MALF CODE 41   CAM SENSOR CIRCUIT PROBLEM
+           3     MALF CODE 40   OPEN P/S PRESSURE SWITCH CIRCUIT
+           4     MALF CODE 39   VCC ENGAGEMENT PROBLEM
+           5     MALF CODE 38   OPEN MAT SENSOR CIRCUIT
+           6     MALF CODE 37   SHORTED MAT SENSOR CIRCUIT
+           7      NOT USED
+    7           ECM MALF CODES WORD 5
+           0      NOT USED
+           1      NOT USED
+           2     MALF CODE 49   AIR MANAGEMENT SYSTEM FAULT
+           3     MALF CODE 48   EGR SYSTEM FAULT
+           4     MALF CODE 47   BCM-ECM DATA PROBLEM
+           5     MALF CODE 46   RIGHT TO LEFT BANK FUELING IMBALANCE
+           6     MALF CODE 45   RIGHT OXYGEN SENSOR SIGNAL RICH
+           7     MALF CODE 44   RIGHT OXYGEN SENSOR SIGNAL RICH
+..PAGE
+    8           ECM MALF CODES WORD 6
+           0     MALF CODE 59   TRANS TEMP SENSOR
+           1      NOT USED
+           2     MALF CODE 57   SHORTED FOURTH GEAR SWITCH CIRCUIT OR OPEN
+                                3-4 SHIFT SOLENOID
+           3     MALF CODE 56   OPEN FOURTH GEAR SWITCH CIRCUIT OR OPEN
+                                3-4 SHIFT SOLENOID
+           4     MALF CODE 55   TPS MISADJUSTED
+           5      NOT USED
+           6     MALF CODE 53   DIST. SIGNAL INTERUPT
+           7     MALF CODE 52   ECM MEMORY RESET
+    9           ECM MALF CODES WORD 7
+           0     MALF CODE 67   C/C SWITCH SHORTED DURING ENABLE
+           1     MALF CODE 66   C/C ENGINE RPM TOO HIGH
+           2     MALF CODE 65   C/C CAR ACCELERATION TOO HIGH
+           3     MALF CODE 64   C/C SERVO POSITION SENSOR FAILURE
+           4     MALF CODE 63   C/C CAR SPEED AND SET SPEED DIFFERENCE TOO HI
+           5     MALF CODE 62   C/C VACUUM SOLENOID PROBLEM
+           6     MALF CODE 61   C/C VENT SOLENOID PROBLEM
+           7     MALF CODE 60   C/C TRANSMISSION NOT IN DRIVE
+    10          TRANSMISSION TEMPERATURE
+    11          COOLANT TEMPERATURE
+    12          LEFT O2 CROSS COUNTS
+    13          RIGHT O2 CROSS COUNTS
+    14          LEFT OXYGEN SENSOR VOLTAGE
+    15          RIGHT OXYGEN SENSOR VOLTAGE
+    16          BATTERY VOLTAGE
+    17          MANIFOLD ABSOLUTE PRESSURE
+    18          LEFT CLOSED LOOP INTEGRATOR
+    19          RIGHT CLOSED LOOP INTEGRATOR
+    20          THROTTLE POSITION SENSOR
+    21          ENGINE RPM
+    22          VEHICLE SPEED UPPER BYTE
+    23          LEFT INJ PULSE WIDTH (MSB)
+    24          LEFT INJ PULSE WIDTH (LSB)
+    25          RIGHT INJ PULSE WIDTH (MSB)
+    26          RIGHT INJ PULSE WIDTH (LSB)
+    27          SPARK ADVANCE
+    28          MANIFOLD ABSOLUTE TEMPERATURE
+    29          BAROMETRIC PRESSURE
+    30          I/O STATUS WORD #1
+           0      NOT USED
+           1     VCC STATUS             1 = ENERGIZED
+           2     THIRD GEAR             1 = IN 3RD GEAR
+           3     THROTTLE SWITCH        1 = CLOSED
+           4     ACTUAL BRAKE SWITCH    1 = CLOSED
+           5     P/N STATUS             1 = PARK/NEUTRAL
+           6     CLOSED LOOP STATUS     1 = CLOSED
+           7     FOURTH GEAR STATUS     1 = IN 4TH GEAR
+..PAGE
+    31          I/O STATUS WORD #2
+           0     CRUISE VENT SOLENOID   1 = ENERGIZED
+           1     CRUISE VACUUM SOLENOID 1 = ENERGIZED
+           2     CRUISE RESUME/ACCEL    1 = CLOSED
+           3     CRUISE ON/OFF          1 = ON
+           4     CRUISE SET/COAST       1 = CLOSED
+           5     CRUISE CONTROL ENABLE  1 = ENABLED
+           6     RIGHT O2 RICH/LEAN     1 = RICH
+           7     LEFT O2 RICH/LEAN      1 = RICH
+    32          PCM ALDL MODE STATUS WORD
+    33          PCM ALDL MODE STATUS WORD
+    34          RIGHT BLOCK LEARN MULTIPLIER
+    35          LEFT BLOCK LEARN MULTIPLIER
+    36          EGR DUTY CYCLE
+    37          CRUISE CONTROL SET SPEED
+    38          NOT USED
+    39          CRUISE CONTROL SERVO POSITION
+    40          POWER STEERING PUMP PRESSURE
+
+..PAGE
+..HEAD02L
+..HEAD03L
+..HEAD04L
+..HEAD05L
+
+                 1987/88 CADILLAC V ALDL LISTING
+
+  NOTE:  ALL UNDEFINED BITS OR WORDS ARE SPARE
+DEVICE CODE $F1 - BCM ALDL DATA
+
+NUMBER OF DATA WORDS - 43
+
+WORD   BIT   DESCRIPTION                   EQUATION
+ NO.   NO.
+
+  1          PROM ID WORD 1                MOST SIGNIFICANT
+  2          PROM ID WORD 2                LEAST SIGNIFICANT
+  3          BCM MODE STATUS WORD 1
+  4          BCM MODE STATUS WORD 2
+  5          BCM HISTORY CODES
+          7  B110-OUTSIDE AIR TEMP CKT PROB             
+          6  B111-A/C HI SIDE TEMP CKT PROB             
+          5  B112-A/C LO SIDE TEMP CKT PROB [A/C]       
+          4  B113-IN CAR TEMP CKT PROB                  
+          3  B115-SUNLOAD TEMP CKT PROB                 
+          2  B119-TWS PHOTOSENSOR CKT PROB              
+          1  B120-TWS DELAY POT CKT PROB                
+          0  B122-PANEL LAMP DIM POT CKT PROB           
+  6          BCM HISTORY CODES
+          7  B124-SPEED SENSOR CKT PROB [C/C]           
+          6  B127-PRND321 SENSOR CKT PROB [C/C]         
+          5  B132-OIL PRESSURE SENSOR FAILURE           
+          4  B334-LOSS OF ECM DATA [C/C]                
+          3  B335-LOSS OF CCDIC DATA                    
+          2  B336-LOSS OF IPC DATA [C/C]                
+          1  B337-LOSS OF PROGRAMMER DATA [A/C]         
+          0  B409-CHARGING SYSTEM FAILURE               
+ 7           BCM HISTORY CODES
+          7  B410-CHARGING SYSTEM PROBLEM               
+          6  B411-BATTERY VOLTS LOW [C/C]               
+          5  B412-BATTERY VOLTS HIGH [C/C]              
+          4  B420-BCM OUTPUT DRIVER 1 FAILURE           
+          3  B421-BCM OUTPUT DRIVER 2 FAILURE           
+          2  B440-AIR MIX DOOR PROBLEM                  
+          1  B441-COOLING FANS PROBLEM                  
+          0  B446-LO A/C REFRIG CONDITION WARNING       
+ 8           BCM HISTORY CODES
+          7  B447-VERY LO A/C REFRIG PROB [A/C]         
+          6  B448-VERY LO A/C REFRIG PRES [A/C]         
+          5  B449-A/C HI SIDE TEMP TOO HIGH [A/C]       
+          4  B450-COOLANT TEMP TOO HIGH [A/C]           
+          3  B480-LOSS OF ANTI-LOCK DATA                
+          2  B481-ANTI-LOCK FAULT                       
+          1  B552-BCM MEMORY RESET INDICATOR            
+          0  B556-BCM EEPROM ERROR                      
+
+
+..PAGE
+DEVICE CODE $F1 - BCM DATA CONT.
+
+NUMBER OF DATA WORDS - 43
+
+WORD   BIT   DESCRIPTION                   EQUATION
+ NO.   NO.
+
+ 9           LIGHTING HSITORY CODES
+          7  L010-REDUNDANT TAIL LAMP RELAY FAILURE     
+          6  L011-REDUNDANT HEADLAMP RELAY FAILURE      
+          5  NOT USED
+          4  NOT USED
+          3  L110-LCP COMMUNICATION FAILURE             
+          2  L202-OSM NO. 2 COMMUNICATION FAILURE       
+          1  L203-OSM NO. 3 COMMUNICATION FAILURE       
+          0  L204-OSM NO. 4 COMMUNICATION FAILURE       
+10           LIGHTING HISTORY CODES
+          7  L205-OSM NO. 5 COMMUNICATION FAILURE           
+          6  L206-OSM NO. 6 COMMUNICATION FAILURE           
+          5  L207-OSM NO. 7 COMMUNICATION FAILURE           
+          4  L208-OSM NO. 8 COMMUNICATION FAILURE           
+          3  L209-OSM NO. 9 COMMUNICATION FAILURE           
+          2  L210-OSM NO. 10 COMMUNICATION FAILURE          
+          1  L302-OSM NO. 2 OUTPUT FAILURE                  
+          0  L303-OSM NO. 3 OUTPUT FAILURE                  
+11           LIGHTING HISTORY CODES
+          7  L304-OSM NO. 4 OUTPUT FAILURE                  
+          6  L305-OSM NO. 5 OUTPUT FAILURE                  
+          5  L306-OSM NO. 6 OUTPUT FAILURE                  
+          4  L307-OSM NO. 7 OUTPUT FAILURE                  
+          3  L308-OSM NO. 8 OUTPUT FAILURE                  
+          2  L309-OSM NO. 9 OUTPUT FAILURE                  
+          1  L310-OSM NO. 10 OUTPUT FAILURE                 
+          0  L411-LIGHTING SYSTEM LOW VOLTAGE               
+12           CURRENT LAMP FAILURES
+          7  X033-HEADLAMPS ARE ON                          
+          6  X036-LOW ENGINE OIL                            
+          5  X041-RIGHT LOW BEAM OUT                        
+          4  X042-LEFT LOW BEAM OUT                         
+          3  X043-RIGHT TAIL LAMP OUT                       
+          2  X044-LEFT TAIL LAMP OUT                        
+          1  X045-RIGHT PARK LAMP OUT                       
+          0  X046-LEFT PARK LAMP OUT                        
+13           CURRENT LAMP FAILURES
+          7  X047-RIGHT BRAKE/TURN LAMP OUT                 
+          6  X048-LEFT BRAKE/TURN LAMP OUT                  
+          5  X049-RR TURN SIGNAL OUT                        
+          4  X050-LR TURN SIGNAL OUT                        
+          3  X051-RF TURN SIGNAL OUT                        
+          2  X052-LF TURN SIGNAL OUT                        
+          1  X053-RF SIDE MARKER OUT                        
+          0  X054-LF SIDE MARKER OUT                        
+14           CURRENT LAMP FAILURES
+          7  X055-RIGHT BRAKE LAMP OUT                      
+          6  X056-LEFT BRAKE LAMP OUT                       
+          5  X057-CENTER BRAKE LAMP OUT                     
+          4  X058-RIGHT BACKUP LAMP OUT                     
+          3  X059-LEFT BACKUP LAMP OUT                      
+          2  X060-RF FOG LAMP OUT                           
+          1  X061-LF FOG LAMP OUT                           
+          0  X062-RR FOG LAMP OUT                           
+15           CURRENT LAMP FAILURES
+          7  X063-LR FOG LAMP OUT                           
+          6  X064-LICENSE/REAR MARKER LAMP OUT              
+          5  X065-RIGHT DOOR COURTESY LAMP OUT              
+          4  X066-LEFT DOOR COURTESY LAMP OUT               
+          3  X067-HEADER/MAP COURTESY LAMP OUT              
+          2  X068-DASH/STOWAGE COURTESY LAMP OUT            
+          1  X069-RIGHT HIGH BEAM OUT                       
+          0  X070-LEFT HIGH BEAM OUT                        
+
+..PAGE
+DEVICE CODE $F1 - BCM DATA CONT.
+
+NUMBER OF DATA WORDS - 43
+
+WORD   BIT   DESCRIPTION                   EQUATION
+ NO.   NO.
+
+
+  16         HVAC AIR DELIVERY MODE       
+           7  FRONT DEFROST
+           6  COLD PURGE
+           5  NORMAL PURGE
+           4  OFF
+           3  HEATER
+           2  INTERMEDIATE
+           1  A/C
+           0  MAX A/C
+  17         HVAC SET TEMP (DEG F)         T=N
+  18         VEHICLE SPEED                 KPH=N
+  19         IN CAR TEMPERATURE (C)        T=N-40
+  20         TWILIGHT POTENTIOMETER (%)    %=N/255
+  21         PRND321 SENSOR (% - GEAR)     TABLE - SEE TABLE 1
+  22         FUEL LEVEL SENSOR             TABLE - SEE TABLE 2
+  23         SUNLOAD TEMPERATURE (C)       T=N-40
+  24         IGNITION 1 VOLTAGE            V=N*16.4/255
+  25         A/C LO SIDE TEMPERATURE (C)   T=N-40
+  26         A/C HI SIDE TEMPERATURE (C)   T=N-40
+  27         TWILIGHT PHOTOCELL (%)        %=N/255
+  28         GENERATOR F-TERMINAL (%)      %=N/255
+  29         OUTSIDE TEMPERATURE (C)       T=N-40
+  30         DIMMING POTENTIOMETER (%)     %=N/255
+  31         AIR MIX DOOR POSITION (%)     %=1-N/255
+  32         OIL PRESSURE                  TABLE - SEE TABLE 3
+  33      7  HEADLAMP SWITCH               1=ON
+          6  THEFT ALARM                   1=TRIGGERED
+          5  TIME/TEMP                     1=DEPRESSED
+          4  LEFT DOOR JAMB                1=DOOR OPEN
+          3  DOOR LOCK                     1=REQUEST UNLOCK
+          2  BRAKE                         1=BRAKING
+          1  IGNITION 3                    1=IGN ON
+          0  CRANK                         1=CRANKING
+
+
+
+
+
+DEVICE CODE $F1 - BCM DATA CONT.
+
+NUMBER OF DATA WORDS - 43
+
+WORD   BIT   DESCRIPTION                   EQUATION
+ NO.   NO.
+
+  34      7  SPARE
+          6  DOOR UNLOCK FEEDBACK          1=UNLOCKING
+          5  SPARE
+          4  RIGHT DOOR JAMB               1=DOOR OPEN
+          3  SPARE
+          2  SPARE
+          1  BUS B
+          0  BUS A
+  35      7  BRAKE FLUID LEVEL             1=LOW FLUID
+          6  SPARE
+          5  COOLANT LEVEL                 1=LOW COOLANT
+          4  HARD TOP STATUS               1=HARD TOP ON
+          3  SOFT TOP STATUS               1=SOFT TOP UP
+          2  ANTI SKID BRAKE STATUS        1=DISABLED
+          1  SPARE
+          0  FREON PRESSURE                1=LOW PRESSURE
+  36      7  OUTPUT DRIVER #2              1=FAULT
+          6  OUTPUT DRIVER #1              1=FAULT
+          5  SPARE
+          4  SPARE
+          3  SPARE
+          2  WASHER FLUID LEVEL            1=FLUID LOW
+          1  SPARE
+          0  SPARE
+  37      7  SPARE
+          6  SPARE
+          5  HIGH BEAM SWITCH              1=SWITCH ON
+          4  COOLANT FAN FEEDBACK          1=FANS OFF
+          3  LEFT TURN SIGNAL SWITCH       1=SWITCH ON
+          2  RIGHT TURN SIGNAL SWITCH      1=SWITCH ON
+          1  HIGH SIDE PARK BRAKE FDBK     1=PARK 0=NOT PARK
+          0  REVERSE                       1=REVERSE 0=NOT REV
+  38      7  SPARE
+          6  SPARE
+          5  SPARE
+          4  SPARE
+          3  SPARE
+          2  SPARE
+          1  ALTERNATOR I TERMINAL         1=ALT OFF/FAULT
+          0  OIL LEVEL                     1=LOW
+
+
+
+
+
+
+
+
+DEVICE CODE $F1 - BCM DATA CONT.
+
+NUMBER OF DATA WORDS - 43
+
+WORD   BIT   DESCRIPTION                   EQUATION
+ NO.   NO.
+
+  39      7  PARK OUTPUT                   1=NOT PARK
+          6  RAP RELAY                     1=RELAY ON
+          5  CHIME MODULE                  1=CHIME
+          4  SPARE
+          3  ALT "I" TERM                  1=ALT DISABLE
+          2  CENTRAL DOOR UNLOCK           1=UNLOCK
+          1  SPARE
+          0  REDUNDANT RELAY               1=RELAY OFF
+  40         COMMANDED BLOWER VOLTAGE      V=N/10
+  41         COM. AIR MIX DOOR POSITION    %=1-N/255
+  42      7  PARK LAMPS SWITCH             1=SWITCH ON
+          6  INTERIOR LIGHTS SWITCH        1=SWITCH ON
+          5  HAZARD LAMPS SWITCH           1=SWITCH ON
+          4  SPARE
+          3  SPARE
+          2  SPARE
+          1  SPARE
+          0  SPARE
+  43      7  TWILIGHT ENABLE SWITCH        1=SWITCH ON
+          6  FRONT FOG LAMPS SWITCH        1=SWITCH ON
+          5  SPARE
+          4  LIGHTS OFF SWITCH             1=SWITCH ON
+          3  SPARE
+          2  SPARE
+          1  SPARE
+          0  SPARE
+
+
+
+
+                             TABLE 1
+                  PRNDL LOCATION VS. PERCENTAGE
+
+
+
+
+                    PERCENT RANGE    SHIFTER LOCATION
+
+                  0          10.5       DRIVE 1
+                  10.6       17.2       DRIVE 2
+                  17.3       25.0       DRIVE 3
+                  25.1       35.2       DRIVE 4
+                  35.3       48.9       NEUTRAL
+                  49.0       63.4       REVERSE
+                  63.5      100.0       PARK
+
+
+
+
+                             TABLE 2
+        FUEL LEVEL (GALS) VS. FUEL LEVEL REFERENCE RATIO
+
+                  PRNDL LOCATION VS. PERCENTAGE
+
+
+                       RATIO        GALLONS
+
+                          0           0.0
+                         16           0.3
+                         32           1.8
+   FUEL LEVEL RATIO      48           2.9
+   IS R=256*N22/N24      64           3.9
+                         80           5.4
+                         96           6.8
+                        112           9.0
+                        128          11.0
+                        144          13.0
+                        160          14.6
+                        176          16.3
+                        192          17.5
+                        208          18.4
+                        224          19.2
+                        240          19.7
+                        256          20.0
+
+
+                             TABLE 3
+                   OIL PRESSURE VS. A/D COUNTS
+
+
+                       A/D COUNTS   OIL PRES (PSI)
+
+                          0            0
+                         16            2.5
+                         32            4
+                         48            9
+                         64            20
+                         80            33
+                         96            48
+                        112            66.5
+                        128            89
+                        144            100
+                        160            100
+                        176            100
+                        192            100
+                        208            100
+                        224            100
+                        240            100
+                        256            200
+
+
+..PAGE
+LAYOUT 000
+:ê  B 
+  
+Su¶    <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

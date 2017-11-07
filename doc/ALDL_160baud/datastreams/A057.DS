@@ -1,0 +1,357 @@
+                         DATA STREAM A57  SPECIFICATION
+
+
+   SPECIFICATIONS FOR DATA STREAM INFORMATION
+   ------------------------------------------
+
+   ENGINE USAGE:   EVRV  EGR
+              3.1L PFI   (LH0)   (VIN=T)   90 A-CAR ALL WHEEL DRIVE ONLY
+              3.1l PFI   (LH0)   (VIN=T)   88 1/2 AWD "A" CAR ONLY
+              3.1l PFI   (LH0)   (VIN=T)   89
+              2.8l PFI   (LB6)   (VIN=W)   89
+              3.1L PFI   (LH0)   (VIN=T)   90   1W ONLY
+                W/VIN POSITIONS 10-17: 9000000-9107251
+                OR  VIN POSITIONS 10-17: 1000000-1103370
+              2.8l PFI   (LB6)   (VIN=W)   88 "J" CARS
+              2.8l PFI   (LB6)   (VIN=W)   87/88 "A" CARS
+              2.8l PFI   (LB6)   (VIN=W)   87 "J" CARS
+              2.8l PFI   (LB6)   (VIN=W)   87/88 "L" CARS
+              2.8l PFI   (LB6)   (VIN=W)   88 "W" CARS
+
+   DATA PIN: READ DATA ON PIN "L"/"M" OF ALDL CONNECTOR
+
+   BAUD RATE: 8192
+              This is a GMP4 FULL FUNCTION ECM.
+              This is NOT the same as the GM30 ECM.
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENTGH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $5A
+                - MODE           = $00
+                - SUM CHECK
+
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $56
+                - MODE           = $01
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $95
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 63
+                - SUM CHECK
+
+        MODE 7 (COMMAND NORMAL MODE MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - ECM SCHEDULER MESSAGE CODE (0-F)
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE APPROPRIATE NORMAL MODE
+                SCHEDULER MESSAGE IF ONE EXISTS FOR THAT PARTICULAR
+                SCHEDULER MESSAGE CODE.
+
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 63
+..HEAD04L ALDL MODE 1:OPEN AND SHORTED MODE
+..HEAD05L WORD  BIT   LOCATION
+..page
+
+   WORD BIT  DESCRIPTION
+   1         PROMIDA (MSB)
+   2         PROMIDB (LSB)
+              PROM = N
+   3         MALFUNCTION WORD 1
+        0     MALF CODE 24 VEHICLE SPEED SENSOR LOW
+        1     MALF CODE 23 MAT SENSOR OPEN
+        2     MALF CODE 22 THROTTLE POSITION LOW
+        3     MALF CODE 21 THROTTLE POSITION HIGH
+        4     MALF CODE 15 COOLANT SENSOR LOW
+        5     MALF CODE 14 COOLANT SENSOR HIGH
+        6     MALF CODE 13 OXYGEN SENSOR
+        7     MALF CODE 12 NO REFERENCE PULSES
+   4         MALFUNCTION WORD 2
+        0     MALF CODE 42 EST MONITOR ERROR
+        1     MALF CODE 41 CYLINDER SELECT ERROR
+        2     MALF CODE 35 IAC ERROR HIGH
+        3     MALF CODE 34 MAP SENSOR LOW
+        4     MALF CODE 33 MAP SENSOR HIGH
+        5     MALF CODE 32 not used
+        6     MALF CODE 31 FUEL INJECTOR MALF
+        7     MALF CODE 25 HI MANIFOLD AIR TEMPERATURE
+   5         MALFUNCTION WORD 3
+        0     MALF CODE 55 ADU ERROR
+        1     MALF CODE 54 FUEL PUMP VOLTAGE LOW
+        2     MALF CODE 53 HIGH BATTERY VOLTAGE
+        3     MALF CODE 26 QDM FAULT
+        4     MALF CODE 51 PROM ERROR
+        5     MALF CODE 45 O2 SENSOR RICH
+        6     MALF CODE 44 O2 SENSOR LEAN
+        7     MALF CODE 43 ESC FAILURE
+   6         MALFUNCTION WORD 4
+        0     (CODE 67)
+        1     (CODE 66)
+        2     (CODE 65)
+        3     (CODE 64)
+        4     MALF CODE 62 TRANSMISSION GEAR SWITCH FAIL
+        5     MALF CODE 46 VATS FAILED
+        6     MALF CODE 61 DEGRADED O2 SENSOR
+        7     MALF CODE 56 CORROSIVITY/ ADD COOLANT
+   7       COOLANT TEMPERATURE
+            DEG C = N * .75 -40
+*            (DEG F = 1.35N - 40
+   8       START UP COOLANT TEMPERATURE
+            DEG C = N * .75 -40
+*            (DEG F = 1.35N - 40
+   9       THROTTLE POSITION
+            VOLTS = N / 51
+   10      RESCALED TPS
+            % = N / 2.56
+   11      ENGINE SPEED
+            RPM = N * 25
+..PAGE
+   12      FILTERED RPM WHILE CRANKING (MSB)
+   13      FILTERED RPM WHILE CRANKING (LSB)
+            RPM = N * 4.6875
+   14      TIME BETWEEN REFERENCE PULSES (MSB)
+   15      TIME BETWEEN REFERENCE PULSES (LSB)
+            mSEC = N * 15.26
+   16      DELTA NUMBER OF REFERENCE PULSES
+            SECONDS = N / 80
+   17      FILTERED MPH
+            MPH = N
+*           (KPH = 1.61N)
+   18      NOT USED
+   19      OXYGEN SENSOR
+            MILLIVOLTS = N * 4.44
+   20      O2 CROSS COUNTS
+            N = COUNTS
+   21      BASE PULSE FINE CORRECTION
+            N = COUNTS
+   22      BASE PULSE COURSE CORRECTION(BLM)
+            N = COUNTS
+   23      BLOCK LEARN MULTIPLIER CELL
+            N = BLM CELL #
+   24      CLOSED LOOP INTEGRATOR
+            N = COUNTS
+   25      IAC MOTOR POSITION
+            N = # IAC STEPS
+   26      IDLE SPEED STEPS COMMAND, DIRECTION
+            0<N<128 N = # STEPS
+            128<N<256 N = #STEPS +128
+   27      DESIRED IDLE RPM
+            RPM = N * 12.5
+   28      BAROMETER
+            VOLTS = N * (5/256)
+*            KPA =(N + 28.06)/2.71
+   29      MANIFOLD ABSOLUTE PRESSURE
+            VOLTS = N * (5/256)
+*            KPA =(N + 28.06)/2.71
+   30      AIR TEMPERATURE SENSOR
+            SEE TABLE #1
+   31      FUEL PUMP RELAY,PRIMARY POWER SWITCH
+            VOLTS = N / 10
+   32      EGR DUTY CYCLE
+            %DC = N / 2.55
+   33      EGR POSITION
+*           VOLTS = N * 5/256
+   34      BATTERY VOLTAGE
+            VOLTS = N / 10
+   35      TOTAL ASYNCHRONOUS PULSE WIDTH (MSB)
+   36      TOTAL ASYNCHRONOUS PULSE WIDTH (LSB)
+            MSEC =  N / 65.536
+   37      MASS  AIR FLOW
+            G/S = N
+..PAGE
+   38      TOTAL UNLIMITED SPARK ADVANCE REL TO TDC (MSB)
+   39      TOTAL UNLIMITED SPARK ADVANCE REL TO TDC (LSB)
+              double byte value in 2's complement representation
+              If Bit 7 of MSB = 0  then result is positive
+                 value = (N38*256 + N39)
+              If Bit 7 of MSB = 1  then result is negative
+                 value = 65536 - (N38*256 + N39)
+                  DEGREES = value * 90/256
+   40      UNLIMITED SPARK ADVANCE REL TO REF PULSE
+            DEGREES = VALUE * 90/256
+   41      DESIRED AIR/FUEL VALUE
+            N = COUNTS
+   42      BASE PULSE WIDTH (MSB)
+   43      BASE PULSE WIDTH (LSB)
+            MSEC = N * .0153
+   44      CORROSIVITY SENSOR VOLTAGE
+   45      CANISTER PURGE DUTY CYCLE
+            % = N / 2.55
+   46      RETARD DUE TO KNOCK
+            DEGREES = N * 90/256
+   47      N/V RATIO
+            N = RPM/MPH
+   48      ENGINE RUN TIME(MSB)
+   49      ENGINE RUN TIME(LSB)
+            SEC = N
+   50      CATALYTIC CONVERTER TEMPERATURE
+            DEG C=(N*3)+300
+   51      ROLLOVER COUNTER FOR RETARD DUE TO KNOCK
+            N = COUNTS
+   52      STATUS OF SC1 OUTPUT DISCRETES
+         0  1 = SERIAL DATA TRANSMIT ENABLE
+         1  1 = TORQUE VALVE ON
+         2  NOT USED
+         3  TCC                                     1 = TCC LOCKED
+         4  1 = VSS DEFINED BY VSS1, 0 = VSS DEFINED BY VSS2
+         5  VSS CHIP SELA
+         6  VSS CHIP SELB
+         7  VSS CHIP SELC
+   53      STATUS OF SC1 INPUT DISCRETES MODE WORD
+         0  0 = QDM FAULT B INDICATED
+         1  0 = LOW A/C PRESSURE DETECTED
+         2  1 = IN 2nd GEAR                          1 = ON
+         3  NOT USED
+         4  NOT USED
+         5  NOT USED
+         6  1 = DEFROST ON
+         7  SECOND FAN REQUEST
+..PAGE
+   54      SERIAL DATA MODE WORD 1
+         0  ADVANCE FLAG                             1 = ADVANCE
+         1  1 = VEHICLE MOVING
+         2  INTERRUPT SERVICE EXECUTION EXCEEDED 6.25 MS
+         3  1 = MALF 35 DETECTED
+         4  0 = ROAD SPEED 1ST TIME FLAG
+         5  A/C CLUTCH FLAG                         1 = DISABLE
+         6  1 = BYPASS CHECK ENABLED (EST MONITOR)
+         7  1 = ENGINE RUNNING
+   55      SERIAL DATA MODE WORD 2
+         0  FUEL SHUT OFF BECAUSE OF LOW OIL PRESSURE
+         1  ROAD SPEED FILTER EXERCISE FLAG
+         2  1 = REFERENCE PULSE OCCURED (6.25 MS CHECK)
+         3  1 = DIAGNOSTIC SWITCH IN FACTORY TEST POSITION
+         4  1 = DIAGNOSTIC SWITCH IN DIAGNOSTIC POSITION
+         5  1 = DIAGNOSTIC SWITCH IN ALDL POSITION
+         6  1 = DISABLE SOLENOID DISCRETES
+         7  1 = IDLE CONDITIONS MET (BLM LOGIC)
+   56      MODE WORD 3
+         0  1 = LOOP TIMING FLAG FOR TIMING ERROR LOGIC
+         1  1 = SYNCH MAP READ WITH 2X REF. PULSES ENABLED
+         2  1 = BLEND OF A/F AFTER AFTI TIMEOUT COMPLETED
+         3  1 = HIGHWAY SPARK ADVANCE MODE ACTIVE
+         4  1 = EGR ON
+         5  1 = A/C DISENGAGED AT HIGH RPM
+         6  1 = REF PULSE OCCURED (USED FOR FILTRPM LOGIC)
+         7  1 = VATS OK  0 = VATS FAILED
+   57      QDM DIAG MODE WORD 1
+         0  1 = FORCE PRP4 OUTPUT HIGH
+         1  1 = FORCE PW5 OUTPUT HIGH (EAS)
+         2  1 = FORCE PW4 OUTPUT HIGH (A/C)
+         3  1 = FORCE SC1 04 HIGH (TCC/ELITE)
+         4  1 = FORCE PW7 OUTPUT HIGH (FAN #1)          1 = ON
+         5  1 = FORCE PW2 OUTPUT HIGH (CCP)
+         6  1 = FORCE PW3 OUTPUT HIGH (EGR)
+         7  1 = USED FOR CHECK ENGINE LIGHT
+   58      LCC & CCP MODE WORD
+         0  1 = SHIFT LIGHT ON
+         1  1 = MALFS HAVE OCCURRED
+         2  1 = LAUNCH MODE
+         3  MALF 42A REPEAT FLAG
+         4  TCC MPH HYST BIT (FOR FORCING TCC TO LOCK AT HI MPH)
+         5  1 = AIR SWITCHED TO PORT
+         6  1 = CLEAN CANNISTER (CCP LOGIC)
+         7  TRANSMISSION LOCKED FLAG ( 1 = LOCKUP ENABLED)
+   59      FMD BYTE 1 MODE WORD
+         0  PARK/NEUTRAL                            1 = DRIVE
+         1  3RD GEAR                                1 = IN 3RD GEAR
+         2  4TH GEAR                                1 = IN 4TH GEAR
+         3  P/S CRAMP                               1 = CRAMP/ON
+         4  NOT USED
+         5  NOT USED
+         6  V5 COOLING FAN DISCRETE                 1 = FAN REQUESTED
+         7  AIR CONDITIONER                         1 = A/C REQUESTED
+..PAGE
+   60      NON VOLITILE MODE WORD
+         0  02 SENSOR READY FLAG                    1 = READY
+         1  CLOSED LOOP TIMER O.K. FLAG             1 = TIMER O.K.
+         2  1 = VSS SENSOR DETERMINED RUNNING TIME EXCEEDED
+         3  IMPROPER SHUTDOWN FLAG                  1 = IMPROPER
+         4  1 = ISMNMPKA LEARNED AFTER NVM FAILURE
+         5  1 = SPEED SENSOR OPTICAL    0 = SPD SENSOR MAGNETIC
+         6  1 = IAC MOTOR RESET ENABLED
+         7  1 = MALF 42 FAIL FLAG (EST MONITOR)
+   61      QDM DIAG MODE WORD 2
+         0  1 = FORCE SCI OUTPUT 2 (BIT 1) HIGH
+         1  1 = FORCE OPORTI HIGH (ADD COOLANT LIGHT)
+         2  1 = FORCE DO1 HIGH (2ND FAN)                   1 = ON
+         3  1 = FORCE PMW6 OUTPUT HIGH
+         4  NOT USED
+         5  NOT USED
+         6  NOT USED
+         7  NOT USED
+   62      MAJOR LOOP MODE WORD
+         0  F4 TBL FLG  0 = EGR,
+         1  NOT USED
+         2  ALDL MODE 4 MOTOR RESET COMPLETE        1 = COMPLETE
+         3  DECEL FUEL CUTOFF FLAG                  1 = DFCO ENABLED
+         4  NOT USED
+         5  NOT USED
+         6  NON-VOLTILE MEMORY BOMBED
+         7  1 = CLOSED TPS FLAG
+   63      AIR FUEL MODE WORD
+         0  ARSEN DIVERT FLAG (1 = DIVERT)
+         1  LEARN CONTROL ENABLE FLAG (1 = ENABLE STORE, 0 = DISABLE)
+         2  SLOW O2 RICH LEAN FLAG
+         3  1 = FUEL BEING INJECTED WITH EACH REF PULSE
+         4  QUASI-SYNCHNONOUS PULSE FLAG
+         5  1 = FIRST TIME CLOSED LOOP FLAG
+         6  RICH/LEAN FLAG                          1 = RICH
+         7  CLOSED LOOP FLAG                        1 = CLOSED LOOP
+..PAGE
+
+
+   TABLE # 1  MAT TEMPERATURE
+
+
+               A/D                     DEGREES
+              COUNTS                   CELCIUS
+              -------                  -------
+              256                       -40.00                                     l
+              252                       -34.00
+              236                        -4.00
+              220                         8.75
+              204                        17.75
+              188                        25.25
+              172                        32.00
+              156                        38.75
+              140                        44.75
+              124                        50.75
+              108                        57.50
+               92                        65.00
+               76                        73.25
+               60                        82.25
+               44                        95.00
+               28                       112.25
+               12                       148.25
+                0                       151.00
+
+READING IN DEGRESS:  SUBTRACT 12 FROM THE CTS RAW A/D COUNTS THAT IS
+                     EQUAL TO THE DEGRESS, THEN GO BACK TO THE CTS
+                     CONVERSION TABLE WITH THIS VALUE FOR A RESULT.
+
+..PAGE
+LAYOUT 000
+:  XB 
+  Su¦     <_        ú \------------------------------------------------------------------------------/----+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+----     STANDARD 2      XB  <

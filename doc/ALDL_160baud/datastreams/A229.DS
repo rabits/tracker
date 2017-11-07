@@ -1,0 +1,116 @@
+
+                        DATA STREAM A229  SPECIFICATION
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       DIC USAGE:
+                 1995       3G - CAR
+
+
+
+       DATA PIN  : READ DATA ON PIN "1" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F3
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                  NOTE: TERMINATE ALL ALDL MESSAGES AND MODES.
+                - SUM CHECK
+
+                THE DIC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F3
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                  NOTE: TERMINATE ALL ALDL MESSAGES AND MODES.
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F3
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE DIC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F3
+                - MESSAGE LENGTH = $5C
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SOFTWARE VERSION, 2 DIGIT BCD (W/ IMPLIED DECIMAL)
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 4
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F3
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+                THE DIC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F3
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 4
+..HEAD04L ALDL MODE 1 DATA LIST MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1      CURRENT  CURRENT DIAGNOSTIC FAILURE FLAG BYTE
+          NOTE: THESE FLAGS ARE STORED IN RAM
+          7        NOT USED
+          6        NOT USED
+          5        NOT USED
+          4        NOT USED
+          3        NOT USED
+          2        NOT USED
+          1        KAM CHECKSUM ERROR     1 = FAILURE ACTIVE  0 = NO FAILURE
+          0        LOSS OF UART B         1 = FAILURE ACTIVE  0 = NO FAILURE
+  2      HISTORY  HISTORY DIAGNOSTIC FAILURE FLAG BYTE
+          NOTE: THESE FLAGS ARE STORED IN EEPROM
+          7        NOT USED
+          6        NOT USED
+          5        NOT USED
+          4        NOT USED
+          3        NOT USED
+          2        NOT USED
+          1        KAM CHECKSUM ERROR     1 = FAILURE ACTIVE  0 = NO FAILURE
+          0        LOSS OF UART B         1 = FAILURE ACTIVE  0 = NO FAILURE
+  3      KEYBOARD INFORMATION BYTE #1
+          NOTE: KEYBOARD CYCLE HISTORY BITS ARE ONLY VALID DURING CURRENT
+                IGNITION CYCLE.
+          7        ALL KEYS CYCLED        1 = ALL KEYS CYCLED 0 = NOT ALL KEYS CYCLED
+          6        NOT USED
+          5        NOT USED
+          4        SPEED/4                1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          3        RANGE/3                1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          2        FUEL/2                 1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          1        ECON/1                 1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          0        DISP/0                 1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+  4      KEYBOARD INFORMATION BYTE #2
+          NOTE: KEYBOARD CYCLE HISTORY BITS ARE ONLY VALID DURING CURRENT
+                IGNITION CYCLE.
+          7        RECALL                 1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          6        RESET                  1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          5        ENTER                  1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          4        DT/TM/9                1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          3        E/T/8                  1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          2        ETA/7                  1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          1        DEST/6                 1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+          0        ENG/5                  1 = CYCLED HISTORY  0 = NOT CYCLED HISTORY
+
+

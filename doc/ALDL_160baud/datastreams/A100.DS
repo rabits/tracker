@@ -1,0 +1,391 @@
+ 
+
+                        DATA STREAM A100   SPECIFICATION
+
+
+       ENGINE   USAGE:
+              5.0  PFI   (LB9)   (VIN=F)   90, 91
+              5.7  PFI   (L98)   (VIN=8)   90, 91
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+..PAGE
+        MODE 0 (INPUT MESSAGE)
+                ALDL REQUEST: THE ALCL TESTER MUST TRANSMET THE FOLLOWING
+                              MESSAGE TO THE ECM, AFTER AN IDLE LINE IS
+                              DETECTED.
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                ECM RESPONSE: THE ECM WILL TRANSMIT THE FOLLOWING MESSAGE.
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (ALCL MODE)
+                THE UART ALDL MODE - MODE 1 WILL ONLY BE ACTIVE IF REQUESTED
+                BY THE ALCL TESTER.
+               ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $01
+                - MESSAGE NUMBER = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $95
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 63
+                - SUM CHECK
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+THE ECM BROADCASTS NO NORMAL MODE MESSAGES, NOR DOES IT ISSUE AN $F0 POLL.
+
+
+
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 63
+..HEAD04L ALDL MODE 1 DATA LIST 
+WORD #   DATA NAME            DESCRIPTION
+  1      PROMIDA       FIRST PROM I.D. WORD (MSB)
+  2      PROMIDA + 1   SECOND PROM I.D. WORD (LSB)
+  3      MALFFLG1      MALFUNCTION WORD 1
+         0      CODE 23     MAT SENSOR LOW
+         1      CODE 22     THROTTLE SENSOR POSITION LOW
+         2      CODE 21     THROTTLE SENSOR POSITION HIGH
+         3      CODE 16     NOT USED
+         4      CODE 15     COOLANT SENSOR LOW TEMPERATURE
+         5      CODE 14     COOLANT SENSOR HIGH TEMPERATURE
+         6      CODE 13     OXYGEN SENSOR
+         7      CODE 12     NO REFERENCE PULSES
+  4      MALFFLG2      MALFUNCTION WORD 2
+         0      CODE 35     NOT USED
+         1      CODE 34     MAP SENSOR LOW
+         2      CODE 33     MAP SENSOR HIGH
+         3      CODE 32     EGR DIAGNOSTIC
+         4      CODE 31     NOT USED
+         5      CODE 26     NOT USED
+         6      CODE 25     MAT SENSOR HIGH
+         7      CODE 24     VEHICLE SPEED SENSOR
+  5      MALFFLG3      MALFUNCTION WORD 3
+         0      CODE 51     PROM ERROR
+         1      CODE 46     VATS FAILED
+         2      CODE 45     OXYGEN SENSOR RICH
+         3      CODE 44     OXYGEN SENSOR LEAN
+         4      CODE 43     ESC FAILURE
+         5      CODE 42     EST MONITOR ERROR
+         6      CODE 41     CYLINDER SELECT ERROR
+         7      CODE 36     NOT USED
+  6      MALFFLG4      MALFUNCTION WORD 4
+         0      CODE 63     NOT USED
+         1      CODE 62     OIL TEMPERATURE SENSOR HIGH
+         2      CODE 61     NOT USED
+         3      CODE 56     NOT USED
+         4      CODE 55     NOT USED
+         5      CODE 54     FUEL PUMP VOLTAGE
+         6      CODE 53     OVER VOLTAGE
+         7      CODE 52     OIL TEMPERATURE SENSOR LOW
+  7      MALFFLG5      MALFUNCTION WORD 5
+         5      CODE 66     NOT USED
+         6      CODE 65     NOT USED
+         7      CODE 64     NOT USED
+  8      COOLDEGA      COOLANT TEMPERATURE, A/D COUNTS
+                        DEGREES C = N*.75 - 40
+..PAGE
+  9      COOLTSU       START UP COOLANT TEMPERATURE
+                        DEGREES C = N*.75 - 40
+ 10      ADTHROT       THROTTLE POSITION, A/D COUNTS
+                        VOLTS = N*(5/255)
+ 11      NTRPMX        ENGINE SPEED (RPM) VARIABLE
+                        RPM = N*25
+ 12      NEWRFPER      TIME BETWEEN REFERENCE PULSES (MSB)
+ 13      NEWRFPER+1    TIME BETWEEN REFERENCE PULSES (LSB)
+                        uSEC = ([N13]*256 + [N14])*15.26
+ 14      FILTMPH       FILTERED MILES PER HOUR VARIABLE (MSB)
+                        MPH = N
+ 15      NVMW2         NON-VOLATILE MODE WORD 2
+         0     NOT USED
+         1     NOT USED
+         2     NOT USED
+         3     1 = PLUGGABLE MEMORY FAILURE (M51)
+         4     NOT USED
+         5     1 = VATS OK,  0 = VATS FAILED
+         6     NOT USED
+         7     1 = ESC ENABLED BY DELTA COOLANT
+ 16      NVRATIO       ENGINE/VEHICLE SPEED RATIO TO DETERMINE GEAR
+                        N = RPM/MPH
+ 17      ADO2AF        OXYGEN SENSOR VARIABLE (FILTERED)
+                        VOLTAGE = N*4.42
+ 18      ALDLCNTR      OXYGEN SENSOR RICH/LEAN TRANSITION COUNTER
+                        N = O2 RICH/LEAN TRANSITIONS
+ 19      CORRCL        BASE PULSE (FUEL) C/L  FINE CORRECTION
+ 20      BLM           BASE PULSE (FUEL) C/L  COARSE CORRECTION
+ 21      BLMCELL       CURRENT BLOCK LEARN MULTIPLIER (BLM) CELL
+ 22      INT           CLOSED LOOP INTEGRATOR
+ 23      ISSPMP        IDLE SPEED, PRESENT IAC MOTOR POSITION
+                        N = ACTUAL IAC STEPS
+ 24      NTPSLD        SCALED TPS (AUTO ZERO) ( 0 TO 100 % )
+                        %TPS = N/2.56
+ 25      ISESDD        DESIRED IDLE SPEED, RPM/12.5
+                        DESIRED RPM = N*12.5
+ 26      ADMAPND       MANIFOLD AIR PRESSURE, A/D CTS (NO-DEFAULT)
+                        VOLTS = N*(5/255)                                                 '
+..PAGE
+ 27      SC1SDI        STATUS OF SC1 INPUT DISCRETES
+         0     NOT USED
+         1     A/C LOW PRESSURE SWITCH
+         2     SECOND GEAR
+         3     NOT USED
+         4     NOT USED
+         5     A/C REQUEST (0 = A/C REQUESTED)
+         6     NOT USED
+         7     2ND FAN REQUEST
+ 28      FMDSDI        INPUT STATES TO FMD VIA SSR
+         0     COOLANT SWITCH (1 = 348 OHM, 0 = 4 KOHM)
+         1     COP2 ( < 54 mSEC BETWEEN FALLING EDGES)
+         2     EST ENABLE
+         3     PORT, PIN8
+         4     FUEL PUMP ENABLE
+         5     ODSC (NOT USED)
+         6     IRQ ENABLE
+         7     DATA STEER (0 = BYTE 1,  1 = BYTE 2)
+ 29      NVMW1         NON-VOLATILE MODE WORD 1                   l
+ 30      ADMAT         MANIFOLD AIR TEMPERATURE, A/D COUNTS
+                        SEE TABLE
+ 31      EGRDC         EGR DUTY CYCLE
+                        %DUTY CYCLE = N/2.56
+ 32      PURGEDC       CHARCOAL CANISTER PURGE DUTY CYCLE
+                        %DUTY CYCLE = N/2.56
+ 33      DIAGMW2       DIAGNOSTIC MODE WORD 2 (CURRENT MALF FLAGS)
+         0     1 = MALF 41 INDICATED (CYLINDER SELECT ERROR)
+         1     1 = MALF 25 THIS PASS INDICATED
+         2     1 = REF PULSE IN CURRENT 100 mSEC.
+         3     1 = REF PULSE IN LAST 100 mSEC.
+         4     1 = MALF 54 LOCKED IN
+         5     1 = M54 PRESENT
+         6     1 = PASSED M54A
+         7     1 = ESC ENABLED (BY COOLANT AND DELTA COOLANT TESTS)
+ 34      ADBAT         BATTERY VOLTAGE, A/D COUNTS
+                        VOLTAGE = N/10
+ 35      PPSW          FUEL PUMP POWER SWITCHED (SUPPLIED)
+                        VOLTAGE = N/10
+..PAGE
+ 36      DIAGMW4       DIAGNOSTIC MODE WORD 4 (CURRENT MALF FLAGS)
+         0     1 = MALF 32 ACTIVE
+         1     NOT USED
+         2     1 = EGR DIAGNOSTIC TEST IN PROGRESS
+         3     OPTION FOR 1 PASS
+         4     TEST CYCLE TIME FLAG
+         5     1 = A/C FIRST PASS WITH HIGH MPH
+         6     1 = A/C CLUTCH DISABLED DUE TO HIGH MPH
+         7     1 = MALF 52 OR 62 PRESENT
+ 37      ISMNMPKA      MIN LEARNED IAC MOTOR POSITION (KEEP ALIVE)
+                        N = STEPS
+ 38      OILDEG        LINEARIZED OIL TEMP (MSB)
+                        DEGREES C = N*.75 - 40
+ 39      SAP           TOTAL UNLIMITED SPARK ADV. REL TO TDC (MSB)
+ 40      SAP + 1       TOTAL UNLIMITED SPARK ADV. REL TO TDC (LSB)
+              Double byte value in 2's complement representation
+              If Bit 7 of MSB = 0  then result is positive
+                  value = ([N39]*256 + [N40])
+              If Bit 7 of MSB = 1  then result is negative
+                  value = 65536 - ([N39]*256 + [N40])
+                        DEGREES = value * 90/256
+ 41      SAREFFNL      UNLIMITED SPARK ADV. REL TO REF. PULSE (MSB)
+ 42      SAREFFNL+1    UNLIMITED SPARK ADV. REL TO REF. PULSE (LSB)
+              Double byte value in 2's complement representation
+              If Bit 7 of MSB = 0  then result is positive
+                  value = ([N41]*256 + [N42])
+              If Bit 7 of MSB = 1  then result is negative
+                  value = 65536 - ([N41]*256 + [N42])
+                        DEGREES = value * 90/256
+ 43      OLDPA3        ELECT. SPARK CONT. (KNOCK) SIGNAL INPUT
+                        N = COUNTS
+ 44      NOCKRTD       ELECT. SPARK CONT. (KNOCK) ECM OUTPUT
+³                       DEG = N*45/256
+ 45      OBPINJ        INJECTOR BASE PULSE WIDTH (MSB)
+ 46      OBPINJ + 1    INJECTOR BASE PULSE WIDTH (LSB)
+                        mSEC = ([N45]*256 + [N46])/65.536
+ 47      FAVALFNL      TOTAL FUEL AIR VALUE (FINAL) (MSB)
+ 48      FAVALFNL+1    TOTAL FUEL AIR VALUE (FINAL) (LSB)
+                        A/F RATIO = 6553.6/([N47]*256) + 6553.6/[N48]
+ 49      IPFUEL        RUNNING TOTAL OF FUEL DELIVERED (MSB)
+ 50      IPFUEL + 1    RUNNING TOTAL OF FUEL DELIVERED (LSB)
+                        uSEC = ([N49]*256 + [N50])*15.26
+ 51      ACUMDIST      RUNNING TOTAL OF DISTANCE TRAVELED
+                        MILES = N/2000
+ 52      TIME          ENGINE RUNNING TIME IN SECONDS (MSB)
+ 53      TIME + 1      ENGINE RUNNING TIME IN SECONDS (LSB)
+                        SECONDS = ([N52]*256 + [N53])
+..PAGE
+ 54      MW2           BIT STATUS WORD
+         0     NOT USED
+         1     MALF 14 OR 15 THIS START UP
+         2     REFERENCE PULSE OCCURRED (6.25 MSEC CHECK)
+         3     1 = IN CCM MODE
+         4     DIAGNOSTIC SWITCH IN DIAG. POSITION
+         5     DIAGNOSTIC SWITCH IN ALDL POSITION
+         6     HIGH BATTERY VOLTAGE-DISABLE MCU SOL.DIS.
+         7     SHIFT LIGHT (1 = ON, 0 = OFF)
+ 55      TCCMW         BIT STATUS WORD
+         0     1 = TCC LOCKED
+         1     1 = KCOAST2 COAST RELEASE TPS THRESHOLD IN USE (HI MPH)
+         2     1 = 4-3/4-2 DOWNSHIFT RELEASE IN PROGRESS
+         3     1 = STATUS OF FOURTH GEAR LAST PASS
+         4     1 = TCC LOCKED FOR PASSBY NOISE
+         5     NOT USED
+         6     NOT USED
+         7     NOT USED
+ 56      FMDBYTE1      BIT STATUS WORD
+                        GEMERIC ALDL BYTE = 44
+         0     PARK/NEUTRAL SWITCH (1 = DRIVE)
+         1     1 = IN 3RD OR 4TH GEAR
+*        2     1 = IN 4TH GEAR
+         3     0 = POWER STEERING CRAMP - CHANGE FROM '89
+         4     NOT USED
+         5     NOT USED
+         6     0 = HIGH A/C HEAD PRESSURE INDICATED (IF N.O. SWITCH)
+         7     1 = A/C CLUTCH ENGAGED
+ 57      MW1           BIT STATUS WORD
+         0     ADVANCE FLAG (0 = ADV., 1 = RTD.)
+         1     1 = HIGHWAY FUEL TIMER ENABLED
+         2     INTERRUPT SERVICE EXECUTION EXC. 6.25MS
+         3     1 = ALL FAN 1 PID STEPS ADDED (FAN 1 ENABLED)
+         4     1 = 1ST PASS WITH 1 ROAD SPEED PULSE
+         5     AIR COND. CLUTCH FLAG (0 = A/C CLUTCH ON)
+         6     BYPASS CHECK ENABLE
+         7     ENGINE RUNNING FLAG (1 = RUNNING)
+..PAGE
+ 58      NVMW          BIT STATUS WORD
+         0     1 = 02 SENSOR READY
+         1     1 = CLOSED LOOP TIMER TIMED OUT
+         2     NOT USED
+         3     1 = IMPROPER SHUTDOWN
+         4     NOT USED
+         5     1 = IAC KICKDOWN ENABLED
+         6     1 = KWARM KICKDOWN ENABLED
+         7     1 = MALF 42 FAILED (EST MONITOR)
+ 59      CARSMW        BIT STATUS WORD
+         0     1 = CARS DISABLED DUE TO LOW BAROMETRIC PRESSURE
+         1     1 = CARS ACTIVE
+         2     NOT USED
+         3     NOT USED
+         4     1 = TRANSMISSION IN FOURTH GEAR
+         5     1 = TRANSMISSION IN FIRST GEAR
+         6     1 = WAIT FOR VEHICLE SPEED RESET
+         7     NOT USED
+ 60      CLCCMW        BIT STATUS WORD
+         0     BOOKKEEPING FLIP FLOP
+         1     1 = USE F69ALT TABLE
+         2     1 = IDLE
+         3     1 = UNDERSPEED IDLE SPARK, 0 = OVERSPEED
+         4     1 = DFCO STALL SAVER ENABLED
+         5     1 = USING KF93MULT TRIM TO D-MAP A.E. ENABLE THRESHOLD
+         6     1 = N.V. MEMORY BOMBED
+         7     1 = HAS BEEN IN C/L AT LEAST ONCE SINCE RESTART
+ 61      AIRMW         BIT STATUS WORD
+                        GENRERIC ALDL BYTE = 18
+         0     1 = 100 mSEC OLD CCP PURGE ON FLAG (0 = OFF)
+         1     1 = AIR CONTROLLED, 0 = AIR DIVERTED
+         2     1 = AIR SWITCHED TO PORT (IF AIR IS CONTROLLED)
+         3     1 = FAN 1 REQUESTED
+         4     1 = FAN 2 REQUESTED
+         5     1 = 'OLD' FAN 1 STATE WAS ON
+         6     1 = ALL FAN 2 PID STEPS ADDED (FAN 2 ENABLED)
+         7     1 = DECEL ENLEANMENT ACTIVE
+ 62      LCCPMW        BIT STATUS WORD
+         0     1 = CANISTER PURGE ACTIVE
+         1     1 = TIME 1ST REF TO ENG RUN
+         2     1 = MALFS HAVE OCCURRED
+         3     1 = IN 8192, MODE 4, BYPASS FUEL MODE
+         4     SECOND TIME COOLANT
+         5     1 = M43A (VOLTAGE PRESENCE CHECK) INDICATED
+         6     1 = KWARM KICKDOWN REQUEST
+         7     1 = F82 TIME OUT FINISHED
+..PAGE
+ 63      MWFA1         BIT STATUS WORD
+         0     1 = IN SINGLE FIRE MODE
+         1     LEARN CONTROL ENABLE FLAG (1 = ENABLE STORE, 0 = DISABLE)
+         2     1 = DELIVER 0 FUEL (SINGLE FIRE)
+         3     1 = ALLOW SINGLE FIRE DISABLE
+         4     1 = VEHICLE SPEED SENSOR FAILURE
+         5     1 = EECC SLOW 02 RICH, 0 = SLOW 02 LEAN
+         6     RICH-LEAN FLAG (1 = RICH, 0 = LEAN)
+         7     CLOSED LOOP FLAG (1 = CLOSED LOOP, 0 = OPEN LOOP)
+
+
+..PAGE
+;
+;                   A/D TO DEGREES CELCIUS SCALING FOR:
+;
+;                               "RAWADMAT"
+;
+;                     A/D COUNTS          DEGREES 'C'
+;                     ----------          -----------
+;                          0                 -40
+;                          4                 -30
+;                          5                 -25
+;                          8                 -20
+;                         10                 -15
+;                         14                 -10
+;                         18                  -5
+;                         24                   0
+;                         30                   5
+;                         37                  10
+;                         46                  15
+;                         56                  20
+;                         66                  25
+;                         78                  30
+;                         90                  35
+;                        103                  40
+;                        116                  45
+;                        129                  50
+;                        141                  55
+;                        153                  60
+;                        163                  65
+;                        174                  70
+;                        183                  75
+;                        191                  80
+;                        199                  85
+;                        205                  90
+;                        211                  95
+;                        216                 100
+;                        221                 105
+;                        225                 110
+;                        229                 115
+;                        232                 120
+;                        234                 125
+;                        237                 130
+;                        239                 135
+;                        241                 140
+;                        242                 145
+;                        243                 150
+;                        255                 200
+
+..PAGE
+LAYOUT 000
+:  B 
+  
+Su¦   <_        ú \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

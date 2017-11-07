@@ -1,0 +1,1836 @@
+
+  DATA STREAM  A1
+            1.8l TBI   (LH8)   (VIN=0)   82, 83, 84, 85, 86
+            2.0l TBI   (LQ5)   (VIN=P)   83
+            2.5l TBI   (LR8)   (VIN=R)   83, 84, 85, 86
+            2.5l TBI   (L68)   (VIN=U)   83, 84, 85, 86
+            2.5l TBI   (LN8)   (VIN=E)   85, 86  TRUCKS
+            2.5l TBI   (LQ9)   (VIN=2)   83, 84, 85, 86
+            5.0  CFI   (LU5)   (VIN=S)   83
+
+
+  DATA STREAM  A2
+            3.8l MFI   (LN3)   (VIN=3)   84
+
+
+  DATA STREAM
+            3.8l  SFI  (LG3)   (VIN=3)   86  (A/H CARS)
+            3.8l  SFI  (LG2)   (VIN=B)   86  (A/H CARS)
+            3.8l  SFI  (LC2)   (VIN=7)   86  (G CARS)
+
+
+  DATA STREAM  A4
+            3.8l  SFI  (LG2)    (VIN=b)  86  'Buick E' Only
+
+
+  DATA STREAM  A5
+            3.0   CLCC (LK9)   (VIN=E)   84  85         (84)
+            3.8l  CLCC (LD5)   (VIN=A)   84, 85, 86, 87 (87)
+            4.1l  CLCC (LC4)   (VIN=4)   84, 85
+            4.3L  CLCC (LS5)   (VIN=S)   85, 86
+
+
+  DATA STREAM  A6
+            5.0l  CLCC (LV2)   (VIN=Y)   84
+            5.0l  CLCC (L69)   (VIN=G)   84
+            5.0l  CLCC (LG4)   (VIN=H)   84
+            5.0l  CLCC (LG8)   (VIN=9)   84
+            5.7l  CLCC (LM1)   (VIN=6)   84
+
+
+  DATA STREAM  A7
+            5.0l  CLCC (LV2)   (VIN=Y)   85, 86, 87
+            5.0l  CLCC (LG8)   (VIN=9)   85
+            5.0l  CLCC (L69)   (VIN=G)   85, 86, 87, 88
+            5.0L  CLCC (LG4)   (VIN=H)   85, 86, 87
+            5.7L  CLCC (LM1)   (VIN=6)   85, 86, 87, 88
+            4.3L  CLCC (LB1)   (VIN=N)   85, 86
+            5.0L  CLCC (LF3)   (VIN=H)   85, 86
+            5.7L  CLCC (LS9)   (VIN=L)   85, 86
+
+
+  DATA STREAM  A8
+            3.8l  SFI  (LG3)   (VIN=3)   86  (A/C/H CARS)
+            3.8l  SFI  (LC2)   (VIN=7)   86  (G CARS)
+            3.8l  SFI  (LG2)   (VIN=B)   86  (A/C/H CARS)
+            3.8l  SFI  (LG3)   (VIN=3)   87, 88
+            3.8l  SFI  (LG2)   (VIN=B)   86, 87
+            3.8l  SFI  (LC2)   (VIN=7)   87, 89, 91
+
+
+  DATA STREAM A10
+            3.0l  MFI  (LN7)   (VIN=L)   86  (H/N CARS)
+
+
+  DATA STREAM A11
+            3.0l  MFI  (LN7)   (VIN=L)   86  (H/N CARS)
+            3.0l  MFI  (LN7)   (VIN=L)   87, 88
+
+
+  DATA STREAM A12
+            3.8l  CLC  (LC3)   (VIN=9)   84
+
+
+  DATA STREAM A14
+            3.0l MFI   (LN7)   (VIN=L)   85
+            3.8l MFI   (LN3)   (VIN=3)   85
+            3.8l SFI-T(LM9)    (VIN=9)   84, 85
+
+
+  DATA STREAM A15
+            1.8l MFI-T (LA5)   (VIN=J)   84, 85
+
+
+  DATA STREAM A16
+            1.8l MFI-T (LA5)   (VIN=J)   86
+
+  DATA STREAM A17
+            2.0l TBI   (LQ5)   (VIN=P)    84, 85, 86
+            2.5l TBI   (LR8)   (VIN=R)    82
+
+
+  DATA STREAM A18
+             2.8 CARB   (LE2)   (VIN=X)   84, 85
+             2.8 CARB   (LC1)   (VIN=1)   84
+             2.8 CARB   (LH7)   (VIN=Z)   84
+             2.8 CARB   (LL1)   (VIN=L)   84
+             2.8 CARB   (LR2)   (VIN=B)   84, 85
+
+
+  DATA STREAM A19
+            2.8l CARB  (LE2)   (VIN=X)    86
+
+
+  DATA STREAM A20
+            2.8l MFI   (LB6)   (VIN=W)   85, 86
+            2.8l MFI   (LB8)   (VIN=S)   86, 87, 88, 89
+            5.0l MFI   (LB9)   (VIN=F)   85
+
+
+  DATA STREAM A21
+            4.1l DFI   (LT8)   (VIN=8)   85 CADILLAC "C" CAR
+
+
+             DATA STREAM A22
+                   4.1l DFI   (LT8)   (VIN=8)
+                               86,87 CADILLAC "C" CAR
+
+
+  DATA STREAM A23
+                   4.1l DFI   (LT8)   (VIN=8)
+                              86,87 CADILLAC  "E" AND "K" CAR
+
+
+  DATA STREAM A24
+         2.0l TBI  (LL8) (VIN = 1)   87' J,L - CAR
+         2.0l TBI  (LL8) (VIN = 1)   88' L - CAR  LAST 6 VIN DIGITS < 500000
+
+
+  DATA STREAM A25
+            2.8L PFI   (LB6)   (VIN=W)   87 "A" CARS
+
+            2.8L PFI   (LB6)   (VIN=W)   87 "J" CARS
+
+            2.8L PFI   (LB6)   (VIN=W)   LB6-88A "L" CARS
+              (ASSEMBLY PLANTS E/Y, VIN SERIAL <500001)
+
+
+  DATA STREAM A26
+                 2.0L PFI-TURBO (LT3)   (VIN=M)   87, 88, 89, 90
+
+
+  DATA STREAM A27
+                 2.0L TBI   (LT2)   (VIN=K)   87
+                 2.5L TBI   (LR8)   (VIN=R)   87, 88, 89
+                 2.5L TBI   (L68)   (VIN=U)   87, 88
+
+
+  DATA STREAM A28
+            5.0L PFI   (LB9)   (VIN=F)   86, 87, 88
+            5.7L MFI   (L98)   (VIN=8)   85, 86, 87, 88
+
+
+  DATA STREAM A29
+             2.8L PFI   (L44)   (VIN=9)   85, 86, 87, 88
+
+
+  DATA STREAM A30
+             4.3L TBI   (LB4)   (VIN=Z)   86, 87 CARS
+
+
+  DATA STREAM A31
+            1.6L CLCC  (L17)   (VIN=C)   81, 82, 83, 84, 85, 86, 87
+
+
+  DATA STREAM A32
+            2.5L PFI   (LN8)   (VIN=E)   87   S/T TRUCKS
+
+
+  DATA STREAM A33
+            4.3L TBI   (LB4)   (VIN=Z)   86,87,88 TRUCKS
+            5.0L TBI   (L03)   (VIN=H)   87,88    TRUCKS
+            5.7L TBI   (L05)   (VIN=K)   87,88    TRUCKS
+            4.3L TBI   (LB4)   (VIN=Z)   91       TRUCKS
+
+
+
+  DATA STREAM A34
+            2.5L TBI   (LN8)   (VIN=E) 88,89
+            2.5L TBI   (LN8)   (VIN=E) 87 S/T TRUCKS
+
+
+  DATA STREAM A35
+            2.8L TBI   (LL2)   (VIN=R)   86,87 TRUCKS
+
+
+  DATA STREAM A36
+         2.0l TBI  (LL8) (VIN = 1)   88' J - CAR
+         2.0l TBI  (LL8) (VIN = 1)   88' L - CAR  LAST 6 VIN DIGITS > 500000
+         2.0l TBI  (LL8) (VIN = 1)   89' J,L - CAR
+
+
+  DATA STREAM A37
+            2.0L TBI   (LT2)   (VIN=K)   88
+
+
+  DATA STREAM A38
+            2.8L PFI MAF(LB6)  (VIN=W)   88  "A" CARS CALIFORNIA EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   87  "A" CARS CALIFORNIA EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   87  "J" CARS CALIFORNIA EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   87  "L" CARS CALIFORNIA EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   88-LB6B "L" CARS CALIFORNIA EMISSIONS
+              (ASSEMBLY PLANTS E/Y, VIN SERIAL >500000)  88 "L"
+
+
+  DATA STREAM A39
+                 2.8L PFI SD(LB6)   (VIN=W)   88  "J" CARS
+
+
+  DATA STREAM A40
+             2.8L TBI   (LL2)   (VIN=R) 88,89,90,91 TRUCK
+             3.1L TBI   (LG6)   (VIN=D) 89 TRUCKS
+             2.8L TBI   (LL2)   (VIN=R) 92 S TRUCK
+             2.8L TBI   (LL2)   (VIN=R) 93 S TRUCK
+
+
+  DATA STREAM A41
+            5.0L TBI   (L03)   (VIN=H)   88 CAR
+
+
+  DATA STREAM A42
+             3800 SFI   (LN3)   (VIN=C)   88 (EXCEPT TORONADO)
+
+
+  DATA STREAM A43
+             5.0l CLCC  (LV2)   (VIN=Y)   88, 89, 90
+             5.0l CLCC  (LG8)   (VIN=9)   88, 89, 90
+
+
+  DATA STREAM A44
+            2.3l MFI   (LD2)   (VIN=D)   88   (N CARS)
+
+
+  DATA STREAM A45
+            4.1 DFI    (LT8)   (VIN=8)   83,84,85
+
+
+  DATA STREAM A46
+            6.0 DFI    (L62)   (VIN=9)   81,82,83,84
+
+
+  DATA STREAM A47
+            4.1 DFI    (LT8)   (VIN=8)   82
+
+
+  DATA STREAM A48
+            2.0 TBI    (LQ5)   (VIN=6)   82
+            2.0 TBI    (LR9)   (VIN=B)   82
+
+
+  DATA STREAM A49
+            4.3L CLCC  (LV8)   (VIN=F)   82
+            5.0L CLCC  (LG4)   (VIN=H)   82
+
+
+  DATA STREAM A50            NOT USED
+
+      DATA STREAM A51
+            4.1 DFI    (LC7)   (VIN=7)   87,88 'V' CAR ONLY -
+
+
+  DATA STREAM A52
+            4.5 DFI    (LR6)   (VIN=5)   88,89 'C'
+                                         CADILLAC CAR ONLY!
+
+
+  DATA STREAM A53
+            2.6L TBI   (L73)   (VIN=6)   87,88,89
+
+
+  DATA STREAM A54
+             4.5L DFI  (LR6)   (VIN=5)   88,89 CADILLAC 'E/K' CAR ONLY
+
+
+  DATA STREAM A55
+            2.0L TBI   (LT2)   (VIN=K)   89
+            2.5L TBI   (L68)   (VIN=U)   89
+
+
+  DATA STREAM A57
+                 3.1L PFI SD(LH0)   (VIN=T)   88 1/2 AWD "A" CAR ONLY
+                 3.1L PFI SD(LH0)   (VIN=T)   89
+                 2.8L PFI SD(LB6)   (VIN=W)   89
+                 3.1L PFI SD(LH0)   (VIN=T)   90   1W ONLY
+                   (ASSEMBLY PLANT 9, VIN SERIAL < 114345)
+                   (ASSEMBLY PLANT 1, VIN SERIAL < 109836)
+                 2.8l PFI SD(LB6)   (VIN=W)   88 "J" CARS
+                 2.8l PFI SD(LB6)   (VIN=W)   87/88 "A" CARS
+                 2.8l PFI SD(LB6)   (VIN=W)   87 "J" CARS
+                 2.8l PFI SD(LB6)   (VIN=W)   87/88 "L" CARS
+                 2.8l PFI SD(LB6)   (VIN=W)   88 "W" CARS
+
+
+  DATA STREAM A58
+                 4.3L TBI   (LB4)   (VIN=Z)   89  TRUCKS
+                 4.3L TBI   (LB4)   (VIN=Z)   90 91 S/T TRUCKS w/autoc TRANS
+                 4.3L TBI   (LB4)   (VIN=Z)   90 C/K/G/M/L/R/V TRUCKS
+                 4.3L TBI   (LU2)   (VIN=B)       90 TRUCKS
+                 5.0L TBI   (L03)   (VIN=H)   89, 90 TRUCKS
+                 5.7L TBI   (L05)   (VIN=K)   89     TRUCKS
+                 5.7L TBI   (L05)   (VIN=K)       90 TRUCKS LIGHT DUTY EMISSION
+                 6.0L TBI   (LS0)   (VIN=P)   89     TRUCKS
+                 7.4L TBI   (L19)   (VIN=N)   89     TRUCKS
+                 7.4L TBI   (L19)   (VIN=N)       90 TRUCKS LIGHT DUTY EMISSION
+
+
+  DATA STREAM A59
+            5.0l PFI   (LB9)   (VIN=F)   89
+            5.7l PFI   (L98)   (VIN=8)   89
+
+
+  DATA STREAM A60
+             5.0  CLC   (LV2)   (VIN=Y)   83
+
+
+ DATA STREAM A61
+            5.0  CLC   (LV2)   (VIN=Y)   82
+
+
+  DATA STREAM A62
+                    5.0  TBI   (LU5)   (VIN=7)   82
+                    5.7  MFI   (L83)   (VIN=8)   82
+
+
+  DATA STREAM A63
+                    4.3  TBI   (LB4)   (VIN=Z)   85
+                    5.0  CFI   (LB9)   (VIN=5)   85
+                    5.7  CFI   (L83)   (VIN=8)   83, 84, 85
+
+
+  DATA STREAM A64
+                    1.8  CLC   (L46)   (VIN=G)   82
+                    2.0  CLC   (LR9)   (VIN=B)   82,83,84
+                    2.5  CLC   (LQ8)   (VIN=F)   82,83,85,86
+                    2.5  CLC   (LW9)   (VIN=5)   82,83
+                    2.8  CLC   (LC1)   (VIN=1)   82,83
+                    2.8  CLC   (LE2)   (VIN=X)   81,82,83
+                    2.8  CLC   (LH7)   (VIN=Z)   82,83
+                    2.8  CLC   (LL1)   (VIN=L)   83
+                    2.8  CLC   (LR2)   (VIN=B)   82,83
+                    3.0  CLC   (LK9)   (VIN=E)   82,83
+                    3.8  CLC   (LC3)   (VIN=9)   82,83
+                    3.8  CLCT  (LC8)   (VIN=3)   82,83
+                    3.8  CLC   (LD5)   (VIN=A)   82,83
+                    4.1  CLC   (LC4)   (VIN=4)   82,83
+                    4.4  CLC   (L39)   (VIN=J)   82
+                    5.0  CLC   (LG8)   (VIN=9)   83
+                    5.0  CLC   (LG4)   (VIN=H)   83
+                    5.0  CLC   (LF3)   (VIN=H)   83,84
+                    5.7  CLC   (LM1)   (VIN=L)   82,83
+                    5.7  CLC   (LS9)   (VIN=L)   83,84
+                    6.0  CLC   (L61)   (VIN=6)   81,82,83
+
+
+  DATA STREAM A65
+             USAGE:
+            2.5 CLC    (LW9)   (VIN=5)   81
+            2.8 CLC    (LH7)   (VIN=Z)   81
+            3.8 CLC    (LC3)   (VIN=K)   81
+            3.8  CLCT  (LC8)   (VIN=3)   81
+            3.8 CLC    (LD5)   (VIN=A)   81
+            4.1 CLC    (LC4)   (VIN=4)   81
+            4.3 CLC    (LS5)   (VIN=S)   81
+            4.3 CLC    (LV8)   (VIN=F)   81
+            4.4 CLC    (L39)   (VIN=J)   81
+            4.9 CLCT   (LU8)   (VIN=T)   81
+            4.9 CLC    (33333333333333   81
+            5.0 CLC    (LG4)   (VIN=H)   81
+            5.0 CLC    (LV2)   (VIN=Y)   81
+            5.7 CLC    (LM1)   (VIN=L)   81
+            5.7 CLC    (L77)   (VIN=B)   81
+            5.7 CLC    (L82)   (VIN=6)   81
+
+
+  DATA STREAM A66
+            5.0L CLCC  (LG4)   (VIN=H)   88
+            5.0L CLCC  (L69)   (VIN=G)   86,87,88
+
+
+  DATA STREAM A68
+               USAGE:
+             4.3L TBI   (LB4)   (VIN=Z)   88 CARS
+
+
+  DATA STREAM A69
+              USAGE:
+            2.3l MFI   (LD2)   (VIN=D)   89
+            2.3l MFI   (LD2)   (VIN=D)   88
+
+
+  DATA STREAM A71
+            3800 SFI   (LN3)   (VIN=C)   88 TORONADO
+
+
+  DATA STREAM A72
+                 3800 SFI   (LN3)   (VIN=C)    89  (EXCEPT TORONADO)
+
+
+
+  DATA STREAM A73
+                 3300 MFI   (LG7)   (VIN=N)   89   'N' CARS
+                 3300 MFI   (LG7)   (VIN=N)   89   'A' CARS
+
+
+
+  DATA STREAM A74
+                 3.8L SFI   (LG3)   (VIN=3)   87 TORONADO
+
+
+  DATA STREAM A75
+            3.8L SFI   (LG3)   (VIN=3)   86 TORONADO
+
+
+  DATA STREAM A76
+            2.8L CLCC  (LR2)   (VIN=B)   83 CHEVY TRUCK
+
+
+
+  DATA STREAM A77
+            1.9L ISUZU (LR1)   (VIN=A)   83
+
+
+
+  DATA STREAM A78
+            6.2L DSL   (LL4)   (VIN=J)   84
+            6.2L DSL   (LH6)   (VIN=C)   84
+
+
+  DATA STREAM A79
+            1.9L ISUZU (LR1)   (VIN=A)   84
+
+
+  DATA STREAM A80
+            1.9L ISUZU (LR1)   (VIN=A)   84.5
+
+
+  DATA STREAM A81
+            6.2L DSL   (LL4)   (VIN=J)   88
+            6.2L DSL   (LH6)   (VIN=C)   88
+
+
+  DATA STREAM A82
+            5.7L SFI   (LT5)   (VIN=J)   89
+
+
+  DATA STREAM A83
+            5.0L TBI   (L03)  (VIN=E) 89, 90, 91, 92 'F'CARS
+
+
+  DATA STREAM A84
+            4.3L TBI   (LB4)   (VIN=Z)   89, 90 CARS
+
+
+  DATA STREAM A85
+            3800 SFI   (LN3)   (VIN=C)   89 TORONADO
+
+
+  DATA STREAM A86
+            4.5 SFI    (LQ6)   (VIN=8)   89 'V' CAR ONLY     -1G6VR3185KU100501
+
+      DATA PIN:        L/M
+      BAUD RATE :      8192
+
+  DATA STREAM A88
+            2.8L PFI MAF(LB6)  (VIN=W)   88  "W"
+            2.8L PFI MAF(LB6)  (VIN=W)   88  "A" CARS FEDERAL EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   LB6-88B "L" CARS FEDERAL EMISSIONS
+              (ASSEMBLY PLANTS E/Y, VIN SERIAL >500000)  88 "L"
+            2.8L PFI MAF(LB6)  (VIN=W)   87 "A" CARS FEDERAL EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   87 "J" CARS FEDERAL EMISSIONS
+            2.8L PFI MAF(LB6)  (VIN=W)   87 "L" CARS FEDERAL EMISSIONS
+
+
+  DATA STREAM A89
+              USAGE:
+            2.3l MFI   (LG0)   (VIN=A)   89
+
+
+  DATA STREAM A90
+            5.0L TBI   (L03)   (VIN=E)   89, 90 'B' CARS
+            5.7L TBI   (L05)   (VIN=7)   89     'B' CARS
+            5.7L TBI   (L05)   (VIN=7)   90   'B/D' CARS
+
+
+  DATA STREAM A91
+                USAGE:
+             3.1l PFI   (LG5)   (VIN=V)   89
+
+
+  DATA STREAM A92
+             USAGE:
+           2.3l MFI   (LD2)   (VIN=D)   90   N CAR
+           2.3l MFI   (LG0)   (VIN=A)   90   L/N CAR
+
+
+  DATA STREAM A93
+              USAGE:
+            2.3l MFI   (LD2)   (VIN=D)   90  W CAR ONLY
+            2.3l MFI   (LG0)   (VIN=A)   90  W CAR ONLY
+
+
+  DATA STREAM A94
+              USAGE:
+            3800 SFI   (LN3)   (VIN=C)   90 91
+
+
+  DATA STREAM A95
+               USAGE:
+             4.5L SFI   (LQ6)   (VIN=8)   90
+             4.5L SFI   (LW2)   (VIN=3)   90
+             4.5L SFI   (LQ6)   (VIN=8)   91  6V-CAR
+             4.9L SFI   (L26)   (VIN=B)   91  6C,E,K-CAR
+             4.5L SFI   (LQ6)   (VIN=8)   92  6V-CAR
+             4.9L SFI   (L26)   (VIN=B)   92  6C,E,K-CAR
+             4.9L SFI   (L26)   (VIN=B)   93  6C,E,K-CAR
+
+
+  DATA STREAM A96
+              USAGE:
+            2.5  TBI   (LR8)   (VIN=R)   90 'W' CAR ONLY
+            2.5  TBI   (LR8)   (VIN=R)   91 'W' CAR ONLY
+            2.5  TBI   (LR8)   (VIN=R)   92 '1W' CAR ONLY
+
+
+  DATA STREAM A97
+              USAGE:
+            2.5  TBI   (L68)   (VIN=U)   91 'N' CARS
+            2.5  TBI   (L68)   (VIN=U)   90 'N' CARS
+            2.5  TBI   (LR8)   (VIN=R)   90 'A' CARS
+            2.5  TBI   (LR8)   (VIN=R)   91 'A' CARS
+            2.5  TBI   (LR8)   (VIN=R)   92 '3,4A' CARS
+
+
+  DATA STREAM A98
+              USAGE:
+            2.2  TBI   (LM3)   (VIN=G)   90
+            2.2  TBI   (LM3)   (VIN=G)   91
+
+
+  DATA STREAM A99
+              USAGE:
+            2.5  TBI   (LN8)   (VIN=E)   90
+            2.5L TBI   (LN8)   (VIN=E)   91  S,T    TRUCKS
+
+
+  DATA STREAM A100
+              USAGE:
+            5.0  PFI   (LB9)   (VIN=F)   90, 91,92
+            5.7  PFI   (L98)   (VIN=8)   90, 91,92
+
+
+  DATA STREAM A101  *********DELETED **************
+
+  DATA STREAM A102  ***********DELETED ************
+
+  DATA STREAM A103
+              USAGE:
+            3.1L TBI   (LG6)   (VIN=D)   90
+            3.1L TBI   (LG6)   (VIN=D)   91
+            3.1L TBI   (LG6)   (VIN=D)   92
+            3.1L TBI   (LG6)   (VIN=D)   93
+
+
+  DATA STREAM A104
+              USAGE:
+          4.3L TBI   (LB4)   (VIN=Z)   90 C/K  TRUCK   23 word data list
+          4.3L TBI   (LB4)   (VIN=Z)   91 S/T  TRUCK W/MANUAL TRANSMISSION
+          4.3L TBI   (LB4)   (VIN=Z)   91 C,K,G,M,L  TRUCK W/MANUAL TRANSMISSION
+          4.3L TBI   (LB4)   (VIN=Z)   90 M/L/G
+          4.3L TBI   (LB4)   (VIN=Z)   90 S/T  TRUCK W/MANUAL TRANSMISSION
+          4.3L TBI   (LB4)   (VIN=Z)   92 C,K,S,T,M,L,G TRUCK
+          4.3L TBI   (LB4)   (VIN=Z)   93 C,K TRUCK
+
+
+  DATA STREAM A105  *******DELETED ************
+
+  DATA STREAM A106
+              USAGE:
+            5.7L TBI   (L05)   (VIN=K)   90 HEAVY DUTY EMISSIONS
+            7.4L TBI   (L19)   (VIN=N)   90 HEAVY DUTY EMISSIONS
+            5.7L TBI   (L05)   (VIN=K)   91 HEAVY DUTY EMISSIONS
+            7.4L TBI   (L19)   (VIN=N)   91 HEAVY DUTY EMISSIONS
+            5.7L TBI   (L05)   (VIN=K)   92 HEAVY DUTY EMISSIONS
+            7.4L TBI   (L19)   (VIN=N)   92 HEAVY DUTY EMISSIONS
+            7.4L TBI   (L19)   (VIN=N)   93 C,K HEAVY DUTY EMISSIONS
+
+
+  DATA STREAM A107
+              USAGE:
+            4.3L TBI   (LB4)   (VIN=Z)   90 (MD-DUTY) P TRUCK
+            6.0L TBI   (LS0)   (VIN=P)   89, 90 (MD-DUTY)
+            7.0L TBI   (LR0)   (VIN=M)   90 (MD-DUTY)
+            4.3L TBI   (LB4)   (VIN=Z)   91 (MD-DUTY) C,K,P TRUCK
+            4.3L TBI   (LB4)   (VIN=Z)   92 P TRUCK
+            4.3L TBI   (LB4)   (VIN=Z)   93 (MD-DUTY) P TRUCK
+            4.3L TBI   (LB4)   (VIN=Z)   94 (MD-DUTY ONLY) P TRUCK
+*             4.3L TBI   (LB4)   (VIN=Z)   95 (MD-DUTY ONLY) P TRUCK
+
+
+
+  DATA STREAM A109
+              USAGE:
+            3.1L PFI SD(LH0)   (VIN=T)   90   1W ONLY
+              (ASSEMBLY PLANT 9, VIN SERIAL > 114344)
+              (ASSEMBLY PLANT 1, VIN SERIAL > 109835)
+            3.1  PFI SD(LH0)   (VIN=T)  90  1A,1J,1L,2A,2L,2W,3A,3W,4W
+            3.1L PFI   (LH0)   (VIN=T)  91  4W (4 door) (vin serial < 800,000)
+
+
+  DATA STREAM A110
+              USAGE:
+            3.1  PFI TURBO  (LG5)   (VIN=V)   90
+
+
+  DATA STREAM A111 PN 93328       ASSEMBLY # 93327
+              USAGE:
+            Central Computer Module     90  'Y' Cars  (CCM)
+            Central Computer Module     91  'Y' Cars  (CCM)
+
+
+  DATA STREAM A112
+              USAGE:
+            3.8L MFI  (L27)   (VIN=L)   90   W car
+            3.8L MFI  (L27)   (VIN=L)   91   W car
+            3.8L MFI  (L27)   (VIN=L)   92   W car
+
+
+  DATA STREAM A113 PN 93393       ASSEMBLY #  93392
+              USAGE:
+           3300 MFI   (LG7)   (VIN=N)    90    ECM
+           3300 MFI   (LG7)   (VIN=N)    89    'A' CARS
+
+
+  DATA STREAM A114
+              USAGE:
+           5.7 SFI    (LT5)   (VIN=J)   90
+
+
+  DATA STREAM A115
+              USAGE:
+           5.7 SFI    (L98)   (VIN=8)   90  'Y' Car only
+           5.7 SFI    (L98)   (VIN=8)   91  'Y' Car only
+
+
+  DATA STREAM A116
+              USAGE:
+           1.6 TBI    (L73)   (VIN=6)   90
+           1.6 TBI    (L73)   (VIN=6)   91
+           1.6 TBI    (L73)   (VIN=6)   92
+           1.6 TBI    (L73)   (VIN=6)   93
+           1.6 TBI    (L73)   (VIN=6)   94
+
+
+  DATA STREAM A117
+              USAGE:
+           2.0 TBI    (LT2)   (VIN=k)   89  'T' Car Only
+           2.0 TBI    (LT2)   (VIN=k)   90  'T' Car Only
+           2.0 TBI    (LT2)   (VIN=k)   91  'T' Car Only
+
+
+  DATA STREAM A118
+              USAGE:
+           Body Computer Module  (bcm)  90 'Cadillac E/K' Only
+
+
+  DATA STREAM A119
+              USAGE:
+           Body Computer Module  (bcm)  90 'Buick E' Only
+
+
+  DATA STREAM A120
+              USAGE:
+           Body Computer Module  (bcm)  90  'Oldsmobile E' Only
+
+
+  DATA STREAM A121
+              USAGE:
+           Body Computer Module  (bcm)  90  'Cadillac V' Only
+
+
+  DATA STREAM A122
+              USAGE:
+           Body Computer Module  (bcm)  90  'Cadillac C' Only
+
+
+  DATA STREAM A123
+              USAGE:
+            3.8l  SFI  (LG3)    (VIN=3)  87 'Buick E' Only
+
+
+  DATA STREAM A124  *******DELETED ************
+
+
+
+  DATA STREAM A125
+              USAGE:
+            Supplemental Inflatable Restraint (SIR)
+              1990 Cadillac C/E/K/V
+              1990 Chevrolet M/R/F
+              1991 Chevrolet F
+              1991 Chevrolet B
+              1990-1991 Pontiac F
+              1990 Oldmobile E
+              1990 Buick E
+              1991 Buick C
+              1992 Buick H
+              1992 2,3H, 1,3,4B, 3,4,6C, 3,4,6E, 1,2F, 6K, 1L, 1M, 1R, 6V, 1Y
+              1993 1,3,4B 6C 6K 1L 3,4C 3,4,6E 3,4H 1Y 6V 1M 1R 3,4A
+
+
+  DATA STREAM A126
+              USAGE:
+            1.6L MFI  (LW0)   (VIN=5)   90
+            1.6L MFI  (L01)   (VIN=6)   90
+            1.6L MFI  (LW0)   (VIN=5)   91
+            1.6L MFI  (L01)   (VIN=6)   91
+            1.6L MFI  (L01)   (VIN=6)   92
+
+
+  DATA STREAM A127
+              USAGE:
+            7.4L TBI  (L19)   (VIN=N)   87, 88 TRUCKS
+
+  DATA STREAM A128          not used
+
+
+
+  DATA STREAM A129
+              USAGE:
+            5.0L        L03     (VIN=E)   91 B,gm300, D
+            5.7L        L05     (VIN=7)   91 B,gm300, D
+            5.7L        L05     (VIN=7)   92 B,gm300, D
+            4.3L        LB4     (VIN=Z)   92 1B
+            5.0L        L03     (VIN=E)   92 1,3,4B 1,6D
+            5.7L        L05     (VIN=7)   93 1B,3B,4B
+            5.0L        L03     (VIN=E)   93 1B,F 2F 3B
+            4.3L        LB4     (VIN=Z)   93 1B
+
+
+  DATA STREAM A130
+              USAGE:
+              3.8L TPI  (L27)   (VIN=L)   91  C  CAR ONLY
+              3.8L TPI  (L27)   (VIN=L)   92  H  CAR ONLY
+              3.8L TPI  (L27)   (VIN=L)   92  C  CAR ONLY
+
+
+  DATA STREAM A131
+        ENGINE OIL LIFE MONITOR (EOLM) USAGE:
+                                               91 C-CAR
+                                               92 H-CAR
+                                               92 C-CAR
+                                               93 4C,H 3,4B-CARS
+
+
+  DATA STREAM A132
+        REMOTE ACCESSORY CONTROL MODULE (RAC) USAGE:
+                                               91 C-CAR
+                                               92 H-CAR
+                                               92 C-CAR
+                                               93 3,4C 2,3,4H-CAR
+
+
+
+  DATA STREAM A133
+        4WAL
+        CAR LINE:
+                 90,91,92  M,L & S,T(4 DOOR)
+                 93        L 3T
+
+
+
+  DATA STREAM A134
+       BOSCH ABS
+       CAR LINE:
+           1990 Y, B, D, E, & K Cars
+           1991 Y,B & E Cars
+           1992 B car
+           1992 3,4E, 6E,K
+           1993 B, 3,4E, 6E CARS
+
+
+  DATA STREAM A135
+       ENGINE USAGE:
+              2.0L OHC TBI   LT2 (VIN=K)      1990  J CAR
+              2.0L OHC TBI   LT2 (VIN=K)      1991  J CAR
+
+
+  DATA STREAM A136
+       ENGINE USAGE:
+              3.1L TBI   (LG6)   (VIN=D)   91 U VAN
+              3.1L TBI   (LG6)   (VIN=D)   92 U VAN
+              3.1L TBI   (LG6)   (VIN=D)   93 U VAN
+              3.1L TBI   (LG6)   (VIN=D)   94 U VAN
+              3.1L TBI   (LG6)   (VIN=D)   95 U VAN
+
+
+  DATA STREAM A137
+       ENGINE USAGE:
+              6.0L TBI   (LS0)   (VIN=P) 91
+              7.0L TBI   (LR0)   (VIN=M) 91
+              6.0L TBI   (LS0)   (VIN=P) 92 GMT530 TRUCK
+              7.0L TBI   (LR0)   (VIN=M) 92 GMT530 TRUCK
+              6.0L TBI   (LS0)   (VIN=P) 93 GMT530 TRUCK
+              7.0L TBI   (LR0)   (VIN=M) 93 GMT530 TRUCK
+              6.0L TBI   (LS0)   (VIN=P) 94 GMT530 TRUCK
+              7.0L TBI   (LR0)   (VIN=M) 94 GMT530 TRUCK
+*           6.0L TBI   (LS0)   (VIN=P) 95 GMT530 TRUCK
+*           7.0L TBI   (LR0)   (VIN=M) 95 GMT530 TRUCK
+
+
+  DATA STREAM A138
+       ENGINE USAGE:                PCM6 4L80E
+              4.3L TBI    LB4   (VIN=Z)   91,92,93
+              5.7L TBI    L05   (VIN=K)   91,92,93
+              7.4L TBI    L19   (VIN=N)   91,92,93
+
+
+  DATA STREAM A139
+       ENGINE USAGE:
+              2.5L  TBI L38  (VIN=A)   1991  S-TRUCKS
+              2.5L  TBI L38  (VIN=A)   1992  S-TRUCKS
+              2.5L  TBI L38  (VIN=A)   1993  S-TRUCKS
+
+
+  DATA STREAM A140
+       ENGINE USAGE:
+            3.1L PFI   (LH0)   (VIN=T)   91   W,A,J,L - CAR
+            3.1L PFI   (LH0)   (VIN=T)   91   4W (4 door) (vin serial > 799,999)
+            3.1L PFI   (LH0)   (VIN=T)   92    1,2,3,4W, 1,2J, 1,7L - cars
+            3.1L PFI   (LH0)   (VIN=T)   93    1J,L,2J,1,2,3W cars
+            3.1L PFI   (LH0)   (VIN=T)   94    1,2J
+
+
+  DATA STREAM A141
+       ENGINE USAGE:
+              3.4L PFI   (LQ1)   (VIN=X)   91           W-CAR
+
+
+  DATA STREAM A142
+       ENGINE USAGE:
+              5.7 SFI - LT5 (VIN=J)  1991
+
+
+  DATA STREAM A143
+       ENGINE USAGE:
+              3300 MFI   (LG7)   (VIN=N)    91    A,N-CAR
+              3300 MFI   (LG7)   (VIN=N)    92    3,4A 2,3,4N CARS
+              3300 MFI   (LG7)   (VIN=N)    93    3,4A 2,3,4N CARS
+
+
+  DATA STREAM A144
+       ENGINE USAGE:
+              2.3l MFI   (LD2)   (VIN=D)   91   N CAR
+              2.3l MFI   (LG0)   (VIN=A)   91   L/N CAR
+
+
+  DATA STREAM A145
+       ENGINE USAGE:
+              2.3l MFI   (LD2)   (VIN=D)   91   W CAR
+
+
+  DATA STREAM A146
+       BCM USAGE:
+       CAR LINE:
+           1991 GM30/33 (RIVIERA/REATTA)    (VIN=E)
+
+
+  DATA STREAM A147
+       BCM USAGE:
+       CAR LINE:
+           1991     TORONADO AND TORONADO TROFEO  (BODY VIN=E)
+
+
+  DATA STREAM A148
+       ENGINE USAGE:  DIGITAL EGR
+              3.1  PFI   (LH0)   (VIN=T)  90  1F, 2F
+              3.1 PFI    (LH0)   (VIN=T)  91  1F, 2F
+              3.1 PFI    (LH0)   (VIN=T)  92  1F, 2F
+
+  DATA STREAM A149     not used
+
+
+  DATA STREAM A150
+       TCM USAGE: THE R2 TRANSMISSION CAN BE USED WITH THE FOLLOWING ENGINES
+              4.3L TBI    LB4   (VIN=Z)   91
+              5.7L TBI    L05   (VIN=K)   91
+              7.4L TBI    L19   (VIN=N)   91
+
+  DATA STREAM A151
+       BCM USAGE :
+       CAR LINE  :
+           1991 GM35 (ALLANTE)     VIN = V
+           1992 GM35 (ALLANTE)     VIN = V
+
+
+  DATA STREAM A152
+       BCM USAGE :
+       CAR LINE  :
+           1991 GM30 (ELDORADO/SEVILLE) (VIN=E/K)
+
+
+  DATA STREAM A153
+       BCM USAGE :
+       CAR LINE  :
+              1991 DEVILLE/FLEETWOOD (VIN=C)
+              1992 DEVILLE/FLEETWOOD (VIN=C)
+              1993 DEVILLE/FLEETWOOD (VIN=C)
+
+
+  DATA STREAM A154
+       ENGINE   USAGE:
+              3.8L TPI  (L27)   (VIN=L)   91  E  CAR ONLY
+              3.8L TPI  (L27)   (VIN=L)   92  E  (Riviera, Toronado & Trofeo)
+              3.8L TPI  (L27)   (VIN=L)   93  E  (Riviera, Toronado & Trofeo)
+
+
+  DATA STREAM A155
+       TEVES ABS/ASR USAGE:
+       CAR LINE  :
+              1991      Buick C-car
+              1991      3C,6C-car
+              1992      H-cars
+              1992      3,4C,6C-cars
+              1993      H, 3,4C, 6C CARS
+
+
+
+  DATA STREAM A156
+       DELCO 6 ABS
+       USAGE:  1991 N CAR
+               1992 2J, 1L, 2,3,4N cars
+
+
+  DATA STREAM A157
+       DIC USAGE :  1991 OLDSMOBILE C-CAR
+                    1992 OLDSMOBILE H-CAR
+                    1992 OLDSMOBILE C-CAR
+                    1993 OLDSMOBILE H-CAR
+                    1993 OLDSMOBILE C-CAR
+
+
+
+  DATA STREAM A158   not used
+
+
+  DATA STREAM A159
+       TCM USAGE: THE R2 TRANSMISSION WITH STAND ALONE TCM  91'
+                  L57  6.5L       VIN = Y      1993  C,K,G,P
+
+
+  DATA STREAM A160
+   ENGINE USAGE:
+              4.3L TURBO (LB4)    (VIN=Z) 91.5   SYCLONE TRUCK
+
+
+  DATA STREAM A161
+   ENGINE USAGE:
+              1.9L MFI   (LL0)   (VIN=7)   91
+              1.9L TBI   (LK0)   (VIN=9)   91
+
+
+  DATA STREAM A162
+   ENGINE USAGE:
+              3.1L PFI   (LH0)    (VIN=T) 91   1W-CAR   (VFV)
+
+
+  DATA STREAM A163
+   ENGINE USAGE:
+       3.8L  SUPER CHARGED L67 (VIN=1)    1992 PONTIAC H-CAR
+       3.8L  SUPER CHARGED L67 (VIN=1)    1992 3,4C - CAR
+       3.8L                L27 (VIN=L)    1992 1,2,3U - van
+       3.8L  SUPER CHARGED L67 (VIN=1)    1993 PONTIAC H-CAR
+       3.8L  SUPER CHARGED L67 (VIN=1)    1993 3,4C - CAR
+
+
+  DATA STREAM A164
+       HVAC USAGE:
+           1992 Buick H-car (2,3,4H)
+           1992 3,4C-car
+           1993 3,4C 2,3,4H -car
+
+
+  DATA STREAM A165
+       DRIVER/PASSENGER DERM (SIR)
+       USAGE:  1992 H CAR
+               1993 6E 6K 6D 2,3F 2H
+
+  DATA STREAM A166      not used
+
+
+  DATA STREAM A167
+   ENGINE USAGE:
+       2.2L  MFI LN2    (VIN=4)           1992 1J,L
+       2.2L  MFI LN2    (VIN=4)           1993 1J,L,W,3A,4A
+
+
+  DATA STREAM A168
+   ENGINE USAGE:
+       2.0L  MFI LE4    (VIN=H)           1992 2J, 7T
+       2.0L  MFI LE4    (VIN=H)           1993 2J
+       2.0L  MFI LE4    (VIN=H)           1994 2J
+
+
+  DATA STREAM A169
+   ENGINE USAGE:
+       2.3L  MFI DOHC       LD2    (VIN=D)           1992 2,3N
+       2.3L  MFI OHC        L40    (VIN=3)           1992 2,3,4N
+       2.3L  MFI DOHC H.O.  LG0    (VIN=A)           1992 2,3N, 1,7L
+
+
+  DATA STREAM A170
+   ENGINE USAGE:
+       2.3L  MFI DOHC       LD2    (VIN=D)           1992 2,3W
+
+
+  DATA STREAM A171
+   ENGINE USAGE:
+       5.7L  SFI OHC        LT5    (VIN=J)           1992 1Y
+
+
+  DATA STREAM A172
+   ENGINE USAGE:
+       5.7L  MFI H.O.       LT1    (VIN=P)           1992 1Y
+       5.7L  MFI H.O.       LT1    (VIN=P)           1993 1Y 1,2F
+
+
+  DATA STREAM A173
+   USAGE:
+       Central Computer Module     92  'Y' Cars  (CCM)
+                                   93  'Y' Cars  (CCM)
+
+
+   DATA STREAM A174
+        DELCO 6 ABS
+        USAGE:
+                1992 1,2,3U van 1,2,3,4W car
+
+
+  DATA STREAM A175
+       BOSCH ABS/ASR
+       CAR LINE:
+                 1992 Y CAR
+                 1993 Y CAR
+                 1994 Y CAR
+
+
+  DATA STREAM A176
+       ENGINE   USAGE:
+              3.8L TPI  (L27)   (VIN=L)   92  E  (Reatta only)
+
+
+  DATA STREAM A177
+       TCM USAGE: THE R2 TRANSMISSION CAN BE USED WITH THE FOLLOWING ENGINES
+              4.3L TBI    LB4   (VIN=Z)   92,93
+              5.7L TBI    L05   (VIN=K)   92,93
+              7.4L TBI    L19   (VIN=N)   92,93
+
+
+  DATA STREAM A178
+       ENGINE   USAGE:
+              4.3L CPI  (L35)   (VIN=W)   92  M,L,S,T TRUCK
+              4.3L CPI  (L35)   (VIN=W)   94  M,L,S,T TRUCK
+
+
+  DATA STREAM A179
+       ENGINE   USAGE:
+                 5.0L TBI   (L03)   (VIN=H)   92  C,K,G TRUCKS
+                 5.7L TBI   (L05)   (VIN=K)   92  C,K,G,R,V TRUCKS
+                   5.0L TBI   (L03)   (VIN=H)   93 C,K        TRUCKS
+                   5.7L TBI   (L05)   (VIN=K)   93 C,K,P      TRUCKS
+                   5.0L TBI   (L03)   (VIN=H)   94 C,K        TRUCKS
+                   5.7L TBI   (L05)   (VIN=K)   94 C,K,P      TRUCKS
+*                  5.0L TBI   (L03)   (VIN=H)   95 C,K        TRUCKS
+*                  5.7L TBI   (L05)   (VIN=K)   95 C,K,P      TRUCKS
+
+
+  DATA STREAM A180
+       BCM USAGE:
+       CAR LINE:
+           1992 GM30/33 (RIVIERA/REATTA)    (VIN=E)
+           1993 GM30/33 (RIVIERA/REATTA)    (VIN=E)
+
+
+  DATA STREAM A181
+       BCM USAGE:
+       CAR LINE:
+              1992     TORONADO AND TORONADO TROFEO  (BODY VIN=E)
+              1993     TORONADO AND TORONADO TROFEO  (BODY VIN=E)
+
+
+
+  DATA STREAM A182
+       BCM USAGE:
+       CAR LINE:
+   NOTE: DELETED 92 USAGE SEE DATA STREAM A153
+              1992 DEVILLE/FLEETWOOD (VIN=C)
+
+
+  DATA STREAM A183
+       IPC USAGE:
+       CAR LINE:
+              1992 ELDORADO/SEVILLE  (VIN=E/K)
+
+
+  DATA STREAM A184
+   ENGINE USAGE:
+       1.8L  PFI            LV6    (VIN=8)           1992 1,7R
+       1.8L  PFI            LV6    (VIN=8)           1993 1,7R
+
+
+  DATA STREAM A185   not used
+
+
+  DATA STREAM A186
+   ENGINE USAGE:
+              3.4L PFI   (LQ1)   (VIN=X)   92           W-CAR
+              3.4L PFI   (LQ1)   (VIN=X)   93           W-CAR
+              3.1L PFI   (LH0)   (VIN=T)   93    1W,2W,3W,4W -CAR
+              3.1L PFI   (LH0)   (VIN=T)   94           1W
+
+
+  DATA STREAM A187
+   ENGINE USAGE:
+              3.1L PFI   (LH0)    (VIN=T) 92   1W-CAR   (VFV)
+
+
+  DATA STREAM A188
+   ENGINE USAGE:
+              4.3L TBI   (LB4)    (VIN=Z) 93 VCM S,T TRUCK
+
+
+  DATA STREAM A189
+        4WAL
+        CAR LINE:
+                   92 3-SENSOR C,K, TRUCK
+                   93 3-SENSOR C,K,G TRUCK
+                   93 3-SENSOR S,T & M,L TRUCK AND BUS
+                   94 3-SENSOR C,K,G,M,L,S,T TRUCK
+                   95 3-SENSOR C,K,G,M,L,S,T TRUCK
+
+
+  DATA STREAM A190
+          RWAL:
+              4.3L TBI   (LB4)    (VIN=Z) 93 VCM S,T TRUCK
+
+
+  DATA STREAM A191
+           HVAC:
+              4.3L TBI   (LB4)    (VIN=Z) 93 VCM S,T TRUCK
+
+
+  DATA STREAM A192
+   ENGINE USAGE:
+              4.3L TBI   (LB4)    (VIN=Z) 94 VCM S,T TRUCK
+              4.3L TBI   (LB4)    (VIN=Z) 95 VCM S,T TRUCK
+
+
+  DATA STREAM A193
+          FWAL:
+              4.3L TBI   (LB4)    (VIN=Z) 94 VCM S,T TRUCK
+              4.3L TBI   (LB4)    (VIN=Z) 95 VCM S,T TRUCK
+
+
+
+  DATA STREAM A194
+           HVAC:
+              4.3L TBI   (LB4)    (VIN=Z) 94 VCM S,T TRUCK
+              4.3L TBI   (LB4)    (VIN=Z) 95 VCM S,T TRUCK
+
+
+  DATA STREAM A195
+          ENGINE USAGE:
+              5.7L TBI   (L05)    (VIN=K) 92 VCM CNG VEHICLE
+
+
+  DATA STREAM A196
+       TCM USAGE:   THE R2 TRANSMISSION WITH STAND ALONE TCM  92'
+*                 LL4  6.2L       VIN = J      1992  C,K
+*                 L65  6.5L       VIN = F      1992  C,K
+*                 LL4  6.2L       VIN = J      1993  C,K
+*                 L65  6.5L       VIN = F      1993  C,K
+
+
+   DATA STREAM A197
+        DELCO 6 ABS
+        USAGE:
+                1993 1,2,3U van 1,2,3,4W car
+
+
+   DATA STREAM A198
+        DELCO 6 ABS
+        USAGE:
+                1993 1,2F CAR
+
+
+   DATA STREAM A199
+        DELCO 6 ABS
+        USAGE:
+                1993 1S CAR
+
+
+  DATA STREAM A200
+          ENGINE USAGE:
+              1.6L PFI   (L01)    (VIN=6) 93 R CAR ONLY
+
+
+  DATA STREAM A201
+          ENGINE USAGE: PCM-6 4L60E
+              L03    5.0L       VIN = H   93 C,K,G
+              L05    5.7L       VIN = K   93 C,K,G
+              L35    4.3L       VIN = W   93 S,T,M,L
+              LB4    4.3L       VIN = Z   93 G,M,L,S,T,C,K
+
+
+   DATA STREAM A202
+        DELCO 6 ABS
+        USAGE:
+                1993 1,2J 1,7L 2,3,4N CARS
+
+
+  DATA STREAM A203
+   ENGINE USAGE:
+       2.3L  PFI DOHC       LD2    (VIN=D)           1993 2,3N
+       2.3L  PFI OHC        L40    (VIN=3)           1993 2,3,4N
+       2.3L  PFI DOHC H.O.  LG0    (VIN=A)           1993 1L 2,3N
+
+
+  DATA STREAM A204
+       TCM USAGE: PCM-6 4L60E
+              4.3L TBI    LB4   (VIN=Z)   93
+              4.3L TBI    L35   (VIN=W)   93
+              5.0L TBI    L03   (VIN=H)   93
+              5.7L TBI    L05   (VIN=K)   93
+
+
+  DATA STREAM A205
+          ENGINE USAGE:
+              3.8L SFI   (L27)    (VIN=L) 93 3,4C 2,3,4H 4W 1,2,3U
+
+
+  DATA STREAM A206
+       IPC USAGE:
+       CAR LINE:
+              1993 ELDORADO/SEVILLE  (VIN=E/K)
+
+
+  DATA STREAM A207
+   ENGINE USAGE:
+       5.7L  SFI OHC        LT5    (VIN=J)           1993 1Y
+       5.7L  SFI OHC        LT5    (VIN=J)           1994 1Y
+       5.7L  SFI OHC        LT5    (VIN=J)           1995 1Y
+
+
+  DATA STREAM A208
+       BOSCH ABS/ASR
+       CAR LINE:
+                 1993 6D CAR
+                 1994 6D CAR
+
+
+  DATA STREAM A209
+       BOSCH ABS/ASR
+       CAR LINE:
+                 1993 6E/K 6 K SPECIAL w/137-ID8 6V CARS
+
+
+
+  DATA STREAM A210
+       CAR LINE:
+              4.6L MFI   (L37)   (VIN=9)   92.5 6V,E,K
+              4.6L MFI   (LD8)   (VIN=Y)   93   6V
+
+
+  DATA STREAM A211
+       BCM USAGE:                        (dcm)(ccm)
+       CAR LINE:
+              1993    BROUGHAM  (VIN = D)
+              1994    BROUGHAM  (VIN = D)
+              1995    BROUGHAM  (VIN = D)
+
+
+  DATA STREAM A212
+       BCM USAGE:
+       CAR LINE:
+              1993    ALLANTE  (VIN = V)
+              1994    ALLANTE  (VIN = V)
+
+
+  DATA STREAM A213
+       ECM USAGE:
+       CAR LINE:
+              1993  5.7l L05   (VIN = 7)    1993 6D - CAR
+
+
+  DATA STREAM A214
+       ECM USAGE:
+       CAR LINE:
+              3.1L SFI (LH0/GENIIS/VIN=T)   93  1W,2W,3W,4W 4T60E AND NB2 ONLY
+
+
+
+  DATA STREAM A215
+       ECM USAGE:
+       CAR LINE:
+              3.4L SFI (L32)  (VIN = S)  93  1,2F ALL
+
+
+  DATA STREAM A216
+       TCM USAGE: PCM-6 4L60E DIESEL
+              6.2L        LH6   (VIN=C)   93      C,K,G
+
+
+  DATA STREAM A217
+            PCM-6 WITH 4L60E TRANSMISSION
+       ENGINE   USAGE:
+                      L03        5.0L    94  VIN = H   C,K,G
+                      L05        5.7L    94  VIN = K   C,K,G
+                      L35        4.3L    94  VIN = W   S,T,M,L
+                      LB4        4.3L    94  VIN = Z   G,M,L,S,T,C,K
+                   *  L03    TBI  5.0L   95  VIN=H   C,K,G
+                   *  L05    TBI  5.7L   95  VIN=K   C,K,G
+                   *  L35    CPI  4.3L   95  VIN=W   S,T,M,L
+                   *  LB4    TBI  4.3L   95  VIN=Z   G,M,L,S,T,C,K
+
+
+  DATA STREAM A218
+            PCM-6 WITH 4L60E TRANSMISSION
+         The 4L60E transmission can be used with the following engines
+       TCM USAGE:
+           L03    TBI  5.0L   94  VIN = H   C,K,G
+           L05    TBI  5.7L   94  VIN = K   C,K,G
+           L35    CPI  4.3L   94  VIN = W   S,T,M,L
+           LB4    TBI  4.3L   94  VIN = Z   G,M,L,S,T,C,K
+                      LN2  MFI   2.2L    94  VIN=4   S
+                   *  L03  TBI   5.0L    95  VIN=H   C,K,G
+                   *  L05  TBI   5.7L    95  VIN=K   C,K,G
+                   *  L35  CPI   4.3L    95  VIN=W   S,T,M,L
+                   *  LB4  TBI   4.3L    95  VIN=Z   G,M,L,S,T,C,K
+                   *  LN2  MFI   2.2L    94  VIN=4   S
+
+
+  DATA STREAM A219
+            PCM-6 WITH 4L80E TRANSMISSION
+       ENGINE   USAGE:
+                  LB4  TBI  4.3L  94   VIN = Z   C,K,G,P
+                  L05  TBI  5.7L  94   VIN = K   C,K,G,P,W-MD
+                  L19  TBI  7.4L  94   VIN = N   C,K,G,P
+               *  LB4  TBI  4.3L 1995  VIN = Z   C,K,G,P
+               *  L05  TBI  5.7L 1995  VIN = K   C,K,G,P,W-MD
+               *  L19  TBI  7.4L 1995  VIN = N   C,K,G,P
+               *  LB4  TBI  4.3L 1995  VIN = Z   C,K (HD)   MANUAL TRANS.
+               *  L19  TBI  7.4L 1995  VIN = N   C,K (HD)   MANUAL TRANS. pcm-6
+
+
+  DATA STREAM A220
+            PCM-6 WITH 4L80E TRANSMISSION
+        The 4L80E transmission can be used with the following engines
+       TCM USAGE:
+                  LB4  TBI  4.3L  94   VIN = Z   C,K,G,P
+                  L05  TBI  5.7L  94   VIN = K   C,K,G,P
+                  L19  TBI  7.4L  94   VIN = N   C,K,G,P
+                  L05  TBI  5.7L  94   VIN = A   MEDIUM DUTY TRUCK
+               *  LB4  TBI  4.3L  95   VIN = Z   C,K,G,P
+               *  L05  TBI  5.7L  95   VIN = K   C,K,G,P
+               *  L05  TBI  5.7L  95   VIN = A   MEDIUM DUTY TRUCK
+               *  L19  TBI  7.4L  95   VIN = N   C,K,G,P
+
+
+  DATA STREAM A221
+   ENGINE USAGE:
+       3.8L  SFI  (L27) (VIN = L)    1994 3,4C, 2,3,4H, 4W 1,2,3U
+       3.8L  SFI  (L67) (VIN = 1)    1994 3,4C, 2H
+       3.8L  SFI  (L67) (VIN = 1)    1995 3G
+*      3.8L  SFI  (L67) (VIN = 1)    1995 3,4C, 2H
+*      3.8L  SFI  (L27) (VIN = L)    1995 3,4H 4W 1,2,3U
+
+
+  DATA STREAM A222
+   ENGINE USAGE:    WITH M13 (4 SPD AUTO TRANS)
+         2.3L  PFI DOHC       LD2    (VIN=D)   1994 2,3N
+         2.3L  PFI OHC        L40    (VIN=3)   1994 2,3,4N
+*        2.3L  PFI DOHC       LD2    (VIN=D)   1995 2,3N
+
+
+  DATA STREAM A223
+   ENGINE USAGE:
+       5.7L  MFI  (LT1) (VIN = P)    1994 1B,F,Y 2F 4B 6D - CARS
+       3.4L  MFI  (L99) (VIN = T)    1994 1B - CARS
+*      5.7L  SFI  (LT1) (VIN = P)    1995 1Y - CAR AUTOMATIC TRANSMISSION
+
+
+  DATA STREAM A224     not used
+
+
+  DATA STREAM A225
+       PCME DIESEL
+       PCM USAGE:
+           L49    PFI  6.5L         VIN = P 1994  C,K,G   4L60E/MANUAL TRANS.
+           L56    PFI  6.5L TURBO   VIN = S 1994  C,K
+           L65    PFI  6.5L TURBO   VIN = F 1994  C,K,P   MANUAL TRAN.
+        *   L49    PFI  6.5L         VIN = P  1995  C,K,G   4L60E/MANUAL TRANS.
+        *   L56    PFI  6.5L TURBO   VIN = S  1995  C,K     4L80E
+        *   L65    PFI  6.5L TURBO   VIN = F  1995  C,K,P   MANUAL TRANS.
+
+
+  DATA STREAM A226
+       4L80E DIESEL TRANS.
+       PCME USAGE:
+            L49    PFI  6.5L         VIN = P 1994  C,K,G   4L60E/MANUAL TRANS.
+            L56    PFI  6.5L TURBO   VIN = S 1994  C,K
+         *  L49    PFI  6.5L         VIN = P  1995  C,K,G   4L60E/MANUAL TRANS.
+         *  L56    PFI  6.5L TURBO   VIN = S  1995  C,K     4L80E
+
+
+  DATA STREAM A227
+   ENGINE USAGE:
+              3.1L SFI   (L82)   (VIN=M)   93  SFI-66U  3W
+
+
+  DATA STREAM A228
+   ENGINE USAGE:
+              4.9L SFI   (L26)   (VIN=B)   94  6E,K,Ksp - CAR
+              4.9L SFI   (L26)   (VIN=B)   95  K,Ksp - CAR
+
+
+
+* DATA STREAM A229
+   DIC USAGE:
+              1995       3G - CAR
+
+
+  DATA STREAM A230
+       HVAC USAGE:
+              1994             1,4B CAR
+              1994             6D     CAR
+*             1995             4B  CAR
+*             1995             6D  CAR
+
+
+  DATA STREAM A231
+       HVAC USAGE:
+              1994             3C,H CAR
+              1994             4C,H CAR
+              1994             2H   CAR
+*             1995             3,4C 2,3,4H CAR
+
+
+  DATA STREAM A232
+       HVAC USAGE:
+              1995             3,4G - CAR
+
+
+  DATA STREAM A233
+       RAC USAGE:
+                 1994          2,3,4H 3,4C 3W
+*                1995          3,4G
+*                1995   2,3,4H 3,4C 3W
+
+
+  DATA STREAM A234
+       IPC USAGE:
+              1994             3C,H CAR
+*             1995             3C,H CAR
+
+
+* DATA STREAM A235
+       IPC USAGE:
+              1995             3G - CAR
+
+
+* DATA STREAM A236
+       IPC USAGE:
+              1995             4G   CAR
+
+
+  DATA STREAM A237
+       IPC USAGE:
+              1994 CADILLAC ELDORADO/SEVILLE   (VIN = E)
+              1995 CADILLAC ELDORADO/SEVILLE   (VIN = E)
+
+
+  DATA STREAM A238
+       RTD USAGE:
+                 1994   6E,K - CAR
+
+
+
+  DATA STREAM A239
+       CCM USAGE:
+                 1994 "Y" CAR WITH 5.7L (LT1) (VIN=P) AND  5.7L  (LT5) (VIN=J)
+
+
+
+  DATA STREAM A240              TEVES ABS/ASR
+       ABS/ASR USAGE:
+                     1994    2,3,4H 3,4C
+*                    1995    3,4G
+                     1995    2,3,4H 3,4C
+
+
+  DATA STREAM A241          BOSCH ABS
+       CAR LINE:
+                1994   1,4B 6E,K,Ksp - CARS
+
+
+  DATA STREAM A242
+       94' REDESIGN DERM (SIR) DRIVER OR DRIVER/PASSENGER
+       USAGE:
+             1993  M/L
+             1994  3,4C 2,3,4H 3,4A 2,3,4N 1,2,3U 1Y 1M 1R
+                   1W 1Z 1,2F 6E 6K 6V 1L G-VAN M/L TRUCK
+*            1995  3,4G
+*        1995  1,2F 1L 3,4A 2,3,4N 1,2,3U 1Y
+               M,L,S,T,G TRUCK
+
+
+  DATA STREAM A243
+      ENGINE USAGE:
+              3.1L PFI   (L64)    (VIN=W) 93   1W-CAR   (VFV)
+
+
+  DATA STREAM A244
+       BOSCH ABS/ASR
+       CAR LINE:  1994   6Ksp W/L26 ENGINE
+
+
+   DATA STREAM A245
+        DELCO 6 ABS
+        USAGE:
+                1994 1S CAR
+                1995 1S CAR
+
+
+   DATA STREAM A246
+        DELCO 6 ABS/EVO
+        USAGE:
+               1994 1,2J 1L 2,3,4N
+    ##      1995 2,3,4N ABS AND VES CARS
+            1995 1L, 4N ABS ONLY
+
+
+   DATA STREAM A247
+        DELCO 6 ABS
+        USAGE:
+                   1994 1,2,3,4W 1,2,3U 3,4A
+           1995 1W ABS ONLY CARS
+
+
+   DATA STREAM A248      not used
+
+
+   DATA STREAM A249
+        DELCO 6 ABS
+        USAGE:
+                   1994 1,2F
+
+
+   DATA STREAM A250
+        DELCO 6 ABS/ASR
+        USAGE:
+                   1994 1,2F
+                   1995 1,2F
+
+
+   DATA STREAM A251
+        DELCO 6 ABS/ASR
+        USAGE:
+                   1994 1,2,3U
+                   1995 1,2,3U
+
+
+   DATA STREAM A252
+        DELCO SDMA/SIR
+        USAGE:
+            1994        1,4B 6D 1,2W  CAR
+*           1995        2,3,4H 3,4C 1,4B 6D 1W CAR
+
+
+  DATA STREAM A253
+       CAR LINE:
+              4.6L MFI   (L37)   (VIN=9)   93  6E,K
+              4.6L MFI   (LD8)   (VIN=Y)   93  6E
+
+
+  DATA STREAM A254
+       CAR LINE:
+              4.6L MFI   (L37)   (VIN=9)   94  6E,K,Ksp
+*             4.6L SFI   (L37)   (VIN=9)   95   6E,K
+              4.6L MFI   (LD8)   (VIN=Y)   94  6E
+*             4.6L SFI   (LD8)   (VIN=Y)   95   6E,K,Ksp
+
+
+* DATA STREAM A255
+       CAR LINE:
+              4.0L MFI   (L47)   (VIN=c)   95  3G
+
+
+  DATA STREAM A256
+       ENGINE USAGE:
+              3.1L SFI   (L82)   (VIN=M)   94  SFI-66U  1L
+
+
+  DATA STREAM A257
+          F-CAR WITH ELECTRONIC TRANSMISSION (4L60E)
+       ENGINE USAGE:
+              3.4L SFI   (L32)   (VIN=S)   94' SFI-66U  1,2F
+
+
+  DATA STREAM A258
+          F-CAR WITH MANUAL TRANSMISSION
+       ENGINE USAGE:
+              3.4L SFI   (L32)   (VIN=S)   94' SFI-66U  1,2F
+
+
+  DATA STREAM A259
+       ENGINE USAGE:
+              3.1L SFI   (L82)   (VIN=M)   94  SFI-66U  2,3,4N
+*             3.1L SFI   (L82)   (VIN=M)   95  SFI-66U  2,3,4N
+
+
+  DATA STREAM A260
+          W-CAR WITH ELECTRONIC TRANSMISSION (4T60E)
+       ENGINE USAGE:
+              3.1L SFI   (L82)   (VIN=M)   94  SFI-66U  1,2,3,4W
+*             3.1L SFI   (L82)   (VIN=M)   95  SFI-66U  1,2,3,4W
+
+
+  DATA STREAM A261
+          W-CAR WITH AUTO 3 SPEED TRANSMISSION
+       ENGINE USAGE:
+              3.1L SFI   (L82)   (VIN=M)   94  SFI-66U  1,2,3,4W
+*             3.1L SFI   (L82)   (VIN=M)   95  SFI-66U  1,2,3,4W
+
+
+  DATA STREAM A262           not used
+
+
+  DATA STREAM A263
+       ENGINE USAGE:
+              3.1L  SFI  (L82) (VIN = M)    1994   3,4A
+*      3.1L  SFI  (L82) (VIN = M)    1995   3,4A
+
+
+  DATA STREAM A264
+       ENGINE USAGE:
+              3.4L  SFI  (LQ1) (VIN = X)    1994   1,2,3W
+*      3.4L  SFI  (LQ1) (VIN = X)    1995   1,2,3W
+
+
+  DATA STREAM A265
+       ENGINE USAGE:
+              LN2  MFI   2.2L    94  VIN = 4   S/T TRUCK
+              LN2  MFI   2.2L    95  VIN = 4   S/T TRUCK
+
+
+  DATA STREAM A266          not used
+
+
+  DATA STREAM A267
+       ENGINE USAGE:
+              LH6 DIESEL 6.2L   (VIN=C)   93   C,K,G
+
+
+  DATA STREAM A268
+       TCM USAGE:
+                  L57 DIESEL 6.5L        94  VIN = Y   P,G
+                * L57 DIESEL 6.5L        95  VIN = Y   P,G
+
+
+  DATA STREAM A269
+       ENGINE USAGE:
+         2.3L  PFI OHC        L40    (VIN=3)   1994 2,3,4N
+         2.3L  PFI DOHC H.O.  LG0    (VIN=A)   1994 1L 2,3N
+         2.2L  PFI            LN2    (VIN=4)   1994 1J,L, 3,4A
+*        2.2L  PFI            LN2    (VIN=4)   1995 1J,L,W 3,4A
+
+
+  DATA STREAM A270   not assigned
+  DATA STREAM A271   not assigned
+  DATA STREAM A272   not assigned
+
+
+  DATA STREAM A273
+   ENGINE USAGE:
+       5.7L  MFI  (LT1) (VIN = P)    1994 1,2F - CARS MANUAL TRANSMISSION
+*      5.7L  SFI  (LT1) (VIN = P)    1995 1,2F - CARS MANUAL TRANSMISSION
+
+
+  DATA STREAM A274
+   ENGINE USAGE:
+       5.7L  MFI  (LT1) (VIN = P)    1994 1,2F - CARS AUTOMATIC TRANSMISSION
+*      5.7L  SFI  (LT1) (VIN = P)    1995 1,2F - CARS AUTOMATIC TRANSMISSION
+
+
+  DATA STREAM A275
+   ENGINE USAGE:
+       5.7L  MFI  (LT1) (VIN = P)    1994 1Y - CAR MANUAL TRANSMISSION
+*      5.7L  SFI  (LT1) (VIN = P)    1995 1Y - CAR MANUAL TRANSMISSION
+
+
+  DATA STREAM A276
+   ENGINE USAGE:
+       5.7L  SFI  (LT1) (VIN = P)    1994 1,4B 6D - CARS
+       4.3L  SFI  (L99) (VIN = T)    1994 1B - CAR
+*      5.7L  SFI  (LT1) (VIN = P)    1995 1,4B 6D - CARS
+*      4.3L  SFI  (L99) (VIN = W)    1995 1B - CAR
+
+
+  DATA STREAM A277
+   ENGINE USAGE:
+              3.1L SFI   (L82)   (VIN=M)   95  SFI-66U  1L
+
+
+  DATA STREAM A278
+   ENGINE USAGE:
+              3.4L SFI   (L32)   (VIN=S)   95' SFI-66U  1,2F
+
+
+  DATA STREAM A279   not assigned
+
+
+  DATA STREAM A280
+   ENGINE USAGE:
+       3.8L  SFI  (L36) (VIN = K)    1995 3,4C, 2,3H, 4G
+
+
+  DATA STREAM A281
+        BOSCH ABS 5
+        USAGE:
+                1995   1,4B - CARS
+
+
+  DATA STREAM A282  NOT USED      (PROGRAM CANCELED)
+        BOSCH ABS 5
+        USAGE:
+                1995   6Ksp - CARS
+
+
+   DATA STREAM A283
+        DELCO 6 ABS
+        USAGE:
+              1995 1M
+
+
+   DATA STREAM A284
+        DELCO 6 ABS/TCS   (VES DROPPED)
+        USAGE:
+            1995 1, 2J ABS CARS
+            1995 2J ABS/TCS CARS ONLY
+
+
+   DATA STREAM A285
+        DELCO 6 ABS/TCS   (VES DROPPED)
+        USAGE:
+            1995 2,3,4W  ABS AND VES ONLY CARS
+
+
+   DATA STREAM A286
+        DELCO 6 ABS
+        USAGE:
+            1995 1,2F ABS
+
+
+  DATA STREAM A287
+       BOSCH ABS/TCS
+       CAR LINE:  1995   6E/K/KSP CARS
+
+
+  DATA STREAM A288
+       BOSCH ABS/TCS
+       CAR LINE:  1995 Y CARS
+
+
+  DATA STREAM A289   not assigned
+
+
+  DATA STREAM A290
+       BOSCH ABS/TCS
+       CAR LINE:  1995 D CARS
+
+
+  DATA STREAM A291   not assigned
+  DATA STREAM A292   not assigned
+
+
+   DATA STREAM A293
+        DELCO 6 ABS
+        USAGE:
+            1995 3,4A  2,3,4W  1,2,3U ABS ONLY CARS
+
+
+   DATA STREAM A294
+
+        IPC USAGE:
+               1995    1,2J
+
+
+   DATA STREAM A295
+        DELCO SDM B/SIR
+        USAGE:
+             1995      2,3,4W
+
+
+   DATA STREAM A296
+        DELCO SDM E/SIR
+        USAGE:
+             1995      6E,K,Ksp
+
+
+   DATA STREAM A297
+       CCM USAGE:
+                 1995 "Y" CAR WITH 5.7L (LT1) (VIN=P) AND  5.7L  (LT5) (VIN=J)
+
+  DATA STREAM A298   not assigned
+  DATA STREAM A299   not assigned
+
+   DATA STREAM A300
+        DELCO SDM AI/SIR
+        USAGE:
+             1995              1M
+
+
+  DATA STREAM A201   not assigned
+  DATA STREAM A202   not assigned
+  DATA STREAM A203   not assigned
+  DATA STREAM A204   not assigned
+  DATA STREAM A205   not assigned
+  DATA STREAM A206   not assigned
+  DATA STREAM A207   not assigned
+  DATA STREAM A208   not assigned
+
+
+  DATA STREAM A309
+
+       OBD-II   VCMX-A
+       USAGE:   4.3L   L35  VIN=W    1995 S,T TRUCKS
+

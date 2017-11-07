@@ -1,0 +1,363 @@
+                 DATA STREAM  A23  SPECIFICATION
+
+ ENGINE USAGE:
+    4.1L DFI - (LT8) - (8) - 86,87 CADILLAC "E" AND "K" CAR
+
+ DATA PIN: READ DATA ON PIN "L"/"M" OF ALDL CONNECTOR
+
+ BAUD RATE: 8192
+..PAGE
+
+                      1986, 1987 CADILLAC E/K
+                ALDL MODING AND DATA INFORMATION
+
+    The ALDL moding of the 1986, 1987 Cadillac Eldorado and Sev
+ille (E/K) vehicles uses the standard GM30 communication protocol
+with access points at pin L and M of the vehicle ALDL connector.
+The GM30 communication protocol uses a "poll/respond" message
+format on an 8192 baud "Master/Slave" UART system.                                  
+    While the communication protocol is a GM30 standard, the con
+tent of the serial data and the ALDL modes are not standard. 
+The standard operational communication
+data is in the form of periodic "poll and respond" data packets
+sent between the master device (BCM) and the slave devices (ECM,
+IPC, CCDIC, and HVAC Programmer).
+    Following the ALDL listing is a listing of the standard oper
+rational communication.
+..page
+..head01           CADILLAC E/K ALDL LISTING
+..head03 DEVICE CODE $F1 - BCM DATA
+..head05 NUMBER OF DATA WORDS - 42
+..head07 WORD   BIT   DESCRIPTION                   EQUATION
+..head08  NO.   NO.                               where N = A/D counts
+
+  1          PROM ID WORD 1                MOST SIGNIFICANT
+  2          PROM ID WORD 2                LEAST SIGNIFICANT
+  3          BCM MODE STATUS WORD 1
+  4          BCM MODE STATUS WORD 2
+  5          MALF CODES                    Bit value 1 =
+        7     B110 MALF CODE                        Malfunction
+        6     B111 MALF CODE
+        5     B112 MALF CODE
+        4     B113 MALF CODE
+        3     B115 MALF CODE
+        2          NOT USED
+        1     B119 MALF CODE
+        0     B120 MALF CODE
+  6          MALF CODES
+        7     B121 MALF CODE
+        6     B122 MALF CODE
+        5     B123 MALF CODE
+        4     B124 MALF CODE
+        3     B127 MALF CODE
+        2     B128 MALF CODE
+        1          NOT USED
+        0     B334 MALF CODE
+  7          MALF CODES
+        7     B335 MALF CODE
+        6     B336 MALF CODE
+        5     B337 MALF CODE
+        4     B410 MALF CODE
+        3     B411 MALF CODE
+        2     B412 MALF CODE
+        1          NOT USED
+        0     B420 MALF CODE
+  8          MALF CODES
+        7          NOT USED
+        6          NOT USED
+        5          NOT USED
+        4     B440 MALF CODE
+        3     B441 MALF CODE
+        2          NOT USED
+        1     B446 MALF CODE
+        0     B446 MALF CODE
+  9          MALF CODES
+        7     B448 MALF CODE
+        6     B449 MALF CODE
+        5     B450 MALF CODE
+        4          NOT USED
+        3     B552 MALF CODE
+        2     B556 MALF CODE
+        1     B660 MALF CODE
+        0     B663 MALF CODE
+..page
+..head05
+  10         MALF CODES
+        7     B664 MALF CODE
+        6     B665 MALF CODE
+        5     B666 MALF CODE
+        4     B667 MALF CODE
+        3     B671 MALF CODE
+        2     B672 MALF CODE
+        1     B673 MALF CODE
+        0          NOT USED
+  11         NOT USED
+  12         HVAC AIR DELIVERY MODE        CODE
+                byte value   mode description
+                    0          MAX A/C
+                    1          A/C
+                    2          INTERMEDIATE
+                    3          HEATER
+                    4          OFF
+                    5          NORMAL PURGE
+                    6          COLD PURGE
+                    7          FRONT DEFROST
+  13         HVAC SET TEMP (DEG F)         DEG F = N
+  14         IN CAR TEMPERATURE (C)        DEG C=N-40
+  15         TWILIGHT POTENTIOMETER (%)    %=N/2.55
+  16         PRND321 SENSOR (%)            %=(N16/N22) * 100
+  17         CRUISE SERVO (%)              %=N/2.55
+≥ 18         FUEL LEVEL (GALS)             GAL=(N18/N22)*10
+  19         VEHICLE SPEED                 KPH=N
+  20         CRUISE SET SPEED              KPH=N
+  21         SUNLOAD TEMPERATURE (C)       DEG C=N-40
+  22         IGNITION 1 VOLTAGE            VOLTS=N*16.4/255
+  23         A/C LO SIDE TEMPERATURE (C)   DEG C=N-40
+  24         A/C HI SIDE TEMPERATURE (C)   DEG C=N-40
+  25         PARKLAMP REFERENCE (VOLTS)    VOLTS=N*16.4/255
+  26         TWILIGHT PHOTOCELL (%)        %=(N/255) * 100
+  27         GENERATOR F-TERMINAL (%)      %=(N/255) * 100
+  28         DIMMING POT (%)               %=(N/255) * 100
+  29         OUTSIDE TEMPERATURE (C)       DEG C=N-40
+  30         AIR MIX DOOR POSITION (%)     %=(1-N/255) * 100
+  31         MODE WORD
+         7    ID STRAP A                    1=EXPORT
+         6    ID STRAP B                    (ALWAYS=0)
+         5    QDM 2 FAULT STATUS            1=FAULT
+         4    NOT USED
+         3    QDM 1 FAULT STATUS            1=FAULT
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+..page
+  32         MODE WORD
+         7    NOT USED
+         6    COOLING FANS FEEDBACK         1=FANS ON
+         5    NOT USED
+         4    TRUNK AJAR                    1=AJAR
+         3    NOT USED
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+  33         SPARE
+  34         MODE WORD
+         7    SERVICE EMISSION SYSTEM       1=ACKNOWLEDGED
+         6    NOT USED
+         5    FRONT/DRIV DOOR AJAR          1=AJAR
+         4    NOT USED
+         3    REAR/PASS DOOR AJAR           1=AJAR
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+  35         MODE WORD
+         7    NOT USED
+         6    WASHER FLUID LEVEL            1=LOW
+         5    COOLANT LEVEL                 1=LOW
+         4    REFRIGERANT PRESSURE          1=LOW
+         3    GENERATOR I-TERM STATUS       1=INPUT HIGH
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+  36         MODE WORD
+         7    REVERSE INPUT 1=REVERSE
+         6    CRUISE S/C                    1=ACTIVE
+         5    CRUISE ON/OFF                 1=ON
+         4    CRUISE R/A                    1=ACTIVE
+         3    CRUISE ENABLE (BRAKE)         1=CRUISE ENABLED
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+  37         MODE WORD
+         7    NOT USED
+         6    IGNITION 3 STATUS             1=IGN ON
+         5    CRUISE VENT SOLENOID FDBK     1=SOLENOID ENERGIZED
+         4    CRUISE VAC SOLENOID FDBK      1=SOLENOID ENERGIZED
+         3    CRANK STATUS                  1=CRANK ACTIVE
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+..page
+  38         MODE WORD
+         7    PARKLAMPS                     1=ON
+         6    TIME OF DAY SWITCH            1=ON
+         5    DOOR HANDLE SWITCH            1=HANDLE DEPRESSED
+         4    PANEL LAMP SWITCH (CTSY)      1=ON
+         3    DOOR JAMB SWITCH              1=DOOR OPEN
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+  39         MODE WORD
+         7    HIGH BEAM RELAY               1=ON
+         6    DELAYED ACC. RELAY            1=ON
+         5    COURTESY LAMP RELAY           1=ON
+         4    TWILIGHT RELAY                1=ON
+         3    NOT USED
+         2    GENERATOR DISABLE             1=DISABLED
+         1    NOT USED
+         0    NOT USED
+  40         MODE WORD
+         7    CRUISE VAC SOLENOID 1=ENERGIZED
+         6    NOT USED
+         5    NOT USED
+         4    CRUISE VENT SOLENOID          1=ENERGIZED
+         3    PARK/NEUTRAL OUTPUT (ADL)     1=P/N
+         2    NOT USED
+         1    NOT USED
+         0    NOT USED
+  41         COMMANDED BLOWER VOLTAGE      VOLTS=(N*.08667)-2.9
+  42         COMMANDED AIR MIX DOOR        %=(1-N/255) * 100
+             POSITION
+..PAGE
+..head01 DEVICE CODE $4F - ECM DATA
+..head05  WORD   BIT  DESCRIPTION                   EQUATION
+..head06   NO.   NO.                             where N = A/D counts
+..head03 NUMBER OF DATA WORDS - 31
+
+  1          ECM PROM ID WORD 1
+  2          ECM PROM ID WORD 2
+  3          MALFUNCTION FLAG WORD 0                     CURRENT CODES ONLY
+         7    E012C MALF CODE   NO DISTRIBUTOR PULSES
+         6    E013C MALF CODE   O2 SENSOR NOT READY
+         5    E014C MALF CODE   COOLANT TEMPERATURE SENSOR FAILED HIGH
+         4    E015C MALF CODE   COOLANT TEMPERATURE SENSOR FAILED LOW
+         3    E016C MALF CODE   SYSTEM VOLTAGE OUT OF RANGE
+         2         NOT USED
+         1    E018C MALF CODE   CRANK DISCRETE FAILED LOW
+         0    E019C MALF CODE   FUEL PUMP VOLTAGE FAILED HIGH
+  4          MALFUNCTION FLAG WORD 1
+         7    E020C MALF CODE   FUEL PUMP VOLTAGE FAILED LOW
+         6    E021C MALF CODE   THROTTLE POSITION SENSOR FAILED HIGH
+         5    E022C MALF CODE   THROTTLE POSITION SENSOR FAILED LOW
+         4    E023C MALF CODE   IMPROVED BYPASS MONITOR FAILED
+         3    E024C MALF CODE   SPEED SENSOR FAIL
+         2         NOT USED
+         1    E026C MALF CODE   THROTTLE SWITCH SHORTED
+         0    E027C MALF CODE   THROTTLE SWITCH OPEN
+  5          MALFUNCTION FLAG WORD 2
+         7    E028C MALF CODE   FOURTH GEAR DISCRETE FAILED OPEN
+         6         NOT USED     FOURTH GEAR DISCRETE FAILED CLOSED
+         5    E030C MALF CODE   ISC MOTOR FAIL
+         4    E031C MALF CODE   MANIFOLD PRESSURE SENSOR FAILED HIGH
+         3    E032C MALF CODE   MANIFOLD PRESSURE SENSOR FAILED LOW
+         2          NOT USED
+         1          NOT USED    MANIFOLD PRESSURE HOSE OFF
+         0          NOT USED
+  6          MALFUNCTION FLAG WORD 3
+         7    E036C MALF CODE
+         6    E037C MALF CODE   MANIFOLD TEMPERATURE SENSOR FAILED HIGH
+         5    E038C MALF CODE   MANIFOLD TEMPERATURE SENSOR FAILED LOW
+         4    E039C MALF CODE   TCC FAILED
+         3    E040C MALF CODE   POWER STEER LOAD FAILED
+         2          NOT USED
+         1          NOT USED
+         0          NOT USED
+
+..PAGE
+..head03
+
+  7          MALFUNCTION FLAG WORD 4
+         7    E044C MALF CODE   OXYGEN SENSOR LEAN
+         6    E045C MALF CODE   OXYGEN SENSOR RICH
+         5          NOT USED
+         4    E047C MALF CODE   LOSS OF BCM TO ECM COMMUNICATIONS
+         3    E048C MALF CODE   EGR SYSTEM FAILURE
+         2          NOT USED
+         1          NOT USED
+         0    E051C MALF CODE   PROM CHECK ERROR
+  8          MALFUNCTION FLAG WORD 5                             HISTORY CODES
+         7    E052H MALF CODE   KEEP-ALIVE RAM NOT INTACT
+         6    E053H MALF CODE   INTERMITTENT REFERENCE PULSES
+         5          NOT USED
+         4    E055H MALF CODE   TPS LEARNING FAIL
+         3          NOT USED
+         2          NOT USED
+         1          NOT USED
+         0    E059H MALF CODE   TRANSMISSION THERMISTOR TEMPERATURE
+  9          NOT USED
+  10         TRANS TEMPERATURE             COUNTS ONLY
+  11         COOLANT TEMPERATURE (DEG C)   DEG C=(N*.75) - 40
+  12         O2 CROSS COUNTS               COUNTS
+  13         O2 SENSOR VOLTAGE (mV)        mV=N*4.448
+  14         BATTERY VOLTAGE               VOLTS=N/10
+  15         MAP (kPA)                     kPA=(N*.323)+20.4
+  16         FUEL INTEGRATOR               COUNTS
+  17         LEARNED TPS (DEGREES)         DEGREES=(N*.39)-10
+  18         ENGINE RPM                    RPM=N*25
+  19         VEHICLE SPEED (KPH)           KPH=N
+  20         INJECTOR PWM WORD 1 (ms)      ms=
+  21         INJECTOR PWM WORD 2 (ms)       N20*3.0966+N21*.01526
+  22         SPARK ADVANCE (DEG)           DEG=N*.3516
+  23         MANIFOLD AIR TEMP (DEG C)     DEG C=(N*.75) - 40
+  24         COMPUTED BAROMETER (kPA)      kPA=(N*.164) + 61
+..PAGE
+
+  25         MODE WORD
+         7    4TH GEAR STATUS               1=4TH GEAR ACTIVE
+         6    OPEN/CLOSED LOOP              1=CLOSED LOOP
+         5    P/N STATUS                    1=P/N
+         4    AIR DIVERT STATUS             1=DIVERT ON
+         3    AIR SWITCH STATUS             1=SWITCH ON
+         2    BRAKE SWITCH STATUS           1=BRAKE ON
+         1    THROTTLE SWITCH STATUS        1=THROTTLE OPEN
+         0    CRANK STATUS                  1=CRANK ACTIVE
+  26         MODE WORD
+         7    3RD GEAR STATUS               1=3RD GEAR ACTIVE
+         6    VCC STATUS                    1=VCC SOL ON
+         5    ISC DIRECTION                 1=FORWARD
+         4    EFE STATUS                    1=ON
+         3    POWER STEERING PRESSURE       1=HI PRESSURE
+         2    ENGINE CONTROL SYSTEM         1=LAMP ON
+         1    RICH/LEAN STATUS              1=RICH
+         0    SPARE
+  27         ECM ALDL MODE WORD 1          COUNTS
+  28         ECM ALDL MODE WORD 2          COUNTS
+  29         BLOCK LEARN MULTIPLIER        COUNTS
+≥ 30         EGR DUTY CYCLE (%)            % = 100 - (N * .3922)
+  31         IGNITION CYCLE COUNTER        COUNTS
+..PAGE
+
+              CADILLAC E/K ALDL MODES OF OPERATION
+           
+    GENERAL:  ALDL moding on the Cadillac E/K vehicles is initi
+ated by the ALDL device responding to the BCM $F0 device code
+with the appropriate 7 byte response.  This initiation sequence
+is identical to other 1986 GM30 vehicles, except that the select
+able modes are different.
+
+    ALDL modes of operation are selected by providing the
+appropriate mode number (mode numbers provided in this listing
+are given in decimal) in the 3rd thru 6th bytes of the ALDL
+initiation response.  Bytes 3 and 4 are allotted for ECM modes
+and bytes 5 and 6 are allotted for BCM modes.
+
+    Following is a listing of the available ALDL modes and their
+descriptions:
+
+            CADILLAC E/K ALDL BCM MODES OF OPERATION
+
+  MODE NO.   MODE DESCRIPTION
+
+
+
+  BCM ALDL modes 1 thru 8 send the BCM ALDL data list (device
+$F1) and execute the additional listed actions:
+
+     1       Service ALDL - Send data and no additional action
+
+..PAGE
+
+            CADILLAC E/K ALDL ECM MODES OF OPERATION
+
+
+  MODE NO.  MODE DESCRIPTION
+
+The following ECM ALDL modes send the ECM ALDL data list (device
+$4F) and the additional actions listed:
+
+    1       Service ALDL - send ALDL data, no additional action
+LAYOUT 000
+:ê  \B 
+  
+Su¶    <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      \B
+  <

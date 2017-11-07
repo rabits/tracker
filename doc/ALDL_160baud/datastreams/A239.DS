@@ -1,0 +1,360 @@
+
+                        DATA STREAM A239   SPECIFICATION
+
+
+
+
+
+..PAGE
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       CCM  USAGE:
+                 1994 "Y" CAR WITH 5.7L (LT1) (VIN=P) AND  5.7L  (LT5) (VIN=J)
+
+
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+..END
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - CHECKSUM
+
+
+        F0 POLL (CCM ALDL DEVICE PRESENCE CHECK)
+                - MESSAGE ID     = $F0
+                - MESSAGE LENGTH = $56
+                - CCM ID         = $F1
+                - CHECKSUM
+
+
+
+        MODE 1 (TRANSMIT MESSAGE 0)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $00
+                - CHECKSUM
+
+                THE CCM RESPONDS WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $7A
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 36
+                - CHECKSUM
+
+        MODE 1 (TRANSMIT MESSAGE 1)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $01
+                - CHECKSUM
+
+                THE CCM RESPONDS WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $6D
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 23
+                - CHECKSUM
+..page
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - MESSAGE CODE   = $10
+                - CHECKSUM
+
+        THE CCM RESPONDS BY TRANSMITTING THE NORMAL MODE MESSAGE
+
+
+
+        MODE 8 (DISABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - CHECKSUM
+
+
+
+        MODE 9 (ENABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $09
+                - CHECKSUM
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+
+..PAGE
+..HEAD02L CCM ALDL DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 36
+..HEAD04L CCM ALDL MODE 1 DATA LIST (MESSAGE 0)
+ BYTE  BIT  DESCRIPTION
+ ----  ---  -------------
+ 1     0-2  UNIVERSAL THEFT DETERRENT STATE
+                0 = PASSIVE
+                1 = ACTIVE
+                2 = DOORS ARMED
+                3 = DOORS AND HATCH ARMED
+                4 = ALARM
+                5 = ALARM TIMED OUT
+       3    FEDS FUEL ENABLE           0 = DISABLE   1 = ENABLE
+       4    ENGLISH/METRIC STATUS      0 = ENGLISH   1 = METRIC
+       5    CURRENT FAULT              0 = NO        1 = YES
+       6    NOT USED
+       7    NOT USED
+
+ 2     0    DOOR KEY SWITCH            0 = NORMAL    1 = UNLOCK
+       1    RIGHT DOOR AJAR            0 = CLOSED    1 = OPEN
+       2    LEFT DOOR AJAR             0 = CLOSED    1 = OPEN
+       3    KEY IN IGNITION            0 = NO        1 = YES
+       4    HATCH AJAR                 0 = CLOSED    1 = OPEN
+       5    POWER DOOR UNLOCK          0 = NO        1 = YES
+       6    POWER DOOR LOCK            0 = NO        1 = YES
+       7    NOT USED
+
+ 3     0    PARKING LIGHTS             0 = OFF       1 = ON
+       1    REAR DEFOG                 0 = OFF       1 = ON  (90mS PULSE ON C68)
+       2    SEAT BELT SWITCH           0 = OFF       1 = ON
+       3    HIGH BEAM                  0 = OFF       1 = ON
+       4    NOT USED
+       5    OIL LEVEL SWITCH           0 = LOW       1 = NORMAL
+       6    NOT USED
+       7    NOT USED
+
+ 4     0    IGNITION 3 PRESENT         0 = NO        1 = YES
+       1    IGNITION 1 PRESENT         0 = NO        1 = YES
+       2    DIAGNOSTIC ENABLE          0 = DISABLE   1 = ENABLE
+       3    NOT USED
+       4    FASTEN SEAT BELTS INPUT    0 = INACTIVE  1 = ACTIVE
+       5    NOT USED
+       6    NOT USED
+       7    NOT USED
+
+ 5     0    CHANGE OIL TELLTALE        0 = OFF       1 = ON
+       1    CHECK GAGES TELLTALE       0 = OFF       1 = ON
+       2    FASTEN SEAT BELT TELLTALE  0 = OFF       1 = ON
+       3    SECURITY LAMP TELLTALE     0 = OFF       1 = ON
+       4    DELAYED ACCESSORY BUS      0 = OFF       1 = ON
+       5    HIGH BEAM INDICATOR DIM    0 = 60%       1 = 100%
+       6    OIL LEVEL TELLTALE         0 = OFF       1 = ON
+       7    NOT USED
+
+ 6     0    LCD BLANKING CONTROL       0 = OFF       1 = ON
+       1    HORN RELAY                 0 = OFF       1 = ON
+       2    REAR DEFOG RELAY           0 = OFF       1 = ON
+       3    COURTESY LAMP RELAY        0 = OFF       1 = ON
+       4    CRANK RELAY                0 = OFF       1 = ON
+       5    CHIME 0                    0 = OFF       1 = ON
+       6    CHIME 1                    0 = OFF       1 = ON
+       7    NOT USED
+
+ 7     0    LCD BLANKING CONTROL-FDBK  0 = OFF       1 = ON
+       1    HORN RELAY-FDBK            0 = OFF       1 = ON
+       2    REAR DEFOG RELAY-FDBK      0 = OFF       1 = ON
+       3    COURTESY LAMP RELAY-FDBK   0 = OFF       1 = ON
+       4    CRANK RELAY-FDBK           0 = OFF       1 = ON
+       5    NOT USED
+       6    NOT USED
+       7    NOT USED
+
+ 8          DIC SWITCH A/D COUNTS                N = COUNTS (SEE TABLE 1)
+ 9          UNFILTERED FUEL LEVEL                GAL = N*.1
+ 10         FILTERED DIMMING POTENTIOMETER       N = COUNTS
+ 11         VATS KEY A/D COUNTS                  N = COUNTS (SEE TABLE 2)
+ 12         AMBIENT LIGHT SENSOR A/D COUNTS      N = COUNTS
+ 13         VEHICLE SPEED                        MPH = N
+                                                 KPH = N*1.609
+ 14         IGNITION STATUS                      VOLTS = N*.1
+ 15         SWITCHED BATTERY VOLTAGE             VOLTS = N*.1
+ 16         CLUSTER GAGE BACKLIGHT DIMMING PWM   %DUTY CYCLE = N
+ 17         CLUSTER LCD BACKLIGHT DIMMING PWM    %DUTY CYCLE = N
+ 18         HVAC AND RADIO LCD BACKLIGHT DIMMING %DUTY CYCLE = N
+ 19         LED INDICATOR DIMMING PWM            %DUTY CYCLE = N
+ 20         SEASON ODOMETER MSB
+ 21         SEASON ODOMETER LSB                  MILES = ([N20]*250+[N21])*16
+ 22         OIL MONITOR EFFECTIVE REVOLUTION TO SERVICE COUNTER
+                                                 REVOLUTIONS = N*100,000
+ 23         REAR DEFOG TIMER                     SECONDS = N*5
+ 24         COURTESY LAMP TIMER                  SECONDS = N
+
+ 25         CURRENT MALFUNCTION WORD 1
+       0    MALF CODE 22         1 = DEFOG RELAY COIL SHORT-BAT/OPEN CCM
+       1    MALF CODE 21         1 = HORN RELAY COIL SHORT-BAT/OPEN CCM
+       2    NOT USED
+       3    MALF CODE 16         1 = IGNITION 3 FUSE BLOWN OR MISSING
+       4    MALF CODE 15         1 = FUEL LEVEL SENSOR OPEN/SHORT TO BAT
+       5    MALF CODE 14         1 = DIC SWITCH SHORTED TO GROUND
+       6    MALF CODE 13         1 = DIC SWITCH OPEN/SHORT TO BAT
+       7    MALF CODE 12         1 = NO MALFUNCTION CODE STORED
+
+ 26         CURRENT MALFUNCTION WORD 2
+       0    MALF CODE 31         1 = LCD DATA SHORT TO BAT/OPEN CCM
+       1    NOT USED
+       2    NOT USED
+       3    MALF CODE 27         1 = LCD BLANKING CTL SHORT TO GND/OPEN
+       4    MALF CODE 26         1 = LCD BLANKING CTL SHORT-BAT/OPEN CCM
+       5    MALF CODE 25         1 = CTSY RELAY COIL SHORT TO GND/OPEN
+       6    MALF CODE 24         1 = CTSY RELAY COIL SHORT-BAT/OPEN CCM
+       7    MALF CODE 23         1 = DEFOG RELAY COIL SHORT IT GND/OPEN
+ 27         CURRENT MALFUNCTION WORD 3
+       0    MOT USED
+       1    MALF CODE 38         1 = M CLOCK SHORT TO GND/OPEN
+       2    MALF CODE 37         1 = M CLOCK SHORT-BAT/OPEN CCM
+       3    MALF CODE 36         1 = DATA STROBE SHORT TO GND/OPEN
+       4    MALF CODE 35         1 = DATA STROBE SHORT-BAT/OPEN CCM
+       5    MALF CODE 34         1 = DATA CLOCK SHORT TO GND/OPEN
+       6    MALF CODE 33         1 = DATA CLOCK SHORT-BAT/OPEN CCM
+       7    MALF CODE 32         1 = LCD DATA SHORT TO GND/OPEN
+ 28         CURRENT MALFUNCTION WORD 4
+       0    MALF CODE 54         1 = VATS FUEL ENABLE FAILURE
+       1    MALF CODE 53         1 = VATS OPEN KEY CIRCUIT DETECTION
+       2    MALF CODE 52         1 = VATS SHORTED KEY CIRCUIT DETECTION
+       3    MALF CODE 51         1 = VATS INVALID KEY DETECTION
+       4    NOT USED
+       5    NOT USED
+       6    NOT USED
+       7    MALF CODE 41         1 = LOSS OF ECM SERIAL DATA
+
+ 29         CURRENT MALFUNCTION WORD 5
+       0    NOT USED
+       1    NOT USED
+       2    NOT USED
+       3    MALF CODE 63         1 = VATS KEY #2 RESISTANCE TOO LOW
+       4    MALF CODE 62         1 = VATS KEY #2 RESISTANCE TOO HIGH
+       5    MALF CODE 61         1 = VATS KEY #1 RESISTANCE OUT OF RANGE
+       6    NOT USED
+       7    NOT USED
+
+ 30         CURRENT MALFUNCTION WORD 6
+       0    MALF CODE 81         1 = INVALID VEHICLE CONFIGURATION DETECTED
+       1    NOT USED
+       2    NOT USED
+       3    MALF CODE 74         1 = LED DIM PWM OUTPUT SHORT TO GND/OPEN
+       4    MALF CODE 73         1 = LED DIM PWM OUTPUT SHORT-BAT/OPEN CCM
+       5    MALF CODE 72         1 = VF DIM PWM OUTPUT SHORT TO GND/OPEN
+       6    MALF CODE 71         1 = VF DIM PWM OUTPUT SHORT-BAT/OPEN CCM
+       7    NOT USED
+
+ 31         HISTORY MALFUNCTION WORD 1
+       0    HIST MALF CODE 22    1 = DEFOG RELAY COIL SHORT-BAT/OPEN CCM
+       1    HIST MALF CODE 21    1 = HORN RELAY COIL SHORT-BAT/OPEN CCM
+       2    NOT USED
+       3    HIST MALF CODE 16    1 = IGNITION 3 FUSE BLOWN OR MISSING
+       4    HIST MALF CODE 15    1 = FUEL LEVEL SENSOR OPEN/SHORT TO BAT
+       5    HIST MALF CODE 14    1 = DIC SWITCH SHORTED TO GROUND
+       6    HIST MALF CODE 13    1 = DIC SWITCH OPEN/SHORT TO BAT
+       7    HIST MALF CODE 12    1 = NO MALFUNCTION CODE STORED
+
+ 32         HISTORY MALFUNCTION WORD 2
+       0    HIST MALF CODE 31    1 = LCD DATA SHORT TO BAT/OPEN CCM
+       1    NOT USED
+       2    NOT USED
+       3    HIST MALF CODE 27    1 = LCD BLANKING CTL SHORT TO GND/OPEN
+       4    HIST MALF CODE 26    1 = LCD BLANKING CTL SHORT-BAT/OPEN CCM
+       5    HIST MALF CODE 25    1 = CTSY RELAY COIL SHORT TO GND/OPEN
+       6    HIST MALF CODE 24    1 = CTSY RELAY COIL SHORT-BAT/OPEN CCM
+       7    HIST MALF CODE 23    1 = DEFOG RELAY COIL SHORT IT GND/OPEN
+..page
+ 33         HISTORY MALFUNCTION WORD 3
+       0    NOT USED
+       1    HIST MALF CODE 38    1 = M CLOCK SHORT TO GND/OPEN
+       2    HIST MALF CODE 37    1 = M CLOCK SHORT-BAT/OPEN CCM
+       3    HIST MALF CODE 36    1 = DATA STROBE SHORT TO GND/OPEN
+       4    HIST MALF CODE 35    1 = DATA STROBE SHORT-BAT/OPEN CCM
+       5    HIST MALF CODE 34    1 = DATA CLOCK SHORT TO GND/OPEN
+       6    HIST MALF CODE 33    1 = DATA CLOCK SHORT-BAT/OPEN CCM
+       7    HIST MALF CODE 32    1 = LCD DATA SHORT TO GND/OPEN
+
+ 34         HISTORY MALFUNCTION WORD 4
+       0    HIST MALF CODE 54    1 = VATS FUEL ENABLE FAILURE
+       1    HIST MALF CODE 53    1 = VATS OPEN KEY CIRCUIT DETECTION
+       2    HIST MALF CODE 52    1 = VATS SHORTED KEY CIRCUIT DETECTION
+       3    HIST MALF CODE 51    1 = VATS INVALID KEY DETECTION
+       4    NOT USED
+       5    NOT USED
+       6    NOT USED
+       7    HIST MALF CODE 41    1 = LOSS OF ECM SERIAL DATA
+
+ 35         HISTORY MALFUNCTION WORD 5
+       0    NOT USED
+       1    NOT USED
+       2    NOT USED
+       3    HIST MALF CODE 63    1 = VATS KEY #2 RESISTANCE TOO LOW
+       4    HIST MALF CODE 62    1 = VATS KEY #2 RESISTANCE TOO HIGH
+       5    HIST MALF CODE 61    1 = VATS KIY #1 RESISTANCE OUT OF RANGE
+       6    NOT USED
+       7    NOT USED
+
+ 36         HISTORY MALFUNCTION WORD 6
+       0    HIST MALF CODE 81    1 = INVALID VEHICLE CONFIGURATION DETECTED
+       1    NOT USED
+       2    NOT USED
+       3    HIST MALF CODE 74    1 = LED DIM PWM OUTPUT SHORT TO GND/OPEN
+       4    HIST MALF CODE 73    1 = LED DIM PWM OUTPUT SHORT-BAT/OPEN CCM
+       5    HIST MALF CODE 72    1 = VF DIM PWM OUTPUT SHORT TO GND/OPEN
+       6    HIST MALF CODE 71    1 = VF DIM PWM OUTPUT SHORT-BAT/OPEN CCM
+       7    NOT USED
+
+
+..PAGE
+..HEAD02L CCM ALDL DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 23
+..HEAD04L CCM ALDL MODE 1 DATA LIST (MESSAGE 1)
+ BYTE  BIT  DESCRIPTION
+ ----  ---  -----------
+ 1          FIRST PROM ID WORD (MSB)
+ 2          SECOND PROM ID WORD (LSB)
+ 3-19       VEHICLE IDENTIFICATION NUMBER
+
+ 20    0    REAL TIME DAMPING SYSTEM   0 = NO        1 = PRESENT
+       1    ANTI-LOCK BRAKES           0 = NO        1 = PRESENT
+       2    ELECTRONIC THROT CONTROL   0 = NO        1 = PRESENT
+       3    RESERVE FUEL INDICATION    0 = NO        1 = YES
+       4    OVERSPEED WARNING          0 = YES       1 = NO
+       5    SPEEDOMETER BIASING        0 = YES       1 = NO
+       6    NOT USED
+       7    NOT USED
+
+ 21    0    ENGINE                     0 = LT1       1 = LT5
+       1    TRANSMISSION               0 = AUTO      1 = MANUAL
+       2    VARIABLE ASSIST            0 = NO        1 = PRESENT
+       3    HVAC                       0 = C60       1 = C68
+       4    LOW TIRE PRESSURE WARNING  0 = NO        1 = PRESENT
+       5    SELECTIVE RIDE SYSTEM      0 = NO        1 = PRESENT
+       6    POWER SEAT, DRIVER SIDE    0 = NO        1 = PRESENT
+       7    POWER SEAT, PASS SIDE      0 = NO        1 = PRESENT
+
+ 22    0    NOT USED
+       1    NOT USED
+       2    NOT USED
+       3    NOT USED
+       4-7  NOT USED
+
+ 23    0-7  NOT USED
+

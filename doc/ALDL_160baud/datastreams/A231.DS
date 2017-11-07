@@ -1,0 +1,209 @@
+
+
+                        DATA STREAM A231  SPECIFICATION
+
+
+
+
+
+..PAGE
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       HVAC USAGE:
+              1994             3,4C 2,3,4H CAR
+*             1995             3,4C 2,3,4H CAR
+
+
+
+       DATA PIN  :  READ DATA ON PIN "9" OF ALDL CONNECTOR
+
+       BAUD RATE :  8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     =$EA
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$EA
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     =$EA
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$00
+                - SUM CHECK
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$EA
+                - MESSAGE LENGTH =$78
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 34
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     =$EA
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - CHECKSUM
+
+
+                THE HVAC WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$EA
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - SUM CHECK
+
+
+..page
+..HEAD02L ALDL HVAC DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 34
+..HEAD04L ALDL MODE 1 MESSAGE 0
+   WORD #  DESCRIPTION
+
+    1      HISTORY FAIL FLAGS #1
+            0      CODE 15 - SUNLOAD SENSOR CIRCUIT
+            1      NOT USED
+            2      CODE 13 - IN CAR SENSOR CIRCUIT
+            3      NOT USED
+            4      NOT USED
+            5      CODE 10 - OUTSIDE AIR SENSOR CIRCUIT
+            6      NOT USED
+            7      CODE 8  - 2ND SUNLOAD SENSOR CIRCUIT (CJ2 ONLY)
+    2      HISTORY FAIL FLAGS #2
+            0      CODE 41 - 2ND AIR MIX DOOR PROBLEM - TOP MOTOR (CJ2 ONLY)
+            1      CODE 40 - AIR MIX DOOR PROBLEM - DRIVER SIDE
+                             (CJ2 - BOTTOM MOTOR) (C68 - TOP MOTOR)
+            2      NOT USED
+            3      CODE 38 - UART DATA LOSS
+            4      NOT USED
+            5      CODE 36 - SEC CCP A/D OUT OF RANGE (OLDSMOBILE C/H ONLY)
+            6      CODE 35 - CCP TO PROGRAMMER DATA LOSS
+            7      CODE 34 - 2ND CCP TO PROGRAMMER DATA LOSS (CJ2 ONLY)
+    3      HISTORY FAIL FLAGS #3
+            0      NOT USED
+            1      NOT USED
+            2      NOT USED
+            3      NOT USED
+            4      NOT USED
+            5      CODE 66 - A/C FREON LOW
+            6      CODE 48 - VERY LOW REFRIGERANT PRESSURE
+            7      CODE 52 - PROGRAMMER LOST KAM
+    4      CURRENT FAIL FLAGS #1
+            0      CODE 15 - SUNLOAD SENSOR CIRCUIT
+            1      NOT USED
+            2      CODE 13 - IN CAR SENSOR CIRCUIT
+            3      NOT USED
+            4      NOT USED
+            5      CODE 10 - OUTSIDE AIR SENSOR CIRCUIT
+            6      NOT USED
+            7      CODE 8  - 2ND SUNLOAD SENSOR CIRCUIT (CJ2 ONLY)
+    5      CURRENT FAIL FLAGS #2
+            0      CODE 41 - 2ND AIR MIX DOOR PROBLEM - TOP MOTOR (CJ2 ONLY)
+            1      CODE 40 - AIR MIX DOOR PROBLEM - DRIVER SIDE
+                             (CJ2 - BOTTOM MOTOR) (C68 - TOP MOTOR)
+            2      NOT USED
+            3      CODE 38 - UART DATA LOSS
+            4      NOT USED
+            5      CODE 36 - SEC CCP A/D OUT OF RANGE (OLDSMOBILE C/H ONLY)
+            6      CODE 35 - CCP TO PROGRAMMER DATA LOSS
+            7      CODE 34 - 2ND CCP TO PROGRAMMER DATA LOSS (CJ2 ONLY)
+    6      CURRENT FAIL FLAGS #3
+            0      NOT USED
+            1      NOT USED
+            2      NOT USED
+            3      NOT USED
+            4      NOT USED
+            5      CODE 66 - A/C FREON LOW
+            6      CODE 48 - VERY LOW REFRIGERANT PRESSURE
+            7      CODE 52 - PROGRAMMER LOST KAM
+    7      SEC CCP A/D (OLDSMOBILE C/H ONLY)
+    8      AIR MIX DOOR ACTUAL A/D (UNFILTERED VALUE)
+            % = N/2.55     (100% = COLD)
+            (CJ2 ONLY - BOTTOM MOTOR DRIVERS SIDE)
+    9      COMMANDED AIR MIX DOOR POSITION A/D
+            % = N/2.55     (100% = COLD)
+            (CJ2 ONLY - BOTTOM MOTOR DRIVERS SIDE)
+    10     AIR MIX DOOR ACTUAL A/D #2 (UNFILTERED VALUE)
+            % = N/2.55     (100% = COLD)
+            (CJ2 - TOP MOTOR/PASSENGER SIDE, C68 - TOP/ONLY MOTOR)
+    11     COMMANDED AIR MIX DOOR POSITION A/D #2
+            % = N/2.55     (100% = COLD)
+            (CJ2 - TOP MOTOR/PASSENGER SIDE, C68 - TOP/ONLY MOTOR)
+    12     INSIDE AIR TEMPERATURE (UNFILTERED VALUE)
+            DEG C = N - 40
+    13     SUNLOAD A/D COUNTS (UNFILTERED VALUE)
+            % = N/2.55    (100% = NO SUN)
+    14     PASSENGER TEMPERATURE (CJ2 ONLY)
+            DEG F = N
+            DEG C = (N - 32)/1.8
+    15     NOT USED
+    16     NOT USED
+    17     AMBIENT TEMPERATURE (UNFILTERED VALUE)
+            DEG C = N - 40
+    18     SUNLOAD #2 A/D COUNTS (UNFILTERED VALUE) (CJ2 ONLY)
+            % = N/2.55    (100% = NO SUN)
+    19     INPUT DISCRETE STATES
+            0      PRESSURE CYCLING SWITCH     0 = OPEN SWITCH
+            1      ENGLISH/METRIC SWITCH       1 = ENGLISH
+            2      OPTION - CJ2 OR C68         0 = C68
+            3      NOT USED
+            4      NOT USED
+            5      NOT USED
+            6      NOT USED
+            7      NOT USED
+    20     NOT USED
+    21     OUTPUT DISCRETE STATES
+            0      A/C CLUTCH REQUEST          0 = ENERGIZED
+            1      #1 VACUUM SOLENOID          1 = ENERGIZED
+            2      #2 VACUUM SOLENOID          1 = ENERGIZED
+            3      #3 VACUUM SOLENOID          1 = ENERGIZED
+            4      #4 VACUUM SOLENOID          1 = ENERGIZED
+            5      NOT USED
+            6      NOT USED
+            7      REAR DEFROST RELAY          1 = ENERGIZED
+    22     NOT USED
+    23     HVAC AIR DELIVERY MODE
+             0 = A/C / RECIRCULATE
+             1 = A/C
+             2 = BILEVEL / A/C
+             3 = BILEVEL/HEATER
+             4 = DEFOG
+             5 = HEATER
+             6 = OFF
+             7 = VENT
+             8 = DEFROST
+             9 = BLOWER DELAY
+            10 = NORMAL PURGE
+            11 = COLD PURGE
+            12 = A/C PURGE
+            13 = SNOW INGESTION
+    24     HVAC SET TEMPERATURE
+            DEG F = N    (RANGE IS 60 TO 90)
+            DEG C = (N - 32)/1.8
+    25     HVAC PROGRAM NUMBER
+            N = COUNTS        (255 = HOT)
+    26     COMMANDED BLOWER MOTOR DUTY CYCLE
+            % = N/2.55        (50% IS MAX BLOWER)
+    27     PROMID (ROM) MSB (BCD)
+    28     PROMID (ROM)     (BCD)
+    29     PROMID (ROM)     (BCD)
+    30     PROMID (ROM) LSB (BCD)
+    31     PROMID (CALIBRATION) MSB (BCD)
+    32     PROMID (CALIBRATION)     (BCD)
+    33     PROMID (CALIBRATION)     (BCD)
+    34     PROMID (CALIBRATION) LSB (BCD)
+

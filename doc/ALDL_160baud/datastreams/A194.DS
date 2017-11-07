@@ -1,0 +1,87 @@
+
+
+
+                        DATA STREAM A194  SPECIFICATION
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+           HVAC:
+            4.3L  (LB4)   (VIN=Z)   94 S,T TRUCK
+*           4.3L  (LB4)   (VIN=Z)   95 S,T TRUCK (MANUAL TRANS)
+
+
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+       DATA PIN  : READ DATA ON PIN "9" OF ALDL CONNECTOR  FOR 1995
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+..PAGE
+
+      OVERVIEW
+      --------
+      THERE IS NO MASTER OF ALDL. THEREFORE YOU DON'T HAVE TO ISSUE A MODE
+      8 TO GET COMMUNICATION.
+
+
+
+..PAGE
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $58
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 02
+                - SUM CHECK
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+                THE VCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $EA
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 02
+..HEAD04L ALDL MODE 1 DATA LIST
+WORD #   DATA NAME    DESCRIPTION
+
+  1                   LOW_AC_MALFUNCTION_WORD
+            0         1 = LOW A/C SYSTEM CHARGE DETECTED
+            1         NOT USED
+            2         NOT USED
+            3         NOT USED
+            4         NOT USED
+            5         NOT USED
+            6         NOT USED
+            7         NOT USED
+  2                   HVAC_NONVOLATILE_WORD
+            0         EVAPORATOR PRES CONTROL SW           1=OPEN    0=CLOSED
+            1         A/C REQUEST ON                       1=TRUE    0=FALSE
+            2         A/C ENABLE RELAY                     1=ENABLED 0=DISABLED
+            3         LOW A/C CHARGE TELLTALE              1=FLASHING0=NOT FLASH
+            4         NOT USED
+            5         NOT USED
+            6         NOT USED
+            7         NOT USED
+
+

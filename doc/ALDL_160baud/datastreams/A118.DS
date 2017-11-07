@@ -1,0 +1,336 @@
+                        DATA STREAM A118  SPECIFICATION
+
+       SPECIFICATIONS FOR  BCM DATA STREAM INFORMATION
+       -----------------------------------------------
+
+       CAR LINE:
+              1990 GM30 (ELDORADO/SEVILLE) (VIN=E/K)
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                BCM RESPONSE:
+                 NORMAL MODE MESSAGES.
+
+
+        MODE 1 MESSAGE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $01
+                - SUM CHECK
+
+                THE BCM WILL RESPOND WITH MODE 1 MESSAGE 1:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $80
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 42
+                - SUM CHECK
+
+        MODE 1 MESSAGE 2 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $02
+                - SUM CHECK
+
+                THE BCM WILL RESPOND WITH MODE 1 MESSAGE 2:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $6A
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 20
+                - SUM CHECK
+..PAGE
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - MESSAGE CODE
+                - CHECKSUM
+
+        THE BCM RESPONDS BY TRANSMITTING THE NORMAL MODE MESSAGE
+
+
+
+        MODE 8 (DISABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - CHECKSUM
+
+
+
+        MODE 9 (ENABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $09
+                - CHECKSUM
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+
+..HEAD02L ALDL BCM DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 42
+..HEAD04L ALDL MODE 1 MESSAGE 1 *ALM1TBL* DATA LIST
+
+
+WORD #   DATA NAME           DESCRIPTION
+
+1      PIP1          PROM IDENTIFICATION NUMBER (MSB)
+2      PIP1+1        PROM IDENTIFICATION NUMBER (LSB)
+                       ID = 256*MSB + LSB
+3      DGZHFTB       HISTORY FAIL FLAG 1
+                 0      MALF CODE 120  TWS DELAY POT FAILURE
+                 1      MALF CODE 119  TWILIGHT PHOTOCELL FAILURE
+                 2      NOT USED
+                 3      MALF CODE 115  SUNLOAD SENSOR FAILURE
+                 4      MALF CODE 113  INSIDE TEMP SENSOR FAILURE
+                 5      MALF CODE 112  A/C LOW TEMP SENSOR FAILURE
+                 6      MALF CODE 111  A/C HIGH TEMP SENSOR
+                 7      MALF CODE 110  OUTSIDE TEMP SENSOR FAILURE
+4      DGZHFTB+1     HISTORY FAIL FLAG 2
+                 0      MALF CODE 334  ECM LOSS OF SERIAL DATA
+                 1      MALF CODE 333  SIR LOSS OF SERIAL DATA
+                 2      NOT USED
+                 3      MALF CODE 127  PRNDL SENSOR FAILURE
+                 4      MALF CODE 124  VEHICLE SPEED SENSOR FAILURE
+                 5      MALF CODE 123  PANEL LAMP SWITCH FAILURE
+                 6      MALF CODE 122  DIM POT FAILURE
+                 7      MALF CODE 121  TWILIGHT ENABLE SWITCH FAILURE
+5      DGZHFTB+2     HISTORY FAIL FLAG 3
+                 0      MALF CODE 420  RELAY FAILURE
+                 1      MALF CODE 412  SYSTEM VOLTAGE HIGH
+                 2      MALF CODE 411  SYSTEM VOLTAGE LOW
+                 3      MALF CODE 410  CHARGING SYSTEM PROBLEM
+                 4      NOT USED
+                 5      MALF CODE 337  HVAC LOSS OF SERIAL DATA
+                 6      MALF CODE 336  IPC LOSS OF SERIAL DATA
+                 7      MALF CODE 335  CCDIC LOSS OF SERIAL DATA
+6      DGZHFTB+3     HISTORY FAIL FLAG 4
+                 0      MALF CODE 447  VERY LOW FREON
+                 1      MALF CODE 446  LOW FREON
+                 2      NOT USED
+                 3      NOT USED
+                 4      MALF CODE 440  AIR MIX DOOR FAILURE
+                 5      NOT USED
+                 6      NOT USED
+                 7      NOT USED
+..PAGE
+7      DGZHFTB+4     HISTORY FAIL FLAG 5
+                 0      MALF CODE 556  EE PROM KEY WORDS INCORRECT
+                 1      MALF CODE 552  BCM KAM ERROR
+                 2      NOT USED
+                 3      NOT USED
+                 4      NOT USED
+                 5      MALF CODE 450  HVAC COOLANT OVERTEMP
+                 6      MALF CODE 449  HIGH SIDE OVERTEMP
+                 7      MALF CODE 448  VERY LOW FREON PRESSURE
+8      ADVFUWP       FUEL LEVEL WIPER  A/D
+  COUNTS TO GALLONS CONVERSION
+  -----------------------------
+  T(X1)     TABLE VALUE
+  0              0
+  1              7
+  2              14
+  3              25
+  4              41          Interpolation program
+  5              55          (Y = displayed output in gallons)
+  6              74          ---------------------------------
+  7              94          F = Code $F1 byte 8 value
+  8              114         V = Code $F1 byte 9 value
+  9              131         X = [(F * 256)/V]
+  10             146         A = 10
+  11             158         I = 16
+  12             170         XT = X/I
+  13             179         X1 = INT (XT)
+  14             190         XF = XT - X1
+  15             199  Y = [T(X1) + XF * {T(X1 + 1) - T(X1)}] /A
+  16             250
+
+9      ADVFURF       IGNITION # 1  A/D
+                       V = N * 16.3/255
+10     ADVSP0        SPARE INPUT  A/D
+11     ADVSP1        SPARE INPUT  A/D
+12     ADVHVDR       AIR MIX DOOR ACTUAL  A/D
+                       % = 100 - (N/2.55)
+..PAGE
+13     ADVTWDL       TWILIGHT SENTINEL DELAY
+                       % = N/2.55
+14     ADVSP2A       SPARE INPUT  A/D
+15     ADVDMWP       DIM POT WIPER  A/D
+                       % = N/2.55
+16     DGVSDDMY      INSIDE AIR TEMPERATURE DEG. F
+                       DEG F = N - 40
+17     DGVSDDMY      SUNLOAD TEMPERATURE DEG. F
+                       DEG F = N - 40
+*18     DGVSDMMY      A/C LOW SIDE TEMPERATURE DEG. F
+                       DEG F = .75N - 40
+*19     HVVACH        A/C HIGH SIDE TEMPERATURE DEG. C
+                       DEG C = .75N - 40
+20     ADVTWPL       TWS PHOTOCELL  A/D
+                       % = N/2.55
+21     ADVSP3        SPARE INPUT  A/D
+22     DGVSDDMY      AMBIENT TEMPERATURE DEG. F
+                       DEG F = N - 40
+23     ADVSP4        SPARE INPUT  A/D
+24     ADVALFTM      ALTERNATOR F TERMINAL
+                       % = N/2.55
+25     ADVSP5        SPARE INPUT  A/D
+26     LOSR1         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      QDM 1 FAULT STATUS            1 = FAULT
+                 4      PRNDL GREY CODE INPUT BIT C   SEE PRNDL GREY CODE TBL
+                 5      QDM 2 FAULT STATUS            1 = FAULT
+                 6      PHONE STATUS                  1 = PHONE CONNECTED
+                 7      MUX 4
+27     LOSR2         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      MUX 0
+                 4      MUX 1
+                 5      MUX 2
+                 6      MUX 3
+                 7      MUX 4
+..PAGE
+28     LOSR3         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      MUX 0
+                 4      MUX 1
+                 5      MUX 2
+                 6      PRNDL GREY CODE INPUT BIT B   SEE PRNDL GREY CODE TBL
+                 7      PRNDL GREY CODE INPUT BIT D   SEE PRNDL GREY CODE TBL
+29     LOSR4         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      REAR DOOR AJAR STATUS BIT     1 = AJAR
+                 4      TRUNK AJAR STATUS BIT         1 = AJAR
+                 5      FRONT DOOR AJAR BIT           1 = AJAR
+                 6      PRNDL GREY CODE INPUT BIT A   SEE PRNDL GREY CODE TBL
+                 7      SPEED DEPENDENT DAMPING FAULT 1 = SSD FAULT
+
+                  PRNDL GREY CODE TABLE
+                  ---------------------
+  A - 29(6)       A   B   C   D
+  B - 33(6)       -   -   -   -
+  C - 26(4)       0   0   1   1   DRIVE 1
+  D - 28(7)       1   0   1   0   DRIVE 2
+                  1   1   1   1   DRIVE 3
+                  0   1   1   0   DRIVE 4
+                  0   1   0   1   NEUTRAL
+                  1   1   0   0   REVERSE
+                  1   0   0   1   PARK
+
+30     LORS5         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      GENERATOR I TERM STATUS BIT   1 = INPUT HIGH
+                 4      LOW FREON PRESSURE BIT        1 = LOW PRESSURE
+                 5      MUX 2
+                 6      WASHER LEVEL BIT              1 = LOW LEVEL
+                 7      MUX 4
+..PAGE
+31     LOSR6         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      MUX 0
+                 4      MUX 1
+                 5      MUX 2
+                 6      MUX 3
+                 7      MUX 4
+32     LOSR7         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      CRANK INPUT BIT               1 = CRANK ACTIVE
+                 4      MUX 1
+                 5      MUX 2
+                 6      IGNITION 3 RUN BIT            1 = IGNITION ON
+                 7      MUX 4
+33     LOSR8         INPUT DISCRETE STATES
+                 0      NOT USED
+                 1      NOT USED
+                 2      NOT USED
+                 3      DOOR JAMB STATUS BIT          1 = SWITCH ACTIVE (DOOR OPEN)
+                 4      PANEL LAMP SWITCH STATUS BIT  1 = COURTESY LAMP SWITCH ACTIVE
+                 5      DOOR HANDLE SWITCH STATUS BIT 1 = SWITCH ACTIVE
+                 6      TIME OF DAY SWITCH STATUS BIT 1 = SWITCH ACTIVE
+                 7      PARK LAMPS ON BIT             1 = SWITCH ACTIVE
+34     PIWPRA        OUTPUT DISCRETE STATES
+                 0      DRL RELAY STATUS              1 = DRL RELAY ON
+                 1      QDM QDR OUTPUT ENABLE FOR PROTO 3
+                                                      1 = QDMS, QDRS DISABLED
+                 2      GENERATOR DISABLE OUTPUT STATUS
+                                                      1 = GENERATOR DISABLED
+                 3      NOT USED
+                 4      TWILIGHT RELAY DRIVE OUTPUT   1 = RELAY ON
+                 5      COURTESY LAMP RELAY DRIVER    1 = RELAY ON
+                 6      DELAYED ACCESSORY BUS RELAY DRIVE OUTPUT
+                 7      HIGH BEAM RELAY DRIVER        1 = HIGH BEAM ON
+35     PIWBRB        OUTPUT DISCRETE STATUS
+..PAGE
+36     VSVKH         VEHICLE SPEED (MSB)
+                       MPH = N/1.61
+37     VSVKH+1       VEHICLE SPEED (LSB) NOT USED
+38     HVVADM        HVAC AIR DELIVERY MODE
+                 BYTE VALUE       MODE DESCRIPTION
+
+                     0            RECIRCULATE
+                     1            A/C
+                     2            BI-LEVEL
+                     3            BI-LEVEL DEFROST
+                     4            HEATER
+                     5            OFF
+                     6            NORMAL PURGE
+                     7            PURGE DEFROST
+                     8            FORCED DEFROST
+                     9            A/C PURGE
+
+39     HVVST         HVAC SET TEMPERATURE
+                       DEG F = N
+40     HVVPNN        HVAC PROGRAM NUMBER
+41     HVVBV         COMMAND BLOWER VOLTAGE
+                       V = (N -33.6)*.0861
+42     HVVDPOS       COMMAND AIR MIX DOOR POSITION
+                       % = 100 - N/2.55
+..PAGE
+LAYOUT 000
+:ê  B 
+  
+Su¶   <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

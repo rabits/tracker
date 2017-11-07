@@ -1,0 +1,93 @@
+
+
+ RPO    DISP       VIN       BODY            D/S         D/S DESCRIPTION             SOFTWARE NAME         CONTROLLER
+------------------------------------------------------------------------------------------------------------------------
+
+*HVAC                        4B 6D           A230        CARRY OVER DATA STREAM
+*HVAC                        2,3,4H 3,4C     A231        CARRY OVER DATA STREAM *HVAC  RELEASED IN 94 UPDATE 3,4G            A232        CARRY OVER DATA STREAM
+*HVAC  RELEASED IN 94 UPDATE 3,4G            A232        CARRY OVER DATA STREAM
+
+*VES                         2,3,4N          A246        CARRY OVER  DELCO6
+*VES                         1,2J            A284        NEW DATA STREAM DELCO6
+*VES                         3,4A 2,3,4W     A285        NEW DATA STREAM DELCO6
+
+*RAC                         2,3,4H 3,4C 3W  A233        CARRY OVER DATA STREAM
+*RAC   RELEASED IN 94 UPDATE 3,4G            A233        CARRY OVER DATA STREAM
+
+*SIR                         3,4G            A242        CARRY OVER DATA STREAM
+*SIR                         1,2F 1L         A242        CARRY OVER DATA STREAM
+*SIR                         3,4A 2,3,4N     A242        CARRY OVER DATA STREAM
+*SIR                         1,2,3U 1Y       A242        CARRY OVER DATA STREAM
+*SIR                         1M              A300 SDMAI  NEW DATA STREAM
+*SIR                         2,3,4W          A295 SDMB   NEW DATA STREAM
+*SIR                         6E,K,Ksp        A296 SDME   NEW DATA STREAM
+
+*SIR                         3,4C 2,3,4H     A252 SDMA   CARRY OVER DATA STREAM
+*SIR                         1,4B 6D 1W      A252 SDMA   CARRY OVER DATA STREAM
+
+ABS UPDATED 10/07/93
+
+*ABS                         1,4B            A281        NEW DATA STREAM  bosch ABS 5
+ ABS **program dropped**     Ksp             A282        NEW DATA STREAM  BOSCH ABS 5
+
+*ABS                         GEO S           A245        CARRY OVER
+*ABS                         GEO M           A283        NEW DATA STREAM  DELCO 6
+
+*ABS                         1L              A246        CARRY OVER  DELCO6
+*ABS/VES                     2,3,4N          A246        CARRY OVER  DELCO6
+*ABS/TCS                     1,2J            A284        NEW DATA STREAM  DELCO6
+
+
+*ABS                         1W              A247        CARRY OVER DELCO 6
+*ABS                         3,4A 2,3,4W     A285        NEW DATA STREAM DELCO 6
+
+*ABS                         1,2,3U ¿        A293
+*ABS                         3,4A   ÃÄÄÄÄÄ>  A293        new data stream  DELCO 6
+*ABS                         2,3,4W Ù        A293
+
+*ABS                         1,2F            A286        NEW DATA STREAM DELCO 6
+
+*TCS                         6E,K            A287        NEW DATA STREAM BOSCH TCS 5
+*TCS                         1,2F            A250        CARRY OVER DELCO 6
+*TCS                         1Y              A288        NEW DATA STREAM BOSCH TCS 5
+
+*TCS                         1,2,3U          A251        CARRY OVER DELCO 6
+*TCS                         2,3,4H 3,4C 3,4G     A240        CARRY OVER TEVES
+*TCS                         6D              A290        NEW DATA STREAM BOSCH TCS 5
+
+ STG DOES NO DIAGNOSTICS AT THIS POINT -  DO NOT RELEASE TO AFTER MARKET
+ RSS/ELC/SWPS                6E,K,Ksp        A291        NEW DATA STREAM
+
+
+*DCM                         6D              A211        CARRY OVER DATA STREAM
+
+*IPC                         6E,K            A237        CARRY OVER DATA STREAM
+
+*IPC                         3G              A235        NEW DATA STREAM
+
+*IPC                         4G              A236        NEW DATA STREAM
+
+*IPC                         1,2J            A294        NEW DATA STREAM
+
+*IPC                         3C,H            A234        CARRY OVER DATA STREAM
+
+*DIC                         3G              A229        NEW DATA STREAM
+
+*CCM                         1Y              A297        NEW DATA STREAM
+
+
+ TRUCK:
+
+ RPO    DISP       VIN       BODY            D/S         D/S DESCRIPTION             SOFTWARE NAME         CONTROLLER
+------------------------------------------------------------------------------------------------------------------------
+
+*SIR                         L,M,S,T,G TRUCK A242        NEW DATA STREAM
+
+*HVAC                        S/T 4.3L AUTO   A194        NEW DATA STREAM
+
+ABS UPDATED 10/07/93
+*4WAL                        S,T VCMX        A193        CARRY OVER
+*4WAL                        S,T VCMX-A      A309        NEW DATA STREAM
+*4WAL                        C,K,G,M,L,S,T   A189        CARRY OVER DATA STREAM
+
+

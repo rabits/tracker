@@ -1,0 +1,1331 @@
+
+
+                        DATA STREAM A255  SPECIFICATION
+
+
+
+
+..PAGE
+
+
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       ENGINE   USAGE:
+              4.0L SFI   (L47)   (VIN=C)   95   3G
+
+
+       DATA PIN  : READ DATA ON PIN "9" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+
+..page
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $7C
+                - MODE #         = $01
+                - MESSAGE #      = $00
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 37
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $01
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $87
+                - MODE #         = $01
+                - MESSAGE #      = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 48
+                - SUM CHECK
+..PAGE
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $02
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $84
+                - MODE #         = $01
+                - MESSAGE #      = $02
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 45
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $03
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $9A
+                - MODE #         = $01
+                - MESSAGE #      = $03
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 67
+                - SUM CHECK
+..PAGE
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $04
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $5C
+                - MODE #         = $01
+                - MESSAGE #      = $04
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 5
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $05
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $AF
+                - MODE #         = $01
+                - MESSAGE #      = $05
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 88
+                - SUM CHECK
+..PAGE
+        MODE 7  (COMMAND MESSAGE NORMAL MODE MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID            = $F4
+                - MESSAGE LENGTH        = $57
+                - MODE NUMBER           = $07
+                - MESSAGE ID
+                - CHECKSUM
+
+                THE ECM WILL RESPOND WITH THE REQUESTED WITH NORMAL MESSAGE
+
+        MODE 8  (DISABLE NORMAL COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID            = $F4
+                - MESSAGE LENGTH        = $56
+                - MODE NUMBER           = $08
+                - CHECKSUM
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID            = $E4
+                - MESSAGE LENGTH        = $56
+                - MODE NUMBER           = $08
+                - CHECKSUM
+
+
+        MODE 9  (ENABLE NORMAL COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID            = $F4
+                - MESSAGE LENGTH        = $56
+                - MODE NUMBER           = $09
+                - CHECKSUM
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID            = $E4
+                - MESSAGE LENGTH        = $56
+                - MODE NUMBER           = $09
+                - CHECKSUM
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $E4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 0
+..HEAD04C 37 DATA WORDS
+WORD #   DATA NAME    DESCRIPTION
+ 1       PROMID       PROMID (BROADCAST ID) MSB
+ 2       PROMID+1     PROMID (BROADCAST ID) LSB
+                        ID = N
+ 3       DPPIDPG      TCM SOFTWARE PROM ID (CAL PROM ID) MSB
+ 4       DPPIDPG+1    TCM SOFTWARE PROM ID (CAL PROM ID) LSB
+                        ID = N
+ 5       DGZFACU      CURRENT MALFUNCTION FLAG WORD 1
+          0   CODE 19    SHORTED FUEL PUMP CIRCUIT
+          1   CODE 18    LOOP OVERRUN IN OPERATING SYSTEM EXECUTIVE
+          2   CODE 17    LEFT OXYGEN SENSOR NOT READY
+          3   CODE 16    SYSTEM OVER/UNDER VOLTAGE
+          4   CODE 15    OPEN COOLANT TEMPERATURE SENSOR
+          5   CODE 14    SHORTED COOLANT TEMPERATURE SENSOR
+          6   CODE 13    RIGHT OXYGEN SENSOR NOT READY
+          7   CODE 12    NO D.I.S 4X REFERENCE SIGNAL
+ 6       DGZFACU+1    CURRENT MALFUNCTION FLAG WORD 2
+          0   CODE 27    OPEN THROTTLE SWITCH CIRCUIT
+          1   CODE 26    SHORTED THROTTLE SWITCH CIRCUIT
+          2   CODE 25    NO 24X REFERENCE SIGNAL
+          3   CODE 24    VEHICLE SPEED SENSOR CIRCUIT PROBLEM
+          4   CODE 23    EST/BYPASS PROBLEM
+          5   CODE 22    OPEN THROTTLE POSITION SENSOR
+          6   CODE 21    SHORTED THROTTLE POSITION SENSOR
+          7   CODE 20    OPEN FUEL PUMP CIRCUIT
+ 7       DGZFACU+2    CURRENT MALFUNCTION FLAG WORD 3
+          0   CODE 35    REFLO VOLTAGE OUT OF RANGE
+          1   CODE 34    MAP SENSOR SIGNAL TO HIGH
+          2   CODE 33    EXTENDED TABLE BRAKE SWITCH MALFUNCTION
+          3   CODE 32    OPEN MAP SENSOR CIRCUIT
+          4   CODE 31    SHORTED MAP SENSOR CIRCUIT
+          5   CODE 30    IDLE SPEED ERROR TO HIGH
+          6   CODE 29    SHIFT RATIO B PROBLEM
+          7   CODE 28    ILLEGAL PRESSURE SWITCH MANIFOLD INPUT
+ 8       DGZFACU+3    CURRENT MALFUNCTION FLAG WORD 4
+          0   CODE 43    LEFT O2 SENSOR RICH TO LONG
+          1   CODE 42    LEFT O2 SENSOR LEAN TO LONG
+          2   CODE 41    NO CAM REFERENCE SIGNAL
+          3   CODE 40    POWER STEERING PRESSURE SENSOR OPEN
+          4   CODE 39    TORQUE CONVERTER CLUTCH NOT ENGAGING
+          5   CODE 38    OPEN MAT SENSOR CIRCUIT
+          6   CODE 37    SHORTED MAT SENSOR CIRCUIT
+          7   CODE 36    LINEAR EGR PINTLE POSITION OUT OF RANGE
+ 9       DGZFACU+4    CURRENT MALFUNCTION FLAG WORD 5
+          0   CODE 51    EPROM CHECKSUM FAILED
+          1   CODE 50    NOT USED
+          2   CODE 49    A.I.R. MANAGEMENT SYSTEM MALFUNCTION
+          3   CODE 48    EGR SYSTEM MALFUNCTION
+          4   CODE 47    BCM TO PCM SERIAL DATA PROBLEM
+          5   CODE 46    LF TO RR BANK FUELING DIFFERENCE
+          6   CODE 45    RIGHT O2 SENSOR RICH TO LONG
+          7   CODE 44    RIGHT O2 SENSOR LEAN TO LONG
+..PAGE
+ 10      DGZFACU+5    CURRENT MALFUNCTION FLAG WORD 6
+          0   CODE 59    OPEN TRANSMISSION TEMPERATURE SENSOR CIRCUIT
+          1   CODE 58    VEHICLE ANTI-THEFT SYSTEM MALFUNCTION
+          2   CODE 57    SHORTED TRANSMISSION TEMPERATURE SENSOR CIRCUIT
+          3   CODE 56    INPUT SPEED CIRCUIT PROBLEM
+          4   CODE 55    THROTTLE POSITION SENSOR OUT OF ADJUSTMENT
+          5   CODE 54    ISC SYSTEM PROBLEM
+          6   CODE 53    D.I.S. 4X SIGNAL INTERRUPT
+          7   CODE 52    PCM KAM CHECKSUM FAILED
+ 11      DGZFACU+6    CURRENT MALFUNCTION FLAG WORD 7
+          0   CODE 67    CRUISE CONTROL R/A OR S/C SWITCH ON TO LONG
+          1   CODE 66    CRUISE ENGINE RPM TO HIGH
+          2   CODE 65    CRUISE SERVO POSITION SENSOR FAILURE
+          3   CODE 64    CRUISE VEHICLE ACCELERATION TO HIGH
+          4   CODE 63    VEHICLE SPEED AND SET SPEED DIFFERENCE TO HIGH
+          5   CODE 62    CRUISE CONTROL VACUUM SOLENOID FAILURE
+          6   CODE 61    CRUISE CONTROL VENT SOLENOID FAILURE
+          7   CODE 60    TRANSMISSION NOT IN DRIVE WHILE IN CRUISE CONTROL
+ 12      DGZFACU+7    CURRENT MALFUNCTION FLAG WORD 8
+          0   CODE 75    INTERMITTENT VEHICLE SPEED
+          1   CODE 74    INTERMITTENT MAT
+          2   CODE 73    INTERMITTENT COOLANT TEMPERATURE
+          3   CODE 72    NOT USED
+          4   CODE 71    INTERMITTENT MAP
+          5   CODE 70    INTERMITTENT THROTTLE POSITION
+          6   CODE 69    TRACTION ACTIVE WHILE IN CRUISE
+          7   CODE 68    C/C SERVO STROKE GREATER THAN COMMANDED
+ 13      DGZFACU+8    CURRENT MALFUNCTION FLAG WORD 9
+          0   CODE 83    NO CRANK SENSOR A OR B SIGNAL
+          1   CODE 82    NOT USED
+          2   CODE 81    CAM TO REFERENCE CORRELATION PROBLEM
+          3   CODE 80    TPS/IDLE LEARN NOT DONE AFTER EEPROM RESET
+          4   CODE 79    TRANSMISSION HOT
+          5   CODE 78    TO MANY 24X PULSES
+          6   CODE 77    TO FEW 4X REFERENCE PULSES
+          7   CODE 76    FORCE MOTOR MALFUNCTION
+ 14      DGZFACU+9    CURRENT MALFUNCTION FLAG WORD 10
+          0   CODE 91    PARK/NEUTRAL INPUT PROBLEM
+          1   CODE 90    TCC BRAKE SWITCH MALFUNCTION
+          2   CODE 89    LONG SHIFT AND MAX ADAPT
+          3   CODE 88    TCC NOT DISENGAGING
+          4   CODE 87    TO MANY 4X PULSES
+          5   CODE 86    UNDEFINED BOX RATIO
+          6   CODE 85    THROTTLE BODY SERVICE REQUIRED
+          7   CODE 84    MISSING 24X PULSES
+ 15      DGZFACU+10   CURRENT MALFUNCTION FLAG WORD 11
+          0   CODE 99    CRUISE CONTROL SERVO STROKE HIGH NOT IN C/C
+          1   CODE 98    NOT USED
+          2   CODE 97    P/N TO D/R AT HIGH THROTTLE ANGLE
+          3   CODE 96    TORQUE CONVERTER OVERSTRESS
+          4   CODE 95    ENGINE STALL DETECTED
+          5   CODE 94    SHIFT RATIO A PROBLEM
+          6   CODE 93    TCS PWM LINK FAILURE
+          7   CODE 92    HEATED WINDSHIELD REQUEST PROBLEM
+..PAGE
+ 16      DGZFACU+11   CURRENT MALFUNCTION FLAG WORD 12
+          0   CODE 107   BCM TO PCM SERIAL DATA PROBLEM
+          1   CODE 106   BRAKE LIGHT SWITCH MALFUNCTION
+          2   CODE 105   BRAKE BOOSTER VACUUM TO LOW
+          3   CODE 104   STACK OVERRUN
+          4   CODE 103   OPEN BRAKE BOOSTER VACUUM SENSOR CIRCUIT
+          5   CODE 102   SHORTED BRAKE BOOSTER SENSOR
+          6   CODE 101   NOT USED
+          7   CODE 100   NOT USED
+ 17      DGZFACU+12   CURRENT MALFUNCTION FLAG WORD 13
+          0   CODE 115   QDSM #1 OUTPUT OPEN/SHORT
+          1   CODE 114   QDM #2 OUTPUT OPEN/SHORT
+          2   CODE 113   QDM #1 OUTPUT OPEN/SHORT
+          3   CODE 112   COMPLETE EEPROM FAILURE
+          4   CODE 111   STACK OVERRUN
+          5   CODE 110   L TERMINAL MALFUNCTION
+          6   CODE 109   KAM CHECKSUM FAILED
+          7   CODE 108   EPROM CHECKSUM FAILED
+ 18      DGZFACU+13   CURRENT MALFUNCTION FLAG WORD 14
+          0   CODE 123   VERY LOW REFRIGERANT PRESSURE
+          1   CODE 122   A/C COOLANT OVERTEMP
+          2   CODE 121   A/C HIGH SIDE TEMPERATURE SENSOR FAILED
+          3   CODE 120   A/C LOW SIDE TEMPERATURE SENSOR FAILED
+          4   CODE 119   INJECTOR OPEN OR SHORTED
+          5   CODE 118   EXCESSIVE SERVO CABLE LASH
+          6   CODE 117   QDSM #3 OUTPUT OPEN/SHORT
+          7   CODE 116   QDSM #2 OUTPUT OPEN/SHORT
+ 19      DGZFACU+14   CURRENT MALFUNCTION FLAG WORD 15
+          0   CODE 131   KNOCK SENSOR FAILURE
+          1   CODE 130   VERY LOW FREON CONDITION
+          2   CODE 129   LOW FREON CONDITION
+          3   CODE 128   A/C HIGH DISCHARGE TEMPERATURE OR PRESSURE
+          4   CODE 127   A/C HIGH SIDE OVERTEMP
+          5   CODE 126   A/C HIGH PRESSURE CONDITION
+          6   CODE 125   A/C HIGH PRESSURE SWITCH SHORTED
+          7   CODE 124   A/C REQUEST DISCRETE SHORTED HIGH
+ 20      DGZFACU+15   CURRENT MALFUNCTION FLAG WORD 16
+          0   CODE 139   LEFT O2 SENSOR HEATER MALFUNCTION
+          1   CODE 138   RIGHT O2 SENSOR HEATER MALFUNCTION
+          2   CODE 137   LOSS OF TCS SERIAL DATA
+          3   CODE 136   LOSS OF DERM SERIAL DATA
+          4   CODE 135   LOSS OF HVAC SERIAL DATA
+          5   CODE 134   LOSS OF IPC SERIAL DATA
+          6   CODE 133   LOSS OF ABS/TCS SERIAL DATA
+          7   CODE 132   KNOCK SENSOR CONNECTOR FAILURE
+ 21      DGZFAHY      HISTORY MALFUNCTION FLAG WORD 1
+          0   CODE 19    SHORTED FUEL PUMP CIRCUIT
+          1   CODE 18    LOOP OVERRUN IN OPERATING SYSTEM EXECUTIVE
+          2   CODE 17    LEFT OXYGEN SENSOR NOT READY
+          3   CODE 16    SYSTEM OVER/UNDER VOLTAGE
+          4   CODE 15    OPEN COOLANT TEMPERATURE SENSOR
+          5   CODE 14    SHORTED COOLANT TEMPERATURE SENSOR
+          6   CODE 13    RIGHT OXYGEN SENSOR NOT READY
+          7   CODE 12    NO D.I.S 4X REFERENCE SIGNAL
+..PAGE
+ 22      DGZFAHY+1    HISTORY MALFUNCTION FLAG WORD 2
+          0   CODE 27    OPEN THROTTLE SWITCH CIRCUIT
+          1   CODE 26    SHORTED THROTTLE SWITCH CIRCUIT
+          2   CODE 25    NO 24X REFERENCE SIGNAL
+          3   CODE 24    VEHICLE SPEED SENSOR CIRCUIT PROBLEM
+          4   CODE 23    EST/BYPASS PROBLEM
+          5   CODE 22    OPEN THROTTLE POSITION SENSOR
+          6   CODE 21    SHORTED THROTTLE POSITION SENSOR
+          7   CODE 20    OPEN FUEL PUMP CIRCUIT
+ 23      DGZFAHY+2    HISTORY MALFUNCTION FLAG WORD 3
+          0   CODE 35    REFLO VOLTAGE OUT OF RANGE
+          1   CODE 34    MAP SENSOR SIGNAL TO HIGH
+          2   CODE 33    EXTENDED TABLE BRAKE SWITCH MALFUNCTION
+          3   CODE 32    OPEN MAP SENSOR CIRCUIT
+          4   CODE 31    SHORTED MAP SENSOR CIRCUIT
+          5   CODE 30    IDLE SPEED ERROR TO HIGH
+          6   CODE 29    SHIFT RATIO B PROBLEM
+          7   CODE 28    ILLEGAL PRESSURE SWITCH MANIFOLD INPUT
+ 24      DGZFAHY+3    HISTORY MALFUNCTION FLAG WORD 4
+          0   CODE 43    LEFT O2 SENSOR RICH TO LONG
+          1   CODE 42    LEFT O2 SENSOR LEAN TO LONG
+          2   CODE 41    NO CAM REFERENCE SIGNAL
+          3   CODE 40    POWER STEERING PRESSURE SENSOR OPEN
+          4   CODE 39    TORQUE CONVERTER CLUTCH NOT ENGAGING
+          5   CODE 38    OPEN MAT SENSOR CIRCUIT
+          6   CODE 37    SHORTED MAT SENSOR CIRCUIT
+          7   CODE 36    LINEAR EGR PINTLE POSITION OUT OF RANGE
+ 25      DGZFAHY+4    HISTORY MALFUNCTION FLAG WORD 5
+          0   CODE 51    EPROM CHECKSUM FAILED
+          1   CODE 50    NOT USED
+          2   CODE 49    A.I.R. MANAGEMENT SYSTEM MALFUNCTION
+          3   CODE 48    EGR SYSTEM MALFUNCTION
+          4   CODE 47    BCM TO PCM SERIAL DATA PROBLEM
+          5   CODE 46    LF TO RR BANK FUELING DIFFERENCE
+          6   CODE 45    RIGHT O2 SENSOR RICH TO LONG
+          7   CODE 44    RIGHT O2 SENSOR LEAN TO LONG
+ 26      DGZFAHY+5    HISTORY MALFUNCTION FLAG WORD 6
+          0   CODE 59    OPEN TRANSMISSION TEMPERATURE SENSOR CIRCUIT
+          1   CODE 58    VEHICLE ANTI-THEFT SYSTEM MALFUNCTION
+          2   CODE 57    SHORTED TRANSMISSION TEMPERATURE SENSOR CIRCUIT
+          3   CODE 56    INPUT SPEED CIRCUIT PROBLEM
+          4   CODE 55    THROTTLE POSITION SENSOR OUT OF ADJUSTMENT
+          5   CODE 54    ISC SYSTEM PROBLEM
+          6   CODE 53    D.I.S. 4X SIGNAL INTERRUPT
+          7   CODE 52    PCM KAM CHECKSUM FAILED
+ 27      DGZFAHY+6    HISTORY MALFUNCTION FLAG WORD 7
+          0   CODE 67    CRUISE CONTROL R/A OR S/C SWITCH ON TO LONG
+          1   CODE 66    CRUISE ENGINE RPM TO HIGH
+          2   CODE 65    CRUISE SERVO POSITION SENSOR FAILURE
+          3   CODE 64    CRUISE VEHICLE ACCELERATION TO HIGH
+          4   CODE 63    VEHICLE SPEED AND SET SPEED DIFFERENCE TO HIGH
+          5   CODE 62    CRUISE CONTROL VACUUM SOLENOID FAILURE
+          6   CODE 61    CRUISE CONTROL VENT SOLENOID FAILURE
+          7   CODE 60    TRANSMISSION NOT IN DRIVE WHILE IN CRUISE CONTROL
+..PAGE
+ 28      DGZFAHY+7    HISTORY MALFUNCTION FLAG WORD 8
+          0   CODE 75    INTERMITTENT VEHICLE SPEED
+          1   CODE 74    INTERMITTENT MAT
+          2   CODE 73    INTERMITTENT COOLANT TEMPERATURE
+          3   CODE 72    NOT USED
+          4   CODE 71    INTERMITTENT MAP
+          5   CODE 70    INTERMITTENT THROTTLE POSITION
+          6   CODE 69    TRACTION ACTIVE WHILE IN CRUISE
+          7   CODE 68    C/C SERVO STROKE GREATER THAN COMMANDED
+ 29      DGZFAHY+8    HISTORY MALFUNCTION FLAG WORD 9
+          0   CODE 83    NO CRANK SENSOR A OR B SIGNAL
+          1   CODE 82    NOT USED
+          2   CODE 81    CAM TO REFERENCE CORRELATION PROBLEM
+          3   CODE 80    TPS/IDLE LEARN NOT DONE AFTER EEPROM RESET
+          4   CODE 79    TRANSMISSION HOT
+          5   CODE 78    TO MANY 24X PULSES
+          6   CODE 77    TO FEW 4X REFERENCE PULSES
+          7   CODE 76    FORCE MOTOR MALFUNCTION
+ 30      DGZFAHY+9    HISTORY MALFUNCTION FLAG WORD 10
+          0   CODE 91    PARK/NEUTRAL INPUT PROBLEM
+          1   CODE 90    TCC BRAKE SWITCH MALFUNCTION
+          2   CODE 89    LONG SHIFT AND MAX ADAPT
+          3   CODE 88    TCC NOT DISENGAGING
+          4   CODE 87    TO MANY 4X PULSES
+          5   CODE 86    UNDEFINED BOX RATIO
+          6   CODE 85    THROTTLE BODY SERVICE REQUIRED
+          7   CODE 84    MISSING 24X PULSES
+ 31      DGZFAHY+10   HISTORY MALFUNCTION FLAG WORD 11
+          0   CODE 99    CRUISE CONTROL SERVO STROKE HIGH NOT IN C/C
+          1   CODE 98    NOT USED
+          2   CODE 97    P/N TO D/R AT HIGH THROTTLE ANGLE
+          3   CODE 96    TORQUE CONVERTER OVERSTRESS
+          4   CODE 95    ENGINE STALL DETECTED
+          5   CODE 94    SHIFT RATIO A PROBLEM
+          6   CODE 93    TCS PWM LINK FAILURE
+          7   CODE 92    HEATED WINDSHIELD REQUEST PROBLEM
+ 32      DGZFAHY+11   HISTORY MALFUNCTION FLAG WORD 12
+          0   CODE 107   BCM TO PCM SERIAL DATA PROBLEM
+          1   CODE 106   BRAKE LIGHT SWITCH MALFUNCTION
+          2   CODE 105   BRAKE BOOSTER VACUUM TO LOW
+          3   CODE 104   STACK OVERRUN
+          4   CODE 103   OPEN BRAKE BOOSTER VACUUM SENSOR CIRCUIT
+          5   CODE 102   SHORTED BRAKE BOOSTER SENSOR
+          6   CODE 101   NOT USED
+          7   CODE 100   NOT USED
+ 33      DGZFAHY+12   HISTORY MALFUNCTION FLAG WORD 13
+          0   CODE 115   QDSM #1 OUTPUT OPEN/SHORT
+          1   CODE 114   QDM #2 OUTPUT OPEN/SHORT
+          2   CODE 113   QDM #1 OUTPUT OPEN/SHORT
+          3   CODE 112   COMPLETE EEPROM FAILURE
+          4   CODE 111   STACK OVERRUN
+          5   CODE 110   L TERMINAL MALFUNCTION
+          6   CODE 109   KAM CHECKSUM FAILED
+          7   CODE 108   EPROM CHECKSUM FAILED
+..PAGE
+ 34      DGZFAHY+13   HISTORY MALFUNCTION FLAG WORD 14
+          0   CODE 123   VERY LOW REFRIGERANT PRESSURE
+          1   CODE 122   A/C COOLANT OVERTEMP
+          2   CODE 121   A/C HIGH SIDE TEMPERATURE SENSOR FAILED
+          3   CODE 120   A/C LOW SIDE TEMPERATURE SENSOR FAILED
+          4   CODE 119   INJECTOR OPEN OR SHORTED
+          5   CODE 118   EXCESSIVE SERVO CABLE LASH
+          6   CODE 117   QDSM #3 OUTPUT OPEN/SHORT
+          7   CODE 116   QDSM #2 OUTPUT OPEN/SHORT
+ 35      DGZFAHY+14   HISTORY MALFUNCTION FLAG WORD 15
+          0   CODE 131   KNOCK SENSOR FAILURE
+          1   CODE 130   VERY LOW FREON CONDITION
+          2   CODE 129   LOW FREON CONDITION
+          3   CODE 128   A/C HIGH DISCHARGE TEMPERATURE OR PRESSURE
+          4   CODE 127   A/C HIGH SIDE OVERTEMP
+          5   CODE 126   A/C HIGH PRESSURE CONDITION
+          6   CODE 125   A/C HIGH PRESSURE SWITCH SHORTED
+          7   CODE 124   A/C REQUEST DISCRETE SHORTED HIGH
+ 36      DGZFAHY+15   HISTORY MALFUNCTION FLAG WORD 16
+          0   CODE 139   LEFT O2 SENSOR HEATER MALFUNCTION
+          1   CODE 138   RIGHT O2 SENSOR HEATER MALFUNCTION
+          2   CODE 137   LOSS OF TCS SERIAL DATA
+          3   CODE 136   LOSS OF DERM SERIAL DATA
+          4   CODE 135   LOSS OF HVAC SERIAL DATA
+          5   CODE 134   LOSS OF IPC SERIAL DATA
+          6   CODE 133   LOSS OF ABS/TCS SERIAL DATA
+          7   CODE 132   KNOCK SENSOR CONNECTOR FAILURE
+ 37      NOT USED
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 1
+..HEAD04C 48 DATA WORDS
+WORD #   DATA NAME    DESCRIPTION
+ 1       ALSM1B1      STATUS BYTE 1
+          0   CANISTER PURGE ENABLED               0 = NO          1 = YES
+          1   FUEL PUMP SOLENOID ENABLED           0 = NO          1 = YES
+          2   RIDE CONTROL ACTIVE                  0 = NO          1 = YES
+          3   A.I.R. PUMP STATUS (E/K ONLY)        0 = OFF         1 = ON
+          4   SERVICE ENGINE SOON LIGHT            0 = OFF         1 = ON
+          5   FAN #2 STATUS                        0 = OFF         1 = ON
+          6   FAN #1 STATUS                        0 = OFF         1 = ON
+          7   STARTER MOTOR INHIBITED              0 = NO          1 = YES
+ 2       ALSM1B2      STATUS BYTE 2
+          0   EST ENABLED                          0 = NO          1 = YES
+          1   CAM PULSE SINCE LAST REFERENCE PULSE 0 = NO          1 = YES
+          2   LOW COOLANT SWITCH INDICATOR         0 = LOW         1 = OK
+          3   DIAGNOSTIC THROTTLE SWITCH INDICATOR 0 = OPEN        1 = CLOSED
+          4   BLM LEARNING CONTROL ENABLED         0 = NO          1 = YES
+          5   RIGHT O2 SENSOR RICH/LEAN FLAG       0 = LEAN        1 = RICH
+          6   LEFT O2 SENSOR RICH/LEAN FLAG        0 = LEAN        1 = RICH
+          7   LOOP STATUS                          0 = OPEN        1 = CLOSED
+ 3       ALSM1B3       STATUS BYTE 3
+          0   NOT USED
+          1   ENGINE OIL LEVEL LOW   (E/K ONLY)    0 = NO          1 = YES
+          2   INJECTOR FAULT INDICATOR             0 = FAULT       1 = OK
+          3   QDSM #3 FAULT INDICATOR              0 = FAULT       1 = OK
+          4   QDSM #2 FAULT INDICATOR              0 = FAULT       1 = OK
+          5   QDSM #1 FAULT INDICATOR              0 = FAULT       1 = OK
+          6   QDM #2 FAULT INDICATOR               0 = FAULT       1 = OK
+          7   QDM #1 FAULT INDICATOR               0 = FAULT       1 = OK
+ 4       EGVPPOF      CLOSED VALVE PINTLE POSITION
+                        VOLTS = 5N/255
+ 5       ADVPPRW      RAW PINTLE POSITION
+                        VOLTS = 5N/256
+ 6       EGVCDPP      DESIRED PINTLE POSITION
+                        % = N/2.56
+ 7       EGVPPAC      RESCALLED PINTLE POSITION
+                        % = N/2.56
+ 8       FCVEGFC      EGR FUEL COMPENSATION
+                        % = N/2.56
+ 9       ADVREFRW     RAW REFERENCE LOW VOLTAGE
+                        VOLTS = 5N/255
+ 10      VSVMH        VEHICLE SPEED (MSB)  NON-DEFAULTED
+                        MPH = N
+                        kph = 1.61N
+ 11      VSVMH+1      VEHICLE SPEED (LSB) (FRACTIONAL VEHICLE SPEED)
+ 12      TSVRPM01     ENGINE SPEED (MSB)
+ 13      TSVRPM01+1   ENGINE SPEED (LSB)
+                        RPM = N
+ 14      ADVO2RW      RIGHT REAR OXYGEN SENSOR VOLTAGE
+                        mV = 4.448N
+ 15      ADVOXRW      LEFT FRONT OXYGEN SENSOR VOLTAGE
+                        mV = 4.448N
+ 16      DGVIZCT      IGNITION CYCLE COUNTER
+                        COUNTS = N
+..PAGE
+ 17      FCVTCDCD     TRACTION CONTROL DESIRED TORQUE
+                        % = N/2.55
+ 18      SPVSRET      SERIAL SPARK RETARD
+                        ø = N
+ 19      DGVADTT      TRANSMISSION TEMPERATURE (NON-DEFAULTED)
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 20      ADVTCNW      FAILSOFTED COOLANT (DEFAULTED)
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 21      DGVADTM      MANIFOLD AIR TEMPERATURE (NON-DEFAULTED)
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 22      ADVPMRW      MANIFOLD ABSOLUTE PRESSURE RAW
+                        VOLTS = 5N/256
+                        kPa = (N + 28.06)/2.71
+ 23      ADVPBSA      BARO PRESSURE
+                        VOLTS = 5N/256
+                        kPa = (N + 28.06)/2.71
+ 24      FCVPWBK2     RIGHT REAR INJECTOR PULSE WIDTH (MSB)
+ 25      FCVPWBK2+1   RIGHT REAR INJECTOR PULSE WIDTH (LSB)
+                        mSEC = N/65.536
+ 26      FCVPWBK1     LEFT FRONT INJECTOR PULSE WIDTH (MSB)
+ 27      FCVPWBK1+1   LEFT FRONT INJECTOR PULSE WIDTH (LSB)
+                        mSEC = N/65.536
+ 28      ADVTARW      THROTTLE POSITION (NON-DEFAULTED)
+                        VOLTS = 5N/256
+                        ø = (N - 33)/2.377
+ 29      ADVTANW      THROTTLE ANGLE
+                        ø = N/3.125
+ 30      ADVBVNW      FUEL PUMP VOLTAGE
+                        VOLTS = N/10
+ 31      ADVIGRW      IGNITION VOLTAGE
+                        VOLTS = N/10
+ 32      SCVSA        SPARK ADVANCE FINAL
+                        ø = 90N/256 - 20
+ 33      NKVRET       KNOCK RETARD
+                        ø = 45N/256
+ 34      NKVDPA2      KNOCK SENSOR COUNTER
+                        DELTA = N
+ 35      FCVCLIT2     RIGHT O2 CLOSED LOOP INTEGRATOR
+                        N = COUNTS
+                        mS = (N - 128)/65.536
+ 36      FCVCLIT      LEFT O2 CLOSED LOOP INTEGRATOR
+                        N = COUNTS
+                        mS = (N - 128)/65.536
+ 37      FCVMLMT2     RIGHT BLOCK LEARN MULTIPLIER
+                        N = COUNTS
+ 38      FCVBLMT1     LEFT BLOCK LEARN MULTIPLIER
+                        N = COUNTS
+ 39      FCVBLTD      BLOCK LEARN CELL
+                        N = COUNTS
+ 40      FCVCCNT2     RIGHT CROSS COUNTS
+                        COUNTS = N
+..PAGE
+ 41      FCVCCNT1     LEFT CROSS COUNTS
+                        COUNTS = N
+ 42      CPVDC        CANISTER PURGE DUTY CYCLE
+                        %DC = N/2.56
+ 43      MDPDEV       BIT SELECT BYTE 1
+          0      SYNCH AE ADDITIONAL ACTION        0 = NO
+          1      G MULE CONFIGURATION              0 = NO          1 = YES
+          2      G - CAR vs E/K/V CAR              0 = NOT G       1 = G
+          3      NUMBER OF OXYGEN SENSORS          0 = DUAL        1 = SINGLE
+          4      PROTOTYPE BCM                     0 = YES         1 = NO
+          5      VDI CODE DISPLAY/CLEAR            0 = RAM SLEW    1 = CLEAR
+          6      FLIGHT RECORDER TRIGGER           0 = NO          1 = YES
+          7      VDI ENABLE                        0 = NO          1 = YES
+ 44      MDPDEV2      BIT SELECT BYTE 2
+          0      FUEL PUMP                         0 = STANDARD    1 = PWM
+          1      EGR OVERRIDE/OUTPUT CYCLING       0 = YES         1 = NO
+          2      LOW COOLANT FANS ENABLED          0 = NO          1 = YES
+          3      EGR FUEL COMP ALGORITHM           0 = MAP/RPM     1 = CALCULATE
+          4      E/K vs V OR G                     0 = V OR G      1 = E/K
+          5      EGR HIGH TA CRITERIA              0 = YES         1 = NO
+          6      AIR MANAGEMENT SYSTEM PRESENT     0 = NO          1 = YES
+          7      TOGGLE COP II                     0 = YES         1 = NO
+ 45      ADVBBRW      BRAKE BOOSTER VACUUM (NOT G-CAR)
+                        kPa = N/2.71 - 10.65
+ 46      TCVTRATF     UPPER BYTE OF GEARBOX RATIO
+                        RATIO = 4N/256
+ 47      DPPIDPG      PROMID MSB                **DO NOT DISPLAY FOR SERVICE**
+ 48      DPPIDPG+1    PROMID LSB
+                        ID = N
+
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 2
+..HEAD04C 45 DATA WORDS
+WORD #   DATA NAME    DESCRIPTION
+ 1       ALSM2S1      MESSAGE 2 STATUS REG 1
+          0   C-C ON INDICATOR                     0 = OFF         1 = ON
+          1   C-C ENABLE/BRAKE INDICATOR           0 = DISABLED    1 = ENABLED
+          2   CRUISE DRIVER OVER-DRIVE FLAG        0 = NO          1 = YES
+          3   CRUISE ENGAGE FLAG
+                                           0 = NOT ENGAGED, OFF, STANDBY ENABLE
+                                           1 = ENGAGED, RESUME, ACCEL
+          4   CRUISE VAC COMMANDED STATE           0 = LOW         1 = HIGH
+          5   CRUISE VENT COMMANDED STATE          0 = LOW         1 = HIGH
+          6   RESUME/ACCEL ACTIVATED               0 = NO          1 = YES
+          7   SET/COAST ACTIVATED                  0 = NO          1 = YES
+ 2       ALSM2S2      MESSAGE 2 STATUS REG 2
+          0   A/C CLUTCH (COMMANDED STATE)         0 = OFF         1 = ON
+          1   A/C REQUEST SWITCH                   0 = REQUEST
+          2   EXCESSIVE POWER STEERING PRESSURE    0 = YES         1 = NO
+          3   TRANSMISSION IN PARK OR NEUTRAL      0 = NO          1 = YES
+          4   SHIFT SELECT                         0 = PERFORMANCE 1 = NORMAL
+          5   THROTTLE SWITCH INDICATOR            0 = OPEN        1 = CLOSED
+          6   C-C RESUME/ACCEL BUTTON              1 = RESUME/ACCEL
+          7   C-C SET/COAST BUTTON                 1 = SET/COAST
+ 3       ALSM2S3      MESSAGE 3 STATUS REG 3
+          0   TRANSMISSION MODE X  SEE MODE TABLE
+          1   TRANSMISSION MODE Y  SEE MODE TABLE
+          2   TRANSMISSION MODE Z  SEE MODE TABLE
+          3   EXTENDED TRAVEL BRAKE SWITCH         0 = ACTIVE
+              (FROM ABS ON)
+          4   TCC ENGAGED FLAG                     1 = ENGAGED
+          5   PASS KEY MALFUNCTION                 1 = CODE 58 ACTIVE
+          6   PASS KEY DISABLED FUEL               1 = DISABLE FUEL
+          7   BRAKE SWITCH                         0 = BRAKE PRESSED
+
+          MODE TABLE
+          ----------
+          Z  Y  X  DEFINITION
+          -  -  -  ----------
+          0  0  0  ILLEGAL
+          0  0  1  DRIVE 4
+          0  1  0  ILLEGAL
+          0  1  1  DRIVE 3
+          1  0  0  REVERSE
+          1  0  1  PARK/NEUTRAL
+          1  1  0  DRIVE 1
+          1  1  1  DRIVE 2
+
+
+ 4       ALSM2S4      MESSAGE 4 STATUS REG 4
+          0   NOT USED
+          1   NOT USED
+          2   NOT USED
+          3   A/C HIGH SIDE PRESSURE INDICATOR     1 = PRESSURE PRESENT
+          4   L-TERMINAL FAULT FLAG                1 = FAULT
+          5   L-TERMINAL ON FLAG                   1 = ON
+          6   SHIFT SOLENOID B                     1 = ON
+          7   SHIFT SOLENOID A                     1 = ON
+
+                                             SHIFT SOLENOID TABLE
+                                             --------------------
+                                             A  B   GEAR
+                                             -  -   ----
+                                             1  0   LOW
+                                             0  0   2ND
+                                             0  1   3RD
+                                             1  1   4TH
+
+..PAGE
+ 5       CCSR5        CRUISE DISENGAGE STATUS INDICATOR
+          0   ILLEGAL SWITCH INPUT,RESUME/ACCEL         1 = YES    0 = NO
+              AND SET/COAST ON AT SAME TIME OR
+              CRUISE POWER SWITCH OFF WHILE CRUISE ENGAGED
+          1   BRAKE APPLIED WHILE CRUISE ENGAGED        1 = YES    0 = NO
+          2   PRNDL STATUS WHILE CRUISE ENGAGED         1 = YES    0 = NO
+               (NOT IN FORWARD GEAR)
+          3   VEHICLE SPEED OUT OF RANGE WHILE CRUISE   1 = YES    0 = NO
+          4   ENGINE RPM OUT OF RANGE WHILE CRUISE      1 = YES    0 = NO
+          5   VEHICLE ACCELERATION TO HIGH WHILE CRUISE 1 = YES    0 = NO
+          6   VEHICLE BATTERY LOW WHILE IN CRUISE       1 = YES    0 = NO
+          7   SET SPEED CHANGED WHILE CRUISE ENGAGED    1 = YES    0 = NO
+               (RANDOM CHANGE DETECTED)
+ 6       ADVSSRW      RAW A/D INPUT FOR SERVO STROKE
+                        N = COUNTS
+ 7       CCVSSTT      TOTAL SERVO STROKE, COMPUTED
+                        N = COUNTS
+ 8       CCVSSLL      CRUISE LASH LEARN TERM
+                        N = COUNTS
+ 9       CCVVSET      SET CRUISE SPEED
+                        N = COUNTS
+ 10      TSVRPM01     ENGINE SPEED (MSB)
+ 11      TSVRPM01+1   ENGINE SPEED (LSB)
+                        RPM = N
+ 12      VSVMH        VEHICLE SPEED (MSB)
+                        MPH = N
+                        KPH = 1.61N
+ 13      VSVMH+1      VEHICLE SPEED (LSB) (FRACTIONAL VEHICLE SPEED)
+ 14      ISVESDD      DESIRED IDLE SPEED
+                        RPM = N * 8
+ 15      ISVFLWD      DESIRED FLOW
+                        N = COUNTS
+ 16      ISVFLOW      ACTUAL FLOW
+                        N = COUNTS
+ 17      DGVADTC      RAW COOLANT                    NON-DEFAULTED
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 18      ADVPMRW      RAW MAP
+                        VOLTS = 5N/256
+                        kPa = (N + 28.06)/2.71
+ 19      ADVTARW      RAW THROTTLE POSITION SENSOR
+                        VOLTS = 5N/256
+                        ø = (N - 33)/2.377
+ 20      ADVTANW      THROTTLE ANGLE
+                        ø = N/3.125
+ 21      TMVDT        DELIVERED TORQUE
+                        FT-LB = 2N
+ 22      VTVALM1      PASS KEY TIME PERIOD
+                        MS = N/4.096
+ 23      ADVPPNW      P/S PRESSURE INPUT  (NOT USED)
+                        PSI = 39N
+ 24      ADVIGRW      IGNITION VOLTAGE
+                        VOLTS = N/10
+..PAGE
+ 25      MDPDEV       BIT SELECTS 1
+          0   POWER STEERING SENSOR                1 = ANALOG      0 = DISCRETE
+          1   G MULE CONFIGURATION                 1 = YES         0 = NO
+          2   G - CAR vs E/K/V CAR                 1 = G           0 = E/K/V
+          3   VATS ENABLED                         1 = YES         0 = NO
+          4   HOT METAL CHIME ENABLED (V - CAR)    1 = YES         0 = NO
+          5   IIU CODE DISPLAY RAM VALUE           1 = IIU CODE    0 = RAM SLEW
+          6   FIRST GEAR DISABLE                   1 = YES         0 = NO
+          7   VDI ENABLED                          1 = YES         0 = NO
+ 26      MDPDEV2      BIT SELECTS 2
+          0   REDUNDANT VENT SOLENOID SELECTED     1 = YES         0 = NO
+          1   PSM INSTEAD OF PRNDL BIT SELECT      1 = YES         0 = NO
+          2   DRIVE 4 ONLY TCC SELECT              1 = YES         0 = NO
+          3   VCC INSTEAD OF TCC SELECT            1 = YES         0 = NO
+          4   E/K vs V OR G                        1 = E/K         0 = V OR G
+          5   TRANS OIL LIFE RESET                 1 = DISABLED    0 = ENABLED
+          6   TRANSMIT LOW OCTANE INDICATOR        1 = LOW         0 = NO LOW
+          7   TOGGLE COP II                        1 = NO          0 = YES
+ 27      ADVACLS      A/C LOWSIDE TEMPERATURE(G-CAR ONLY)
+                        øF = N - 40
+ 28      ADVALHS      A/C HIGHSIDE TEMPERATURE (G-CAR ONLY)
+                        øC = N - 40
+ 29      OLVLFSD      TRANS OIL LIFE REMAINING
+                        % = N
+ 30      EOVPCNT      ENGINE OIL LIFE REMAINING
+                        % = N/2.56
+ 31      ISVGLM1      ISC GAIN LEARN FACTOR FOR 1ST PULSEWIDTH
+                        FACTOR = N/128
+ 32      ISVGLM2      ISC GAIN LEARN FACTOR FOR 2ND PULSEWIDTH
+                        FACTOR = N/128
+ 33      ISVGLM3      ISC GAIN LEARN FACTOR FOR 3RD PULSEWIDTH
+                        FACTOR = N/128
+ 34      ISVTPCO1     TPS LEARNED CORRECTION TA*1
+                        ø = N/2.377    (SIGNED)
+ 35      ISVTPCO4     TPS LEARNED CORRECTION TA*4
+                        ø = N/9.5      (SIGNED)
+ 36      ISVILOF      A/C OFF COASTDOWN THROTTLE ANGLE LEARNED OFFSET
+                        ø = N/13.223
+ 37      ISVILOFA     A/C ON COASTDOWN THROTTLE ANGLE LEARNED OFFSET
+                        ø = N/13.223
+ 38      ISVTAKA      KAM MIN TPS SETPOINT
+                        ø = .10517(N - 72)
+ 39      ISVTPLSA     SUCCESSFUL TPS LEARN ATTEMPTS
+                        N = COUNTS
+ 40      ISVTPLAT     TPS LEARN ATTEMPTS
+                        N = COUNTS
+ 41      TPSR2        TPS LEARN STATUS REGISTER
+                        N = COUNTS
+ 42      DPPIDPG      TCM SOFTWARE PROM ID(MSB) ** DO NOT DISPLAY FOR SERVICE **
+ 43      DPPIDPG+1    TCM SOFTWARE PROM ID(LSB)
+                        ID = N
+ 44      PROMID       TCM BROADCAST PROM ID(MSB) ** DISPLAY FOR SERVICE **
+ 45      PROMID+1     TCM BROADCAST PROM ID(LSB)
+                        ID = N
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 3
+..HEAD04C 67 DATA WORDS
+WORD #   DATA NAME    DESCRIPTION
+ 1       ADVTANW      THROTTLE ANGLE
+                        ø = N/3.125
+ 2       THROTBEG     THROTTLE ANGLE AT SHIFT
+                        ø = N/3.125
+ 3       ADVPBCU      BARO PRESSURE
+                        VOLTS = 5N/256
+                        kPa = N/6.1 + 60.81
+ 4       TSVRPM01     ENGINE SPEED (MSB)
+ 5       TSVRPM01+1   ENGINE SPEED (LSB)
+                        RPM = N
+ 6       TCVTSPD      INPUT SPEED (MSB)
+ 7       TCVTSPD+1    INPUT SPEED (LSB)
+                        RPM = N/8
+ 8       VSVMH        VEHICLE SPEED (MSB)
+                        MPH = N
+                        kph = 1.61N
+ 9       VSVMH+1      VEHICLE SPEED (LSB) (FRACTIONAL VEHICLE SPEED)
+ 10      PRESSURE     PRESSURE
+                        PSI = N
+ 11      TPVSHFTP     SHIFT PRESSURE FINAL VALUE
+                        PSI = N
+ 12      CURRCMND     COMMANDED CURRENT
+                        AMPS = N/51.2
+ 13      CURRACT      ACTUAL CURRENT
+                        AMPS = N/51.2
+ 14      ERROR        CURRENT ERROR
+                        AMPS = N/51.2     (SIGNED)
+ 15      DGVADTC      COOLANT                    NON-DEFAULTED
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 16      ADVTTNW      TRANS TEMPERATURE          DEFAULTED
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 17      TCVTRAT      GEAR BOX RATIO
+ 18      TCVTRAT+1    GEAR BOX RATIO
+                        RATIO = N/16384
+ 19      TMVGBTQ      GEAR BOX TORQUE
+                        FT-LB = N*2
+ 20      TPVSGBTQ     SHIFT GEAR BOX TORQUE
+                        FT-LB = N*2
+ 21      TCVFMDC      FORCE MOTOR DUTY CYCLE
+                        % = N/2.56
+ 22      ERROR12      LATEST 1-2 UPSHIFT ERROR
+                        SEC = N/40        (SIGNED)
+ 23      ERROR23      LATEST 2-3 UPSHIFT ERROR
+                        SEC = N/40        (SIGNED)
+ 24      ERROR34      LATEST 3-4 UPSHIFT ERROR
+                        SEC = N/40        (SIGNED)
+ 25      LASTERR      RECENT UPDATE ERROR
+                        SEC = N/40        (SIGNED)
+ 26      TIME12       1-2 SHIFT TIME
+                        SEC = N/40
+..PAGE
+ 27      TIME12+1     2-3 SHIFT TIME
+                        SEC = N/40
+ 28      TIME12+2     3-4 SHIFT TIME
+                        SEC = N/40
+ 29      SHFTDLY      SHIFT DELAY
+                        SEC = N/40
+ 30      EADPT2       1-2 ADAPT CELL LOW (ADAPTIVE) 2ND GEAR
+                        PSI = N/4         (SIGNED)
+ 31      EADPT2+1     1-2 ADAPT CELL HIGH (ADAPTIVE) 2ND GEAR
+                        PSI = N/4         (SIGNED)
+ 32      EACI2        1-2 ACCUMULATED CORRECTION INTEGRATOR LOW 2ND GEAR
+                        PSI = N/2         (SIGNED)
+ 33      EACI2+1      1-2 ACCUMULATED CORRECTION INTEGRATOR HIGH 2ND GEAR
+                        PSI = N/2         (SIGNED)
+ 34      EADPT3       2-3 ADAPT CELL LOW (ADAPTIVE) 3RD GEAR
+                        PSI = N/4         (SIGNED)
+ 35      EADPT3+1     2-3 ADAPT CELL HIGH (ADAPTIVE) 3RD GEAR
+                        PSI = N/4         (SIGNED)
+ 36      EACI3        2-3 ACCUMULATED CORRECTION INTEGRATOR LOW 3RD GEAR
+                        PSI = N/2         (SIGNED)
+ 37      EACI3+1      2-3 ACCUMULATED CORRECTION INTEGRATOR HIGH 3RD GEAR
+                        PSI = N/2         (SIGNED)
+ 38      EADPT4       3-4 ADAPT CELL LOW (ADAPTIVE) 4TH GEAR
+                        PSI = N/4         (SIGNED)
+ 39      EADPT4+1     3-4 ADAPT CELL HIGH (ADAPTIVE) 4TH GEAR
+                        PSI = N/4         (SIGNED)
+ 40      EACI4        3-4 ACCUMULATED CORRECTION INTEGRATOR LOW 4TH GEAR
+                        PSI = N/2         (SIGNED)
+ 41      EACI4+1      3-4 ACCUMULATED CORRECTION INTEGRATOR HIGH 4TH GEAR
+                        PSI = N/2         (SIGNED)
+ 42      CURADPT      CURRENT ADAPT VALUE
+                        PSI = N           (SIGNED)
+ 43      CELWGHT      CURRENT ADAPT CELL
+                        % = N/2.56
+ 44      TPVRSAPT     STEADY STATE ADAPT - REVERSE
+                        PSI = N/2
+ 45      TPVRSAPT+1   STEADY STATE ADAPT - 1ST GEAR
+                        PSI = N/2
+ 46      TPVRSAPT+2   STEADY STATE ADAPT - 2ND GEAR
+                        PSI = N/2
+ 47      TPVRSAPT+3   STEADY STATE ADAPT - 3RD GEAR
+                        PSI = N/2
+ 48      TPVRSAPT+4   STEADY STATE ADAPT - 4TH GEAR
+                        PSI = N/2
+ 49      TPVRSAPT+5   STEADY STATE ADAPT - 3RD W/TCC
+                        PSI = N/2
+ 50      TPVRSAPT+6   STEADY STATE ADAPT - 4TH W/TCC
+                        PSI = N/2
+ 51      TPVSSSA      STEADY STATE ADAPT USED
+                        PSI = N/2
+ 52      TPVCSCNT     STEADY STATE SLIP ACCUMULATOR
+                        N = RPM
+ 53      GSADPTR      REVERSE GARAGE SHIFT ADAPT LOW
+                        PSI = N/40        (SIGNED)
+..PAGE
+ 54      GSADPTR+1    REVERSE GARAGE SHIFT ADAPT HIGH
+                        PSI = N/40        (SIGNED)
+ 55      GSADPTD      DRIVE GARAGE SHIFT ADAPT LOW
+                        PSI = N/40        (SIGNED)
+ 56      GSADPTD+1    DRIVE GARAGE SHIFT ADAPT HIGH
+                        PSI = N/40        (SIGNED)
+ 57      ADPTCOND     UPSHIFT ADAPT CONDITION
+          0   1 = PATTERN IS NOT "NORMAL" (HOT MODE)
+          1   1 = PREVIOUS SHIFT/(RANGE CHANGE) OCCURRED TOO RECENTLY
+          2   1 = TRANSMISSION TEMPERATURE OUT OF RANGE
+          3   1 = GEARBOX TORQUE OUT OF RANGE
+          4   1 = DIAGNOSTIC ACTION ADAPT UPDATE DISABLE
+          5   1 = PRNDL IS LO OR D2
+          6   1 = FILL/TORQUE PHASES WERE TOO QUICK
+          7   1 = THROTTLE/(VEHICLE SPEED) CHANGED TO MUCH
+ 58      ALSM3S1      STATUS BYTE 1
+          0   TRANSMISSION MODE X  SEE MODE TABLE
+          1   TRANSMISSION MODE Y  SEE MODE TABLE
+          2   TRANSMISSION MODE Z  SEE MODE TABLE
+          3   TRANSMISSION IN PARK OR NEUTRAL      0 = NO          1 = YES
+          4   TCC BRAKE SWITCH                     0 = BRAKE OFF   1 = BRAKE ON
+          5   A/C CLUTCH                           0 = OFF         1 = ON
+          6   THROTTLE SWITCH INDICATOR            0 = OPEN        1 = CLOSED
+          7   CRUISE ENGAGE FLAG
+                                           0 = NOT ENGAGED, OFF, STANDBY ENABLE
+                                           1 = ENGAGED, RESUME, ACCEL
+
+          MODE TABLE
+          ----------
+          Z  Y  X  DEFINITION
+          -  -  -  ----------
+          0  0  0  ILLEGAL
+          0  0  1  DRIVE 4
+          0  1  0  ILLEGAL
+          0  1  1  DRIVE 3
+          1  0  0  REVERSE
+          1  0  1  PARK/NEUTRAL
+          1  1  0  DRIVE 1
+          1  1  1  DRIVE 2
+
+ 59      ALSM3S2      STATUS BYTE 2
+          0   NOT USED
+          1   1 = STEADY STATE ADAPTABLE
+          2   1 = TRANS DIAG CODE SET
+          3   1 = GARAGE SHIFT ADAPTABLE
+          4   1 = UPSHIFT ADAPTABLE
+          5   1 = QDSM #3 FAULT
+          6   1 = QDM #1 FAULT
+          7   1 = A/C ENABLE
+..PAGE
+ 60      ALVSOLST     SOLENOID STATE
+          0   NOT USED
+          1   NOT USED
+          2   NOT USED
+          3   NOT USED
+          4   NOT USED
+          5   NOT USED
+          6   1 = SOLENOID A ENERGIZED
+          7   1 = SOLENOID B ENERGIZED
+ 61      TCVPWMDC     TCC DUTY CYCLE
+                        % = N/2.56
+ 62      TCVSLSP      SLIP SPEED
+                        RPM = 32N         (SIGNED)
+ 63      TSVPRNDL     PRNDL
+                        1 = PARK/NEUTRAL
+                        2 = REVERSE
+                        3 = ILLEGAL
+                        4 = DRIVE 4
+                        5 = DRIVE 3
+                        6 = DRIVE 2
+                        7 = DRIVE 1
+                        8 = ILLEGAL
+ 64      NOT USED
+ 65      NOT USED
+ 66      TPVSTPE      SHIFT TIME PRESSURE ERROR
+                        PSI = N           (SIGNED)
+ 67      ADVPMNW      RE-SCALED FAILSOFTED MAP
+                        kPa = N/3.1 + 20.4
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 4
+..HEAD04C 5 DATA WORDS
+WORD #   DATA NAME    DESCRIPTION
+ 1       RFVOLD       OLD REFERENCE PERIOD MSB
+ 2       RFVOLD+1     OLD REFERENCE PERIOD LSB
+                        MS = N/65.536
+ 3       REFPER       REFERENCE PERIOD MSB
+ 4       REFPER+1     REFERENCE PERIOD LSB
+                        MS = N/65.536
+ 5       ALSM4B1      MESSAGE 4 STATUS WORD
+          0   NOT USED
+          1   NOT USED
+          2   NOT USED
+          3   NOT USED
+          4   NOT USED
+          5   EXCESSIVE POWER STEERING PRESSURE    0 = NO          1 = YES
+          6   IN PARK/NEUTRAL                      0 = NO          1 = YES
+          7   CAM PULSE SEEN                       0 = NO          1 = YES
+
+..PAGE
+..HEAD03C ALDL MODE 1 MESSAGE 5
+..HEAD04C 88 DATA WORDS
+..FOOT64L NOTE: DATA NAMES THAT START WITH I2V SHOULD NOT BE USED FOR SERVICE !
+WORD #   DATA NAME    DESCRIPTION
+ 1       ADVTANW      THROTTLE ANGLE TA*1
+                        ø = N/3.125
+ 2       THROTBEG     THROTTLE AT BEGINNING OF SHIFT
+                        ø = N/3.125
+ 3       ADVPBCU      AMBIENT BAROMETRIC PRESSURE
+                        VOLTS = 5N/255
+                        kPa = N/6.1 + 60.81
+ 4       ESVRM25R     ENGINE SPEED
+                        RPM = 25N + 400
+ 5       TCVTSPD      INPUT SPEED
+                        RPM = N*32
+ 6       DGVMH        VEHICLE SPEED
+                        MPH = N
+                        KPH = 1.61N
+ 7       PRESSURE     CURRENT TORQUE SIGNAL PRESSURE
+                        PSI = N
+ 8       TPVSHFTP     SHIFT PRESSURE
+                        PSI = N
+ 9       PROFMOD      PRESSURE PROFILE AMOUNT
+                        PSI = N            (SIGNED)
+ 10      CURRCMND     COMMANDED CURRENT
+                        AMPS = N/51.2
+ 11      CURRACT      ACTUAL CURRENT
+                        AMPS = N/51.2
+ 12      DGVADTC      COOLANT
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 13      ADVTTNW      TRANS TEMPERATURE
+                        øC = .75N - 40
+                        øF = 1.35N - 40
+ 14      TCVTRAT      GEAR BOX RATIO
+                        RATIO = N/64
+ 15      TMVGBTQ      GEAR BOX TORQUE
+                        FT-LB = 2N
+ 16      TPVSGBTQ     SHIFT GEAR BOX TORQUE
+                        FT-LB = 2N
+ 17      TCVFMDC      FORCE MOTOR DUTY CYCLE
+                        % = N/2.56
+ 18      ERROR12      LATEST 1-2 UPSHIFT ERROR
+                        SEC = N/40         (SIGNED)
+ 19      ERROR23      LATEST 2-3 UPSHIFT ERROR
+                        SEC = N/40         (SIGNED)
+ 20      ERROR34      LATEST 3-4 UPSHIFT ERROR
+                        SEC = N/40         (SIGNED)
+ 21      LASTERR      RECENT UPDATE ERROR
+                        SEC = N/40         (SIGNED)
+ 22      TIME12       1-2 SHIFT TIME
+                        SEC = N/40
+ 23      TIME12+1     2-3 SHIFT TIME
+                        SEC = N/40
+ 24      TIME12+2     3-4 SHIFT TIME
+                        SEC = N/40
+..PAGE
+ 25      SHFTDLY      SHIFT DELAY
+                        SEC = N/40
+ 26      EADPT2       1-2 ADAPT CELL LOW (ADAPTIVE) 2ND GEAR
+                        PSI = N/4          (SIGNED)
+ 27      EADPT2+1     1-2 ADAPT CELL HIGH (ADAPTIVE) 2ND GEAR
+                        PSI = N/4          (SIGNED)
+ 28      EACI2        1-2 ACCUMULATED CORRECTION INTEGRATOR LOW 2ND GEAR
+                        PSI = N/2          (SIGNED)
+ 29      EACI2+1      1-2 ACCUMULATED CORRECTION INTEGRATOR HIGH 2ND GEAR
+                        PSI = N/2          (SIGNED)
+ 30      EADPT3       2-3 ADAPT CELL LOW (ADAPTIVE) 3RD GEAR
+                        PSI = N/4          (SIGNED)
+ 31      EADPT3+1     2-3 ADAPT CELL HIGH (ADAPTIVE) 3RD GEAR
+                        PSI = N/4          (SIGNED)
+ 32      EACI3        2-3 ACCUMULATED CORRECTION INTEGRATOR LOW 3RD GEAR
+                        PSI = N/2          (SIGNED)
+ 33      EACI3+1      2-3 ACCUMULATED CORRECTION INTEGRATOR HIGH 3RD GEAR
+                        PSI = N/2          (SIGNED)
+ 34      EADPT4       3-4 ADAPT CELL LOW (ADAPTIVE) 4TH GEAR
+                        PSI = N/4          (SIGNED)
+ 35      EADPT4+1     3-4 ADAPT CELL HIGH (ADAPTIVE) 4TH GEAR
+                        PSI = N/4          (SIGNED)
+ 36      EACI4        3-4 ACCUMULATED CORRECTION INTEGRATOR LOW 4TH GEAR
+                        PSI = N/2          (SIGNED)
+ 37      EACI4+1      3-4 ACCUMULATED CORRECTION INTEGRATOR HIGH 4TH GEAR
+                        PSI = N/2          (SIGNED)
+ 38      CURADPT      CURRENT ADAPT VALUE
+                        PSI = N            (SIGNED)
+ 39      CELWGHT      UPSHIFT ADAPT CELL WEIGHT
+                        % = N/2.56
+ 40      TRVRSAPT     STEADY STATE ADAPT - REVERSE
+                        PSI = N/2
+ 41      TPVRSAPT+1   STEADY STATE ADAPT - 1ST GEAR
+                        PSI = N/2
+ 42      TPVRSAPT+2   STEADY STATE ADAPT - 2ND GEAR
+                        PSI = N/2
+ 43      TPVRSAPT+3   STEADY STATE ADAPT - 3RD GEAR
+                        PSI = N/2
+ 44      TPVRSAPT+4   STEADY STATE ADAPT - 4TH GEAR
+                        PSI = N/2
+ 45      TPVRSAPT+5   STEADY STATE ADAPT - 3RD W/TCC
+                        PSI = N/2
+ 46      TPVRSAPT+6   STEADY STATE ADAPT - 4TH W/TCC
+                        PSI = N/2
+ 47      TPVSSSA      STEADY STATE ADAPT USED
+                        PSI = N/2
+ 48      TPVCSCNT     STEADY STATE SLIP ACCUMULATOR
+                        RPM = N
+ 49      GSADPTR      REVERSE GARAGE SHIFT ADAPT LOW
+                        PSI = N/4          (SIGNED)
+ 50      GSADPTR+1    REVERSE GARAGE SHIFT ADAPT HIGH
+                        PSI = N/4          (SIGNED)
+ 51      GSADPTD      DRIVE GARAGE SHIFT ADAPT LOW
+                        PSI = N/4          (SIGNED)
+..PAGE
+ 52      GSADPTD+1    DRIVE GARAGE SHIFT ADAPT HIGH
+                        PSI = N/4          (SIGNED)
+ 53      ADPTCOND     UPSHIFT ADAPT CONDITION
+          0   1 = PATTERN IS NOT "NORMAL" (HOT MODE)
+          1   1 = PREVIOUS SHIFT/(RANGE CHANGE) OCCURRED TOO RECENTLY
+          2   1 = TRANSMISSION TEMPERATURE OUT OF RANGE
+          3   1 = GEARBOX TORQUE OUT OF RANGE
+          4   1 = DIAGNOSTIC ACTION ADAPT UPDATE DISABLE
+          5   1 = PRNDL IS LO OR D2
+          6   1 = FILL/TORQUE PHASES WERE TOO QUICK
+          7   1 = THROTTLE/(VEHICLE SPEED) CHANGED TO MUCH
+ 54      ALSM3S1      STATUS BYTE 1
+          0   TRANSMISSION MODE X
+          1   TRANSMISSION MODE Y
+          2   TRANSMISSION MODE Z
+          3   TRANSMISSION IN PARK OR NEUTRAL      0 = NO          1 = YES
+          4   TCC BRAKE SWITCH                     0 = BRAKE OFF   1 = BRAKE ON
+          5   A/C CLUTCH                           0 = OFF         1 = ON
+          6   THROTTLE SWITCH INDICATOR            0 = OPEN        1 = CLOSED
+          7   CRUISE ENGAGE FLAG
+                                           0 = NOT ENGAGED, OFF, STANDBY ENABLE
+                                           1 = ENGAGED, RESUME, ACCEL
+
+          MODE TABLE
+          ----------
+          Z  Y  X  DEFINITION
+          -  -  -  ----------
+          0  0  0  ILLEGAL
+          0  0  1  DRIVE 4
+          0  1  0  ILLEGAL
+          0  1  1  DRIVE 3
+          1  0  0  REVERSE
+          1  0  1  PARK/NEUTRAL
+          1  1  0  DRIVE 1
+          1  1  1  DRIVE 2
+
+ 55      ALSM3S2      STATUS BYTE 2
+          0   NOT USED
+          1   1 = STEADY STATE ADAPTABLE FLAG
+          2   1 = TRANS DIAG CODE SET FLAG
+          3   1 = GARAGE SHIFT ADAPTABLE FLAG
+          4   1 = UPSHIFT ADAPTABLE FLAG
+          5   1 = QDM #3 FAULT STATUS
+          6   1 = QDM #1 FAULT STATUS
+          7   1 = A/C ENABLE STATUS
+ 56      GEARNIND     CURRENT HYDRAULICALLY LIMITED GEAR
+                        GEAR = N + 1
+ 57      I2VCLSLP     STEADY STATE CLUTCH SLIP SPEED
+                        RPM = 32N
+ 58      TCVPWMDC     TCC DUTY CYCLE
+                        % = N/2.56
+ 59      TCVSLSP      SLIP SPEED
+                        RPM = 32N          (SIGNED)
+..PAGE
+ 60      TSVPRNDL     PRNDL
+                        1 = PARK/NEUTRAL
+                        2 = REVERSE
+                        3 = ILLEGAL
+                        4 = DRIVE 4
+                        5 = DRIVE 3
+                        6 = DRIVE 2
+                        7 = DRIVE 1
+                        8 = ILLEGAL
+ 61      I2VGSCTE     GARAGE SHIFT PULSE TIME ERROR
+                        SEC = N/40         (SIGNED)
+ 62      TMVTTSR      TORQUE MANAGEMENT SPARK RETARD
+                        ø = 90N/256
+ 63      OLVMTHI      TRANS OIL LIFE  (MSB)
+ 64      OLVMTMD      TRANS OIL LIFE  (NEXT MSB)
+ 65      OLVMTLO      TRANS OIL LIFE  (LSB)
+                        N = COUNTS
+ 66      PULSE        GARAGE SHIFT PULSE TIME
+                        SEC = N/40
+ 67      I2VTPTC      TEMPERATURE COMP AMOUNT
+                        PSI = N            (SIGNED)
+ 68      I2VDSNI      DOWNSHIFT TARGET INPUT SPEED
+                        RPM = 32N
+ 69      I2VSHFES     ENGINE SHIFT SPEED
+ 70      I2VSHFES+1   ENGINE SHIFT SPEED
+                        RPM = N
+ 71      I2VTPVIT     INERTIA TORQUE AT SHIFT
+                        FT-LB = 2N
+ 72      I2VGBTQ      GEARBOX TORQUE AT SHIFT
+                        FT-LB = 2N
+ 73      I2VSLTLD     DELTA TORQUE CONTROL
+                        FT-LB = 2N
+ 74      TPVSTPE      SHIFT TIME PRESSURE ERROR
+                        PSI = N            (SIGNED)
+ 75      I2VSDPE      SHIFT DELAY PRESSURE ERROR
+                        PSI = N            (SIGNED)
+ 76      TRVRDPLO     RAW LOW DELTA P
+                        PSI = N            (SIGNED)
+ 77      TRVRDPHI     RAW HIGH DELTA P
+                        PSI = N            (SIGNED)
+ 78      I2VCDPLO     ADAPT MOD. LOW
+                        PSI = N/4          (SIGNED)
+ 79      I2VCDPHI     ADAPT MOD. HIGH
+                        PSI = N/4          (SIGNED)
+ 80      DGZFACU      CURRENT MALFUNCTION FLAG WORD 1
+          0   CODE 19    SHORTED FUEL PUMP CIRCUIT
+          1   CODE 18    LOOP OVERRUN IN OPERATING SYSTEM EXECUTIVE
+          2   CODE 17    LEFT OXYGEN SENSOR NOT READY
+          3   CODE 16    SYSTEM OVER/UNDER VOLTAGE
+          4   CODE 15    OPEN COOLANT TEMPERATURE SENSOR
+          5   CODE 14    SHORTED COOLANT TEMPERATURE SENSOR
+          6   CODE 13    RIGHT OXYGEN SENSOR NOT READY
+          7   CODE 12    NO D.I.S 4X REFERENCE SIGNAL
+..PAGE
+ 81      DGZFACU+1    CURRENT MALFUNCTION FLAG WORD 2
+          0   CODE 27    OPEN THROTTLE SWITCH CIRCUIT
+          1   CODE 26    SHORTED THROTTLE SWITCH CIRCUIT
+          2   CODE 25    NO 24X REFERENCE SIGNAL
+          3   CODE 24    VEHICLE SPEED SENSOR CIRCUIT PROBLEM
+          4   CODE 23    EST/BYPASS PROBLEM
+          5   CODE 22    OPEN THROTTLE POSITION SENSOR
+          6   CODE 21    SHORTED THROTTLE POSITION SENSOR
+          7   CODE 20    OPEN FUEL PUMP CIRCUIT
+ 82      DGZFACU+2    CURRENT MALFUNCTION FLAG WORD 3
+          0   CODE 35    REFLO VOLTAGE OUT OF RANGE
+          1   CODE 34    MAP SENSOR SIGNAL TO HIGH
+          2   CODE 33    EXTENDED TABLE BRAKE SWITCH MALFUNCTION
+          3   CODE 32    OPEN MAP SENSOR CIRCUIT
+          4   CODE 31    SHORTED MAP SENSOR CIRCUIT
+          5   CODE 30    IDLE SPEED ERROR TO HIGH
+          6   CODE 29    SHIFT RATIO B PROBLEM
+          7   CODE 28    ILLEGAL PRESSURE SWITCH MANIFOLD INPUT
+ 83      DGZFACU+3    CURRENT MALFUNCTION FLAG WORD 4
+          0   CODE 43    LEFT O2 SENSOR RICH TO LONG
+          1   CODE 42    LEFT O2 SENSOR LEAN TO LONG
+          2   CODE 41    NO CAM REFERENCE SIGNAL
+          3   CODE 40    POWER STEERING PRESSURE SENSOR OPEN
+          4   CODE 39    TORQUE CONVERTER CLUTCH NOT ENGAGING
+          5   CODE 38    OPEN MAT SENSOR CIRCUIT
+          6   CODE 37    SHORTED MAT SENSOR CIRCUIT
+          7   CODE 36    LINEAR EGR PINTLE POSITION OUT OF RANGE
+ 84      DGZFACU+5    CURRENT MALFUNCTION FLAG WORD 6
+          0   CODE 59    OPEN TRANSMISSION TEMPERATURE SENSOR CIRCUIT
+          1   CODE 58    VEHICLE ANTI-THEFT SYSTEM MALFUNCTION
+          2   CODE 57    SHORTED TRANSMISSION TEMPERATURE SENSOR CIRCUIT
+          3   CODE 56    INPUT SPEED CIRCUIT PROBLEM
+          4   CODE 55    THROTTLE POSITION SENSOR OUT OF ADJUSTMENT
+          5   CODE 54    ISC SYSTEM PROBLEM
+          6   CODE 53    D.I.S. 4X SIGNAL INTERRUPT
+          7   CODE 52    PCM KAM CHECKSUM FAILED
+ 85      DGZFACU+7    CURRENT MALFUNCTION FLAG WORD 8
+          0   CODE 75    INTERMITTENT VEHICLE SPEED
+          1   CODE 74    INTERMITTENT MAT
+          2   CODE 73    INTERMITTENT COOLANT TEMPERATURE
+          3   CODE 72    NOT USED
+          4   CODE 71    INTERMITTENT MAP
+          5   CODE 70    INTERMITTENT THROTTLE POSITION
+          6   CODE 69    TRACTION ACTIVE WHILE IN CRUISE
+          7   CODE 68    C/C SERVO STROKE GREATER THAN COMMANDED
+ 86      DGZFACU+8    CURRENT MALFUNCTION FLAG WORD 9
+          0   CODE 83    NO CRANK SENSOR A OR B SIGNAL
+          1   CODE 82    NOT USED
+          2   CODE 81    CAM TO REFERENCE CORRELATION PROBLEM
+          3   CODE 80    TPS/IDLE LEARN NOT DONE AFTER EEPROM RESET
+          4   CODE 79    TRANSMISSION HOT
+          5   CODE 78    TO MANY 24X PULSES
+          6   CODE 77    TO FEW 4X REFERENCE PULSES
+          7   CODE 76    FORCE MOTOR MALFUNCTION
+..PAGE
+ 87      DGZFACU+9    CURRENT MALFUNCTION FLAG WORD 10
+          0   CODE 91    PARK/NEUTRAL INPUT PROBLEM
+          1   CODE 90    TCC BRAKE SWITCH MALFUNCTION
+          2   CODE 89    LONG SHIFT AND MAX ADAPT
+          3   CODE 88    TCC NOT DISENGAGING
+          4   CODE 87    TO MANY 4X PULSES
+          5   CODE 86    UNDEFINED BOX RATIO
+          6   CODE 85    THROTTLE BODY SERVICE REQUIRED
+          7   CODE 84    MISSING 24X PULSES
+ 88      DGZFACU+10   CURRENT MALFUNCTION FLAG WORD 11
+          0   CODE 99    CRUISE CONTROL SERVO STROKE HIGH NOT IN C/C
+          1   CODE 98    NOT USED
+          2   CODE 97    P/N TO D/R AT HIGH THROTTLE ANGLE
+          3   CODE 96    TORQUE CONVERTER OVERSTRESS
+          4   CODE 95    ENGINE STALL DETECTED
+          5   CODE 94    SHIFT RATIO A PROBLEM
+          6   CODE 93    TCS PWM LINK FAILURE
+          7   CODE 92    HEATED WINDSHIELD REQUEST PROBLEM
+
+

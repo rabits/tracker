@@ -1,0 +1,304 @@
+
+                        DATA STREAM A95   SPECIFICATION
+
+
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+
+       ENGINE  USAGES:
+              4.5L SFI   (LQ6)   (VIN=8)   90
+              4.5L SFI   (LW2)   (VIN=3)   90
+              4.5L SFI   (LQ6)   (VIN=8)   91  6V-CAR
+              4.9L SFI   (L26)   (VIN=B)   91  6C,E,K-CAR
+              4.5L SFI   (LQ6)   (VIN=8)   92  6V-CAR
+              4.9L SFI   (L26)   (VIN=B)   92  6C,E,K-CAR
+              4.9L SFI   (L26)   (VIN=B)   93  6C,E,K-CAR
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL
+
+THERE IS NO MASTER ON THE DEVILLE BUS.
+THE ALDL TESTER MUST INITIATE COMMUNICATION.
+
+
+        MODE 0 (REQUEST NORMAL MODE MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                PCM RESPONDS WITH A MODE 0 MESSAGE
+
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $00 (PCM DATA LIST)
+                                   $01 (BCM DATA LIST DEVILLE ONLY)
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $86
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 48
+                - SUM CHECK
+
+
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $07
+                - SUM CHECK
+
+                THE ECM RESPONDS WITH THE NEXT SCHEDULED PCM TO BCM MESSAGE
+
+..PAGE
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 48
+..HEAD04L ALDL MODE  
+WORD #   DATA NAME     DESCRIPTION
+ 1       PROMID        PCM PROMID (MSB)
+ 2       PROMID+1      PCM PROMID (LSB)
+ 3       CURRENT  MALF CODES WORD 1
+         0               MALF CODE 19   SHORTED FUEL PUMP CIRCUIT
+         1               MALF CODE 18   EXECUTIVE LOOP OVERRUN
+         2               MALF CODE 17   LEFT O2 SENSOR NOT READY
+         3               MALF CODE 16   GENERATOR VOLTAGE OUT OF RANGE
+         4               MALF CODE 15   OPEN COOLANT SENSOR
+         5               MALF CODE 14   SHORTED COOLANT SENSOR
+         6               MALF CODE 13   RIGHT O2 SENSOR NOT READY
+         7               MALF CODE 12   NO DISTRIBUTOR SIGNAL
+ 4       CURRENT MALF CODES WORD 2
+         0               MALF CODE 27   OPEN THROTTLE SWITCH
+         1               MALF CODE 26   SHORTED THROTTLE SWITCH
+         2               NOT USED
+         3               MALF CODE 24   SPEED SENSOR CIRCUIT
+         4               MALF CODE 23   EST/BYPASS CIRCUIT PROBLEM
+         5               MALF CODE 22   OPEN TPS CIRCUIT
+         6               MALF CODE 21   SHORTED TPS CIRCUIT
+         7               MALF CODE 20   OPEN FUEL PUMP CIRCUIT
+ 5       CURRENT  MALF CODES WORD 3
+         0               NOT USED
+         1               MALF CODE 34   MAP SENSOR SIGNAL TOO HIGH
+         2               NOT USED
+         3               MALF CODE 32   OPEN MAP SENSOR
+         4               MALF CODE 31   SHORTED MAP SENSOR
+         5               MALF CODE 30   IDLE SPEED CONTROL CIRCUIT PROBLEM
+         6               MALF CODE 29   SHORTED 3RD OR 4TH GEAR SWITCH
+         7               MALF CODE 28   OPEN 3RD OR 4TH GEAR DISCRETE
+ 6       CURRENT MALF CODES WORD 4
+         0               MALF CODE 43   LEFT OXYGEN SENSOR SIGNAL RICH
+         1               MALF CODE 42   LEFT OXYGEN SENSOR SIGNAL LEAN
+         2               MALF CODE 41   CAM SENSOR CIRCUIT PROBLEM
+         3               MALF CODE 40   OPEN P/S PRESSURE SWITCH CIRCUIT
+         4               MALF CODE 39   VCC ENGAGEMENT PROBLEM
+         5               MALF CODE 38   OPEN MAT SENSOR CIRCUIT
+         6               MALF CODE 37   SHORTED MAT SENSOR CIRCUIT
+         7               NOT USED
+..PAGE
+ 7       CURRENT  MALF CODES WORD 5
+         0               MALF CODE 51   EPROM CHECKSUM MISMATCH
+         1               MALF CODE 50   2ND GEAR PRESS. DISC. OPEN/SHORT
+         2               MALF CODE 49   A.I.R. MANAGEMENT SYSTEM FAULT
+         3               MALF CODE 48   EGR SYSTEM FAULT
+         4               MALF CODE 47   BCM-ECM DATA PROBLEM
+         5               MALF CODE 46   RIGHT TO LEFT BANK FUELING IMBALANCE
+         6               MALF CODE 45   RIGHT OXYGEN SENSOR SIGNAL RICH
+         7               MALF CODE 44   RIGHT OXYGEN SENSOR SIGNAL LEAN
+ 8       HISTORY  MALF CODES WORD 1
+         0               NOT USED
+         1               MALF CODE 58   VATS MALFUNCTION
+         2               NOT USED
+         3               NOT USED
+         4               MALF CODE 55   TPS OUT OF ADJUSTMENT
+         5               MALF CODE 54   ISC SYSTEM PROBLEM
+         6               MALF CODE 53   DIST. SIGNAL INTERRUPT
+         7               MALF CODE 52   ECM MEMORY RESET
+ 9       HISTORY  MALF CODES WORD 2
+         0               MALF CODE 67   C/C SWITCH ENABLED TO LONG
+         1               MALF CODE 66   C/C ENGINE RPM TO HIGH
+         2               MALF CODE 65   C/C SERVO POSITION SENSOR FAILURE
+         3               MALF CODE 64   C/C VEHICLE ACCELERATION TO HIGH
+         4               MALF CODE 63   C/C CAR SPEED AND SET SPEED DIFFERENCE TOO HI
+         5               MALF CODE 62   C/C VACUUM SOLENOID PROBLEM
+         6               MALF CODE 61   C/C VENT SOLENOID PROBLEM
+         7               MALF CODE 60   C/C TRANSMISSION NOT IN DRIVE
+10       HISTORY  MALF CODES WORD 3
+         0               MALF CODE 75   INTERMITTENT VEHICLE SPEED
+         1               MALF CODE 74   INTERMITTENT MAT
+         2               NOT USED
+         3               NOT USED
+         4               MALF CODE 71   INTERMITTENT MAP
+         5               MALF CODE 70   INTERMITTENT THROTTLE POSITION
+         6               MALF CODE 69   TRACTION CONTROL ACTIVE WHILE IN CRUSE
+         7               MALF CODE 68   C/C SERVO STROKE TO LARGE
+11       CURRENT  MALF CODES WORD 6
+         0               NOT USED
+         1               NOT USED
+         2               NOT USED
+         3               MALF CODE 80   FUEL SYSTEM RICH
+         4               NOT USED
+         5               NOT USED
+         6               NOT USED
+         7               NOT USED
+..PAGE
+12       CURRENT  MALF CODES WORD 7
+         0               MALF CODE 91   P/N OR PRND321 INPUT PROBLEM
+         1               MALF CODE 90   BRAKE INPUT PROBLEM
+         2               NOT USED
+         3               NOT USED
+         4               NOT USED
+         5               NOT USED
+         6               NOT USED
+         7               NOT USED
+13       CURRENT  MALF CODES WORD 8
+         0               MALF CODE 99   C/C SERVO STROKE HIGH - NOT IN CRUSE
+         1               MALF CODE 98   P/N TO D/R AT HIGH RPM IN ISC RANGE
+         2               MALF CODE 97   P/N TO D/R AT HIGH THROTTLE ANGLE
+         3               MALF CODE 96   TORQUE CONVERTER OVERSTRESSED
+         4               MALF CODE 95   ENGINE STALL DETECTED
+         5               NOT USED
+         6               NOT USED
+         7               MALF CODE 92   HEATED WINDSHIELD REQUEST PRESENT TOO LONG
+14       COOLANT TEMPERATURE
+                         DEG C = N*.75-40
+15       LEFT O2 CROSS COUNTS
+                         N = COUNT
+16       RIGHT O2 CROSS COUNTS
+                         N = COUNT
+17       LEFT OXYGEN SENSOR VOLTAGE
+                         MILLIVOLT  = N*1000/225
+18       RIGHT OXYGEN SENSOR VOLTAGE
+                         MILLIVOLTS = N*1000/225
+19       BATTERY VOLTAGE
+                         VOLTS = N/10
+20       MANIFOLD ABSOLUTE PRESSURE
+                         VOLTS = N*5/255  Kpa=(N*.323) + 20.4
+21       LEFT FRONT CLOSED LOOP INTEGRATOR
+                         N = COUNTS
+22       RIGHT REAR CLOSED LOOP INTEGRATOR
+                         N = COUNTS
+23       THROTTLE POSITION SENSOR
+                         VOLTS = N*5/255
+24       ENGINE RPM
+                         RPM = N*25
+25       VEHICLE SPEED UPPER BYTE
+                         MPH = N
+26       LEFT INJ PULSE WIDTH (MSB)  A,D,F,G
+27       LEFT INJ PULSE WIDTH (LSB)
+                         MILLISEC = ([N26]*256 + [N27])/65.536
+..PAGE
+28       RIGHT INJ PULSE WIDTH (MSB) B,C,E,H
+29       RIGHT INJ PULSE WIDTH (LSB)
+                         MILLISEC = ([N28]*256 + [N29])/65.536
+30       SPARK ADVANCE
+                         DEGREES = N*90/256
+31       MANIFOLD ABSOLUTE TEMPERATURE
+                         DEGREES C = N*.75-40
+32       BAROMETRIC PRESSURE
+                         VOLTS = N*5/256   Kpa=(N*.323) + 20.4
+33       I/O STATUS WORD #1
+         0               SECOND GEAR PRESSURE   1 = PRESSURE PRESENT
+         1               VCC STATUS             1 = ENERGIZED
+         2               THIRD GEAR             1 = IN 3RD GEAR
+         3               THROTTLE SWITCH        1 = CLOSED
+         4               ACTUAL BRAKE SWITCH    1 = CLOSED
+         5               P/N STATUS             1 = PARK/NEUTRAL
+         6               CLOSED LOOP STATUS     1 = CLOSED
+         7               FOURTH GEAR STATUS     1 = IN 4TH GEAR
+34       I/O STATUS WORD #2
+         0              CRUISE VENT SOLENOID   1 = ENERGIZED
+         1              CRUISE VACUUM SOLENOID 1 = ENERGIZED
+         2              CRUISE RESUME/ACCEL    1 = CLOSED
+         3              CRUISE ON/OFF          1 = ON
+         4              CRUISE SET/COAST       1 = CLOSED
+         5              CRUISE CONTROL ENABLE  1 = ENABLED
+         6              RIGHT O2 RICH/LEAN     1 = RICH
+         7              LEFT O2 RICH/LEAN      1 = RICH
+35       RIGHT BLOCK LEARN MULTIPLIER
+                         N = COUNTS
+36       LEFT BLOCK LEARN MULTIPLIER
+                         N = COUNTS
+37       EGR DUTY CYCLE
+                         %DUTY CYCLE = N/2.56
+38       EGR FUEL COMPENSATION
+                         %COMPENSATION = N/2.56
+39       PRND321 GREY CODE FOR F31 TRANSMISSION
+                         1 = PARK
+                         2 = REVERSE
+                         3 = NEUTRAL
+                         4 = DRIVE 4
+                         5 = DRIVE 3
+                         6 = DRIVE 2
+                         7 = DRIVE 1
+                         8-15 = INVALID
+..PAGE
+40       CRUISE CONTROL SET SPEED (MSB)
+                         MPH = N
+41       CRUISE CONTROL SERVO POSITION
+                         %POSITION = N/256
+42       POWER STEERING PUMP PRESSURE (ALLANTE ONLY)
+                         VOLTS = N*5/256
+43       BLOCK LEARN CELL NUMBER
+                         N = COUNTS
+44       DESIRED IDLE SPEED
+                         RPM = N*25
+45       CANISTER PURGE DUTY CYCLE
+                         %DUTY CYCLE = N/2.56
+46                     I/O STATUS WORD #3
+         0               NOT USED
+         1               NOT USED
+         2               AIR SWITCH SOLENOID (1 = ENERGIZED)
+         3               AIR DIVERT SOLENOID (1 = ENERGIZED)
+         4               BLOCK LEARN ENABLED (1 = ENABLED)
+         5               HEATED WINDSHIELD   (1 = ON)
+         6               A/C CLUTCH STATUS   (1 = ON)
+         7               POWER STEERING PRESSURE (1 = PRESENT)
+47       ALDL MODE STATUS WORD
+         0               CURRENT ALDL MODE 0 FLAG
+         1               CURRENT ALDL MODE 1 FLAG
+         2               N/A
+         3               N/A
+         4               N/A
+         5               N/A
+         6               N/A
+         7               CURRENT ALDL MODE 7 FLAG
+48       ALDL MODE STATUS WORD
+         0               CURRENT ALDL MODE 8 FLAG
+         1               CURRENT ALDL MODE 9 FLAG
+         2               CURRENT ALDL MODE 10 FLAG
+         3               NOT USED
+         4               NOT USED
+         5               NOT USED
+         6               NOT USED
+         7               NOT USED
+
+..PAGE
+LAYOUT 000
+:ê  XB 
+  Su¶     <_        ˙ \------------------------------------------------------------------------------/----+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+----     STANDARD 2      XB  <

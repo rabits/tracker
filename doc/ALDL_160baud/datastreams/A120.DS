@@ -1,0 +1,396 @@
+                        DATA STREAM A120  SPECIFICATION
+
+
+       SPECIFICATIONS FOR  BCM DATA STREAM INFORMATION
+       -----------------------------------------------
+
+       CAR LINE:
+              1990     TORONADO     (VIN = E)
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                BCM RESPONSE:
+                 NORMAL MODE MESSAGES.
+
+
+        MODE 1 MESSAGE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $01
+                - SUM CHECK
+
+                THE BCM WILL RESPOND WITH MODE 1 MESSAGE 1:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $82
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 44
+                - SUM CHECK
+
+        MODE 1 MESSAGE 2 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $02
+                - SUM CHECK
+
+                THE BCM WILL RESPOND WITH MODE 1 MESSAGE 2:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $6A
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 20
+                - SUM CHECK
+
+        MODE 7 (COMMAND MESSAGE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $57
+                - MODE           = $07
+                - MESSAGE CODE
+                - CHECKSUM
+
+        THE BCM RESPONDS BY TRANSMITTING THE SELECTED NORMAL MODE MESSAGE
+
+
+
+        MODE 8 (DISABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $08
+                - CHECKSUM
+
+
+
+        MODE 9 (ENABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $09
+                - CHECKSUM
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F1
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+..HEAD02L ALDL BCM DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 44
+..HEAD04L ALDL MODE 1 MESSAGE 1 DATA LIST
+WORD#  DATA NAME     DESCRIPTION
+1      PRPID         PROM IDENTIFICATION NUMBER (MSB)
+2      PRPID         PROM IDENTIFICATION NUMBER (LSB)
+3      DGZHFTB       HISTORY FAIL FLAG 0
+                   0   MALF CODE B121  TWILIGHT ENABLE FAILURE
+                   1   MALF CODE B120  TWILIGHT POT FAILURE
+                   2   MALF CODE B119  TWILIGHT PHOTOCELL FAILURE
+                   3   MALF CODE B115  SUNLOAD SENSOR FAILURE
+                   4   MALF CODE B113  INSIDE TEMP SENSOR FAILURE
+                   5   MALF CODE B112  A/C LOW TEMP SENSOR FAILURE
+                   6   MALF CODE B111  A/C HIGH TEMP SENSOR FAILURE
+                   7   MALF CODE B110  OUTSIDE TEMP SENSOR FAILURE
+4      DGZHFTB+1     HISTORY FAIL FLAG 1
+                   0   MALF CODE B333  SIR SERIAL DATA FAILURE
+                   1   MALF CODE B332  COMPASS SERIAL DATA FAILURE
+                   2   MALF CODE B140  PHONE SYSTEM PROBLEM STATUS
+                   3   MALF CODE B132  OIL PRESSURE SENSOR ENGINE RUNNING STATUS
+                   4   MALF CODE B127  PRNDL SENSOR FAILURE
+                   5   MALF CODE B124  VEHICLE SPEED SENSOR FAILURE
+                   6   MALF CODE B123  PANEL LAMP SWITCH FAILURE
+                   7   MALF CODE B122  DIMMING POT FAILURE
+5      DGZHFTB+2     HISTORY FAIL FLAG 2
+                   0   MALF CODE B420  RELAY FAILURE
+                   1   MALF CODE B412  SYSTEM VOLTAGE HIGH FAILURE
+                   2   MALF CODE B411  SYSTEM VOLTAGE LOW FAILURE
+                   3   MALF CODE B410  CHARGING SYS F-TERMINAL STATUS
+                   4   MALF CODE B337  HVAC SERIAL DATA FAILURE
+                   5   MALF CODE B336  IPC SERIAL DATA FAILURE
+                   6   MALF CODE B335  ECC SERIAL DATA FAILURE
+                   7   MALF CODE B334  ECM SERIAL DATA FAILURE
+6      DGZHFTB+3     HISTORY FAIL FLAG 3
+                   0   MALF CODE B552  KEEP ALIVE MEMORY FAILURE
+                   1   MALF CODE B482  LOW BRAKE PRESSURE STATUS
+                   2   MALF CODE B450  COOLANT OVERTEMP A/C DISABLE STATUS
+                   3   MALF CODE B449  A/C HIGHSIDE OVERTEMP DISABLE STATUS
+                   4   MALF CODE B448  VERY LOW FREON PRESSURE FAILURE
+                   5   MALF CODE B447  VERY LOW FREON LEVEL FAILURE
+                   6   MALF CODE B446  LOW FREON LEVEL FAILURE
+                   7   MALF CODE B440  AIR MIX DOOR STATUS
+..PAGE
+7      DGZHFTB+4     HISTORY FAIL FLAG 4
+                   0   MALF CODE B673  CRUISE - VACUUM SOLENOID FAILURE
+                   1   MALF CODE B672  CRUISE VENT SOLENOID FAILURE
+                   2   MALF CODE B671  CRUISE SERVO POSITION SENSOR FAILURE
+                   3   MALF CODE B667  CRUISE S/C OR R/A SWITCH SHORT
+                   4   MALF CODE B664  CRUISE - ACCEL TOO HIGH ST BIT
+                   5   MALF CODE B663  CRUISE - VSET - VCAR TOO HIGH ST BIT
+                   6   MALF CODE B660  CRUISE - NOT IN DRIVE STATUS
+                   7   MALF CODE B556  EEPROM KEY WORDS INCORRECT
+8      ADVFUMP       FUEL LEVEL WIPER  A/D
+
+         FUEL LEVEL CONVERSION
+    ----------------------------------
+     T(X1)        TABLE VALUE
+       0              0
+       1              7
+       2              15
+       3              24
+       4              37          Interpolation program
+       5              52          (Y = displayed output in gallons)
+       6              70          ---------------------------------
+       7              85          F = Code $F1 byte 6 value
+       8              102         V = Code $F1 byte 7 value
+       9              117         X = [(F * 256)/V]
+       10             132         A = 10
+       11             143         I = 16
+       12             152         XT = X/I
+       13             161         X1 = INT (XT)
+       14             167         XF = XT - X1
+       15             170  Y = [T(X1) + XF * {T(X1 + 1) - T(X1)}] /A
+       16             170
+
+9      ADVFURF       IGNITION # 1  A/D
+                       V = N * 16.3/255
+10     ADVMXSP7      SPARE INPUT  A/D
+11     ADVSPR2       SPARE INPUT  A/D
+12     ADVHVDR       AIR MIX DOOR ACTUAL  A/D
+                       % = 100 - (N/2.55)
+13     ADVTWDL       TWILIGHT SENTINEL DELAY
+                       % = N/2.55
+14     ADVAN4        SPARE INPUT  A/D
+15     ADVDMWP       DIM POT WIPER  A/D
+                       % = N/2.55
+16     HVVIT         INSIDE AIR TEMPERATURE DEG. F
+                       DEG F = N - 40
+17     HVVSL         SUNLOAD TEMPERATURE DEG. F
+                       DEG F = N - 40
+..PAGE
+18     HVVACLO       A/C LOW SIDE TEMPERATURE DEG. F
+                       DEG F = N - 40
+19     HVVACHI       A/C HIGH SIDE TEMPERATURE DEG. C
+                       DEG C = N - 40
+20     ADVAP         TWS PHOTOCELL  A/D
+                       % = N/2.55
+21     ADVOLPS       OIL PRESSURE  A/D
+
+        OIL PRESSURE CONVERSION
+    ----------------------------------
+     T(H)       TABLE VALUE 
+
+       0              0
+       1              3
+       2              6
+       3              9
+       4              17          Interpolation program
+       5              36          (X = OIL PRESSURE IN PSI)
+       6              50          ---------------------------------
+       7              65          G = ALDL BCM DATA BYTE 19
+       8              83          H = INT(G/16)
+       9              107         L = (G/16) - H
+       10             139         X = T(H) + [L * (T(H+1) - T(H))]
+       11             203
+       12             252
+       13             255
+       14             255
+       15             255
+       16             255
+
+22     HVVOTU        AMBIENT TEMPERATURE DEG. F
+                       DEG F = N - 40
+23     ADVDAN11      SPARE INPUT  A/D
+24     ADVALFTP      ALTERNATOR F TERMINAL
+                       % = N/2.55
+25     ADVCCSV       CRUISE SERVO  A/D
+                       % = N/2.55
+..PAGE
+26     DISR1         INPUT DISCRETE STATES 
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      QDM FAULT 1                   1 = QUAD DRIVER FAULT 1
+                4      GREY CODE PRNDL C STATUS      SEE PRNDL GREY CODE TABLE
+                5      QDM FAULT 2                   1 = QUAD DRIVER FAULT 2
+                6      PHONE STATUS BIT              1 = PHONE CONNECTED
+                7      ENGINE OIL LEVEL LOW          1 = ENGINE OIL LEVEL LOW
+27     DISR2         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      NOT USED
+                4      LOW BRAKE PRESSURE STATUS BIT 1 = BRAKE PRESSURE OK
+                5      4K/MILE PULSE INPUT FROM ECM
+                6      NOT USED
+                7      BRAKE FLUID LEVEL LOW         1 = BRAKE FLUID LEVEL LOW
+28     DIRS3         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      KEY IN IGNITION STATUS        1 = KEY IN IGNITION
+                4      TWILIGHT ENABLE STATUS        1 = SWITCH ACTIVE
+                5      TURN SIGNAL ON STATUS         1 = TURN SIGNAL ON
+                6      GREY CODE PRNDL B STATUS      SEE PRNDL GREY CODE TABLE
+                7      GREY CODE PRNDL D STATUS      SEE PRNDL GREY CODE TABLE
+29     DIRS4         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      PASSENGER DOOR OPEN STATUS    1 = PASSENGER DOOR OPEN
+                4      SEAT BELT SWITCH STATUS       1 = SEAT BELT BUCKLED
+                5      DRIVER'S DOOR OPEN STATUS     1 = DRIVER'S DOOR OPEN
+                6      GREY CODE PRNDL A STATUS      SEE PRNDL GREY CODE TABLE
+                7      PARKING BRAKE STATUS          1 = PARKING BRAKE ON
+..PAGE
+                    PRNDL GREY CODE TABLE
+                    ---------------------
+                    A   B   C  (D)
+                    -   -   -   -
+                    0   0   1   1   DRIVE 1
+                    1   0   1   0   DRIVE 2
+                    1   1   1   1   DRIVE 3
+                    0   1   1   0   DRIVE 4
+                    0   1   0   1   NEUTRAL
+                    1   1   0   0   REVERSE
+                    1   0   0   1   PARK
+
+30     DIRS5         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      I TERMINAL STATUS             1 = ALT I FAILURE
+                4      LOW FREON PRESSURE BIT        1 = LOW FREON PRESSURE
+                5      DIS DATA STATUS BIT
+                6      WASHER FLUID LEVEL STATUS     1 = LOW WASHER FLUID
+                7      FOG LAMP SWITCH STATUS        1 = SWITCH ON
+31     DIRS6         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      CRUISE CONTROL ENABLE BIT     1 = ENABLED (BRAKE OFF)
+                4      CRUISE RESUME/ACCEL SWITCH    1 = RESUME/ACC SWITCH ACTIVE
+                5      CRUISE CONTROL ON/OFF BIT     1 = ON
+                6      CRUISE SET/COAST SWITCH BIT   1 = SET/COAST SWITCH ACTIVE
+                7      HIGH BEAM SWITCH STATUS       1 = HIGH BEAM SWITCH ON
+32     DIRS7         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      CRANK STATUS BIT              1 = CRANK ACTIVE
+                4      CRUISE VACUUM FEEDBACK STATUS 1 = FEEDBACK ACTIVE
+                5      CRUISE VENT FEEDBACK STATUS   1 = FEEDBACK ACTIVE
+                6      IGNITION OFF (WU) STATUS REG  1 = IGNITION OFF
+                7      HEADLAMPS ON STATUS           1 = HEADLIGHTS HAVE POWER
+..PAGE
+33     DIRS8         INPUT DISCRETE STATES
+                0      NOT USED
+                1      NOT USED
+                2      NOT USED
+                3      DOOR JAMB (WAKE UP)           1 = SWITCH ACTIVE
+                4      PANEL COURTESY LAMP           1 = SWITCH ACTIVE
+                5      DOOR HANDLE SWITCH            1 = SWITCH ACTIVE
+                6      CRT TO BCM WAKE UP SIGNAL     1 = CRT WAKE UP ACTIVE
+                7      PARK LAMP ON (WAKE UP)        1 = SWITCH ACTIVE
+34     PIWPRA        OUTPUT DISCRETE STATES   (WITH CRT WU)
+                0      NOT USED
+                1      QDM, QDR OUTPUT ENABLE STATUS 1 = NOT ENABLED
+                2      NOT USED
+                3      RADIO MUTE OUTPUT STATUS
+                4      TWILIGHT RELAY DRIER FOR PARKLAMP   1 = RELAY ON
+                5      COURTESY LAMP RELAY DRIVER    1 = RELAY ON
+                6      DIS CLOCK OUTPUT              1 = CLOCK HIGH
+                7      FOGLAMP RELAY OUTPUT STATUS   1 = RELAY ON
+35     PIWPRB        OUTPUT DISCRETE STATES   (WITH CRT WU)
+                0      MUX ENABLE A BIT
+                1      MUX ENABLE B BIT
+                2      MUX ENABLE C BIT
+                3      NOT USED
+                4      CRUISE VENT BIT               1 = SOLENOID ENERGIZED
+                5      CHIME 2 OUTPUT BIT            1 = CHIME ON
+                6      CHIME 1 OUTPUT BIT            1 = CHIME ON
+                7      CRUISE VACUUM BIT             1 = SOLENOID ENERGIZED
+36     VSVKPHU       VEHICLE SPEED
+                       MPH = N/1.61
+..PAGE
+37     HVVADM        HVAC AIR DELIVERY MODE
+                BYTE VALUE        MODE DESCRIPTION
+                     0            RECIRCULATION
+                     1            A/C
+                     2            BI-LEVEL
+                     3            BI-LEVEL DEFROST
+                     4            HEATER
+                     5            OFF
+                     6            NORMAL PURGE
+                     7            DEFROST PURGE
+                     8            DEFROST FORCED
+                     9            LOWER FORCED
+                     10           UPPER FORCED
+                     11           BI-LEVEL FORCED
+                     12           FRONT DEFOG FORCED
+                     13           A/C PURGE
+
+38     HVVSTF        HVAC SET TEMPERATURE
+                       DEG F = N - 40
+39     HVVPNN        HVAC PROGRAM NUMBER
+                       N = NUMBER
+40     HVVBV         COMMAND BLOWER VOLTAGE
+                      VOLTS = (N - 38.6)/11.6
+41     HVVDPOS       COMMAND AIR MIX DOOR POSITION
+                       % = 100 - N/2.55
+42     CCVVSST       CRUISE SET SPEED
+                       MPH = N/1.61
+43     DMVVFIM2      VF DIMMING
+                       %DC = N/2.56
+44     DMVIDIM       INCANDESCENT DIMMING
+                       %DC = N/2.56
+..PAGE
+..HEAD02L ALDL BCM DATA LIST 
+..HEAD03L NUMBER OF DATA WORDS - 20
+..HEAD04L ALDL MODE 1 MESSAGE 2 *SOVVIN* DATA LIST
+WORD #   DATA NAME     DESCRIPTION
+
+1-17    OPVVIN      VEHICLE IDENTIFICATION NUMBER 17 BYTES
+18      OPSR1       OPTION CONTENT # 1
+               0     NOT USED
+               1     FUEL TYPE               1 = UNLEADED    0 = DON'T CARE
+               2     COMPASS OPTION          1 = COMPASS PRESENT
+               3     OIL PRESSURE OPTION     1 = SENSOR SELECTED
+               4     STEERING WHEEL CONTROL  1 = OPTION SELECTED
+               5     DOMESTIC/EXPORT         1 = EXPORT
+               6     NOT USED
+               7     VEHICLE TYPE            1 = USA         0 = FRENCH/CANADIAN
+19      OPSR2       OPTION CONTENT # 2
+               0     NOT USED
+               1     NOT USED
+               2     VEHICLE TYPE OPTION     1 = TROFEO'     0 = TORONADO
+               3     WASHER FLUID SENSOR     1 = OPTION PRESENT
+               4     ANTI-LOCK BRAKES OPTION 1 = OPTION PRESENT
+               5     ENGINE COOLANT LEVEL    1 = SENSOR PRESENT
+               6     OIL LEVEL SENSOR OPTION 1 = SENSOR PRESENT
+               7     CRTC STATUS             1 = CRTC OPTION PRESENT
+20      n/a
+LAYOUT 000
+:ê  #B 
+  
+Su¶   <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      #B
+ <

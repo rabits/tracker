@@ -1,0 +1,387 @@
+
+                        DATA STREAM A290  SPECIFICATION
+
+
+
+
+
+..PAGE
+
+
+       SPECIFICATIONS FOR  DATA STREAM INFORMATION
+       -------------------------------------------
+       BOSCH ABS/TCS
+       CAR LINE:  1995 D CARS
+
+       DATA PIN  :  M
+
+       BAUD RATE :  8192
+
+..PAGE
+       ABS/ASR ECU OVERVIEW
+       --------------------
+          THE ABS/ASR ECU IS A SLAVE MODULE ON THE DATA LINK. BEFORE
+          COMMUNICATIONS CAN BE ESTABLISHED A MODE 8 MUST BE ISSUED TO THE
+          MASTER.
+
+..page
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                THE ABS CONTROLLER WILL NOT RESPOND.
+
+
+        MODE 1 MESSAGE 0: (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $00
+                - SUM CHECK
+
+                THE ABS CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $55 + $01 + $13 + (5*N)
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 19 + (5*N)
+                - SUM CHECK
+N IS THE NUMBER OF FAULT CODES STORED. POSSIBLE VALUES ARE 0, 1, 2 OR 3.
+
+
+        MODE 1 MESSAGE 1: (TRANSMIT SYSTEM ID)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $01
+                - SUM CHECK
+
+                THE ABS CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $55 + $01 + $02 = $58
+                - MODE           = $01
+                - DATA BYTE 1
+                - DATA BYTE 2
+                - SUM CHECK
+
+..PAGE
+        MODE 1 MESSAGE 2: (TRANSMIT FAULT CODE DATA)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $02
+                - SUM CHECK
+
+                THE ABS CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $55 + $01 + (5*N)
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE (5*N)
+                - SUM CHECK
+N IS THE NUMBER OF FAULT CODES STORED. POSSIBLE VALUES ARE 0, 1, 2 OR 3.
+        MODE 1 MESSAGE 3: (TRANSMIT SYSTEM DATA)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $03
+                - SUM CHECK
+
+                THE ABS CONTROLLER WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $55 + $01 + $09
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 9
+                - SUM CHECK
+
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F9
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+                THE ABS CONTROLLER SENDS NO RESPONSE
+
+
+..PAGE
+..HEAD02L ALDL ABS DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 19 + 5N (N can be 0, 1, 2, or 3)
+..HEAD04L ALDL MODE 1 MESSAGE 0 DATA LIST
+                          DATA STREAM LENGTH
+                          ------------------
+   *      THE DATA STREAM LENGTH WILL VARIABLE DEPENDING ON THE NUMBER OF
+   *      MALFUNCTION CODES:
+   *      19 BYTES IF NO CODES ARE SET
+   *      24 BYTES IF ONE CODE IS SET
+   *      29 BYTES IF TWO CODES ARE SET
+   *      34 BYTES IF THREE BYTES ARE SET
+
+ WORD#       DESCRIPTION
+  1           SYSTEM IDENTIFICATION
+                 (01 = B/D, E/K AND Y-CAR)
+  2           SYSTEM IDENTIFICATION
+                 DISPLAY NUMBER IN SECOND TWO xx
+                 $01 - Y CAR
+                 $02 - B & D CAR
+                 $03 - E/K CAR
+  3-10        CONTROLLER ID (8 ASCII CODES FOR CONTROLLER IDENTIFICATION)
+               DISPLAY CODES AS THEY ARE, NO CONVERSION NECESSARY.
+  11          SYSTEM STATUS WORD
+        7      NOT USED
+        6      PUMP MONITORING                   0 = PUMP OFF     1 = PUMP ON
+        5      ASR PASSIVE SWITCH                0 = RELEASED     1 = PRESSED
+        4      NOT USED
+        3      BRAKE LIGHT SWITCH                0 = OFF          1 = ON
+        2      VALVE RELAY STATUS                0 = ON           1 = OFF
+        1      NOT USED
+        0      NOT USED
+
+  12          NOT USED
+
+  13          (RESERVED FOR Y-CAR)
+  14          ENGINE SPEED
+               RPM = 30N
+  15          THROTTLE ANGLE
+               % = N/2.55
+  16          RIGHT FRONT WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+  17          LEFT FRONT WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+  18          RIGHT REAR WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+  19          LEFT REAR WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+ *20          FAULT CODE 1
+..page
+ *21          FAULT STATUS WORD 1
+        7      ASR STATE                   1 = ACTIVE   0 = PASSIVE
+        6      BRAKE LIGHT SWITCH STATE    1 = ON       0 = OFF
+        5      ABS STATE                   1 = ACTIVE   0 = PASSIVE
+        4      ASR SWITCHED OFF BY DRIVER  1 = YES      0 = NO
+        3      NOT USED
+        2      NOT USED
+        1      NOT USED
+        0      NOT USED
+ *22          VEHICLE SPEED WHEN FAULT CODE 1 IS SET (MSB)
+ *23          VEHICLE SPEED WHEN FAULT CODE 1 IS SET (LSB)
+               km/Hr = (256MSB + LSB)/16
+               Mi/Hr = (256MSB + LSB)/25.75
+ *24          IGNITION CYCLES SINCE FAULT CODE 1 Set
+               COUNT = N
+ *25          FAULT CODE 2
+ *26          FAULT STATUS WORD 2
+        7      ASR STATE                   1 = ACTIVE   0 = PASSIVE
+        6      BRAKE LIGHT SWITCH STATE    1 = ON       0 = OFF
+        5      ABS STATE                   1 = ACTIVE   0 = PASSIVE
+        4      ASR SWITCHED OFF BY DRIVER  1 = YES      0 = NO
+        3      NOT USED
+        2      NOT USED
+        1      NOT USED
+        0      NOT USED
+
+ *27          VEHICLE SPEED WHEN FAULT CODE 2 IS SET (MSB)
+ *28          VEHICLE SPEED WHEN FAULT CODE 2 IS SET (LSB)
+               km/Hr = (256MSB + LSB)/16
+               Mi/Hr = (256MSB + LSB)/25.75
+ *29          IGNITION CYCLES SINCE FAULT CODE 2 Set
+               COUNT = N
+ *30          FAULT CODE 3
+ *31          FAULT STATUS WORD 3
+        7      ASR STATE                   1 = ACTIVE   0 = PASSIVE
+        6      BRAKE LIGHT SWITCH STATE    1 = ON       0 = OFF
+        5      ABS STATE                   1 = ACTIVE   0 = PASSIVE
+        4      ASR SWITCHED OFF BY DRIVER  1 = YES      0 = NO
+        3      NOT USED
+        2      NOT USED
+        1      NOT USED
+        0      NOT USED
+ *32          VEHICLE SPEED WHEN FAULT CODE 3 IS SET (MSB)
+ *33          VEHICLE SPEED WHEN FAULT CODE 3 IS SET (LSB)
+               km/Hr = (256MSB + LSB)/16
+               Mi/Hr = (256MSB + LSB)/25.75
+ *34          IGNITION CYCLES SINCE FAULT CODE 3 SET
+               count = N
+
+
+ * THESE BYTES ARE ONLY TRANSMITTED IF FAULT CODES ARE SET.
+..PAGE
+..HEAD03L NUMBER OF DATA WORDS - 2
+..HEAD04L ALDL MODE 1 MESSAGE 1 DATA LIST
+ WORD#       DESCRIPTION
+  1           SYSTEM IDENTIFICATION
+                 (00 = B/D, K-SPECIAL, E/K/V, AND Y-CAR)
+  2           SYSTEM IDENTIFICATION
+                 DISPLAY NUMBER IN SECOND TWO xx
+                 $01 - Y CAR
+                 $02 - B & D CAR
+                 $03 - E, K, & V CAR
+..PAGE
+..HEAD03L NUMBER OF DATA WORDS - 0 + 5N (N can be 0, 1, 2, or 3)
+..HEAD04L ALDL MODE 1 MESSAGE 2 DATA LIST
+                          DATA STREAM LENGTH
+                          ------------------
+          THE DATA STREAM LENGTH WILL VARIABLE DEPENDING ON THE NUMBER OF
+          MALFUNCTION CODES:
+          0  BYTES IF NO CODES ARE SET
+          5  BYTES IF ONE CODE IS SET
+          10 BYTES IF TWO CODES ARE SET
+          15 BYTES IF THREE BYTES ARE SET
+
+ WORD#       DESCRIPTION
+
+ *1           FAULT CODE 1
+ *2           FAULT STATUS WORD 1
+        7      ASR STATE                   1 = ACTIVE   0 = PASSIVE
+        6      BRAKE LIGHT SWITCH STATE    1 = ON       0 = OFF
+        5      ABS STATE                   1 = ACTIVE   0 = PASSIVE
+        4      ASR SWITCHED OFF BY DRIVER  1 = YES      0 = NO
+        3      NOT USED
+        2      NOT USED
+        1      NOT USED
+        0      NOT USED
+ *3           VEHICLE SPEED WHEN FAULT CODE 1 IS SET (MSB)
+ *4           VEHICLE SPEED WHEN FAULT CODE 1 IS SET (LSB)
+               km/Hr = (256MSB + LSB)/16
+               Mi/Hr = (256MSB + LSB)/25.75
+ *5           IGNITION CYCLES SINCE FAULT CODE 1 Set
+               COUNT = N
+ *6           FAULT CODE 2
+..page
+ *7           FAULT STATUS WORD 2
+        7      ASR STATE                   1 = ACTIVE   0 = PASSIVE
+        6      BRAKE LIGHT SWITCH STATE    1 = ON       0 = OFF
+        5      ABS STATE                   1 = ACTIVE   0 = PASSIVE
+        4      ASR SWITCHED OFF BY DRIVER  1 = YES      0 = NO
+        3      NOT USED
+        2      NOT USED
+        1      NOT USED
+        0      NOT USED
+
+ *8           VEHICLE SPEED WHEN FAULT CODE 2 IS SET (MSB)
+ *9           VEHICLE SPEED WHEN FAULT CODE 2 IS SET (LSB)
+               km/Hr = (256MSB + LSB)/16
+               Mi/Hr = (256MSB + LSB)/25.75
+ *10          IGNITION CYCLES SINCE FAULT CODE 2 Set
+               COUNT = N
+ *11          FAULT CODE 3
+ *12          FAULT STATUS WORD 3
+        7      ASR STATE                   1 = ACTIVE   0 = PASSIVE
+        6      BRAKE LIGHT SWITCH STATE    1 = ON       0 = OFF
+        5      ABS STATE                   1 = ACTIVE   0 = PASSIVE
+        4      ASR SWITCHED OFF BY DRIVER  1 = YES      0 = NO
+        3      NOT USED
+        2      NOT USED
+        1      NOT USED
+        0      NOT USED
+ *13          VEHICLE SPEED WHEN FAULT CODE 3 IS SET (MSB)
+ *14          VEHICLE SPEED WHEN FAULT CODE 3 IS SET (LSB)
+               km/Hr = (256MSB + LSB)/16
+               Mi/Hr = (256MSB + LSB)/25.75
+ *15          IGNITION CYCLES SINCE FAULT CODE 3 Set
+               COUNT = N
+
+
+ * THESE BYTES ARE ONLY TRANSMITTED IF FAULT CODES ARE SET.
+..PAGE
+..HEAD03L NUMBER OF DATA WORDS - 9
+..HEAD04L ALDL MODE 1 MESSAGE 3 DATA LIST
+ WORD#       DESCRIPTION
+
+   1          SYSTEM STATUS WORD
+        7      NOT USED
+        6      PUMP MONITORING                   0 = PUMP OFF     1 = PUMP ON
+        5      ASR PASSIVE SWITCH                0 = RELEASED     1 = PRESSED
+        4      NOT USED
+        3      BRAKE LIGHT SWITCH                0 = OFF          1 = ON
+        2      VALVE RELAY STATUS                0 = ON           1 = OFF
+        1      NOT USED
+        0      NOT USED
+
+   2          NOT USED
+
+   3          (RESERVED FOR Y-CAR)
+   4          ENGINE SPEED
+               RPM = 30N
+   5          THROTTLE ANGLE
+               % = N/2.55
+   6          RIGHT FRONT WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+   7          LEFT FRONT WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+   8          RIGHT REAR WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+   9          LEFT REAR WHEEL SPEED
+               km/Hr = N/2
+               Mi/Hr = .3107N
+
+..page
+..HEAD02L FAULT CODE SUMMARY
+..HEAD03L
+..HEAD04L
+  CODE#      DESCRIPTION
+
+  $21        RIGHT FRONT WHEEL SPEED SENSOR FAULT
+  $23        RIGHT FRONT WHEEL SPEED SENSOR CONTINUITY FAULT
+  $25        LEFT FRONT WHEEL SPEED SENSOR FAULT
+  $27        LEFT FRONT WHEEL SPEED SENSOR CONTINUITY FAULT
+  $28        WHEEL SPEED SENSOR FREQUENCY ERROR
+  $31        RIGHT REAR WHEEL SPEED SENSOR FAULT
+  $33        RIGHT REAR WHEEL SPEED SENSOR CONTINUITY FAULT
+  $35        LEFT REAR WHEEL SPEED SENSOR FAULT
+  $37        LEFT REAR WHEEL SPEED SENSOR CONTINUITY FAULT
+  $41        RIGHT FRONT ABS INLET VALVE SOLENOID FAULT
+  $42        RIGHT FRONT ABS OUTLET VALVE SOLENOID FAULT
+  $43        RESERVED FOR E/K CAR
+  $44        RESERVED FOR E/K CAR
+  $45        RIGHT FRONT ABS OUTLET VALVE SOLENOID FAULT
+  $44        ASR VALVE SOLENOID FAULT
+  $45        LEFT FRONT ABS INLET VALVE SOLENOID FAULT
+  $46        LEFT FRONT ABS OUTLET VALVE SOLENOID FAULT
+  $47        PRIME LINE SOLENOID FAULT (ASV)
+  $48        PILOT VALVE SOLENOID FAULT (USV)
+  $51        RIGHT REAR ABS INLET VALVE SOLENOID FAULT
+  $52        RIGHT REAR ABS OUTLET VALVE SOLENOID FAULT
+  $55        LEFT REAR ABS INLET VALVE SOLENOID FAULT
+  $56        LEFT REAR ABS OUTLET VALVE SOLENOID FAULT
+  $58        ECU INTERNAL FAULT (THROTTLE RELAXER PWM INTERFACE FAULT)
+  $61        MOTOR PUMP FAULT
+  $62        SIGNAL FAULT
+  $63        VALVE POWER SUPPLY FAULT
+  $64        THROTTLE POSITION SIGNAL FAULT
+  $65        THROTTLE RELAXER FAULT
+  $66        ACCURACY OF THROTTLE POSITION CONTROL FAULT
+  $67        TPS COMPARISON FAULT
+  $71        ELECTRONIC BRAKE/TRACTION CONTROL MODERN INTERNAL FAULT
+  $72        SERIAL DATA LINK FAULT (SETS WHEN ECU BEGINS NORMAL OPERATION BUT,
+                                     DOSE NOT SEE NORMAL MODE BUS TRAFFIC FOR
+                                     3.2 SEC.)
+  $73        SPARK RETARD MONITORING FAULT
+  $75        RESERVED FOR E/K CAR
+  $76        RESERVED FOR E/K CAR
+
+  $85        LOW VOLTAGE CONDITION
+
+

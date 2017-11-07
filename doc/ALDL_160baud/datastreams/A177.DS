@@ -1,0 +1,666 @@
+
+                        DATA STREAM A177  SPECIFICATION
+
+       SPECIFICATIONS FOR  TCM DATA STREAM INFORMATION
+       -----------------------------------------------
+
+       TCM USAGE: THE R2 TRANSMISSION CAN BE USED WITH THE FOLLOWING ENGINES
+
+              4.3L TBI    LB4   (VIN = Z)   92,93 C,K,P (PCM-6)
+              5.7L TBI    L05   (VIN = K)   92,93 C,K,G,P (PCM-6)
+              7.4L TBI    L19   (VIN = N)   92,93 C,K,G,P (PCM-6)
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD -  BI-DIRECTIONAL
+
+..END
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                TCM RESPONSE:
+                  NONE
+
+        MODE 1 (TRANSMIT FIXED DATA STREAM)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE        = $00
+                - SUM CHECK
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $AB
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 85
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+                THE TCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F5
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - SUM CHECK
+ALDL DATA LIST
+NUMBER OF DATA WORDS - 85
+ALDL MODE 1 DATA LIST
+WORD #   DATA NAME    DESCRIPTION     NOTE: * INDICATES THAT CODES ARE CLEARED
+                                            BY TCM, - BY ECM.
+  1      MALFFLG1     MALFUNCTION WORD 1
+            0  - * CODE 21  THROTTLE POSITION HIGH
+            1      CODE 19
+            2      CODE 18
+            3      CODE 17
+            4      CODE 16
+            5  - * CODE 15  COOLANT SENSOR LOW TEMPERATURE
+            6  - * CODE 14  COOLANT SENSOR HIGH TEMPERATURE
+            7  -   CODE 13  OXYGEN SENSOR
+  2      CURMALF1     CURRENT MALFUNCTION WORD 1
+            0  - * CODE 21  THROTTLE POSITION HIGH
+            1      CODE 19
+            2      CODE 18
+            3      CODE 17
+            4      CODE 16
+            5  - * CODE 15  COOLANT SENSOR LOW TEMPERATURE
+            6  - * CODE 14  COOLANT SENSOR HIGH TEMPERATURE
+            7  -   CODE 13  OXYGEN SENSOR
+  3      MALFFLG2     MALFUNCTION WORD 2
+            0      CODE 29
+            1    * CODE 28  PRESSURE SWITCH MANIFOLD
+            2      CODE 27
+            3      CODE 26
+            4      CODE 25
+            5  - * CODE 24  OUTPUT SPEED LOW
+            6      CODE 23
+            7  - * CODE 22  THROTTLE POSITION LOW
+  4      CURMALF2     CURRENT MALFUNCTION WORD 2
+            0      CODE 29
+            1    * CODE 28  PRESSURE SWITCH MANIFOLD
+            2      CODE 27
+            3      CODE 26
+            4      CODE 25
+            5  - * CODE 24  OUTPUT SPEED LOW
+            6      CODE 23
+            7  - * CODE 22  THROTTLE POSITION LOW
+  5      MALFFLG3     MALFUNCTION WORD 3
+            0    * CODE 38  BRAKE OFF
+            1    * CODE 37  BRAKE ON
+            2      CODE 36
+            3      CODE 35
+            4  -   CODE 34  MAP SENSOR LOW
+            5  -   CODE 33  MAP SENSOR HIGH
+            6  -   CODE 32  EGR FAILURE
+            7  -   CODE 31  GOVERNOR MALFUNCTION
+..PAGE
+  6      CURMALF3     CURRENT MALFUNCTION WORD 3
+            0    * CODE 38  BRAKE OFF
+            1    * CODE 37  BRAKE ON
+            2      CODE 36
+            3      CODE 35
+            4  -   CODE 34  MAP SENSOR LOW
+            5  -   CODE 33  MAP SENSOR HIGH
+            6  -   CODE 32  EGR FAILURE
+            7  -   CODE 31  GOVERNOR MALFUNCTION
+  7      MALFFLG4     MALFUNCTION WORD 4
+            0      CODE 47
+            1      CODE 46
+            2  -   CODE 45  OXYGEN SENSOR RICH
+            3  -   CODE 44  OXYGEN SENSOR LEAN
+            4  -   CODE 43  ESC FAILURE
+            5  -   CODE 42  EST MONITOR
+            6      CODE 41
+            7    * CODE 39  TCC OFF
+  8      CURMALF4     CURRENT MALFUNCTION WORD 4
+            0      CODE 47
+            1      CODE 46
+            2  -   CODE 45  OXYGEN SENSOR RICH
+            3  -   CODE 44  OXYGEN SENSOR LEAN
+            4  -   CODE 43  ESC FAILURE
+            5  -   CODE 42  EST MONITOR
+            6      CODE 41
+            7    * CODE 39  TCC OFF
+  9      MALFFLG5     MALFUNCTION WORD 5
+            0      CODE 56
+            1  -   CODE 55  ADU ERROR
+            2  -   CODE 54  FUEL PUMP RELAY MALFUNCTION
+            3    * CODE 53  SYSTEM VOLTAGE HIGH
+            4      CODE 52
+            5  -   CODE 51  PROM ERROR
+            6      CODE 49
+            7      CODE 48
+  10     CURMALF5     CURRENT MALFUNCTION WORD 5
+            0      CODE 56
+            1  -   CODE 55  ADU ERROR
+            2  -   CODE 54  FUEL PUMP RELAY MALFUNCTION
+            3    * CODE 53  SYSTEM VOLTAGE HIGH
+            4      CODE 52
+            5  -   CODE 51  PROM ERROR
+            6      CODE 49
+            7      CODE 48
+  11     MALFFLG6     MALFUNCTION WORD 6
+            0      CODE 65
+            1      CODE 64
+            2      CODE 63
+            3      CODE 62
+            4      CODE 61
+            5    * CODE 59  TRANSMISSION TEMPERATURE LOW
+            6    * CODE 58  TRANSMISSION TEMPERATURE HIGH
+            7      CODE 57
+..PAGE
+  12     CURMALF6     CURRENT MALFUNCTION WORD 6
+            0      CODE 65
+            1      CODE 64
+            2      CODE 63
+            3      CODE 62
+            4      CODE 61
+            5    * CODE 59  TRANSMISSION TEMPERATURE LOW
+            6    * CODE 58  TRANSMISSION TEMPERATURE HIGH
+            7      CODE 57
+  13     MALFFLG7     MALFUNCTION WORD 7
+            0    * CODE 74  INPUT SPEED SENSOR
+            1    * CODE 73  FORCE MOTOR CURRENT
+            2    * CODE 72  OUTPUT SPEED LOSS
+            3    * CODE 71  ENGINE SPEED LOW
+            4    * CODE 69  TCC ON
+            5    * CODE 68  OVERDRIVE
+            6      CODE 67
+            7      CODE 66
+  14     CURMALF7     CURRENT MALFUNCTION WORD 7
+            0    * CODE 74  INPUT SPEED SENSOR
+            1    * CODE 73  FORCE MOTOR CURRENT
+            2    * CODE 72  OUTPUT SPEED LOSS
+            3    * CODE 71  ENGINE SPEED LOW
+            4    * CODE 69  TCC ON
+            5    * CODE 68  OVERDRIVE
+            6      CODE 67
+            7      CODE 66
+  15     MALFFLG8     MALFUNCTION WORD 8
+            0    * CODE 83  QDM FAULT
+            1    * CODE 82  QDM AND SHIFT A FAULT
+            2    * CODE 81  QDM AND SHIFT B FAULT
+            3    * CODE 79  TRANSMISSION HOT
+            4      CODE 78
+            5      CODE 77
+            6      CODE 76
+            7    * CODE 75  SYSTEM VOLTAGE LOW
+  16     CURMALF8     CURRENT MALFUNCTION WORD 8
+            0    * CODE 83  QDM FAULT
+            1    * CODE 82  QDM AND SHIFT A FAULT
+            2    * CODE 81  QDM AND SHIFT B FAULT
+            3    * CODE 79  TRANSMISSION HOT
+            4      CODE 78
+            5      CODE 77
+            6      CODE 76
+            7    * CODE 75  SYSTEM VOLTAGE LOW
+  17     MALFFLG9     MALFUNCTION WORD 9
+            0      CODE 92
+            1      CODE 91
+            2    * CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3      CODE 88
+            4    * CODE 87  SOLENOID B STUCK OFF
+            5    * CODE 86  SOLENOID B STUCK ON
+            6    * CODE 85  RATIO-UNDEFINED REGION
+            7      CODE 84
+..PAGE
+  18     CURMALF9     CURRENT MALFUNCTION WORD 9
+            0      CODE 92
+            1      CODE 91
+            2    * CODE 89  MAXIMUM ADAPT LONG SHIFT
+            3      CODE 88
+            4    * CODE 87  SOLENOID B STUCK OFF
+            5    * CODE 86  SOLENOID B STUCK ON
+            6    * CODE 85  RATIO-UNDEFINED REGION
+            7      CODE 84
+  19     ENGTEMP      ENGINE COOLANT TEMPERATURE FOR TRANSMISSION
+                        DEGREES C = N*.75 - 40
+                         (deg F = 1.35N - 40)
+  20     THROTPOS     THROTTLE POSITION (FILTERED) FOR TRANSMISSION
+                        % = N/2.56
+  21     THROTMOD     MODIFIED THROTTLE , FUNCTION OF BARO PRESSURE
+                        % = N/2.56
+  22     BARO         BAROMETRIC PRESSURE (FILTERED) FOR TRANSMISSION
+                        VOLTS = N*(5/255)
+                         (kpa = (N + 28.06)/2.71)
+  23     TRANTEMP     TRANSMISSION FLUID TEMPERATURE (FILTERED)
+                        DEGREES C = N*.75 - 40
+                         (deg F = 1.35N - 40)
+  24     NE           ENGINE SPEED (FILTERED) MSB
+  25     NE+1         ENGINE SPEED (FILTERED) LSB
+                         RPM = N/8
+  26     NI           TRANSMISSION INPUT SPEED (FILTERED) MSB
+  27     NI+1         TRANSMISSION INPUT SPEED (FILTERED) LSB
+                         RPM = N/8
+  28     NT           FILTERED TURBINE SPEED MSB
+  29     NT+1         FILTERED TURBINE SPEED LSB
+                         RPM = N/8
+  30     NO           TRANSMISSION OUTPUT SPEED (FILTERED) MSB
+  31     NO+1         TRANSMISSION OUTPUT SPEED (FILTERED) LSB
+                         RPM = N/8
+  32     VEHSPEED     VEHICLE SPEED (FILTERED)
+                         MPN = N/2
+  33     PRESSURE     CURRENT TORQUE SIGNAL PRESSURE
+                         PSI = N
+  34     CURRENT      REFERENCE CURRENT FORCE MOTOR CIRCUIT
+                         AMPS = N/51.2
+  35     CURRACT      ACTUAL CURRENT SAMPLED FROM A/D
+                         AMPS = N/51.2
+  36     ERROR        ERROR BETWEEN DESIRED AND ACTUAL CURRENT
+                         AMPS = N/51.2
+  37     PRNDLFLG     CURRENT STATE OF TRANSMISSION RANGE SELECTION
+            0            1 = LOW GEAR
+            1            1 = DRIVE 2
+            2            1 = DRIVE 3
+            3            1 = DRIVE 4
+            4            1 = NEUTRAL
+            5            1 = REVERSE
+            6            1 = PARK
+            7            1 = ILLEGAL RANGE
+..PAGE
+  38     SYSVOLT      SYSTEM VOLTAGE (FILTERED)
+                         VOLTS = N/10
+  39     TCCDC        TCC PWM SOLENOID DUTY CYCLE (MSB)
+  40     TCCDC+1      TCC PWM SOLENOID DUTY CYCLE (LSB)
+                         %DC = (256MSB + LSB)/655.36
+  41     BOXRATIO     TORQUE RATIO OF TRANSMISSION (MSB)
+  42     BOXRATIO+1   TORQUE RATIO OF TRANSMISSION (LSB)
+                         RATIO = N/16384
+  43     RATIO        TRANSMISSION (INPUT SPEED)/(OUTPUT SPEED)  NI/NO    MSB
+  44     RATIO+1      TRANSMISSION (INPUT SPEED)/(OUTPUT SPEED)  NI/NO    LSB
+                         RATIO = N/16384
+  45     ODRATIO      TRANSMISSION (ENGINE SPEED)/(XMISSION INPUT SPEED) NE/NI MSB
+  46     ODRATIO+1    TRANSMISSION (ENGINE SPEED)/(XMISSION INPUT SPEED) NE/NI MSB
+                         RATIO = N/16384
+  47     GEAR         CURRENT GEAR OF TRANSMISSION
+                         GEAR = N + 1
+  48     SHFTDLY      RATIO DELAY TIMER
+                         SEC = N/32
+  49     SOLTIME      TIME SINCE LAST GEAR SHIFT COMMANDED
+                         SEC = N/32
+  50     LASTTIME     TIME OF LAST SHIFT
+                         SEC = N/32
+  51     LASTERR      DIFFERENCE BETWEEN DESIRED AND ACTUAL SHIFT TIMES
+                         SEC = N/32
+  52     LSTADEL      LAST CHANGE TO ADAPTIVE MODIFIER
+                         PSI = N/4
+  53     CURADPT      CURRENT ADAPTIVE MODIFIER
+                         PSI = N
+  54     CURCELL      CURRENT ADAPTIVE MODIFIER INDEX WITHIN TABLE
+                         CELL = N
+  55     ERROR12      ERROR BETWEEN DESIRED AND ACTUAL SHIFT TIMES FOR LATEST
+                      1-2 UPSHIFT
+                         SEC = N/32
+  56     ERROR23      ERROR BETWEEN DESIRED AND ACTUAL SHIFT TIMES FOR LATEST
+                      2-3 UPSHIFT
+                         SEC = N/32
+  57     COOLDEGA     COOLANT TEMPERATURE
+                        DEGREES C = N*.75 - 40
+                         (deg F = 1.35N - 40)
+  58     ADAPTBLE     255 = LAST SHIFT WAS USABLE FOR ADAPTING  0 = UNUSABLE
+  59     RELDLY       TIME IN RELEASE DELAY MODE BEFORE MUCH SLIP
+                         SEC = N/32
+  60     APPTIME      TIME TORQUE CONVERTER CLUTCH TAKES TO APPLY
+                         SEC = N/32
+  61     LOCKTIME     TIME IN APPLY MODE, LOCKED
+                         SEC = N/32
+  62     SLIP         ABSOLUTE VALUE OF SLIP (MSB)
+  63     SLIP+1       ABSOLUTE VALUE OF SLIP (LSB)
+                         RPM = N/8
+  64     OPPT         CALCULATED OPERATING POINT DURING ON MODE (MSB)
+  65     OPPT+1       CALCULATED OPERATING POINT DURING ON MODE (LSB)
+                         % = (256MSB + LSB)/655.36
+  66     TIME12       TIME OF LATEST 1-2 UPSHIFT
+                         SEC = N/32
+..PAGE
+  67     TIME23       TIME OF LATEST 2-3 UPSHIFT
+                         SEC = N/32
+  68     TIME34       TIME OF LATEST 3-4 UPSHIFT
+                         SEC = N/32
+  69     FMONTIME     FORCE MOTOR ON TIME (MSB)
+  70     FMONTIME+1   FORCE MOTOR ON TIME (LSB)
+                         %DC = (256MSB + LSB)/71.68
+  71     IODSOD       STORAGE FOR IODPORT
+            0            COOLANT TEMPERATURE PULLUP SELECT 0 = T348  1 = T3998
+            1            TRANSMISSION PULLUP SELECT        0 = T348  1 = T3998
+            2            NOT USED
+            3            NOT USED
+            4            NOT USED
+            5            NOT USED
+            6            NOT USED
+            7            NOT USED
+  72     EADPT2       PRESSURE MODIFIER (ADAPTIVE) - 2ND GEAR
+                         PSI = N/4
+  73     EADPT2+1     PRESSURE MODIFIER (ADAPTIVE) - 2ND GEAR
+                         PSI = N/4
+  74     EADPT2+2     PRESSURE MODIFIER (ADAPTIVE) - 2ND GEAR
+                         PSI = N/4
+  75     EADPT2+3     PRESSURE MODIFIER (ADAPTIVE) - 2ND GEAR
+                         PSI = N/4
+  76     EADPT3       PRESSURE MODIFIER (ADAPTIVE) - 3ND GEAR
+                         PSI = N/4
+  77     EADPT3+1     PRESSURE MODIFIER (ADAPTIVE) - 3ND GEAR
+                         PSI = N/4
+  78     EADPT3+2     PRESSURE MODIFIER (ADAPTIVE) - 3ND GEAR
+                         PSI = N/4
+  79     EADPT3+3     PRESSURE MODIFIER (ADAPTIVE) - 3ND GEAR
+                         PSI = N/4
+  80     ADTHROT      THROTTLE POSITION, A/D COUNTS
+                         VOLTS = 5N/255
+  81     ADTRAN       TRANSMISSION TEMPERATURE A/D COUNTS
+                         SEE TABLE 1
+  82     PROMIDA      PROM ID (MSB)
+  83     PROMIDA+1    PROM ID (LSB)
+                         ID = 256MSB + LSB
+  84     DIFLAGS      BIT STATUS WORD
+            0            NORMAL PATTERN REQUESTED         1 = YES    0 = NO
+            1            PERFORMANCE PATTERN REQUESTED    1 = YES    0 = NO
+            2            MANUAL PATTERN REQUESTED         1 = YES    0 = NO
+            3            NOT USED
+            4            POWER ENRICHMENT ACTIVE          1 = YES    0 = NO
+            5            KICKDOWN PATTERN ACTIVE          1 = YES    0 = NO
+            6            AIR CONDITIONING COMPRESSOR      1 = ON     0 = OFF
+            7            BRAKE ON                         1 = YES    0 = NO
+  85     DISCOLD6     DISCRETE INPUTS
+            0            NOT USED
+            1            NOT USED
+            2            RANGE 1
+            3            RANGE 2
+            4            RANGE 3
+            5            BRAKE INPUT                  1 = ON    0 = OFF
+            6            A/C REQUEST                  1 = ON    0 = OFF
+            7            NOT USED
+
+
+
+
+
+
+;⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+;≥                                   TABLE 1                                   ≥
+;≥                         TRANSMISSION TEMPERATURE VS N                       ≥
+;≥                                  (ADTRAN)                                   ≥
+;≥    The transmission temperature sensor has two values of pull up resistor   ≥
+;≥    that are software selectable. If TRANSW is set, use the left most table  ≥
+;≥    [A/D (4K)]. If TRANSW is clear, use the right most table [A/D (348)].    ≥
+;¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+;                                      ≥
+; (TRANSW = SET)                       ≥       (TRANSW = CLEAR)
+;                                      ≥
+; A/D (4K)      DEG C         DEG F    ≥       A/D (348)     DEG C         DEG F
+;                                      ≥
+; 0             132.5         270.5    ≥       0             151.3         304.3
+; 1             130.6         267      ≥       1             151.3         304.3
+; 2             128.8         263.8    ≥       2             151.3         304.3
+; 3             126.9         260.4    ≥       3             151.3         304.3
+; 4             125           257      ≥       4             151.3         304.3
+; 5             123.1         253.5    ≥       5             151.3         304.3
+; 6             121.3         250.3    ≥       6             151.3         304.3
+; 7             118.4         245.1    ≥       7             151.3         304.3
+; 8             115.6         240      ≥       8             151.3         304.3
+; 9             112.8         235      ≥       9             151.3         304.3
+; 10            110           230      ≥       10            151.3         304.3
+; 11            107.2         224.9    ≥       11            151.3         304.3
+; 12            104.4         219.9    ≥       12            151.3         304.3
+; 13            101.6         214.8    ≥       13            151.3         304.3
+; 14            98.8          209.8    ≥       14            151.3         304.3
+; 15            95.9          204.6    ≥       15            151.3         304.3
+; 16            93.1          199.5    ≥       16            151.3         304.3
+; 17            90.3          194.5    ≥       17            151           303.8
+; 18            87.5          189.5    ≥       18            150.8         303.4
+; 19            84.7          184.4    ≥       19            150.5         302.9
+; 20            81.9          179.4    ≥       20            150.3         302.5
+; 21            79.1          174.3    ≥       21            150.1         302.1
+; 22            76.3          169.3    ≥       22            149.8         301.6
+; 23            75.2          167.3    ≥       23            149.6         301.2
+; 24            74.1          165.3    ≥       24            149.4         300.9
+; 25            73            163.4    ≥       25            149.1         300.3
+; 26            71.9          161.4    ≥       26            148.9         300
+; 27            70.9          159.6    ≥       27            148.7         299.6
+; 28            69.8          157.6    ≥       28            148.4         299.1
+; 29            68.7          155.6    ≥       29            148.2         298.7
+; 30            67.6          153.6    ≥       30            148           298.4
+; 31            66.5          151.7    ≥       31            147.7         297.8
+; 32            65.5          149.9    ≥       32            147.5         297.5
+; 33            64.4          147.9    ≥       33            146.3         295.3
+; 34            63.3          145.9    ≥       34            145.1         293.1
+; 35            62.2          143.9    ≥       35            143.8         290.8
+; 36            61.2          142.1    ≥       36            142.6         288.6
+; 37            60.1          140.1    ≥       37            141.4         286.5
+; 38            59            138.2    ≥       38            140.2         284.3
+; 39            58.3          136.9    ≥       39            139           282.2
+; 40            57.6          135.6    ≥       40            137.8         280
+; 41            56.9          134.4    ≥       41            136.5         277.7
+; 42            56.2          133.1    ≥       42            135.3         275.5
+; 43            55.5          131.9    ≥       43            134.1         273.3
+; 44            54.8          130.6    ≥       44            132.9         271.2
+; 45            54.1          129.3    ≥       45            131.7         269
+; 46            53.4          128.1    ≥       46            130.4         266.7                                       A177
+
+; 47            52.7          126.8    ≥       47            129.2         264.5
+; 48            52            125.6    ≥       48            128           262.4
+; 49            51.3          124.3    ≥       49            127.1         260.7
+; 50            50.6          123      ≥       50            126.2         259.1
+; 51            49.9          121.8    ≥       51            125.3         257.5
+; 52            49.2          120.5    ≥       52            124.4         255.9
+; 53            48.5          119.3    ≥       53            123.5         254.3
+; 54            47.8          118      ≥       54            122.7         252.8
+; 55            47.2          116.9    ≥       55            121.8         251.2
+; 56            46.7          116      ≥       56            120.9         249.6
+; 57            46.2          115.1    ≥       57            120           248
+; 58            45.7          114.2    ≥       58            119.1         246.3
+; 59            45.2          113.3    ≥       59            118.2         244.7
+; 60            44.7          112.4    ≥       60            117.3         243.1
+; 61            44.1          111.3    ≥       61            116.4         241.5
+; 62            43.6          110.4    ≥       62            115.5         239.9
+; 63            43.1          109.5    ≥       63            114.6         238.2
+; 64            42.6          108.6    ≥       64            113.8         236.8
+; 65            42.1          107.7    ≥       65            113.1         235.5
+; 66            41.6          106.8    ≥       66            112.4         234.3
+; 67            41            105.8    ≥       67            111.8         233.2
+; 68            40.5          104.9    ≥       68            111.1         231.9
+; 69            40            104      ≥       69            110.5         230.9
+; 70            39.5          103.1    ≥       70            109.8         229.6
+; 71            39.1          102.3    ≥       71            109.2         228.5
+; 72            38.7          101.6    ≥       72            108.5         227.3
+; 73            38.2          100.7    ≥       73            107.8         226
+; 74            37.8          100      ≥       74            107.2         224.9
+; 75            37.4          99.3     ≥       75            106.5         223.7
+; 76            37            98.6     ≥       76            105.9         222.6
+; 77            36.5          97.7     ≥       77            105.2         221.3
+; 78            36.1          96.9     ≥       78            104.6         220.2
+; 79            35.7          96.2     ≥       79            103.9         219
+; 80            35.3          95.5     ≥       80            103.3         217.9
+; 81            34.9          94.8     ≥       81            102.6         216.6
+; 82            34.4          93.9     ≥       82            102           215.6
+; 83            34            93.2     ≥       83            101.4         214.5
+; 84            33.6          92.4     ≥       84            100.8         213.4
+; 85            33.2          91.7     ≥       85            100.2         212.3
+; 86            32.8          91       ≥       86            99.6          211.2
+; 87            32.3          90.1     ≥       87            99            210.2
+; 88            31.9          89.4     ≥       88            98.4          209.1
+; 89            31.5          88.7     ≥       89            97.8          208
+; 90            31.1          87.9     ≥       90            97.2          206.9
+; 91            30.6          87       ≥       91            96.5          205.7
+; 92            30.2          86.3     ≥       92            95.9          204.6
+; 93            29.8          85.6     ≥       93            95.3          203.5
+; 94            29.4          84.9     ≥       94            94.7          202.4
+; 95            29            84.2     ≥       95            94.1          201.3
+; 96            28.5          83.3     ≥       96            93.5          200.2
+; 97            28.1          82.5     ≥       97            93            199.4
+; 98            27.7          81.8     ≥       98            92.5          198.5
+; 99            27.3          81.1     ≥       99            92            197.5
+; 100           26.8          80.2     ≥       100           91.4          196.5
+; 101           26.4          79.5     ≥       101           90.9          195.6
+; 102           26            78.8     ≥       102           90.4          194.7
+; 103           25.7          78.2     ≥       103           89.9          193.8
+; 104           25.3          77.5     ≥       104           89.4          192.9
+; 105           25            77       ≥       105           88.9          192
+; 106           24.7          76.4     ≥       106           88.3          190.9                                       A177
+
+; 107           24.4          75.9     ≥       107           87.8          190
+; 108           24            75.2     ≥       108           87.3          189.1
+; 109           23.7          74.6     ≥       109           86.8          188.2
+; 110           23.4          74.1     ≥       110           86.3          187.3
+; 111           23            73.3     ≥       111           85.8          186.4
+; 112           22.7          72.8     ≥       112           85.3          185.5
+; 113           22.4          72.3     ≥       113           84.8          184.6
+; 114           22.1          71.7     ≥       114           84.3          183.7
+; 115           21.7          71       ≥       115           83.8          182.8
+; 116           21.4          70.5     ≥       116           83.4          182.1
+; 117           21.1          69.9     ≥       117           82.9          181.2
+; 118           20.8          69.4     ≥       118           82.4          180.3
+; 119           20.4          68.7     ≥       119           82            179.5
+; 120           20.1          68.1     ≥       120           81.5          178.7
+; 121           19.8          67.6     ≥       121           81            177.7
+; 122           19.4          66.9     ≥       122           80.6          177
+; 123           19.1          66.3     ≥       123           80.1          176.1
+; 124           18.8          65.8     ≥       124           79.6          175.2
+; 125           18.5          65.3     ≥       125           79.2          174.5
+; 126           18.1          64.5     ≥       126           78.7          173.6
+; 127           17.8          64       ≥       127           78.2          172.7
+; 128           17.5          63.5     ≥       128           77.8          172
+; 129           17.1          62.7     ≥       129           77.3          171.1
+; 130           16.8          62.2     ≥       130           76.8          170.2
+; 131           16.5          61.7     ≥       131           76.3          169.3
+; 132           16.2          61.1     ≥       132           75.9          168.6
+; 133           15.8          60.4     ≥       133           75.4          167.7
+; 134           15.5          59.9     ≥       134           74.9          166.8
+; 135           15.2          59.3     ≥       135           74.5          166
+; 136           14.8          58.6     ≥       136           74            165.2
+; 137           14.5          58.1     ≥       137           73.5          164.2
+; 138           14.2          57.5     ≥       138           73.1          163.5
+; 139           13.9          57       ≥       139           72.6          162.6
+; 140           13.5          56.3     ≥       140           72.1          161.7
+; 141           13.2          55.7     ≥       141           71.7          161
+; 142           12.9          55.2     ≥       142           71.2          160.1
+; 143           12.5          54.5     ≥       143           70.7          159.2
+; 144           12.2          53.9     ≥       144           70.3          158.5
+; 145           11.9          53.4     ≥       145           69.8          157.6
+; 146           11.6          52.8     ≥       146           69.3          156.7
+; 147           11.2          52.1     ≥       147           68.8          155.8
+; 148           10.9          51.6     ≥       148           68.4          155.1
+; 149           10.6          51       ≥       149           67.9          154.2
+; 150           10.3          50.5     ≥       150           67.4          153.3
+; 151           9.9           49.8     ≥       151           67            152.6
+; 152           9.6           49.2     ≥       152           66.5          151.7
+; 153           9.3           48.7     ≥       153           66            150.7
+; 154           8.9           48       ≥       154           65.6          150
+; 155           8.6           47.4     ≥       155           65.1          149.1
+; 156           8.3           46.9     ≥       156           64.6          148.2
+; 157           8             46.4     ≥       157           64.2          147.5
+; 158           7.6           45.6     ≥       158           63.7          146.6
+; 159           7.3           45.1     ≥       159           63.2          145.7
+; 160           7             44.6     ≥       160           62.8          145
+; 161           6.6           43.8     ≥       161           62.3          144.1
+; 162           6.3           43.3     ≥       162           61.8          143.2
+; 163           6             42.8     ≥       163           61.3          142.3
+; 164           5.7           42.2     ≥       164           60.9          141.6
+; 165           5.3           41.5     ≥       165           60.4          140.7
+; 166           5             41       ≥       166           59.9          139.8                                       A177
+
+; 167           4.6           40.2     ≥       167           59.5          139.1
+; 168           4.3           39.7     ≥       168           59            138.2
+; 169           3.9           39       ≥       169           58.5          137.2
+; 170           3.5           38.3     ≥       170           58.1          136.5
+; 171           3.1           37.5     ≥       171           57.6          135.6
+; 172           2.8           37       ≥       172           57.1          134.7
+; 173           2.4           36.3     ≥       173           56.7          134
+; 174           2             35.6     ≥       174           56.2          133.1
+; 175           1.6           34.8     ≥       175           55.7          132.2
+; 176           1.3           34.3     ≥       176           55.3          131.5
+; 177           .9            33.6     ≥       177           54.7          130.4
+; 178           .5            32.9     ≥       178           54.2          129.5
+; 179           .1            32.1     ≥       179           53.7          128.6
+; 180          -.2            31.6     ≥       180           53.2          127.7
+; 181          -.6            30.9     ≥       181           52.7          126.8
+; 182          -1             30.2     ≥       182           52.2          125.9
+; 183          -1.4           29.4     ≥       183           51.6          124.8
+; 184          -1.7           28.9     ≥       184           51.1          123.9
+; 185          -2.1           28.2     ≥       185           50.6          123
+; 186          -2.5           27.5     ≥       186           50.1          122.1
+; 187          -2.9           26.7     ≥       187           49.6          121.2
+; 188          -3.2           26.2     ≥       188           49.1          120.3
+; 189          -3.6           25.5     ≥       189           48.5          119.3
+; 190          -4             24.8     ≥       190           48            118.4
+; 191          -4.4           24       ≥       191           47.5          117.5
+; 192          -4.7           23.5     ≥       192           47            116.6
+; 193          -5.1           22.8     ≥       193           46.4          115.5
+; 194          -5.5           22.1     ≥       194           45.8          114.4
+; 195          -5.9           21.3     ≥       195           45.2          113.3
+; 196          -6.2           20.8     ≥       196           44.6          112.2
+; 197          -6.6           20.1     ≥       197           44            111.2
+; 198          -7             19.4     ≥       198           43.3          109.9
+; 199          -7.5           18.5     ≥       199           42.7          108.8
+; 200          -7.9           17.7     ≥       200           42.1          107.7
+; 201          -8.4           16.8     ≥       201           41.5          106.7
+; 202          -8.9           15.9     ≥       202           40.9          105.6
+; 203          -9.3           15.2     ≥       203           40.3          104.5
+; 204          -9.8           14.3     ≥       204           39.7          103.4
+; 205          -10.3          13.4     ≥       205           39.1          102.3
+; 206          -10.7          12.7     ≥       206           38.5          101.2
+; 207          -11.2          11.8     ≥       207           37.9          100.2
+; 208          -11.7          10.9     ≥       208           37.3          99.1
+; 209          -12.2          10       ≥       209           36.5          97.7
+; 210          -12.6          9.3      ≥       210           35.8          96.4
+; 211          -13.1          8.4      ≥       211           35            95
+; 212          -13.6          7.5      ≥       212           34.3          93.7
+; 213          -14            6.8      ≥       213           33.5          92.3
+; 214          -14.5          5.9      ≥       214           32.8          91
+; 215          -15.1          4.8      ≥       215           32            89.6
+; 216          -15.6          3.9      ≥       216           31.3          88.3
+; 217          -16.2          2.8      ≥       217           30.5          86.8
+; 218          -16.7          1.9      ≥       218           29.8          85.6
+; 219          -17.3          .8       ≥       219           29            84.2
+; 220          -17.9         -.3       ≥       220           28.3          82.9
+; 221          -18.4         -1.2      ≥       221           27.5          81.5
+; 222          -19           -2.2      ≥       222           26.8          80.2
+; 223          -19.6         -3.3      ≥       223           26            78.8
+; 224          -20.1         -4.2      ≥       224           25.3          77.5
+; 225          -20.7         -5.3      ≥       225           24            75.2
+; 226          -21.2         -6.2      ≥       226           22.8          73                                          A177
+
+; 227          -21.8         -7.3      ≥       227           21.6          70.8
+; 228          -22.4         -8.4      ≥       228           20.4          68.7
+; 229          -22.9         -9.3      ≥       229           19.2          66.5
+; 230          -23.5         -10.3     ≥       230           17.9          64.2
+; 231          -24.5         -12.1     ≥       231           16.7          62
+; 232          -25.6         -14.1     ≥       232           15.5          59.9
+; 233          -26.6         -15.9     ≥       233           14.3          57.7
+; 234          -27.6         -17.7     ≥       234           13.1          55.5
+; 235          -28.7         -19.7     ≥       235           11.8          53.2
+; 236          -29.7         -21.5     ≥       236           10.6          51
+; 237          -30.7         -23.3     ≥       237           9.4           48.9
+; 238          -31.7         -25.1     ≥       238           8.2           46.7
+; 239          -32.8         -27.1     ≥       239           7             44.6
+; 240          -33.8         -28.9     ≥       240           5.8           42.4
+; 241          -34.8         -30.7     ≥       241           2.9           37.2
+; 242          -35.9         -32.7     ≥       242           0             32
+; 243          -36.9         -34.5     ≥       243          -2.8           26.9
+; 244          -37.9         -36.3     ≥       244          -5.7           21.7
+; 245          -39           -38.2     ≥       245          -8.5           16.7
+; 246          -39           -38.2     ≥       246          -11.4          11.4
+; 247          -39           -38.2     ≥       247          -14.3          6.2
+; 248          -39           -38.2     ≥       248          -17.1          1.2
+; 249          -39           -38.2     ≥       249          -20           -4
+; 250          -39           -38.2     ≥       250          -22.8         -9.1
+; 251          -39           -38.2     ≥       251          -25.7         -14.3
+; 252          -39           -38.2     ≥       252          -28.6         -19.5
+; 253          -39           -38.2     ≥       253          -31.4         -24.6
+; 254          -39           -38.2     ≥       254          -34.3         -29.8
+; 255          -39           -38.2     ≥       255          -37.1         -34.8                                        A177
+LAYOUT 000
+:ê  XB 
+  Su¶     <_        ˙ \------------------------------------------------------------------------------/----+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+----     STANDARD 2      XB  <

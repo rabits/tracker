@@ -1,0 +1,468 @@
+
+                        DATA STREAM A54   SPECIFICATION
+
+        ENGINE USAGES:
+                4.5L DFI - LR6 - (5) - 88,89  CADILLAC E/K  CAR ONLY
+
+        DATA PIN:     L/M
+
+        BAUD RATE:    8192
+
+      
+
+..page
+                 CADILLAC 1988 E/K ALDL LISTING
+
+
+BCM DATA LIST - DEVICE CODE $F1
+
+NUMBER OF DATA WORDS - 42
+
+ WORD   BIT   DESCRIPTION                   EQUATION
+  NO.   NO.
+
+  1           PROM ID WORD 1                MOST SIGNIFICANT
+  2           PROM ID WORD 2                LEAST SIGNIFICANT
+  3           BCM MODE STATUS WORD 1
+  4           BCM MODE STATUS WORD 2
+  5       7  B110-OUTSIDE AIR TEMP CKT PROB          Bit value 1 =
+          6  B111-A/C HISIDE TEMP CKT PROB                  Malfunction
+          5  B112-A/C LO SIDE TEMP CKT PROB
+          4  B113-IN CAR TEMP CKT PROB
+          3  B115-SUNLOAD TEMP CKT PROB
+          2  B118-DOOR JAMB/DOOR AJAR SWITCH FAIL
+          1  B119-TWS PHOTOSENSOR CKT PROB
+          0  B120-TWS DELAY POT CKT PROB
+  6       7  B121-TWS ENABLE CKT PROB
+          6  B122-PANEL LAMP DIM POT CKT PROB
+          5  B123-PANEL LAMP ENABLE CKT PROB
+          4  B124-SPEED SENSOR CKT PROB [C/C]
+          3  B127-PRND321 SENSOR CKR PROB [C/C]
+          2  NOT USED
+          1  NOT USED
+          0  B334-LOSS OF ECM DATA [C/C]
+  7       7  B335-LOSS OS CCDIC DATA [C/C]
+          6  B336-LOSS OF IPC DATA [C/C]
+          5  B337-LOSS OF PROGRAMMER DATA [A/C]
+          4  NOT USED
+          3  B410-CHARGING SYSTEM PROB
+          2  B411-BATTERY VOLTS LOW [C/C]
+          1  B412-BATTERY VOLTS HIGH [C/C]
+          0  B420-RELAY CKT PROBLEM
+  8       7  NOT USED             (History codes only)
+          6  NOT USED
+          5  NOT USED
+          4  B440-AIR MIX DOOR PROBLEM
+          3  B441-COOLING FAMS PROBLEM
+          2  NOT USED
+          1  B446-LO A/C REFRIG CONDITION WARNING
+          0  B447-VERY LO A/C REFRIG CONITION PROB [A/C]
+  9       7  B448-VERY LO A/C REFRIG PRES [A/C]
+          6  B449-A/C HI SIDE TEMP TOO HIGH [A/C]
+          5  B450-COOLANT TEMP TOO HIGH [A/C]
+          4  NOT USED
+          3  NOT USED
+          2  NOT USED
+          1  B552-BCM MEMORY RESET INDICATOR
+          0  B556-BCM EEPROM ERROR
+ 10       7  NOT USED
+          6  NOT USED
+          5  NOT USED
+          4  NOT USED
+          3  NOT USED
+          2  NOT USED
+          1  NOT USED
+          0  B999-RAM OVERWRITE - STACK OVERFLOW
+  11          SPARE
+  12         HVAC AIR DELIVERY MODE
+          7  FRONT DEFROST
+          6  COLD PURGE
+          5  NORMAL PURGE
+          4  OFF
+          3  HEATER
+          2  INTERMEDIATE (DEF.)
+          1  A/C
+          0  MAX A/C (RECIRC.)
+  13          HVAC SET TEMP (DEG F)         T=N
+  14          IN CAR TEMPERATURE (DEG C)    T=N-40
+  15          TWILIGHT POTENTIOMETER (%)    %=N/2.55
+  16          SPARE
+  17          SPARE
+  18          FUEL LEVEL (GALS)             GAL=(N18/N22)*.1
+  19          VEHICLE SPEED                 KPH=N
+  20          SPARE
+  21          SUNLOAD TEMPERATURE (C)       T=N-40
+  22          IGNITION 1 VOLTAGE            V=N*.064
+  23          A/C LO SIDE TEMPERATURE (C)   T=N-40
+  24          A/C HI SIDE TEMPERATURE (C)   T=N-40
+  25          SPARE
+  26          TWILIGHT PHOTOCELL (%)        %=N/2.55
+  27          GENERATOR F-TERMINAL (%)      %=N/2.55
+  28          DIMMING POT (%)               %=N/2.56
+  29          OUTSIDE TEMPERATURE (C)       T=N-40
+  30          AIR MIX DOOR POSITION (%)     %=[1-(N/255)]*100
+  31     7    ENGINE OIL LEVEL STATUS       1=LOW OIL LEVEL
+         6    PHONE STATUS                  1=PHONE CONNECTED
+         5    QDM 2 FAULT STATUS            1=QDM #2 FAULT
+         4    PRNDL GREY CODE INPUT BIT C   SEE TABLE 3
+         3    QDM 1 FAULT STATUS            1=QDM #1 FAULT
+         2    SPARE
+         1    SPARE
+         0    SPARE
+
+
+PRNDL GREY CODE BIT:          A  B  C  D     GEAR SHIFT POSITION
+
+                     0  0  0  0  0  1  1          DRIVE 1
+                     0  0  0  1  0  1  0          DRIVE 2
+                     0  0  0  1  1  1  1          DRIVE 3
+                     0  0  0  0  1  1  0          DRIVE 4
+                     0  0  0  0  1  0  1          NEUTRAL
+                     0  0  0  1  1  0  0          REVERSE
+                     0  0  0  1  0  0  1          PARK
+
+                             TABLE 3
+       PRNDL GREY CODE BIT VALUES vs. GEAR SHIFT POSITION
+
+
+
+
+                 CADILLAC E/K ALDL LISTING CONT.
+DEVICE CODE $F1 - BCM DATA CONTINUED
+
+ WORD   BIT  DESCRIPTION                   EQUATION
+  NO.   NO.
+
+  32     7    LOW BRAKE FLUID INDICATOR     1=LOW BRAKE FLUID
+         6    COOLING FANS FEEDBACK         1=FANS ON
+         5    SPARE
+         4    SPARE                               
+         3    SPARE
+         2    SPARE
+         1    SPARE
+         0    SPARE
+  33     7    PRNDL GREY CODE INPUT BIT D   SEE TABLE 3
+         6    PRNDL GREY CODE INPUT BIT B   SEE TABLE 3
+         5    SPARE
+         4    SPARE
+         3    KEY IN IGNITION STATUS        1=KEY IN IGNITION
+         2    SPARE
+         1    SPARE
+         0    SPARE
+  34     7    SERVICE EMISSION SYSTEM       1=ACKNOWLEDGED
+         6    PRNDL GREY CODE INPUT BIT A   SEE TABLE 3
+         5    FRONT/DRIVER DOOR AJAR        1=AJAR
+         4    TRUNK AJAR                    1=AJAR
+         3    REAR/PASS DOOR AJAR           1=AJAR
+         2    SPARE
+         1    SPARE
+         0    SPARE
+  35     7    SPARE
+         6    WASHER FLUID LEVEL            1=LOW
+         5    COOLANT LEVEL                 1=LOW
+         4    REFRIGERANT PRESSURE          1=LOW
+         3    GENERATOR I-TERM STATUS       1=INPUT HIGH
+         2    SPARE
+         1    SPARE
+         0    SPARE
+  36          SPARE                                  
+  37     7    SPARE
+         6    IGNITION 3 STATUS             1=IGN ON
+         5    SPARE                                              
+         4    SPARE                                              
+         3    CRANK STATUS                  1=CRANK ACTIVE
+         2    SPARE
+         1    SPARE
+         0    SPARE
+  38     7    PARKLAMPS                     1=ON
+         6    TIME OF DAY SWITCH            1=SWITCH ACTIVE (ON)
+         5    DOOR HANDLE SWITCH            1=SWITCH DEPRESSED
+         4    PANEL LAMP SWITCH (CTSY)      1=SWITCH ACTIVE (ON)
+         3    DOOR JAMB SWITCH              1=DOOR OPEN
+         2    SPARE
+         1    SPARE
+         0    SPARE
+                 CADILLAC E/K ALDL LISTING CONT.
+DEVICE CODE $F1 - BCM DATA CONTINUED
+
+ WORD   BIT  DESCRIPTION                   EQUATION
+  NO.   NO.
+
+
+
+  39     7    HIGH BEAM RELAY               1=ON
+         6    DELAYED ACC. RELAY            1=ON
+         5    COURTESY LAMP RELAY           1=ON
+         4    TWILIGHT RELAY                1=ON
+         3    SPARE                                      
+         2    GENERATOR DISABLE             1=DISABLED
+         1    SPARE
+         0    SPARE
+  40
+         7    SPARE
+         6    SPARE
+         5    SPARE
+         4    SPARE
+         3    PARK/NEUTRAL OUTPUT (ADL)     1=P/N
+         2    SPARE
+         1    SPARE
+         0    SPARE
+  41          COMMANDED BLOWER VOLTAGE       V=(N-33.6)*.08621
+  42          COMMANDED AIR MIX DOOR         %=1-(N/255)
+              POSITION
+
+
+
+
+ALDL ECM LONG DATA LIST - MODE 1 - DEVICE CODE $4F
+
+NUMBER OF DATA WORDS - 33
+
+ WORD   BIT  DESCRIPTION                   EQUATION
+  NO.   NO.
+
+  1          ECM PROM ID WORD 1
+  2          ECM PROM ID WORD 2
+  3       7  E12-NO DISTRIBUTOR SIGNAL
+          6  E13-O2 SENSOR NOT READY [AIR, CAN PURG]
+          5  E14-SHORTED COOLANT SENSOR CKT [AIR]
+          4  E15-OPEN COOLANT SENSOR CKT [AIR]
+          3  E16-VOLTAGE OUT OF RANGE [ALL SOLS]
+          2  NOT USED
+          1  E18-OPEN CRANK SIGNAL CKT
+          0  E19-SHORTED FUEL PUMP CKT
+  4       7  E20-OPEN FUEL PUMP CKT
+          6  E21-SHORTED THROTTLE POS SENSOR CKT
+          5  E22-OPEN THROTTLE POS SENSOR CKT
+          4  E23-EST/BYPASS CKT PROB
+          3  E24-SPEED SEN CKT PROB
+          2  NOT USED
+          1  E26-SHORTED THROTTLE SWITCH CKT
+          0  E27-OPEN THROTTLE SEITCH CKT
+  5       7  E28-OPEN 3RD OR 4TH GEAR CKT
+          6  NOT USED
+          5  E30-IDLE SPEED CONTROL CKT PROBLEM
+          4  E31-SHORTED MAP SENSOR CKT [AIR]
+          3  E32-OPEN MAP SENSOR CKT [AIR]
+          2  NOT USED
+          1  E34-MAP SENSOR SIGNAL TOO HIGH [AIR]
+          0  NOT USED
+  6       7  NOT USED
+          6  E37-SHORTED MAT SENSOR CKT [AIR]
+          5  E38-OPTN MAT SENSOR CKT [AIR]
+          4  E39-VCC ENGAGMENT PROBLEM
+          3  E40-OPEN P/S PRES SW CKT
+          2  NOT USED
+          1  NOT USED
+          0  NOT USED
+  7       7  E44-LEAN EXHASUST SIGNAL [AIR,CAN PURG]
+          6  E45-RICH EXHAUST SIGNAL [AIR,CAN PURG]
+          5  NOT USED
+          4  E47-BCM TO ECM DATA PROBLEM
+          3  E48-EGR SYSTEM FAULT
+          2  NOT USED
+          1  NOT USED
+          0  NOT USED
+  8       7  E52-ECM MEMORY RESET INDICATOR       (HISTORY CODES)
+          6  E53-DISTRIBUTOR SIGNAL INTERUPT
+          5  NOT USED
+          4  E55-THROTTLE POS SENSOR MISADJUSTED
+          3  NOT USED
+          2  NOT USED
+          1  E58-ANTI-THEFT SYSTEM MALFUNCTION
+          0  E59-VCC TEMP CKT PROB
+  9       7  E60-CRUISE - TRANS NOT IN DRIVE [C/C]   (HISTORY CODES)
+          6  NOT USED
+          5  NOT USED
+          4  E63-CRUISE - SPEED/SET SPEED DIF HI [C/C]
+          3  E64-CRUISE - CAR ACCL TOO HI [C/C]
+          2  E65-CRUISE - COOLANT TEMP TOO HI [C/C]
+          1  E66-CRUISE - ENGINE RPM TOO HI [C/C]
+          0  E67-CRUISE - SWT SHORT DURING ENABLE
+  10         MANIFOLD AIR TEMP. (C)        T=(N*.75) - 40
+  11         TRANSMISSION SUMP TEMP. (C)   T=(N*.75) - 40
+  12         SPARK ADVANCE (DEG.)          DEG=N*.35
+  13         BAROMETRIC PRESSURE (Kpa)     Kpa=(N*.16) + 61
+  14         BLOCK LEARN MULTIPLIER (Cnts) COUNTS
+  15         EGR DUTY CYCLE (%)            %=N*.39
+  16         IGNITION CYCLE COUNTER        COUNTS
+  17         COOLANT TEMP. (C)             T=(N*.75) - 40
+  18         O2 SENSOR CROSS COUNTS        COUNTS
+  19         O2 SENSOR VOLTAGE (mV)        mV=N*4.448
+  20         BATTERY VOLTAGE (V)           V=N*.1
+  21         MAP (Kpa)                     Kpa=(N*.32) + 20
+  22         CLOSED LOOP INTEGRATOR        COUNTS
+  23         TPS (DEG.)                    DEG=N*.32
+  24         ENGINE RPM                    RPM=N*25
+  25         VEHICLE SPEED (MPH)           MPH=COUNTS
+  26         INJECTOR PULSE WIDTH WORD 1
+  27         INJECTOR PULSE WIDTH WORD 2   PW=
+                                          N26*3.0966 + N27*.01526
+  28     7   FOURTH GEAR STATUS            1=FOURTH GEAR
+         6   CLOSED LOOP STATUS            1=CLOSED LOOP
+         5   P/N STATUS                    1=P/N
+         4   AIR DIVERT STATUS             1=ENERGIZED
+         3   AIR SWITCH STATUS             1=ENERGIZED
+         2   BRAKE SWITCH STATUS           1=CLOSED (NOT APPLIED)
+         1   THROTTLE SWITCH STATUS        1=CLOSED
+         0   CRANK STATUS                  1=CRANK
+  29     7   THIRD GEAR STATUS             1=THIRD GEAR
+         6   VCC STATUS                    1=ENERGIZED
+         5   ISC DIRECTION STATUS          1=FORWARD
+         4   SPARE
+         3   POWER STEERING STATUS         1=P.S. LOAD
+         2   ISC REVERSE PREVENT           1=PREVENT
+         1   RICH/LEAN STATUS              1=RICH
+         0   A/C RELAY STATUS              1=ENERGIZED
+
+
+
+
+ALDL ECM LONG DATA LIST - MODE 1 - DEVICE CODE $4F - CONT.
+
+ WORD   BIT  DESCRIPTION                   EQUATION
+  NO.   NO.
+
+  30     7   CRUISE CONTROL ENABLE         1=ENABLED
+         6   C/C SET/COAST                 1=SET/COAST
+         5   C/C RESUME/ACCEL              1=RESUME/ACCEL
+         4   C/C ON/OFF                    1=ON
+         3   C/C ENGAGE LAMP               1=ON
+         2   C/C VENT                      1=ENERGIZED
+         1   C/C VACUUM                    1=ENERGIZED
+         0   E=CELL                        1=EXPIRED
+  31         CRUISE CONTROL SET SPEED      MPH=COUNTS
+  32         ECM ALDL MODE WORD
+  33         SPARE
+
+
+ALDL ECM SHORT DATA LIST - DEVICE CODE $4F
+NUMBER OF DATA WORDS - 17
+
+
+ WORD   BIT  DESCRIPTION                   EQUATION
+  NO.   NO.
+
+   1         COOLANT TEMP. (C)             T=(N*.75) - 40
+   2         O2 SENSOR CROSS COUNTS        COUNTS
+   3         O2 SENSOR VOLTAGE (mV)        mV=N*4.448
+   4         BATTERY VOLTAGE (V)           V=N*.1
+   5         MAP (Kpa)                     Kpa=(N*.32) + 20
+   6         CLOSED LOOP INTEGRATOR        COUNTS
+   7         TPS (DEG.)                    DEG=N*.32
+   8         ENGINE RPM                    RPM=N*25
+   9         VEHICLE SPEED (MPH)           MPH=COUNTS
+  10         INJECTOR PULSE WIDTH WORD 1
+  11         INJECTOR PULSE WIDTH WORD 2   PW=
+                                          N26*3.0966 + N27*.01526
+  12     7   FOURTH GEAR STATUS            1=FOURTH GEAR
+         6   CLOSED LOOP STATUS            1=CLOSED LOOP
+         5   P/N STATUS                    1=P/N
+         4   AIR DIVERT STATUS             1=ENERGIZED
+         3   AIR SWITCH STATUS             1=ENERGIZED
+         2   BRAKE SWITCH STATUS           1=CLOSED (APPLIED)
+         1   THROTTLE SWITCH STATUS        1=CLOSED
+         0   CRANK STATUS                  1=CRANK
+  13     7   THIRD GEAR STATUS             1=THIRD GEAR
+         6   VCC STATUS                    1=ENERGIZED
+         5   ISC DIRECTION STATUS          1=FORWARD
+         4   SPARE
+         3   POWER STEERING STATUS         1=P.S. LOAD
+         2   ISC REVERSE PREVENT           1=PREVENT
+         1   RICH/LEAN STATUS              1=RICH
+         0   A/C RELAY STATUS              1=ENERGIZED
+  14     7   CRUISE CONTROL ENABLE         1=ENABLED
+         6   C/C SET/COAST                 1=SET/COAST
+         5   C/C RESUME/ACCEL              1=RESUME/ACCEL
+         4   C/C ON/OFF                    1=ON
+         3   C/C ENGAGE LAMP               1=ON
+         2   C/C VENT                      1=ENERGIZED
+         1   C/C VACUUM                    1=ENERGIZED
+         0   E=CELL                        1=EXPIRED
+  15         CRUISE CONTROL SET SPEED      MPH=COUNTS
+  16         ECM ALDL MODE WORD
+  17         SPARE
+
+
+
+
+
+
+
+
+ALDL MECHANIZATION AND MODING
+
+    1988 Cadillac "E/K" vehicle ALDL initiation mechanization is
+identical to ALDL initiation mechanization of 1986 - 1987
+Cadillac "E/K" vehicles equipped with the 4.1L V-8 Digital Fuel
+Injected engine.  ALDL moding of the 1988 Cadillac "E/K" vehicles
+has changed, relative to previous model years.  A summary of ALDL
+modes is given below.
+
+
+                        1988 CADILLAC E/K
+                ALDL MODING AND DATA INFORMATION
+
+    The ALDL moding of the 1988 Cadillac Eldorado and Seville
+(E/K) vehicles uses the standard GM30 communication protocol
+with access points at pin L and M of the vehicle ALDL connector.
+The GM30 communication protocol uses a "poll/respond" message
+format on an 8192 baud "Master/Slave" UART system.  
+    While the communication protocol is a GM30 standard, the con
+tent of the serial data and the ALDL modes are not standard. The
+primary purpose of this document is to provide a listing of the 
+Cadillac E/K ALDL serial data and the ALDL modes available.
+    In addition to the ALDL data, the E/K UART communication sys
+tem has substantial data available in the form of standard opera
+tional communication.  The standard operational communication
+data is in the form of periodic "poll and respond" data packets
+sent between the master device (BCM) and the slave devices (ECM,
+IPC, CCDIC, and HVAC Programmer).
+..page
+              CADILLAC E/K ALDL MODES OF OPERATION
+
+    GENERAL:  ALDL moding on the Cadillac E/K vehicles is initi
+ated by the ALDL device responding to the BCM $F0 device code
+with the appropriate 7 byte response.  This initiation sequence
+is identical to other 1986 GM30 vehicles, except that the select
+able modes are different.
+
+    ALDL modes of operation are selected by providing the
+appropriate mode number (mode numbers provided in this listing
+are given in decimal) in the 3rd thru 6th bytes of the ALDL
+initiation response.  Bytes 3 and 4 are allotted for ECM modes
+and bytes 5 and 6 are allotted for BCM modes.
+
+    Following is a listing of the available ALDL modes and their
+descriptions:
+
+
+            CADILLAC E/K ALDL BCM MODES OF OPERATION
+
+  MODE NO.   MODE DESCRIPTION
+
+
+     0       Null mode - no vehicle systems affected - no data
+
+  BCM ALDL mode 1 sends the BCM ALDL data list (device $F1)
+
+     1       Service ALDL - Send data and no additional action
+
+
+            CADILLAC E/K ALDL ECM MODES OF OPERATION
+
+
+  MODE NO.  MODE DESCRIPTION
+
+    0       Null mode - no vehicle systems affected, no data
+
+The following ECM ALDL mode sends the ECM ALDL data list (device
+$4F).
+
+    1       Service ALDL - send ALDL data, no additional action
+LAYOUT 000
+:ê  B 
+  
+Su¶    <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

@@ -1,0 +1,409 @@
+
+
+                        DATA STREAM A123  SPECIFICATION
+
+
+       SPECIFICATIONS FOR ECM DATA STREAM INFORMATION
+       -----------------------------------------------
+
+       ENGINE    :
+              3.8l V6 SFI BUICK - 87 Buick E CAR
+
+       DATA PIN  : READ DATA ON PIN "L"/"M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD
+
+
+       DEFINITION: DATA STREAMS CONTAIN THE SAME INFORMATION
+                   IN THE SAME FORMAT WITH 31 WORD FORMAT,
+
+..PAGE
+
+
+  DATA STREAM DEFINITION
+  -----------------------
+    WHERE "WORD" IS THE BYTE OF DATA STREAM AS IT IS READ FROM THE VEHICLE
+    AND "BIT" IS THE BIT OF THE BYTE, WHERE 0 IS THE LEAST SIGNIFICANT BIT.
+
+    WORD  BIT   DESCRIPTION
+    ----  ---   ----------------------
+    1           PROM ID BYTE 1
+    2           PROM ID BYTE 2                  PROMID = N(1)*256 + N(2)
+    3           MALF FLAG1
+           0      MALF CODE 28 THIRD GEAR SWITCH FAULT
+           1      MALF CODE 24 VEHICLE SPEED SENSOR LOW
+           2      MALF CODE 22 THROTTLE POSITION SENSOR LOW
+           3      MALF CODE 21 THROTTLE POSITION SENSRO HIGH
+           4      MALF CODE 16 IGNITION VOLTS OUT OF RANGE
+           5      MALF CODE 15 COOLANT SENSOR LOW TEMPERATURE
+           6      MALF CODE 14 COOLANT SENSOR HIGH TEMPERATURE
+           7      MALF CODE 13 OXYGEN SENSOR
+    4           MALF FLAG2
+           0      MALF CODE 39 TCC ENGAGE PROBLEM
+           1      MALF CODE 38 MAT SENSOR LOW
+           2      MALF CODE 37 MAT SENSOR HIGH
+           3      MALF CODE 34 MAF SENSOR LOW
+           4      MALF CODE 33 MAF SENSOR HIGH
+           5      MALF CODE 32 EGR SYSTEM PROBELM
+           6      MALF CODE 30 IAC CONTROL PROBLEM
+           7      MALF CODE 29 FOURTH GEAR SWITCH FAULT
+    5           MALF FLAG3
+           0      MALF CODE 51 PROM ERROR
+           1      MALF CODE 47 UART LINE PROBLEM
+           2      MALF CODE 45 OXYGEN SENSOR RICH
+           3      MALF CODE 44 OXYGEN SENSOR LEAN
+           4      MALF CODE 43 ESC FAILURE
+           5      MALF CODE 42 SET MONITOR ERROR
+           6      MALF CODE 41 CAM SENSOR FAILURE
+           7      MALF CODE 40 POWER STEERING SWITCH FAULT
+    6           MALF FLAG4
+           0      NOT USED
+           1      NOT USED
+           2      NOT USED
+           3      NOT USED
+           4      MALF CODE 61 TAS SWITCH PROBLEM
+           5      MALF CODE 60 TDS SOLENOID PROBLEM
+           6      MALF CODE 55 ECM ADU ERROR
+           7      MALF CODE 52 CAL PACK MISSING
+    7           LV8 (ENGINE LOAD)
+..page
+    WORD  BIT   DESCRIPTION
+    ----  ---   ----------------------
+    8           FUEL AIR MODE WORD
+           0      CLEAR FLOOD FLAG              1 = CRANKED IN CLEAR FLOOD
+           1      LEARN CONTROL ENABLE FLAG     1 = ENABLE STORE
+           2      LOW BATTERY                   1 = LOW BATTERY
+           3      PROP STEP TAKEN               1 = RICH STEP  0 = LEAN STEP
+           4      NOT USED
+           5      FIRST TIME CLOSED LOOP FLAG
+           6      RICH LEAN                     1 = RICH        0 = LEAN
+           7      CLOSED LOOP                   1 = CLOSED      0 = OPEN
+    9           MCU INPUT STATUS WORD
+           0      PARK/NEUTRAL                  1 = PARK OR NEUTRAL
+           1      EGR FEEDBACK LINE HIGH        1 = HIGH
+           2      TCC LOCKED                    1 = LOCKED
+           3      EXCESSIVE POWER STEERING PRESSURE  1 = EXCESSIVE PRESSURE
+           4      CRUISE                        1 = CRUISE ACTIVE
+           5      3RD GEAR SWITCH CLOSED        0 = IN 3RD GEAR
+           6      4TH GEAR SWITCH CLOSED        1 = IN 4TH GEAR
+           7      A/C REQUEST                   0 = A/C REQUESTED
+   10           COOLANT TEMPERATURE SENSOR      DEGREES C = N*.75 - 40
+   11           OXYGEN CROSS OVER COUNTS
+   12           OXYGEN SENSOR VOLTAGE           MILLIVOLTS = N * 4.424
+   13           BATTERY VOLTAGE                 VOLTS = N/10
+   14           MANIFOLD AIR TEMPERATURE        DEGREES C =  SEE TABLE 1
+   15           INTEGRATOR
+   16           THROTTLE POSITION SENSOR        VOLTS = N * .0196
+   17           RPM                             RPM = N * 25
+   18           VEHICLE SPEED (MPH)             MPH = N
+   19           INJECTOR PULSE WIDTH BYTE 1       X = N(19)*256+N(20)
+   20           INJECTOR PULSE WIDTH BYTE 2     MS = X * .015259
+   21           SPARK ADVANCE  BYTE 1             X = N(21)*256+N(22)
+   22           SPARK ADVANCE  BYTE 2           DEGREES = N*90/256
+   23           MODE WORD
+           0      CCP ON                        1 = PURGE ON
+           1      FAN ON FLAG                   1 = FAN ON
+           2      HAVE ANY MALFS OCCURRED       1 = YES
+           3      NOT USED
+           4      NOT USED
+           5      MALF 14 OR 15 CURRENTLY ACTIVE
+           6      IDLE FUEL OPEN LOOP FLAG
+           7      MALF 14 OR 15 THIS STARTUP
+   24           SERIAL DATA INPUT CONTROL BUFFER BYTE 1
+   25           SERIAL DATA INPUT CONTROL BUFFER BYTE 2
+   26           BLOCK LEARN MULTIPLIER
+   27           EGR DUTY CYCLE                  % DC = N * 90/256
+   28           IAC MOTOR POSITION              N = STEPS
+   29           KNOCK RETARD                    DEGREES = N * .176
+   30           OLDPA3
+   31           MASS AIR FLOW                   G/S = N
+
+
+..PAGE
+
+    DATA STREAM DEFINITION : Body Computer Module
+    -----------------------
+   WHERE "WORD" IS THE BYTE OF DATA STREAM AS IT IS READ FROM THE VEHICLE AND
+  "BIT" IS THE BIT OF THE BYTE, WHERE 0 IS THE LEAST SIGNIFICANT BIT.
+
+  WORD  BIT       DESCRIPTION
+  ----  ---   ----------------------
+    1         BCM PROM ID BYTE 1
+    2         BCM PROM ID BYTE 2
+    3         ALDL BCM MODE STATUS WORD
+    4         ALDL BCM MODE STATUS WORD
+    5         BCM MALF CODE 0 ( FAIL STATUS = 1)
+        7      OUTSIDE TEMP SENSOR           CODE   B110
+        6      AC HIGH SENSOR                CODE   B111
+        5      AC LOW SENSOR                 CODE   B112
+        4      INSIDE TEMP SENSOR            CODE   B113
+        3      SUNLOAD SENSOR                CODE   B115
+        2      TWILIGHT PHOTO                CODE   B119
+        1      TWILIGHT POT                  CODE   B120
+        0      TWILIGHT ENABLE               CODE   B121
+    6         BCM MALF CODE 1 ( FAIL STATUS = 1)
+        7      DIMMING POT                   CODE   B122
+        6      PANEL LAMP SWITCH             CODE   B123
+        5      VSS                           CODE   B124
+        4      OIL PRESSURE SENSOR/SWITCH    CODE   B131
+        3      OIL PRESSURE SENSOR           CODE   B132
+        2      ECM SERIAL DATA               CODE   B334
+        1      CRT SERIAL DATA               CODE   B335
+        0      IPC SERIAL DATA               CODE   B336
+    7         BCM MALF CODE 2 ( FAIL STATUS = 1)
+        7      HVAC SERIAL DATA              CODE   B337
+        6      CHARGING SYSTEM PROBLEM (I-TERM) CODE B409
+        5      CHARGING SYSTEM PROBLEM (F-TERM) CODE B410
+        4      BATTERY VOLTS LOW             CODE   B411
+        3      BATTERY VOLTS HIGH            CODE   B412
+        2      CRANK SIGNAL PROBLEM          CODE   B418
+        1      RELAY PROBLEM                 CODE   B420
+        0      AIR MIX DOOR FAIL             CODE   B440
+    8         BCM MALF CODE 3 ( FAIL STATUS = 1)
+        7      HVAC COMPRESSOR               CODE   B445
+        6      LOW FREON                     CODE   B446
+        5      VERY LOW FREON                CODE   B447
+        4      VERY LOW FREON PRESSURE       CODE   B448
+        3      HVAC HIGH SIDER OVERTEMP      CODE   B449
+        2      COOLANT OVERTEMP              CODE   B450
+        1      LOW BRAKE PRESSURE            CODE   B483
+        0      BRAKE PUMP PROBLEM            CODE   B482
+..page
+  WORD  BIT       DESCRIPTION
+  ----  ---   ----------------------
+    9         BCM MALF CODE 4 ( FAIL STATUS = 1)
+        7      BCM KAM FAILURE               CODE   B552
+        6      EEPROM KEY WORDS INCORRECT    CODE   B556
+        5      CRUISE - NOT IN DRIVE         CODE   B660
+        4      CRUISE - VSET - VCAR TOO HIGH CODE   B663
+        3      CRUISE - ACCELERATION TOO HIGH CODE  B664
+        2      CRUISE - RPM TOO HIGH         CODE   B666
+        1      CRUISE - S/C OR R/A SWITCH SHORTED   CODE   B667
+        0      CRUISE-SERVO POS SENSOR       CODE   B671
+   10         BCM MALF CODE 5 ( FAIL STATUS = 1)
+        7      CRUISE - VENT SOLENOID        CODE   B672
+        6      CRUISE - VACUUM SOLENOID      CODE   B673
+        5      CRUISE-SERVO MODING FAIL      CODE   B674
+        4
+        3
+        2
+        1
+        0
+   11         CRTC HISTORY FAIL FLAGS  ( FAIL STATUS = 1)
+        7      RADIO SERIAL DATA FAIL        CODE  C339
+        6      CRTC KAM FAILURE              CODE  C553
+        5      CRTC INTERFACE (RSS) FAIL     CODE  C710
+        4
+        3
+        2
+        1
+        0
+   12           HVAC AIR DELIVERY MODE
+                 SEE TABLE
+   13           INSIDE TEMP
+                 DEGREES C = X - 40
+                 DEGREES F = [9/5(X-40)+32]
+   14           TWILIGHT SENTINEL POT
+                 % = (X/2.56)
+   15           CRUISE SERVO
+                 PERCENTAGE = X/2.56
+   16           FUEL LEVEL WIPER
+                 Liters = (Y * 3.79) where Y=Gallons
+                 Gallons = SEE TABLE
+   17           VEHICLE SPEED
+                 KPH = X
+                 MPH = X/1.6093
+   18           CRUISE SET SPEED
+                 KPH = X
+                 MPH = X/1.6093
+   19           SUNLOAD SENSOR
+                 DEGREES C = X - 40
+                 DEGREES F = [9/5(X-40)+32]
+   20           IGNITION 1
+                 VOLTS = (X/15.6468)
+   21           A/C LOW TEMPERATURE
+                 DEGREES C = X - 40
+                 DEGREES F = [9/5(X-40)+32]
+   22           A/C HI TEMPERATURE
+                 DEGREES C = X - 40
+                 DEGREES F = [9/5(X-40)+32]
+   23           MODE WORD
+..page
+  WORD  BIT       DESCRIPTION
+  ----  ---   ----------------------
+   24           TWILIGHT SENTINEL PHOTOCELL
+                 % = (X/2.56)
+   25           DIMMING POT SENSOR
+                 % = 100-(X/2.56)
+   26           OUTSIDE TEMPERATURE
+                 DEGREES C = X - 40
+                 DEGREES F = [9/5(X-40)+32]
+   27           HVAC MIX DOOR
+                 % = 100-(X/2.56)
+   28           OIL PRESSURE
+                 PSI = X
+                 KPA = X*6.849
+   29           IGNITION CYCLE
+                 # OF CYCLES = X
+   30           MODE
+        7        ID-A                           0=EXPORT,1=DOMESTIC
+   31           MODE
+        7        BRAKE FLUID LEVEL              0=LO,1=OKAY
+        4        BRAKE BOOST                    0=LO,1=OKAY
+   32           MODE
+        7        HI BEAM SWITCH                 0=ON,1=OFF
+        6        WASHER FLUID LEVEL             1=OKAY,0=LOW
+        5        HEADLAMP SWITCH                1=ON,0=OFF
+        4        TWILIGHT SENTINEL              0=ON,1=OFF
+        3        KEY LEFT IN                    1=YES,0=NO
+   33           MODE
+        7        PARK BRAKE SWITCH              0=ON,1=OFF
+        5        DRIVERS DOOR AJAR              0=YES,1=NO
+        3        PASSENGER DOOR AJAR            0=YES,1=NO
+        4        SEAT BELT                      1=ON,0=OFF
+   34           MODE
+        7        GENERATOR FAULT                0=YES,1=NO
+        5        COOLANT LEVEL                  0=LO,1=OKAY
+        4        FREON PRESSURE SWITCH          0=LO,1=OKAY
+   35           MODE
+        7        REVERSE GEAR                   1=IN GEAR,0=OUT
+        6        CRUISE SET/COAST               1=ON,0=OFF
+        5        CRUISE CONTROL                 1=ON,0=OFF
+        4        CRUISE RESUME/ACCEL            1=ON,0=OFF
+        3        CRUISE BRAKE SWITCH            1=ON,0=OFF
+   36           MODE
+        7        RETAINED ACCESSORY POWER       1=ON,0=OFF
+        5        CRUISE VENT SOLENOID           1=ON,0=OFF
+        4        CRUISE VACUUM SOLENOID         1=ON,0=OFF
+   37           MODE
+        7        PARKLAMPS                      0=OFF,1=ON
+        5        DOOR HANDLE SWITCH             0=OPEN,1=CLOSED
+        4        COURTESY LAMP SWITCH           0=ON,1=OFF
+        3        DOOR JAMB SWITCH               0=OPEN,1=CLOSED
+   38           MODE
+        7        CHIME 1                        1=ON,0=OFF
+        6        CHIME 2                        1=ON,0=OFF
+        5        HI BEAM RELAY                  1=ON,0=OFF
+        4        RETAINED ACCESSORY POWER RELAY 1=ON,0=OFF
+        3        COURTESY LAMP RELAY            1=ON,0=OFF
+        2        TWILIGHT SENTINEL RELAYS       1=ON,0=OFF
+        1        VF WAKEUP                      1=ON,0=OFF
+        0        CRT WAKEUP                     1=ON,0=OFF
+..page
+  WORD  BIT       DESCRIPTION
+  ----  ---   ----------------------
+   39           HVAC PROGRAM NUMBER
+                 # = X/2.56
+                 SEE TABLE
+   40           VF DIMMING
+                 % = (X/2.56)
+   41           INCAN DIMMING SWITCH
+                 % = (X/2.56)
+   42           GENERATOR FIELD
+                 PERCENTAGE = X/2.56
+
+
+..PAGE
+
+
+     FUEL LEVEL A/D COUNTS TO GALLONS CONVERSION
+
+              Table Value for               Table Value for
+T(X1)         Prom ID 7294                  Prom ID 0424   
+
+ 0                 0                             0
+ 1                 17                            7
+ 2                 25                            14
+ 3                 36                            25
+ 4                 48                            41
+ 5                 63                            55
+ 6                 82                            74
+ 7                 97                            94
+ 8                 115                           114
+ 9                 129                           131
+ 10                143                           146
+ 11                155                           158
+ 12                164                           170
+ 13                174                           179
+ 14                180                           190
+ 15                180                           199
+ 16                180                           250
+
+Interpolation program (Y = displayed output in gallons)
+                       F = Code $F1 Byte 16 value
+                       V = Code $F1 Byte 20 value
+                       X = [(F * 256)/V]
+                       A = 10     I = 16
+                       XT = X/I
+                       X1 = INT (XT)
+                       XF = XT - X1
+                       Y = [T(X1) + XF * {T(X1 + 1) - T(X1)}] /A
+..page
+       OIL PRESSURE A/D COUNTS TO PSI CONVERSION
+
+
+                 T(X1)                     Table Value
+
+                   0                             0
+                   1                             3
+                   2                             6
+                   3                             9
+                   4                             17
+                   5                             36
+                   6                             50
+                   7                             65
+                   8                             83
+                   9                             107
+                   10                            139
+                   11                            203
+                   12                            252
+                   13                            255
+                   14                            255
+                   15                            255
+                   16                            255
+
+Interpolation program (Z = displayed output in PSI)
+                        X = Code $F1 Byte 28 value
+                        I = 16
+                        XT = X/I
+                        X1 = Int (XT)
+                        XF = XT - X1
+                        Z = T(X1) + XF * [T(X1 + 1) - T(X1)]
+..page
+        MAT A/D COUNTS TO DEGREES C CONVERSION
+
+
+                 T(X1)                     Table Value
+
+                   0                             -40
+                   1                             -25
+                   2                             -12
+                   3                             -3
+                   4                             4
+                   5                             11
+                   6                             16
+                   7                             22
+                   8                             27
+                   9                             33
+                   10                            39
+                   11                            46
+                   12                            54
+                   13                            64
+                   14                            77
+                   15                            102
+                   16                            151
+
+Interpolation program (Z = displayed output in Degrees C)
+                       X = Code $4F Byte 14 value
+                       I = 16
+                       XT = X/I
+                       X1 = Int (XT)
+                       XF = XT - X1
+                       Z = T(X1) + XF * [T(X1 + 1) - T(X1)]
+..page
+LAYOUT 000
+:ê  B 
+  
+Su¶   <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      B
+ <

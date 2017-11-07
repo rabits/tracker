@@ -1,0 +1,408 @@
+
+
+                        DATA STREAM A142   SPECIFICATION
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       ENGINE   USAGE:
+                5.7 SFI - LT5 (VIN = J)  1991
+
+       DATA PIN  : READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE : 8192 BAUD - BI-DIRECTIONAL  (OPEN MODE)
+
+..PAGE
+        ECM OVERVIEW
+        ------------
+          This ECM is a slave to the body computer. See body computer data
+          stream for master ALDL moding.
+
+..PAGE
+        MODE 0 (INPUT MESSAGE)
+                ALDL REQUEST: THE ALCL TESTER MUST TRANSMIT THE FOLLOWING
+                              MESSAGE TO THE ECM, AFTER AN IDLE LINE IS
+                              DETECTED.
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+                ECM RESPONSE: THE ECM WILL TRANSMIT THE FOLLOWING MESSAGE.
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $00
+                - SUM CHECK
+
+        MODE 1 (ALCL MODE)
+                THE UART ALDL MODE - MODE 1 WILL ONLY BE ACTIVE IF REQUESTED
+                BY THE ALCL TESTER.
+               ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $57
+                - MODE           = $01
+                - MESSAGE NUMBER = $00
+                - SUM CHECK
+
+                THE ECM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $95
+                - MODE           = $01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 63
+                - SUM CHECK
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     = $F4
+                - MESSAGE LENGTH = $56
+                - MODE           = $0A
+                - CHECKSUM
+
+
+
+..PAGE
+..HEAD02L ALDL DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 63
+..HEAD04L ALDL MODE 1 DATA LIST
+ WORD #   DATA NAME  DESCRIPTION
+
+  1       PROMIDA    PROM IDENTIFICATION NUMBER (MSB)
+  2       PROMIDA+1  PROM IDENTIFICATION NUMBER (LSB)
+  3       MALFFLG1   MALFUNCTION FLAG WORD #1
+          0      CODE 23     MAT SENSOR LOW
+          1      CODE 22     THROTTLE SENSOR POSITION LOW
+          2      CODE 21     THROTTLE SENSOR POSITION HIGH
+          3      CODE 16     DIS FAULT LINE OPEN/SHORTED
+          4      CODE 15     COOLANT SENSOR LOW TEMPERATURE
+          5      CODE 14     COOLANT SENSOR HIGH TEMPERATURE
+          6      CODE 13     LEFT OXYGEN SENSOR FAILED
+          7      CODE 12     NO REFERENCE PULSES
+  4       MALFFLG2   MALFUNCTION FLAG WORD #2
+          0      CODE 35     NOT USED
+          1      CODE 34     MAP SENSOR LOW
+          2      CODE 33     MAP SENSOR HIGH
+          3      CODE 32     EGR DIAGNOSTIC
+          4      CODE 31     CAM DIAGNOSTIC
+          5      CODE 26     NOT USED
+          6      CODE 25     MAT SENSOR HIGH
+          7      CODE 24     VEHICLE SPEED SENSOR
+  5       MALFFLG3   MALFUNCTION FLAG WORD #3
+          0      CODE 51     PROM ERROR
+          1      CODE 46     VATS FAILED
+          2      CODE 45     LEFT OXYGEN SENSOR RICH
+          3      CODE 44     LEFT OXYGEN SENSOR LEAN
+          4      CODE 43     ESC FAILURE
+          5      CODE 42     EST MONITOR ERROR
+          6      CODE 41     CYLINDER SELECT ERROR
+          7      CODE 36     DIS FAULT INDICATING XTRA/MISS EST
+  6       MALFFLG4   MALFUNCTION FLAG WORD #4
+          0      CODE 63     RIGHT OXYGEN SENSOR FAILED
+          1      CODE 62     OIL TEMPERATURE SENSOR HIGH
+          2      CODE 61     PORT THROTTLE SYSTEM FAILURE
+          3      CODE 56     PORT THROTTLE SYSTEM VACUUM SENSOR
+          4      CODE 55     FUEL LEAN MALFUNCTION
+          5      CODE 54     FUEL PUMP VOLTAGE
+          6      CODE 53     OVER VOLTAGE
+          7      CODE 52     OIL TEMPERATURE SENSOR LOW
+  7       MALFFLG5   MALFUNCTION FLAG WORD #5
+          0      CODE xx     NOT USED
+          1      CODE xx     NOT USED
+          2      CODE xx     NOT USED
+          3      CODE xx     NOT USED
+          4      CODE xx     NOT USED
+          5      CODE 66     VALET MODE SWITCH OPEN OR SHORTED
+          6      CODE 65     RIGHT OXYGEN SENSOR RICH
+          7      CODE 64     RIGHT OXYGEN SENSOR LEAN
+..PAGE
+  8       NVMW1      BIT STATUS WORD
+          0            1 = M43B TEST IN PROGRESS
+          1            1 = KWARM KICKDOWN ENABLE
+          2            1 = MALF 42 FAILED (EST MONITOR)
+          3            1 = IMPROPER SHUTDOWN
+          4            1 = SKIP IAC MOTOR RESET
+          5            1 = IAC KICKDOWN ENABLED
+          6            1 = M43B TEST OVER THIS STARTUP
+          7            1 = M43B TEST FAILED THIS STARTUP
+  9       NVMW2      BIT STATUS WORD
+          0            NOT USED
+          1            1 = CLOSED LOOP TIMER TIMED OUT
+          2            NOT USED
+          3            1 = PLUGABLE MEMORY FAILURE (M51)
+          4            NOT USED
+          5            1 = VATS OK    0 = VATS FAILED
+          6            NOT USED
+          7            1 = ESC ENABLED BY DELTA COOLANT
+ 10       CARSMW     BIT STATUS WORD
+          0            NOT USED
+          1            CARS                                    1 = ON  0 = OFF
+          2            NOT USED
+          3            NOT USED
+          4            TRANSMISSION IN FOURTH GEAR             1 = ON  0 = OFF
+          5            TRANSMISSION IN FIRST GEAR              1 = ON  0 = OFF
+          6            1 = WAIT FOR VEHICLE SPEED RESET
+          7            1 = NOT USED
+ 11       FMDBYTE1   BIT STATUS WORD
+          0            NOT USED
+          1            NOT USED
+          2            NOT USED
+          3            NOT USED
+          4            EGR DIAGNOSTIC SWITCH CLOSED (FLOW)     1 = ON   0 = OFF
+          5            FAN 1 REQUEST (A/C PRESSURE HIGH)       1 = ON   0 = OFF
+          6            A/C REQUESTED            1 = OFF   0 = ON
+          7            A/C CLUTCH               1 = ON    0 = OFF
+ 12       FMDBYTE2   BIT STATUS WORD
+          0            READ BUT NOT USED
+          1            READ BUT NOT USED
+          2            READ BUT NOT USED
+          3            M0 -- MODE DECODE: REFA, REFB, FROM TREF
+          4            M1 -- MODE DECODE: REFA, REFB, FROM TREF
+          5            0. R VOLTS AT SENSOR RESISTOR OF INJECTOR
+          6            INJECTOR OR HARNESS SHORTED TO BATTERY
+          7            INTERRUPT DUE TO FMD ON RISING TREFB
+ 13       MW1        BIT STATUS WORD
+          0            1 = PORT THROTTLES REQUESTED OPEN LAST PASS
+          1            1 = PORT THROTTLES TO 2NDARY'S ON DELAY OVER
+          2            PORT THROTTLE REQUESTED 1 = ON  0 = OFF
+          3            SECOND FUEL PUMP        1 = ON  0 = OFF
+          4            1 = ROAD SPEED 1ST PULSE DETECTED
+          5            0 = A/C CLUTCH ON
+          6            1 = M42 BYPASS CHECK ENABLED
+          7            1 = ENGINE RUNNING (SPARK)
+..PAGE
+ 14       MW2        BIT STATUS WORD
+          0            IN CCM MODE                1 = YES   O = NO
+          1            1 = PORT THROTTLES OPEN
+          2            1 = REFERENCE PULSE OCCURRED (6.25 mSEC CHECK)
+          3            1 = E - LITE DELAY STARTED
+          4            1 = F1 SPARK TABLES IN USE (0 = F3 TABLES IN USE)
+          5            1 = EGR DUTY CYCLE BEING SLEWED (FOR M32 BYPASS)
+          6            HIGH BATTERY VOLTAGE    1 = YES   0 = NO
+          7            1 = ALDL MODE 4 FUEL CUTOFF ENABLED
+ 15       MW3        BIT STATUS WORD
+          0            1 = SKIP M42 FOR STALL SAVER SPARK OR DIS FAULT
+          1            IN STALL SAVER BYPASS SPARK    1 = YES   0 = NO
+          2            TIMING ERROR CHECK FLAG
+          3            1 = A/C FIRST PASS WITH HIGH MPH COMPLETE
+          4            A/C DISABLED DUE TO HIGH MPH    1 = YES   0 = NO
+          5            1 = BLEND SPARK
+          6            1 = 1ST REF FLAG (1 = REFERENCE PERIOD IS VALID)
+          7            1 = REFERENCE PULSE DETECTED (6.25 mSEC OR REF INTERRUPT)
+ 16       LCCPMW     BIT STATUS WORD
+          0            1 = CCP ENABLED
+          1            NOT USED
+          2            1 = MALFS HAVE OCCURRED
+          3            1 = ALDL MODE 4  BYPASS FUEL COMMANDED
+          4            SECOND TIME COOLANT
+          5            ESC FAILURE           1 = YES    0 = NO
+          6            1 = KWARM KICKDOWN REQUESTED
+          7            1 = CLOSED THROTTLE SPARK ACTIVE
+ 17       CLCCMW     BIT STATUS WORD
+          0            1 = 2 CONSECUTIVE ROAD SPEED PASSES WITH ONLY 1 PULSE
+          1            1 = MALF 51 OCCURRED IN INIT
+          2            1 = PORT THROTTLES DISABLED BY LOW VOLTAGE
+          3            VALET (POWER REDUCTION) MODE    1 = ON    0 = OFF
+          4            1 = DFCO STALL SAVER ENABLED
+          5            1 = PASSBY NOISE CONTROL ENABLE CRITERIA MET
+          6            1 = N. V. MEMORY BOMBED
+          7            1 = MAP EXCEEDED THRESHOLD FLAG (FOR CCP INT RESET)
+ 18       AIRMW      BIT STATUS WORD
+          0            NOT USED
+          1            AIR TO EXHAUST PORTS/AIR DIVERTED    1 = OFF  0 = ON
+          2            NOT USED
+          3            1 = PORT THROTTLES DISABLED BY HIGH OIL TEMPERATURE
+          4            1 = PORT THROTTLES DISABLED BY HIGH COOLANT TEMP
+          5            NOT USED
+          6            1 = ZERO ESC ACTIVITY DETECTED
+          7            1 = HIGH ESC ACTIVITY DETECTED
+ 19       MWFA1      BIT STATUS WORD
+          0            1 = 1ST 2NDARY INJECTOR OF PAIR ALREADY ON
+          1            LEARN CONTROL ENABLED   1 = ON   0 = OFF
+          2            1 = SECONDARY INJECTOR MAKE-UP FUEL TO BE USED
+          3            1 = PASSBY NOISE CONTROL ENABLED
+          4            1 = INHIBIT SPARK BLEND INCRIMINATION
+          5            1 = IDLING (LOW TPS AND LOW VEHICLE SPEED)
+          6            1 = PORT THROTTLES SPARK TRANSITION IN PROGRESS
+          7            1 = CLOSED LOOP (BOTH SENSORS C.L.) 0 = OPEN LOOP
+..PAGE
+ 20       PPSW       PPSW VOLTAGE A/D COUNTS
+                       V = N/10
+ 21       NVRATIO    RATIO OF ENGINE SPEED TO VEHICLE SPEED
+
+ 22       COOLDEGA   COOLANT TEMPERATURE A/D COUNTS
+                       DEG C = .75N - 40
+                         (deg F = 1.35N - 40)
+ 23       ADMAPND    RAW A/D MAP VALUE (NOT REPLACED IF MALF)
+                       V = N*5/255
+                         (kpa = (N + 28.06)/2.71)
+ 24       ADTHROT    THROTTLE POSITION A/D COUNTS
+                       V = N*5/255
+ 25       ADBAT      BATTERY VOLTAGE A/D COUNTS
+                       V = N/10
+ 26       ADOILTMP   A/D COUNTS FROM OIL TEMP SENSOR
+                       SEE OIL TEMPERATURE CONVERSION TABLE
+ 27       ADPTVAC    PORT THROTTLE ACTIVATION VACUUM
+                       V = N*5/255
+ 28       ADMAT      MAT A/D VALUE (NO DEFAULT FOR MALF)
+                       SEE MAT LOOKUP TABLE
+ 29       LADO2      A/D COUNTS FOR LEFT HAND O2 SENSOR
+                       MILLIVOLTS = N * 4.42
+ 30       RADO2      A/D COUNTS FOR RT. HAND O2 SENSOR
+                       MILLIVOLTS = N * 4.42
+ 31       LBLM       LEFT BANK BLOCK LEARN MULTIPLIER
+ 32       RBLM       RIGHT BANK BLOCK LEARN MULTIPLIER
+ 33       BLMCELL    BLOCK LEARN MULTIPLIER CELL NO.
+                       N = CURRENT BLOCK LEARN MULTIPLIER
+ 34       LALDLCNT   LEFT O2 SENSOR TRANSITION COUNTER
+                       N = TRANSITION COUNTS
+ 35       RALDLCNT   RT. O2 SENSOR TRANSITION COUNTER
+                       N = TRANSITION COUNTS
+ 36       LINT       INTEGRATOR VAL FOR LEFT O2 SENSOR
+                       N = COUNTS
+ 37       RINT       INTEGRATOR VAL FOR RIGHT O2 SENSOR
+                       N = COUNTS
+ 38       KSECINJ    'MULT' SECONDARY INJ ON FUEL SCALAR
+                       N = FUEL SCALAR
+ 39       PURGEDC    PURGE DUTY CYCLE VALUE = D/C COUNTS/16
+                       %DC = N/2.56
+ 40       ISSPMP     IAC RESET MOTOR POSITION
+                       N = IAC STEPS
+ 41       ISESDD     DESIRED IDLE SPEED RPM
+                        RPM = N * 12.5
+ 42       NEWRFPER   PRESENT MINOR LOOP REF PERIOD
+ 43       NEWRFPER+1 PRESENT MINOR LOOP REF PERIOD
+                       mSEC = ([N42]*256 + [N43])/65.356
+..PAGE
+ 44       SAREF      UNLIMITED SPARK ADVANCE REL. (MSB)
+ 45       SAREF+1    UNLIMITED SPARK ADVANCE REL. (LSB)
+               Double byte value in 2's complement representation
+               If Bit 7 of MSB = 0  then result is positive
+                   value = ([N44]*256 + [N45])
+               If Bit 7 of MSB = 1  then result is negative
+                   value = 65536 - ([N44]*256 + [N45])
+                         DEGREES = value * 90/256
+ 46       NTRPMX     RPM VARIABLE SCALED 25 RPM/BIT
+                       RPM = N*25
+ 47       TIME       ENGINE RUN TIME IN SECONDS (MSB)
+ 48       TIME+1     ENGINE RUN TIME IN SECONDS (LSB)
+                       SEC = [N47]*256 + [N48]
+ 49       NOCKRTD    RETARD DUE TO KNOCK
+                       DEG = N*90/256
+ 50       OLDPA3     ECU PA3 COUNTER VALUE FROM LAST
+                       N = COUNTS
+ 51       OLDPA3+1   NOT USED
+ 52       FILTMPH    FILTERED MPH
+                       MPH = N
+                         (kph = 1.61N)
+ 53       NTPSLD     THROTTLE POSITION LOAD AXIS VARIABLE
+                       % THROTTLE = N/2.56
+ 54       CUREFIAP   CURRENT INJ 'A' FUEL PULSE WIDTH
+                       MSEC = N / 3.91
+ 55       CUREFIBP   CURRENT INJ 'B' FUEL PULSE WIDTH
+                       MSEC = N / 3.91
+ 56       LBPINJC    LEFT HAND LOW VOLTAGE CORRECTED BPW
+ 57       LBPINJC+1  LEFT HAND LOW VOLTAGE CORRECTED BPW
+                       MSEC = ([N56]*256 + [N57])/65.53
+ 58       RBPINJC    RIGHT HAND LOW VOLTAGE CORRECTED
+ 59       RBPINJC+1  RIGHT HAND LOW VOLTAGE CORRECTED
+                       MSEC = ([N58]*256 + [N59])/65.53
+ 60       BPINJSD    BASE BPW WITH D - TPS A.E. FACTOR APPLIED (MSB)
+ 61       BPINJSD+1  BASE BPW WITH D - TPS A.E. FACTOR APPLIED (LSB)
+                       MSEC = ([N60]*256 + [N61])/65.53
+ 62       EGRDC      EGR DUTY CYCLE
+                       %DC = N/2.56
+ 63       FANMW      FAN CONTROL MODE WORD
+          0          FAN-1 ENABLED (ALL PID FAN 1 STEPS ADDED)   1=ON 0=OFF
+          1          FAN-1 ENABLED BY HIGH FREON PRESSURE        1=ON 0=OFF
+          2          FAN-1 REQUESTED                             1=ON 0=OFF
+          3          FAN-2 ENABLED (ALL PID FAN 1 STEPS ADDED)   1=ON 0=OFF
+          4          FAN-2 REQUESTED                             1=ON 0=OFF
+          5          FAN-1 ENABLED BY HIGH OIL PRESSURE          1=ON 0=OFF
+          6          HIGH RPM FAN ENABLED                        1=ON 0=OFF
+          7          NOT USED
+
+
+
+
+;⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+;≥                                                                            ≥
+;≥                                                                            ≥
+;≥    OIL TEMPERATURE CONVERSION TABLE                                        ≥
+;≥    ----------------------------------                                      ≥
+;≥     T(H)       TABLE VALUE                                                 ≥
+;≥                                                                            ≥
+;≥       0              255                                                   ≥
+;≥       1              255                                                   ≥
+;≥       2              249                                                   ≥
+;≥       3              223                                                   ≥
+;≥       4              205         OIL TEMPERATURE INTERPOLATION             ≥
+;≥       5              191         (X = DISPLAYED TEMP IN DEG C)             ≥
+;≥       6              178         (Z = DISPLAYED TEMP IN DEG F)             ≥
+;≥       7              167         ---------------------------------         ≥
+;≥       8              157         G = MODE 1 DATA WORD 26                   ≥
+;≥       9              147         H = INT(G/16)                             ≥
+;≥       10             137         L = (G/16) - H                            ≥
+;≥       11             127         Y = {T(H) - (L * [T(H) - T(H+1)])}        ≥
+;≥       12             117         X = Y * .75 - 40                          ≥
+;≥       13             104         Z = Y * 1.35 - 40                         ≥
+;≥       14              89                                                   ≥
+;≥       15              67                                                   ≥
+;≥       16               0                                                   ≥
+;≥                                                                            ≥
+;¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+                                                                                                                            A142
+
+;⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+;≥                                TABLE 3                                      ≥
+;≥                       MANIFOLD AIR TEMPERATURE VS N                         ≥
+;≥                               (RAWADMAT)                                    ≥
+;¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+;
+;       ADMAT (N)       TEMP 'DEG C'          DEG F   TEMP  (USED WITH THE [UNIT] BUTTON)
+;          0               -40                -40
+;          4               -30                -22
+;          5               -25                -13
+;          8               -20                -4
+;         10               -15                 5
+;         14               -10                 14
+;         18                -5                 23
+;         24                 0                 32
+;         30                 5                 41
+;         37                10                 50
+;         46                15                 59
+;         56                20                 68
+;         66                25                 77
+;         78                30                 86
+;         90                35                 95
+;        103                40                 104
+;        116                45                 113
+;        129                50                 122
+;        141                55                 131
+;        153                60                 140
+;        163                65                 149
+;        174                70                 158
+;        183                75                 167
+;        191                80                 176
+;        199                85                 185
+;        205                90                 194
+;        211                95                 203
+;        216               100                 212
+;        221               105                 221
+;        225               110                 230
+;        229               115                 239
+;        232               120                 248
+;        234               125                 257
+;        237               130                 266
+;        239               135                 275
+;        241               140                 284
+;        242               145                 293
+;        243               150                 302
+;        255               200                 392
+LAYOUT 000
+:ê  #B 
+  
+Su¶   <_        ˙ \---+----+----+----+---------+---------+---------+---------+--@-/----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     STANDARD 2      #B
+ <

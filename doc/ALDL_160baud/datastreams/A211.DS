@@ -1,0 +1,239 @@
+
+                        DATA STREAM A211  SPECIFICATION
+
+       SPECIFICATIONS FOR DATA STREAM INFORMATION
+       ------------------------------------------
+
+       BCM USAGE:
+              1993  (BROUGHAM) 6D CAR
+              1994  (BROUGHAM) 6D CAR
+*             1995  (BROUGHAM) 6D CAR
+
+       DATA PIN  :  READ DATA ON PIN "M" OF ALDL CONNECTOR
+
+       BAUD RATE :  8192 BAUD -  BI-DIRECTIONAL
+
+..PAGE
+
+        MODE 0 (RETURN TO NORMAL MODE)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$56
+                - MODE           =$00
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 0
+                ALDL REQUEST:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$00
+                - SUM CHECK
+
+                THE DCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$5E
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 8
+                - SUM CHECK
+
+        MODE 1 (TRANSMIT ALDL DATA) TRANSMIT MESSAGE 1
+                ALDL REQUEST:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$57
+                - MODE           =$01
+                - MESSAGE        =$01
+                - SUM CHECK
+
+                THE DCM WILL RESPOND WITH THE FOLLOWING MESSAGE:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$66
+                - MODE           =$01
+                - DATA BYTE 1
+                  .
+                  .
+                - DATA BYTE 16
+                - SUM CHECK
+
+        MODE 8 (DISABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$56
+                - MODE           =$08
+                - CHECKSUM
+
+        MODE 9 (ENABLE COMMUNICATIONS)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$56
+                - MODE           =$09
+                - CHECKSUM
+
+        MODE 10 (CLEAR MALFUNCTION CODES)
+                ALDL REQUEST:
+                - MESSAGE ID     =$F1
+                - MESSAGE LENGTH =$56
+                - MODE           =$0A
+                - CHECKSUM
+
+
+..page
+..HEAD02L ALDL DCM DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 08
+..HEAD04L ALDL MODE 1 MESSAGE 0
+WORD #   DATA NAME    DESCRIPTION
+
+  1               CURRENT MALF CODE WORD #1
+            0     MALF CODE 20  RAP ENABLE SHORT TO BATTERY
+            1     MALF CODE 21  RAP ENABLE SHORT TO GROUND/OPEN
+            2     MALF CODE 22  DIL ENABLE SHORT TO BATTERY
+            3     MALF CODE 23  DIL ENABLE SHORT TO GROUND/OPEN
+            4     MALF CODE 24  COURTESY OUTPUT SHORT TO BATTERY
+            5     MALF CODE 25  COURTESY OUTPUT SHORT TO GROUND/OPEN
+            6     MALF CODE 46  CCM INTERNAL FAILURE
+            7     MALF CODE 47  CANADIAN SELECT INPUT ERROR
+
+  2               CURRENT MALF CODE WORD #2
+            0     MALF CODE 26  VES OUTPUT SHORT TO GND/OPEN(BEFORE OPERATION)
+            1     MALF CODE 27  VES OUTPUT SHORT TO BATTERY(BEFORE OPERATION)
+            2     MALF CODE 28  VES TRACKING ERROR
+            3     MALF CODE     NOT USED
+            4     MALF CODE 30  PASSKEY TELLTALE SHORT TO BATTERY
+            5     MALF CODE 31  PASSKEY TELLTALE SHORT TO GROUND/OPEN
+            6     MALF CODE     NOT USED
+            7     MALF CODE     NOT USED
+
+  3               CURRENT MALF CODE WORD #3
+            0     MALF CODE 32  FUEL ENABLE SHORT TO BATTERY
+            1     MALF CODE 33  FUEL ENABLE SHORT TO GROUND/OPEN
+            2     MALF CODE 34  HEADLAMP ENABLE SHORT TO BATTERY
+            3     MALF CODE     NOT USED
+            4     MALF CODE 35  PARKLAMP ENABLE SHORT TO BATTERY
+            5     MALF CODE     NOT USED
+            6     MALF CODE 36  DRL ENABLE SHORT TO BATTERY
+            7     MALF CODE 37  DRL ENABLE SHORT TO GROUND/OPEN
+
+  4               CURRENT MALF CODE WORD #4
+            0     MALF CODE 38  EEPROM CAL ERROR
+            1     MALF CODE 39  EEPROM CAL ID ERROR
+            2     MALF CODE 40  DELAY POT SHORT TO GROUND
+            3     MALF CODE 41  DELAY POT SHORT TO BATTERY/OPEN
+            4     MALF CODE 42  KEY RESISTOR SHORT TO GROUND
+            5     MALF CODE 43  KEY RESISTOR SHORT TO BATTERY/OPEN
+            6     MALF CODE 44  HANDWHEEL SENSOR SHORT TO GROUND
+            7     MALF CODE 45  HANDWHEEL SENSOR SHORT TO BATTERY/OPEN
+
+  5               HISTORY MALF CODE WORD #1
+            0     MALF CODE 20  RAP ENABLE SHORT TO BATTERY
+            1     MALF CODE 21  RAP ENABLE SHORT TO GROUND/OPEN
+            2     MALF CODE 22  DIL ENABLE SHORT TO BATTERY
+            3     MALF CODE 23  DIL ENABLE SHORT TO GROUND/OPEN
+            4     MALF CODE 24  COURTESY OUTPUT SHORT TO BATTERY
+            5     MALF CODE 25  COURTESY OUTPUT SHORT TO GROUND/OPEN
+            6     MALF CODE 46  CCM INTERNAL FAILURE
+            7     MALF CODE 47  CANADIAN SELECT INPUT ERROR
+
+..page
+  6               HISTORY MALF CODE WORD #2
+            0     MALF CODE 26  VES OUTPUT SHORT TO GND/OPEN(BEFORE OPERATION)
+            1     MALF CODE 27  VES OUTPUT SHORT TO BATTERY(BEFORE OPERATION)
+            2     MALF CODE 28  VES TRACKING ERROR
+            3     MALF CODE     NOT USED
+            4     MALF CODE 30  PASSKEY TELLTALE SHORT TO BATTERY
+            5     MALF CODE 31  PASSKEY TELLTALE SHORT TO GROUND/OPEN
+            6     MALF CODE     NOT USED
+            7     MALF CODE     NOT USED
+
+  7               HISTORY MALF CODE WORD #3
+            0     MALF CODE 32  FUEL ENABLE SHORT TO BATTERY
+            1     MALF CODE 33  FUEL ENABLE SHORT TO GROUND/OPEN
+            2     MALF CODE 34  HEADLAMP ENABLE SHORT TO BATTERY
+            3     MALF CODE     NOT USED
+            4     MALF CODE 35  PARKLAMP ENABLE SHORT TO BATTERY
+            5     MALF CODE     NOT USED
+            6     MALF CODE 36  DRL ENABLE SHORT TO BATTERY
+            7     MALF CODE 37  DRL ENABLE SHORT TO GROUND/OPEN
+
+  8               HISTORY MALF CODE WORD #4
+            0     MALF CODE 38  EEPROM CAL ERROR
+            1     MALF CODE 39  EEPROM CAL ID ERROR
+            2     MALF CODE 40  DELAY POT SHORT TO GROUND
+            3     MALF CODE 41  DELAY POT SHORT TO BATTERY/OPEN
+            4     MALF CODE 42  KEY RESISTOR SHORT TO GROUND
+            5     MALF CODE 43  KEY RESISTOR SHORT TO BATTERY/OPEN
+            6     MALF CODE 44  HANDWHEEL SENSOR SHORT TO GROUND
+            7     MALF CODE 45  HANDWHEEL SENSOR SHORT TO BATTERY/OPEN
+
+..page
+..HEAD02L ALDL DCM DATA LIST
+..HEAD03L NUMBER OF DATA WORDS - 16
+..HEAD04L ALDL MODE 1 MESSAGE 1
+WORD #   DATA NAME    DESCRIPTION
+
+  1               INPUT SWITCH WORD
+            0      PARK                            1=PARK
+            1      TWILIGHT ENABLE                 1=ON    0=OFF
+            2      DOOR JAMB                       1=OPEN
+            3      COURTESY SWITCH                 1=ON 0=OFF
+            4      DOOR HANDLE                     1=ON (PULLED)
+            5      NOT USED
+            6      NOT USED
+            7      NOT USED
+
+  2               INPUT STATUS WORD
+            0      IGNITION 1 PRESENT              1=PRESENT
+            1      IGNITION 3 PRESENT              1=PRESENT
+            2      DIAGNOSTICS ENABLE              1=ENABLE
+            3      CANADA SELECT
+            4      NOT USED
+            5      NOT USED
+            6      NOT USED
+            7      NOT USED
+
+  3               STATUS WORD 1 - OUTPUT
+            0      FUEL ENABLE                     1=ENABLED
+            1      COURTESY ENABLE - HIGH          1=ON 0=OFF
+            2      COURTESY ENABLE - LOW           1=ON 0=OFF
+            3      DAB ENABLE                      1=ENABLED
+            4      PARK LAMPS                      1=ON 0=OFF
+            5      HEADLAMPS                       1=ON 0=OFF
+            6      NOT USED
+            7      NOT USED
+
+  4               STATUS WORD 2 - OUTPUT
+            0      CRANK ENABLE                    1=ENABLED
+            1      SECURITY/PASS KEY FAULT LAMP    1=ON 0=OFF
+            2      EVO FAULT LAMP                  1=ON 0=OFF  (NOT IMPLEMENTED)
+            3      DAYTIME RUNNING LAMPS           1=ON 0=OFF
+            4      NOT USED
+            5      NOT USED
+            6      NOT USED
+            7      NOT USED
+
+  5              VEHICLE SPEED
+                  MPH = N
+  6              HANDWHEEL SENSOR INPUT
+                  COUNTS = N
+                  VOLTS = .02 * N
+  7              TEST INPUT VOLTAGE
+  8              AMBIENT LIGHT SENSOR
+                  COUNTS = N
+  9              TWILIGHT DELAY POT
+                  COUNTS = N
+ 10              EVO CURRNT FEEDBACK
+                  MA = 3.27N
+..PAGE
+ 11              PASS-KEY A/D COUNTS
+                  COUNTS = N
+ 12              BATTERY VOLTAGE
+                  VOLTS = .065N + 1
+ 13              DELAYED ACCESSORY BUS(DAB)TIMER - HIGH ORDER BYTE
+ 14              DELAYED ACCESSORY BUS(DAB)TIMER - LOW ORDER BYTE
+                  SEC = .02N
+ 15              DELAYED INTERIOR LAMP (DIL) TIMER - HIGH ORDER BYTE
+ 16              DELAYED INTERIOR LAMP (DIL) TIMER - LOW ORDER BYTE
+                  SEC = N
+
