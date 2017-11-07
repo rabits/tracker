@@ -19,51 +19,44 @@ Bluetooth:
 GPIO:
   - name: GPIO
     enabled: true
+
+    sockets: # Sockets is used to automatically generate functions that required by signals
+      celluralPowerSwitch: # DIYMall 3G/GPS module 5320_ON/OFF pin
+        type: switch
+        pin: 13 # GPIO27
+      audioSwitch: # Custom pin, connected to modified DELCO radio
+        type: switch
+        pin: 37 # GPIO26
+
     listen: # It can listen gpio ports and do some actions when port is changed
       ignition:
         pin: 35 # GPIO19
         signals:
-          - name: Disable LAN & USB
-            when: false
+          - socket: disableUSB # Disable LAN & USB
             module: Power
-            socket: disableUSB
-          - name: Disable Bluetooth
             when: false
+          - socket: disableBluetooth # Disable Bluetooth
             module: Bluetooth
-            socket: disableBluetooth
-          - name: Switch WiFi to client mode
             when: false
+          - socket: switchClient # Switch WiFi to client mode
             module: WiFi
-            socket: switchClient
-          - name: Disable Cellural if WiFi found
             when: false
+          - socket: disableCelluralOnConnected # Disable Cellural if WiFi found
             module: WiFi
-            socket: disableCelluralOnConnected
+            when: false
 
-          - name: Enable LAN & USB
-            when: true
+          - socket: enableUSB # Enable LAN & USB
             module: Power
-            socket: enableUSB
-          - name: Enable Bluetooth
             when: true
+          - socket: enableBluetooth # Enable Bluetooth
             module: Bluetooth
-            socket: enableBluetooth
-          - name: Switch WiFi to ad-hoc mode
             when: true
+          - socket: switchAdHoc # Switch WiFi to ad-hoc mode
             module: WiFi
-            socket: switchAdHoc
-          - name: Enable Cellural
             when: true
+          - socket: start # Enable Cellural
             module: Cellural
-            socket: start
-
-    sockets: # Sockets is used to automatically generate functions that required by signals
-      celluralPowerSwitch:
-        type: switch
-        pin: 13 # GPIO27
-      audioSwitch:
-        type: switch
-        pin: 37 # GPIO26
+            when: true
 
 Cellural:
   - name: GSMGPS
@@ -81,3 +74,8 @@ Cellural:
       power:
         instance: GPIO
         socket: celluralPower
+
+ALDL160:
+  - name: ALDL 160 baud
+    enabled: true
+    dev: /dev/ttyUSB0

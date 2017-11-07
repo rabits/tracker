@@ -12,13 +12,11 @@ class GPIO(Module):
     def __init__(self, **kwargs):
         Module.__init__(self, **kwargs)
 
+        self._pin_map = {}
         gpio.setmode(gpio.BOARD)
 
     def start(self):
         Module.start(self)
-
-        # Init listen GPIO's
-        # TODO: do it!
 
         # Init socket GPIO's
         for action in self._cfg.get('sockets', []).keys():
@@ -36,6 +34,24 @@ class GPIO(Module):
             else:
                 log.warn("GPIO type %s unsupported for socket %s" % (socket_type, action))
 
+        # Init listen GPIO's
+        for name, item in self._cfg.get('listen', {}).iteritems():
+            log.info("Attaching GPIO listener %s to pin %d" % (name, item['pin']))
+            self._pin_map[item['pin']] = name
+            gpio.setup(item['pin'], gpio.IN)
+            gpio.add_event_detect(item['pin'], gpio.BOTH, callback=self._listenTrigger)
+
     def stop(self):
         Module.stop(self)
         gpio.cleanup()
+        self._pin_map = {}
+
+    def _listenTrigger(self, pin):
+        name = self._pin_map[pin]
+        item = self._cfg['listen'][name]
+        value = gpio.input(item['pin'])
+        log.info("Triggered listener %s with value %s" % (name, value))
+
+        for signal in item['signals']:
+            if signal.get('when', True) == value:
+                self.signal(signal)

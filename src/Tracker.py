@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-'''Tracker v0.3-alpha
+'''Tracker v0.4-alpha
 
 Author:      Rabit <home@rabits.org>
 License:     GPL v3

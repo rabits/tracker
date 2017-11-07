@@ -7,10 +7,13 @@ class Module(object):
     """Module - basic module class"""
 
     def __init__(self, **kwargs):
+        '''Module preparation'''
+        log.info("Initializing %s instance" % self.__class__.__name__)
         self._control = kwargs.get('control')
         self._cfg = kwargs.get('config')
 
     def name(self):
+        '''Getting module instance name'''
         return self._cfg.get('name')
 
     def wait(self):
@@ -29,23 +32,25 @@ class Module(object):
         '''Shutdown the module operations'''
         log.info("Stopping %s instance" % self.__class__.__name__)
 
-    def signal(self, name):
+    def signal(self, signal):
         '''Send configured signal and execute defined function
+        Signal could be a name in the configuration or a map with required socket info
         Will try to search the required instance by module or instance or will use self'''
-        sig = self._cfg.get('signals', {}).get(name)
-        if not sig:
-            return # Skipping if no signal defined in the configuration
+        if isinstance(signal, str):
+            signal = self._cfg.get('signals', {}).get(signal)
+        if not signal:
+            return # Skipping if no signal configuration is defined
 
         inst = self
-        req = { 'module': sig.get('module'), 'instance': sig.get('instance') }
+        req = { 'module': signal.get('module'), 'instance': signal.get('instance') }
         if isinstance(req['module'], str) or isinstance(req['instance'], str):
             inst = self._control.getModuleInstance(**req)
 
         if not isinstance(inst, Module):
-            log.error("Found module instance is not a module: %s (signal: %s)" % (inst, name))
+            log.error("Found module instance is not a module: %s (signal: %s)" % (inst, signal))
             return # Wrong instance found
 
-        func = sig.get('socket', name)
+        func = signal.get('socket')
         if hasattr(inst, func) and callable(getattr(inst, func)):
             return getattr(inst, func)(inst)
         else:
