@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-'''Tracker v0.4-alpha
+'''Tracker v0.4.1-alpha
 
 Author:      Rabit <home@rabits.org>
 License:     GPL v3
@@ -70,7 +70,13 @@ class Tracker(object):
         log.info("Waiting till %s will be started..." % name)
         for module in self._modules[name]:
             module.wait()
+
         log.info("%s was started" % name)
+
+    def _postStartModules(self):
+        for name in self._modules:
+            for module in self._modules[name]:
+                module.postStart()
 
     def _init(self):
         log.info('Initializing...')
@@ -79,6 +85,8 @@ class Tracker(object):
         # TODO: dependent module starting
         for module in [ name for name in self._cfg.keys() if name[0] in string.ascii_uppercase ]:
             self._startModules(module)
+
+        self._postStartModules()
 
         log.info('Initialization done')
 

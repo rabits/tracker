@@ -30,7 +30,7 @@ class GPIO(Module):
 
             socket_type = socket.get('type', 'switch')
             if socket_type == 'switch':
-                setattr(self, action, lambda self, pin=socket['pin']: gpio.output(pin, not gpio.input(pin)))
+                setattr(self, action, lambda self=self, pin=socket['pin'], value=None: gpio.output(pin, not gpio.input(pin) if value is None else value))
             else:
                 log.warn("GPIO type %s unsupported for socket %s" % (socket_type, action))
 
@@ -40,6 +40,13 @@ class GPIO(Module):
             self._pin_map[item['pin']] = name
             gpio.setup(item['pin'], gpio.IN)
             gpio.add_event_detect(item['pin'], gpio.BOTH, callback=self._listenTrigger)
+
+    def postStart(self):
+        '''Checking the current state of the listening GPIO's and do the configured actions'''
+        Module.postStart(self)
+
+        for pin in self._pin_map:
+            self._listenTrigger(pin)
 
     def stop(self):
         Module.stop(self)
