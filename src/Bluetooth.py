@@ -66,7 +66,7 @@ class Bluetooth(Module):
         self._agent.setPin(self._cfg.get('pin', None))
 
         self.setState(self._cfg.get('enabled', True))
-        self.setDeviceClass("0x6c041c")
+        self.setDeviceClass('0x200420')
         self.setDeviceName(self._cfg.get('name', 'tracker-1'))
         self.setSSP(False) # Secure Simple Pairing - if enabled will disable pin pairing (not supported) (not secure)
         self.setAFH(self._cfg.get('afh', True))
@@ -134,38 +134,44 @@ class Bluetooth(Module):
     def _exec(self, cmd):
         return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
+    def _exec_wait(self, cmd):
+        ret = self._exec(cmd)
+        if ret.wait() != 0:
+            log.error('Failed to execute command')
+            log.debug('STDOUT: %s\n\nSTDERR: %s' % ret.communicate())
+
     def setState(self, val):
         log.info("Set device state to '%s'" % ('up' if val else 'down'))
         # TODO: Replace with Adapter1 Set "Power" property
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'up' if val else 'down'])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'up' if val else 'down'])
 
     def setDeviceClass(self, btclass):
         log.info("Set device class to '%s'" % btclass)
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'class', btclass])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'class', btclass])
 
     def setDeviceName(self, name):
         log.info("Set device name to '%s'" % name)
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'name', name])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'name', name])
 
     def setEncryption(self, val):
         log.info("Set device encryption to '%s'" % ('encrypt' if val else 'noencrypt'))
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'encrypt' if val else 'noencrypt'])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'encrypt' if val else 'noencrypt'])
 
     def setVisibility(self, visible):
         log.info("Set device visibility to '%s'" % ('visible' if visible else 'invisible'))
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'piscan' if visible else 'noscan'])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'piscan' if visible else 'noscan'])
 
     def setAuth(self, val):
         log.info("Set device authentication to '%s'" % ('enable' if val else 'disable'))
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'auth' if val else 'noauth'])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'auth' if val else 'noauth'])
 
     def setAFH(self, val):
         log.info("Set device AFH mode to '%s'" % ('enable' if val else 'disable'))
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'afhmode', '1' if val else '0'])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'afhmode', '1' if val else '0'])
 
     def setSSP(self, val):
         log.info("Set device SSP mode to '%s'" % ('enable' if val else 'disable'))
-        self._exec(['sudo', 'hciconfig', self._cfg.get('dev'), 'sspmode', '1' if val else '0'])
+        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'sspmode', '1' if val else '0'])
 
     def _devicePropertyChanged(self, property_name, value, path, interface, device_path):
         if property_name == PLAYER_INTERFACE:
@@ -193,7 +199,7 @@ class Bluetooth(Module):
                     self._last_device = device_path
 
                     log.debug('Connecting device audio routing')
-                    self._connected_devices[properties['Address']] = self._exec(['bluealsa-aplay', properties['Address']])
+                    self._connected_devices[properties['Address']] = self._exec(['bluealsa-aplay', '--verbose', '-i', self._cfg.get('dev'), '--profile-a2dp', properties['Address']])
 
                     if len(self._connected_devices) == 1:
                         log.info('Connecting GPIO sound output')
@@ -209,10 +215,13 @@ class Bluetooth(Module):
                     dev = self._connected_devices.pop(properties['Address'])
                     if dev.poll() != None:
                         log.debug('Audio routing application exited with code %d' % dev.poll())
+                        if dev.poll() != 0:
+                            log.debug('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
                     else:
                         dev.kill()
                         if dev.poll() != None:
                             log.debug('Audio routing application killed with code %d' % dev.poll())
+                            log.debug('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
                         else:
                             log.warn('Unable to kill the audio routing application pid: %d' % dev.pid)
 

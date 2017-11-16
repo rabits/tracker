@@ -1,5 +1,5 @@
 --- # Default tracker configuration
-global:
+Core:
   log:
     verbose: true # true - verbose, false - not verbose, null - middle
 
@@ -14,17 +14,17 @@ Bluetooth:
     signals: # Used in the code to execute the remote module function
       audio_switch:
         instance: GPIO
-        socket: audioSwitch
+        socket: audioEnabled
 
 GPIO:
   - name: GPIO
     enabled: true
 
     sockets: # Sockets is used to automatically generate functions that required by signals
-      celluralPowerSwitch: # DIYMall 3G/GPS module 5320_ON/OFF pin
+      gsmgpsPower: # DIYMall 3G/GPS module 5320_ON/OFF pin
         type: switch
         pin: 13 # GPIO27
-      audioSwitch: # Custom pin, connected to modified DELCO radio
+      audioEnabled: # Custom pin, connected to modified DELCO radio
         type: switch
         pin: 37 # GPIO26
 
@@ -41,7 +41,7 @@ GPIO:
           - socket: switchClient # Switch WiFi to client mode
             module: WiFi
             when: false
-          - socket: disableCelluralOnConnected # Disable Cellural if WiFi found
+          - socket: disableGSMGPSOnConnected # Disable GSMGPS if WiFi found
             module: WiFi
             when: false
 
@@ -54,11 +54,11 @@ GPIO:
           - socket: switchAdHoc # Switch WiFi to ad-hoc mode
             module: WiFi
             when: true
-          - socket: start # Enable Cellural
-            module: Cellural
+          - socket: start # Enable GSMGPS
+            module: GSMGPS
             when: true
 
-Cellural:
+GSMGPS:
   - name: GSMGPS
     enabled: false
     dev: /dev/ttyS0

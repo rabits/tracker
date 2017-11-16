@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import RPi.GPIO as gpio
+import time
 
 import Log as log
 from Module import Module
@@ -30,7 +31,9 @@ class GPIO(Module):
 
             socket_type = socket.get('type', 'switch')
             if socket_type == 'switch':
-                setattr(self, action, lambda self=self, pin=socket['pin'], value=None: gpio.output(pin, not gpio.input(pin) if value is None else value))
+                setattr(self, action, lambda self=self, pin=socket['pin'], value=None: self.sendChange(pin, value))
+            elif socket_type == 'pulse':
+                setattr(self, action, lambda self=self, pin=socket['pin'], duration=socket.get('duration', None): self.sendPulse(pin, duration))
             else:
                 log.warn("GPIO type %s unsupported for socket %s" % (socket_type, action))
 
@@ -62,3 +65,16 @@ class GPIO(Module):
         for signal in item['signals']:
             if signal.get('when', True) == value:
                 self.signal(signal)
+
+    def sendChange(self, pin, value = None):
+        '''Send change GPIO pin state to the required value or opposite value if value = None'''
+        gpio.output(pin, not gpio.input(pin) if value is None else value)
+        return bool(gpio.input(pin))
+
+    def sendPulse(self, pin, duration = None):
+        '''Send pulse to GPIO pin with required duration (sec)'''
+        val = gpio.input(pin)
+        gpio.output(pin, not val)
+        if duration != None:
+            time.sleep(duration)
+        gpio.output(pin, val)

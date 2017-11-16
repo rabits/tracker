@@ -6,18 +6,31 @@ import serial
 import Log as log
 from Module import Module
 
-class Cellural(Module):
+class GSMGPS(Module):
     '''GSM & GPS module interface'''
+
+    _SUPPORTED = [
+        'SIMCOM_SIM5320A'
+    ]
+
     def __init__(self, **kwargs):
         Module.__init__(self, **kwargs)
 
         self.setDevice(self._cfg.get('dev', False))
         self.setRate(self._cfg.get('rate', 115200))
 
+        self._c = None
+
     def start(self):
+        Module.start(self)
         self._c = serial.Serial(self.getDevice(), self.getRate(), timeout=1.0)
         # Disabling echo
         self.execAT('ATE0')
+
+        # Check the device before running
+        if self.checkVersion() != True:
+            log.error('Unable to run GSMGPS module due to device version is unsupported: %s' % self.checkVersion())
+            self.stop()
 
         if self._cfg.get('net', {}).get('enabled', False):
             self.enableNetwork()
@@ -25,38 +38,72 @@ class Cellural(Module):
         if self._cfg.get('gps', {}).get('enabled', False):
             self.enableGPS()
 
+    def stop(self):
+        if self._c:
+            self._c.close()
+
     def powerOn(self):
-        '''Enable the module'''
+        log.info('Power on the GSMGPS chip %s' % self.name())
+        self.signal('power_on')
+        # Waiting for init done
+        self.execAT('AT', '+CPIN: READY')
 
     def powerOff(self):
-        '''Disable the module'''
+        log.info('Power off the GSMGPS chip %s' % self.name())
+        self.execAT('AT+CPOF', '+STIN:')
 
-    def execAT(self, cmd, return_begins = None, wait_return = False):
-        '''Will execute command & read output till OK.
+    def execAT(self, cmd, return_begins = None, msg_ok = 'OK', msg_err = 'ERROR'):
+        '''Will execute command & read output till OK and return_begins filtered
         If there is error - will return False immediately
-        If no return filter is set - will return command success
-        If wait_return is set to True - it will wait for at least one return line'''
-
-        self._c.write(cmd+'\r')
+        If no return filter is set - will return command success'''
 
         command_done = False
 
-        out = []
-        while not command_done or wait_return:
+        out = None
+        out_num = 0
+        if return_begins == None:
+            pass
+        elif isinstance(return_begins, str):
+            # Found values will be stored in list
+            out = []
+            out_num = 1
+        elif isinstance(return_begins, list):
+            # Found values will be stored in map
+            out = { key:[] for key in return_begins }
+            out_num = len(return_begins)
+        else:
+            log.error('Unsupported return filter for execute AT command: %s' % (return_begins))
+            return_begins = None
+
+        self._c.write(cmd+'\r')
+
+        while not command_done or len(out) < out_num:
             data = self._c.readline().rstrip()
-            if data == 'OK':
+            if data == msg_ok:
                 command_done = True
-            elif data == 'ERROR':
+            elif data == msg_err:
                 return False
             elif isinstance(return_begins, str):
                 # Adding data to output only if filter is ok
                 if data.startswith(return_begins):
-                    out.append(data[len(return_begins):]))
-
-            if wait_return and len(out) > 0:
-                wait_return = False
+                    out.append(data[len(return_begins):].strip())
+                    out_flag = False
+            elif isinstance(return_begins, list):
+                # Searching across the known keys
+                for key in return_begins:
+                    if data.startswith(key):
+                        out[key].append(data[len(key):].strip())
+                        out_flag = False
 
         return out if out else command_done
+
+    def checkVersion(self):
+        '''Checking chip verision to be supported'''
+        model = self.callGetInfo().get('Model:')
+        if model in self._SUPPORTED:
+            return True
+
+        return model
 
     def enableNetwork(self):
         '''Configuring & enabling networking'''
@@ -85,38 +132,37 @@ class Cellural(Module):
         self.callDisableGPS()
 
     def callSetAPN(self):
-        '''AT+CGSOCKCONT=1,"IP","Phone"
+        '''AT+CGCONT=1,"IP","Broadband"
+        OK'''
+        return self.execAT('AT+CGCONT=1,"IP","%s"' % self._cfg.get('net', {}).get('apn', ''))
+
+    def callSetSockAPN(self):
+        '''AT+CGSOCKCONT=1,"IP","Broadband"
         OK'''
         return self.execAT('AT+CGSOCKCONT=1,"IP","%s"' % self._cfg.get('net', {}).get('apn', ''))
-
-    def callSetAPNAuth(self):
-        '''AT+CGSOCKAUTH=1,1,"user","pass"
-        OK'''
-        cfg = self._cfg.get('net', {})
-        if cfg.get('user', False) and cfg.get('pass', False):
-            return self.execAT('AT+CGSOCKAUTH=1,1,"%s","%s"' % (cfg.get('user'), cfg.get('pass')))
-        return None
 
     def callNetworkOpen(self):
         '''AT+NETOPEN
         OK
 
         +NETOPEN: 0'''
-        return self.execAT('AT+NETOPEN', '+NETOPEN: ', True)
+        return self.execAT('AT+NETOPEN', '+NETOPEN:')
+
+    def callSendHTTPSRequest(self, url):
 
     def callNetworkClose(self):
         '''AT+NETCLOSE
         OK
 
         +NETCLOSE: 0'''
-        return self.execAT('AT+NETCLOSE', '+NETCLOSE: ', True)
+        return self.execAT('AT+NETCLOSE', '+NETCLOSE:')
 
     def callGetIP(self):
         '''AT+IPADDR
         +IPADDR: 10.235.141.11
 
         OK'''
-        return self.execAT('AT+IPADDR', '+IPADDR: ')
+        return self.execAT('AT+IPADDR', '+IPADDR:')
 
     def callEnableGPS(self):
         '''AT+CGPS=1,2
@@ -174,23 +220,24 @@ class Cellural(Module):
         +GCAP: +CGSM,+DS,+ES
 
         OK'''
+        return execAT('ATI', ['Manufacturer:', 'Model:','Revision:', 'IMEI:'])
 
     def callSignalQuality(self):
         '''AT+CSQ
         +CSQ: 13,99
 
         OK'''
-        data = self.execAT('AT+CSQ', '+CSQ: ')
+        data = self.execAT('AT+CSQ', '+CSQ:')
         if not data:
             return (None, None)
         return [ int(d) for d in data.split(',') ]
 
     def callNetworkRegistration(self):
-        '''AT+CREG
+        '''AT+CREG?
         +CREG: 0,1
 
         OK'''
-        data = self.execAT('AT+CREG', '+CREG: ')
+        data = self.execAT('AT+CREG?', '+CREG:')
         if not data:
             return (None, None)
         return [ int(d) for d in data.split(',') ]
@@ -200,7 +247,7 @@ class Cellural(Module):
         +COPS: 0,0,"AT&T",2
 
         OK'''
-        data = self.execAT('AT+COPS?', '+COPS: ').split(',')
+        data = self.execAT('AT+COPS?', '+COPS:').split(',')
         if not data:
             return (None, None, None, None)
         mode = data[0]
@@ -222,3 +269,6 @@ class Cellural(Module):
         +CBC: 0,62,3.837V
 
         OK'''
+
+    def runPPPD(self):
+        '''sudo pppd /dev/ttyS0 115200 nodetach crtscts debug persist maxfail 0 noauth persist user '' password '' connect 'echo "ATD*99#\r" > /dev/ttyS0' noccp defaultroute replacedefaultroute'''

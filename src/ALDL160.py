@@ -86,7 +86,7 @@ class ALDL160(Module):
                         log.warn('Found wrong sync bit while parsing last 9 bits of data: %s, processed out: %s' % (data, out))
                         out = []
 
-            log.info('Disactivation - cleaning data')
+            log.info('Deactivation - cleaning data')
             with self._data_lock:
                 self._data = []
 

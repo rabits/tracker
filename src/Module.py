@@ -38,7 +38,7 @@ class Module(object):
 
     def signal(self, signal, **kwargs):
         '''Send configured signal and execute defined function
-        Signal could be a name in the configuration or a map with required socket info
+        Signal could be a name in module configuration, a map with required socket info or array of such maps
         Will try to search the required instance by module or instance or will use self
         If fynction contains parameters from the kwargs - it will be added to execution params'''
         if isinstance(signal, str):
@@ -46,21 +46,26 @@ class Module(object):
         if not signal:
             return # Skipping if no signal configuration is defined
 
-        inst = self
-        req = { 'module': signal.get('module'), 'instance': signal.get('instance') }
-        if isinstance(req['module'], str) or isinstance(req['instance'], str):
-            inst = self._control.getModuleInstance(**req)
+        if not isinstance(signal, list):
+            signal = [signal]
 
-        if not isinstance(inst, Module):
-            log.error("Found module instance is not a module: %s (signal: %s)" % (inst, signal))
-            return # Wrong instance found
+        for s in signal:
+            inst = self
+            req = { 'module': s.get('module'), 'instance': s.get('instance') }
+            if isinstance(req['module'], str) or isinstance(req['instance'], str):
+                inst = self._control.getModuleInstance(**req)
 
-        func_name = signal.get('socket')
-        if hasattr(inst, func_name) and callable(getattr(inst, func_name)):
-            func = getattr(inst, func_name)
-            if len(kwargs):
-                params = { k:v for k,v in kwargs.iteritems() if k in func.func_code.co_varnames }
-                return func(**params)
-            return func()
-        else:
-            log.error("Unable to find module instance function to execute the signal: %s::%s" % (inst, func_name) )
+            if not isinstance(inst, Module):
+                log.error('Found module instance is not a module: %s (signal: %s)' % (inst, s))
+                return # Wrong instance found
+
+            func_name = s.get('socket')
+            if hasattr(inst, func_name) and callable(getattr(inst, func_name)):
+                func = getattr(inst, func_name)
+                kwargs.update(s.get('parameters', {}))
+                if len(kwargs):
+                    params = { k:v for k,v in kwargs.iteritems() if k in func.func_code.co_varnames }
+                    return func(**params)
+                return func()
+            else:
+                log.error('Unable to find module instance function to execute the signal: %s::%s' % (inst, func_name) )

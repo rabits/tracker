@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-'''Tracker v0.4.1-alpha
+'''Tracker v0.5.0-alpha
 
 Author:      Rabit <home@rabits.org>
 License:     GPL v3
@@ -19,8 +19,8 @@ import dbus.mainloop.glib
 
 import Log as log
 
-class Tracker(object):
-    """Main application"""
+class Core(object):
+    """Main control application"""
     def __init__(self, config_path):
         self._mainloop = GObject.MainLoop()
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
@@ -43,14 +43,9 @@ class Tracker(object):
 
     def _checkConfig(self):
         self._dir = {}
-        for key in self._cfg.get('global', {}).get('dir', {}):
-            self._dir[key] = os.path.abspath(os.path.expanduser(self._cfg.get('global')['dir'][key]))
-            if not os.path.isdir(self._dir[key]):
-                log.info("Make directory '%s'" % self._dir[key])
-                os.makedirs(self._dir[key])
-        if 'verbose' in self._cfg.get('global', {}).get('log', {}):
-            log.logSetVerbose(self._cfg.get('global')['log']['verbose'])
-            log.info("Set verbose mode to %s" % self._cfg.get('global')['log']['verbose'])
+        if 'verbose' in self._cfg.get('Core', {}).get('log', {}):
+            log.logSetVerbose(self._cfg.get('Core')['log']['verbose'])
+            log.info("Set verbose mode to %s" % self._cfg.get('Core')['log']['verbose'])
 
     def saveConfig(self):
         pass
@@ -83,7 +78,7 @@ class Tracker(object):
 
         # Processing uppercase configurations as modules
         # TODO: dependent module starting
-        for module in [ name for name in self._cfg.keys() if name[0] in string.ascii_uppercase ]:
+        for module in [ name for name in self._cfg.keys() if name != 'Core' and name[0] in string.ascii_uppercase ]:
             self._startModules(module)
 
         self._postStartModules()
@@ -177,7 +172,7 @@ if __name__ == '__main__':
         print("Usage: tracker <config.yaml>")
         log.error("No config file argument found")
         sys.exit(1)
-    onebutton = Tracker(sys.argv[1])
+    onebutton = Core(sys.argv[1])
 
     onebutton.run()
 

@@ -10,6 +10,7 @@ Requirements
 * python-dbus
 * python-bluez
 * python-serial
+* python-smbus
 
 States
 ------
@@ -36,10 +37,6 @@ When you turn on the ignition, Tracker will:
 
 Nice To Have
 ------------
-
-### No graphics interface
-
-Will save some battery, cpu & some memory
 
 ### Read only root
 
@@ -118,6 +115,25 @@ enable_uart=1 # Now UART GPIO pins (GPIO14, GPIO15) will be used by miniUART
 core_freq=250 # Required to have constant baud rates
 ```
 
-### ALDL-USB Cable 1320 Electronics
+### OBD1 ALDL-USB Cable 1320 Electronics
 
 Check ALDL160 [README](doc/ALDL_160baud/README.md) for more info
+
+### ADS1115 via I2C
+
+Checking input voltage requires at lease one Analog-Digital Converter.
+
+Simple voltage divider (~1/10) and zener diode used to get appropriate value.
+
+TODO
+----
+
+* HUD display - hdmi projector + optical system to show picture on the windshield
+* TextToSpeech interface & audio notification support - verbal events & status
+
+Support
+-------
+If you like this project, you can support our open-source development by a small Bitcoin donation.
+
+Bitcoin wallet: `15phQNwkVs3fXxvxzBkhuhXA2xoKikPfUy`
+

@@ -1,5 +1,5 @@
 [Unit]
-Description=Tracker daemon
+Description=Tracker - car computer system daemon
 Requires=bluetooth.service
 After=bluetooth.service systemd-udev-trigger.service network.target
 
@@ -18,7 +18,7 @@ WorkingDirectory=/srv/tracker
 
 Environment="PYTHONPATH=lib:src" 'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket'
 
-ExecStart=/usr/bin/python -u src/Tracker.py config.user.yaml
+ExecStart=/usr/bin/python -u src/Core.py config.user.yaml
 StandardOutput=syslog
 StandardError=syslog
 

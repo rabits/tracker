@@ -1,5 +1,5 @@
-ALDL 160 baud data
-==================
+OBD1 ALDL 160 baud data
+=======================
 
 This document is about "How to understand what's happening in raw ALDL 160 baud binary data".
 
@@ -51,3 +51,9 @@ Step 4 - split bytes
 Last step is splitting the bytes and using the ADX xml file format (or any else like for your engine) to get properties offset and required steps & math to extract the data.
 
 Check the example step data: [04_formatted_frames.bin.txt](dump/04_formatted_frames.bin.txt)
+
+Support
+-------
+If you like this project, you can support our open-source development by a small Bitcoin donation.
+
+Bitcoin wallet: `15phQNwkVs3fXxvxzBkhuhXA2xoKikPfUy`
