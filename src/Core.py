@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-'''Tracker v0.5.0-alpha
+'''Tracker v0.5.1-alpha
 
 Author:      Rabit <home@rabits.org>
 License:     GPL v3
@@ -54,7 +54,7 @@ class Core(object):
         self._modules[name] = []
         for cfg in self._cfg.get(name, {}):
             if cfg.get('enabled', True):
-                module = import_module(name)
+                module = import_module('modules.%s' % name)
                 self._modules[name].append(getattr(module, name)(control = self, config = cfg))
             else:
                 log.info('Skipping starting disabled module %s instance %s' % (name, cfg.get('name')))

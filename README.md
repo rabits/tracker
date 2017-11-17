@@ -90,7 +90,7 @@ sudo modprobe brcmfmac brcmutil
 
 ##### Additional software
 
-* bluealsa - to provide blueatooth audio service (if you hearing choppy audio, you can add --disable-hsp --disable-hfp to the daemon exec)
+* bluealsa - to provide blueatooth audio service (Jittery audio due to wifi+bt issue: https://github.com/Arkq/bluez-alsa/issues/60)
   * bluealsa-aplay "connected device address" - connecting bluetooth media device to default soundcard
 
 ### GSM/GPS SIM5320A

@@ -22,7 +22,7 @@ GPIO:
 
     sockets: # Sockets is used to automatically generate functions that required by signals
       gsmgpsPower: # DIYMall 3G/GPS module 5320_ON/OFF pin
-        type: switch
+        type: pulse
         pin: 13 # GPIO27
       audioEnabled: # Custom pin, connected to modified DELCO radio
         type: switch
@@ -41,7 +41,7 @@ GPIO:
           - socket: switchClient # Switch WiFi to client mode
             module: WiFi
             when: false
-          - socket: disableGSMGPSOnConnected # Disable GSMGPS if WiFi found
+          - socket: disableGSMGPSOnConnected # Disable GSM/GPS if WiFi found
             module: WiFi
             when: false
 
@@ -54,9 +54,23 @@ GPIO:
           - socket: switchAdHoc # Switch WiFi to ad-hoc mode
             module: WiFi
             when: true
-          - socket: start # Enable GSMGPS
+          - socket: start # Enable GSM/GPS
             module: GSMGPS
             when: true
+
+      power_up:
+        pin: 32 # GPIO12 - soldered to U4 transistor (between microUSB power in and HDMI) - leg near R5 resistor
+        signals:
+          - socket: powerOutage
+            module: Power
+            when: true
+            parameters:
+              value: false
+          - socket: powerOutage
+            module: Power
+            when: false
+            parameters:
+              value: true
 
 GSMGPS:
   - name: GSMGPS
@@ -73,7 +87,9 @@ GSMGPS:
     signals:
       power:
         instance: GPIO
-        socket: celluralPower
+        socket: gsmgpsPower
+        parameters:
+          duration: 0.2
 
 ALDL160:
   - name: ALDL 160 baud

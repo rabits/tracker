@@ -213,17 +213,14 @@ class Bluetooth(Module):
                     log.info('Device: %s has disconnected: %s' % (properties['Name'], properties['Address']))
 
                     dev = self._connected_devices.pop(properties['Address'])
-                    if dev.poll() != None:
-                        log.debug('Audio routing application exited with code %d' % dev.poll())
-                        if dev.poll() != 0:
-                            log.debug('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
-                    else:
+                    if dev.poll() is None:
                         dev.kill()
-                        if dev.poll() != None:
-                            log.debug('Audio routing application killed with code %d' % dev.poll())
-                            log.debug('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
-                        else:
+                        if dev.poll() is None:
                             log.warn('Unable to kill the audio routing application pid: %d' % dev.pid)
+
+                    log.debug('Audio routing application ended with code %d' % dev.poll())
+                    if dev.poll() != None and dev.poll() != 0:
+                        log.warn('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
 
                     if len(self._connected_devices) < 1:
                         log.info('Disconnecting GPIO sound output')
