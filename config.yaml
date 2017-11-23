@@ -1,7 +1,7 @@
 --- # Default tracker configuration
 Core:
   log:
-    verbose: true # true - verbose, false - not verbose, null - middle
+    verbose: true # true - verbose, false - quiet, null - middle
 
 Bluetooth:
   - name: Tracker-1
@@ -32,31 +32,8 @@ GPIO:
       ignition:
         pin: 35 # GPIO19
         signals:
-          - socket: disableUSB # Disable LAN & USB
+          - socket: ignition
             module: Power
-            when: false
-          - socket: disableBluetooth # Disable Bluetooth
-            module: Bluetooth
-            when: false
-          - socket: switchClient # Switch WiFi to client mode
-            module: WiFi
-            when: false
-          - socket: disableGSMGPSOnConnected # Disable GSM/GPS if WiFi found
-            module: WiFi
-            when: false
-
-          - socket: enableUSB # Enable LAN & USB
-            module: Power
-            when: true
-          - socket: enableBluetooth # Enable Bluetooth
-            module: Bluetooth
-            when: true
-          - socket: switchAdHoc # Switch WiFi to ad-hoc mode
-            module: WiFi
-            when: true
-          - socket: start # Enable GSM/GPS
-            module: GSMGPS
-            when: true
 
       power_up:
         pin: 32 # GPIO12 - soldered to U4 transistor (between microUSB power in and HDMI) - leg near R5 resistor
@@ -95,3 +72,260 @@ ALDL160:
   - name: ALDL 160 baud
     enabled: true
     dev: /dev/ttyUSB0
+    map: # A008 LC2 3.8L Turbo
+      0x00:
+        name: MODE WORD 2
+        type: binmap
+        map:
+          - name: ROAD SPEED PULSE OCCURRED
+          - name: ESC FAILURE
+          - name: REFERENCE PULSE OCCURRED
+          - name: DIAGNOSTIC SWITCH IN FACTORY TEST (3.9K)
+          - name: DIAG SWITCH IN DIAG POSITION (Shorted)
+          - name: DIAGNOSTIC SWITCH IN ALDL POSITION (10K)
+          - name: HIGH BATTERY VOLTAGE
+          - name: AIR METER PULSE OCCURRED
+      0x01:
+        name: ECM ID # Byte 0x01, 0x02
+        type: hex
+        size: 2 # 2 bytes
+      0x03:
+        name: IAC Present Position (steps)
+      0x04:
+        name: Coolant Temp (Deg C)
+        math: N*0.8-40
+      0x05:
+        name: Vehicle Speed (MPH)
+      0x06:
+        name: Load (%DC)
+      0x07:
+        name: Engine Speed (RPM)
+        math: N*25
+      0x08:
+        name: Throttle Position (Volts)
+        math: N*0.0196
+      0x09:
+        name: Integrator (counts)
+      0x0A:
+        name: O2 (mV)
+        math: N*4.44
+      0x0B:
+        name: MALFUNCTION FLAG WORD 1
+        type: binmap
+        map:
+          - name: C24 OPEN OR GROUNDED VEHICLE SPEED SENSOR
+          - name: C23 AIR TEMPERATURE SENSROR CIRCUIT OPEN (or low temp)
+          - name: C22 THROTTLE POSITION SENSOR LOW
+          - name: C21 THROTTLE POSITION SENSOR HIGH
+          - name: C15 COOLANT SENSOR LOW TEMPERATURE
+          - name: C14 COOLANT SENSOR HIGH TEMPERATURE
+          - name: C13 OXYGEN SENSOR OPEN
+          - name: C12 NO REFERENCE PULSES
+      0x0C:
+        name: MALFUNCTION FLAG WORD 2
+        type: binmap
+        map:
+          - name: C42 OPEN EST OR BYPASS CIRCUIT TO ECM
+          - name: C41 CAM SENSOR FAILURE
+          - name: C35 IAC (Idle Air Control) Actuator
+          - name: C34 MAF SENSOR LOW
+          - name: C33 MAF SENSOR HIGH
+          - name: C32 EGR (Exhaust Gas Recirculation) DIAGNOSTICS
+          - name: C31 WASTEGATE SIGNAL OPEN OR GROUNDED
+          - name: C25 AIR TEMPERATURE SENSOR CIRCUIT SHORTED (or high temp)
+      0x0D:
+        name: MALFUNCTION FLAG WORD 3
+        type: binmap
+        map:
+          - name: C55 FAULTY ECM
+          - name: C54 N/A
+            enabled: false
+          - name: C53 N/A
+            enabled: false
+          - name: C52 CAL PACK MISSING
+          - name: C51 PROM ERROR
+          - name: C45 OXYGEN SENSOR RICH
+          - name: C44 OXYGEN SENSOR LEAN
+          - name: C43 ESC (Electronic Spark Control) FAILURE
+      0x0E:
+        name: AIR-FUEL (A/F) MODE WORD
+        type: binmap
+        map:
+          - name: Cranked in CLEAR FLOOD FLAG
+          - name: CRUISE BLM (Block Learn Control)
+          - name: N/A
+            enabled: false
+          - name: Prop Step
+          - name: N/A
+            enabled: false
+          - name: First Time Closed Loop
+          - name: Rich/Lean
+          - name: Loop Status
+      0x0F:
+        name: MAF (Grams/Sec)
+      0x10:
+        name: MCU STATUS WORD
+        type: binmap
+        map:
+          - name: PARK/NEUTRAL MODE
+          - name: Cruise Control
+          - name: TCC
+          - name: Power Steering Switch
+          - name: Water Injector
+          - name: 3rd Gear Switch
+          - name: 4th Gear Switch
+          - name: A/C
+      0x11:
+        name: Knock Counter (counts)
+      0x12:
+        name: BLM Block Learn Multiplier (count)
+      0x13:
+        name: Rich/Lean Transition Count (transitions)
+      0x14:
+        name: Spark Advance (Knock Retard) (deg)
+      0x15:
+        name: Air Temp (Deg C)
+        table: # Keys should start & end with min & max values
+          0: -40.00
+          15: -25.00
+          31: -12.00
+          47: -3.00
+          63: 4.00
+          79: 11.00
+          95: 16.00
+          111: 22.00
+          127: 27.00
+          143: 33.00
+          159: 39.00
+          175: 46.00
+          191: 54.00
+          207: 64.00
+          223: 77.00
+          239: 102.00
+          255: 151.00
+      0x16:
+        name: Battery Voltage (V)
+        math: N*0.1
+      0x17:
+        name: Counter since No Malfunctions (counts)
+      0x18:
+        name: EGR Duty Cycle (DC)
+
+ADS1115:
+  - name: adc # ADC from adafruit with reference 3.3v
+    i2c_bus: 1 # i2c device number
+    address: 0x48 # Bus device address
+    update_timeout: 30 # 30 sec
+    map:
+      - name: Battery Voltage # ADC0 input
+        gain: 1
+        math: (N-4877)*0.002468 # Converted table to simple linear dependency
+        round: 2 # second sign after the point
+        signals:
+          # Low Battery
+          - module: Power
+            socket: lowBatteryVoltage
+            when: 11.0<N<11.49
+            parameters:
+              value: true
+          - module: Power
+            socket: lowBatteryVoltage
+            when: N>11.51
+            parameters:
+              value: false
+
+          # Critical Battery
+          - module: Power
+            socket: criticalBatteryVoltage
+            when: N<10.98
+            parameters:
+              value: true
+          - module: Power
+            socket: criticalBatteryVoltage
+            when: N>11.0
+            parameters:
+              value: false
+
+#          It's possible to use this signals, but better to use onboard power control
+#          # Power Outage
+#          - module: Power
+#            socket: powerOutage
+#            when: N<6.0
+#            parameters:
+#              value: true
+#          - module: Power
+#            socket: powerOutage
+#            when: N>6.0
+#            parameters:
+#              value: false
+      - enabled: false # Other sensors is not used
+      - enabled: false
+      - enabled: false
+
+Power:
+  - name: power
+    signals:
+      low_voltage_raise:
+        - instance: Mail
+          socket: sendEmail
+          parameters:
+            title: Car-1 Voltage Drop
+            message: "WARNING: input voltage dropped below low level"
+      low_voltage_drop:
+        - instance: Mail
+          socket: sendEmail
+          parameters:
+            title: Car-1 Voltage OK
+            message: "INFO: input voltage raised above low level"
+      critical_voltage_raise:
+        - instance: Mail
+          socket: sendEmail
+          parameters:
+            title: Car-1 Voltage Critical Drop
+            message: "CRITICAL: input voltage dropped below critical level"
+      critical_voltage_drop:
+        - instance: Mail
+          socket: sendEmail
+          parameters:
+            title: Car-1 Voltage Low
+            message: "INFO: input voltage raised above critical level"
+      power_outage_raise:
+        - instance: Server
+          socket: setSendInterval
+          parameters:
+            value: 1
+        - instance: Mail
+          socket: sendEmail
+          parameters:
+            title: Car-1 Power Outage
+            message: "EMERGENCY: Noticed power outage, soon backup battery will be drained"
+      power_outage_drop:
+        - instance: Server
+          socket: setSendInterval
+        - instance: Mail
+          socket: sendEmail
+          parameters:
+            title: Car-1 Power Restored
+            message: "INFO: Power restored after outage"
+      ignition_on:
+          - socket: enableUSB # Enable LAN & USB
+            module: Power
+            when: true
+          - socket: enableBluetooth # Enable Bluetooth
+            module: Bluetooth
+            when: true
+          - socket: switchAdHoc # Switch WiFi to ad-hoc mode
+            module: WiFi
+            when: true
+          - socket: start # Enable GSM/GPS
+            module: GSMGPS
+            when: true
+      ignition_off:
+          - socket: disableBluetooth # Disable Bluetooth
+            module: Bluetooth
+          - socket: switchClient # Switch WiFi to client mode
+            module: WiFi
+          - socket: disableGSMGPSOnConnected # Disable GSM/GPS if WiFi found
+            module: WiFi
+          - socket: disableUSB # Disable LAN & USB
+            module: Power

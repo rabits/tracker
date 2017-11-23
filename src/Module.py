@@ -10,7 +10,7 @@ class Module(object):
         '''Module preparation'''
         self._control = kwargs.get('control')
         self._cfg = kwargs.get('config')
-        log.info('Initializing %s instance %s' % (self.__class__.__name__, self.name()))
+        log.info('Initializing %s(%s)' % (self.__class__.__name__, self.name()))
 
     def name(self):
         '''Getting module instance name'''
@@ -26,15 +26,15 @@ class Module(object):
 
     def start(self):
         '''Start the module initialization'''
-        log.info('Starting %s instance %s' % (self.__class__.__name__, self.name()))
+        log.info('Starting %s(%s)' % (self.__class__.__name__, self.name()))
 
     def postStart(self):
         '''Actions to do when all the modules was started'''
-        log.info('PostStarting %s instance %s' % (self.__class__.__name__, self.name()))
+        log.info('PostStarting %s(%s)' % (self.__class__.__name__, self.name()))
 
     def stop(self):
         '''Shutdown the module operations'''
-        log.info('Stopping %s instance %s' % (self.__class__.__name__, self.name()))
+        log.info('Stopping %s(%s)' % (self.__class__.__name__, self.name()))
 
     def signal(self, signal, **kwargs):
         '''Send configured signal and execute defined function
@@ -56,7 +56,7 @@ class Module(object):
                 inst = self._control.getModuleInstance(**req)
 
             if not isinstance(inst, Module):
-                log.error('Found module instance is not a module: %s (signal: %s)' % (inst, s))
+                log.error('Wrong module instance: %s (signal: %s)' % (inst, s))
                 return # Wrong instance found
 
             func_name = s.get('socket')

@@ -37,16 +37,17 @@ class GPIO(Module):
             else:
                 log.warn("GPIO type %s unsupported for socket %s" % (socket_type, action))
 
-        # Init listen GPIO's
+    def postStart(self):
+        '''Checking the current state of the listening GPIO's and do the configured actions'''
+        Module.postStart(self)
+
+        # Init listen GPIO's in poststart
+        # We need to be sure that listen isn't triggered until all the modules was started
         for name, item in self._cfg.get('listen', {}).iteritems():
             log.info("Attaching GPIO listener %s to pin %d" % (name, item['pin']))
             self._pin_map[item['pin']] = name
             gpio.setup(item['pin'], gpio.IN)
             gpio.add_event_detect(item['pin'], gpio.BOTH, callback=self._listenTrigger)
-
-    def postStart(self):
-        '''Checking the current state of the listening GPIO's and do the configured actions'''
-        Module.postStart(self)
 
         for pin in self._pin_map:
             self._listenTrigger(pin)
@@ -59,12 +60,12 @@ class GPIO(Module):
     def _listenTrigger(self, pin):
         name = self._pin_map[pin]
         item = self._cfg['listen'][name]
-        value = gpio.input(item['pin'])
-        log.info("Triggered listener %s with value %s" % (name, value))
+        value = bool(gpio.input(item['pin']))
+        log.debug('Triggered listener %s with value %s' % (name, value))
 
-        for signal in item['signals']:
-            if signal.get('when', True) == value:
-                self.signal(signal)
+        for signal in item.get('signals', []):
+            if signal.get('when') in (None, value):
+                self.signal(signal, value = value)
 
     def sendChange(self, pin, value = None):
         '''Send change GPIO pin state to the required value or opposite value if value = None'''
