@@ -49,7 +49,32 @@ Will reboot raspberry pi on stuck
 Hardware
 --------
 
+### Components
+
+* Bluetooth (BT Audio receiver)
+* WiFi (remote access, configuration, update, send logs)
+* HDMI (Display or HUD projector)
+* Analog stereo audio output (BT Audio receiver, notifications)
+* GPIOx4 (Ignition, Power, Audio enable, GSM module power switch)
+* I2C (ADC connection)
+* UART (connection with GSM/GPS module)
+* GPS (get location)
+* GSM Data (2G, 3G, 4G - non-wifi internet access)
+* USB Host (ALDL connection)
+
 ### Raspberry PI 3
+
+#### Issues
+
+* No power management - it will eat your battery even if it's powered off and there is no way to sleep.
+* Jittery BT audio due to wifi+bt issue: https://github.com/Arkq/bluez-alsa/issues/60 - it's better to use USB BT adapter
+  You could disable the internal bluetooth permanently by adding next /boot/config.txt lines and disable the sytemd htcuart service:
+  ```
+  dtoverlay=pi3-disable-bt
+  ```
+  ```
+  sudo systemctl disable hciuart
+  ```
 
 #### Power
 
@@ -90,8 +115,12 @@ sudo modprobe brcmfmac brcmutil
 
 ##### Additional software
 
-* bluealsa - to provide blueatooth audio service (Jittery audio due to wifi+bt issue: https://github.com/Arkq/bluez-alsa/issues/60)
+* bluealsa - to provide blueatooth audio service
   * bluealsa-aplay "connected device address" - connecting bluetooth media device to default soundcard
+
+### NanoPi M3
+
+Has all the required components and power management. Need to be tested.
 
 ### GSM/GPS SIM5320A
 

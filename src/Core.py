@@ -158,7 +158,7 @@ class Core(object):
                 out += [ (self._modules[mod][0], mod, self._modules[mod][0].name()) ]
 
         if len(out) != 1:
-            log.error("Found too much module instances: %s" % out)
+            log.error('Not found just one module instances: %s' % out)
             return None
 
         return out.pop()[0]

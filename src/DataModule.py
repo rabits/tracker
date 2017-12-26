@@ -44,10 +44,12 @@ class DataModule(Module):
 
     def _readRawDataThreadWrapper(self):
         '''This wrapper is required to run prepare & cleaning operations for the read thread'''
-        log.debug('%s %s reading thread started' % (self.__class__.__name__, self.name()))
-        self._readRawDataThread()
-        log.debug('%s %s reading thread completed' % (self.__class__.__name__, self.name()))
-        self._cleanData()
+        try:
+            log.debug('%s %s reading thread started' % (self.__class__.__name__, self.name()))
+            self._readRawDataThread()
+        finally:
+            log.debug('%s %s reading thread completed' % (self.__class__.__name__, self.name()))
+            self._cleanData()
 
     def _readRawDataThread(self):
         '''Thread function to get & update values of the collected data'''
@@ -55,7 +57,7 @@ class DataModule(Module):
 
     def _processData(self, data):
         '''Helper to update _raw_data and _map_data and trigger required signals'''
-        # Determining byte changes
+        # Determining changes
         to_update = []
         for i, val in data.iteritems():
             if self._raw_data.get(i, None) != val:
@@ -77,24 +79,33 @@ class DataModule(Module):
             changes = {}
             with self._map_data_lock:
                 changes = mergeDicts(self._map_data, mdata)
-            self._processChanged(changes, self._map, self._map_data)
+            changes = self._processChanged(changes, self._map, self._map_data)
+            if changes:
+                self.signal('changes', sender=self.name(), data=changes)
+        elif to_update:
+            self.signal('changes', sender=self.name(), data={k:v for k,v in data.iteritems() if k in to_update})
 
     def _processChanged(self, changes, data_map, data):
         '''Function will execute required signals based on changes data'''
+        out = {}
         for key in changes:
-            if isinstance(changes[key], dict):
-                log.debug('- %s(%s) changes: %s:' % (self.__class__.__name__, self.name(), key))
-                self._processChanged(changes[key], data_map.get(key, {}), data.get(key, {}))
+            if not data_map.get(key, {}).get('enabled', True):
                 continue
 
-            if data_map.get(key, {}).get('enabled', True):
-                log.debug('- %s(%s) changes: %s = %s (%s)' % (self.__class__.__name__, self.name(), key, data.get(key), changes.get(key)))
+            if isinstance(changes[key], dict):
+                log.debug('- %s(%s) changes: %s:' % (self.__class__.__name__, self.name(), key))
+                out[key] = self._processChanged(changes[key], data_map.get(key, {}), data.get(key, {}))
+                continue
+
+            log.debug('- %s(%s) changes: %s = %s (%s)' % (self.__class__.__name__, self.name(), key, data.get(key), changes.get(key)))
+            out[key] = changes[key]
 
             signals = data_map.get(key, {}).get('signals', [])
             for s in signals:
                 if s.has_key('when') and not evaluateMath(s.get('when'), data.get(key), changes.get(name, s.get('default_value', 0))):
                     continue
                 self.signal(s)
+        return out
 
     def _cleanData(self):
         '''Will clean all the data when module is inactive'''

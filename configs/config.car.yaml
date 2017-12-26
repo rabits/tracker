@@ -1,4 +1,4 @@
---- # Default tracker configuration
+--- # Example tracker car configuration
 Core:
   log:
     verbose: true # true - verbose, false - quiet, null - middle
@@ -52,7 +52,7 @@ GPIO:
 GSMGPS:
   - name: GSMGPS
     enabled: false
-    dev: /dev/ttyS0
+    dev: /dev/ttyS0 # If minibt enabled, else you can disable internal bluetooth and use /dev/ttyAMA0
     net:
       enabled: true
       apn: Phone # AT&T apn for 3G
@@ -290,8 +290,8 @@ Power:
             title: Car-1 Voltage Low
             message: "INFO: input voltage raised above critical level"
       power_outage_raise:
-        - instance: Server
-          socket: setSendInterval
+        - module: Client
+          socket: setInterval
           parameters:
             value: 1
         - instance: Mail
@@ -300,8 +300,8 @@ Power:
             title: Car-1 Power Outage
             message: "EMERGENCY: Noticed power outage, soon backup battery will be drained"
       power_outage_drop:
-        - instance: Server
-          socket: setSendInterval
+        - module: Client
+          socket: setInterval
         - instance: Mail
           socket: sendEmail
           parameters:
@@ -329,3 +329,11 @@ Power:
             module: WiFi
           - socket: disableUSB # Disable LAN & USB
             module: Power
+
+Client:
+  - name: remotelog
+    url: https://tracker.example.com/
+    ssl_check_hostname: True
+    ssl_verify_host: True
+    auth_user: username here
+    auth_password: strong password here
