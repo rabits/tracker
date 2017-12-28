@@ -115,8 +115,8 @@ class Bluetooth(Module):
             if ('/org/bluez/%s' % self._cfg.get('dev')) not in path or DEVICE_INTERFACE not in interfaces:
                 continue
             props = interfaces[DEVICE_INTERFACE]
-            if props['Connected']:
-                log.debug(' - disconnecting device %s %s' %(props['Name'], props['Address']))
+            if props.get('Connected'):
+                log.debug(' - disconnecting device %s %s' %(props.get('Name'), props['Address']))
                 device = dbus.Interface(self._bus.get_object(BUS_NAME, path), DEVICE_INTERFACE)
                 device.Disconnect()
 
@@ -194,7 +194,7 @@ class Bluetooth(Module):
                 if value['Connected']:
                     if self._connected_devices.has_key(properties['Address']):
                         return # Already connected
-                    log.info('Device: %s has connected: %s' % (properties['Name'], properties['Address']))
+                    log.info('Device: %s has connected: %s' % (properties.get('Name'), properties['Address']))
 
                     self._last_device = device_path
 
@@ -210,7 +210,7 @@ class Bluetooth(Module):
                     if not self._connected_devices.has_key(properties['Address']):
                         return # Not connected at all
 
-                    log.info('Device: %s has disconnected: %s' % (properties['Name'], properties['Address']))
+                    log.info('Device: %s has disconnected: %s' % (properties.get('Name'), properties['Address']))
 
                     dev = self._connected_devices.pop(properties['Address'])
                     if dev.poll() is None:
