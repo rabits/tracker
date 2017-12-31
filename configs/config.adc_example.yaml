@@ -1,0 +1,52 @@
+--- # Example of ADC usage as voltage meter: with voltage divider & zener diode
+
+ADS1115:
+  - name: adc # ADC from adafruit with reference 3.3v
+    i2c_bus: 1 # i2c device number
+    address: 0x48 # Bus device address
+    update_timeout: 30 # 30 sec
+    map:
+      - name: Battery Voltage # ADC0 input
+        gain: 1
+        math: (N-4877)*0.002468 # Converted table to simple linear dependency
+        round: 2 # second sign after the point
+        signals:
+          # Low Battery
+          - module: Power
+            socket: lowBatteryVoltage
+            when: 11.0<N<11.49
+            parameters:
+              value: true
+          - module: Power
+            socket: lowBatteryVoltage
+            when: N>11.51
+            parameters:
+              value: false
+
+          # Critical Battery
+          - module: Power
+            socket: criticalBatteryVoltage
+            when: N<10.98
+            parameters:
+              value: true
+          - module: Power
+            socket: criticalBatteryVoltage
+            when: N>11.0
+            parameters:
+              value: false
+
+#          It's possible to use this signals, but better to use onboard power control
+#          # Power Outage
+#          - module: Power
+#            socket: powerOutage
+#            when: N<6.0
+#            parameters:
+#              value: true
+#          - module: Power
+#            socket: powerOutage
+#            when: N>6.0
+#            parameters:
+#              value: false
+      - enabled: false # Other sensors is not used
+      - enabled: false
+      - enabled: false
