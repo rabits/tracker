@@ -4,7 +4,7 @@ ADS1115:
   - name: adc # ADC from adafruit with reference 3.3v
     i2c_bus: 1 # i2c device number
     address: 0x48 # Bus device address
-    update_timeout: 30 # 30 sec
+    update_delay: 30 # 30 sec
     map:
       - name: Battery Voltage # ADC0 input
         gain: 1

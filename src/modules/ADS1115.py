@@ -34,4 +34,4 @@ class ADS1115(DataModule):
 
                 self._processData(out)
 
-                time.sleep(self._cfg.get('update_timeout', 1))
+                time.sleep(self._cfg.get('update_delay', 1))

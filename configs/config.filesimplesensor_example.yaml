@@ -1,0 +1,29 @@
+# Example for ASUS Tinkerboard CPU & GPU sensors
+
+FileSimpleSensor:
+  - name: temperature
+    paths:
+      - /sys/devices/virtual/thermal/thermal_zone0/temp
+      - /sys/devices/virtual/thermal/thermal_zone1/temp
+    update_delay: 30 # sec
+    map:
+      - name: CPU
+        round: 1 # second sign after the point
+        math: N*0.001
+        signals:
+          # Critical temperature
+          - instance: Mail
+            socket: sendEmail
+            when: N>85.0
+            parameters:
+              title: Car-1 CPU Temp is critical!
+              message: "WARNING: CPU temperature is too high (>85C), please cool it down"
+
+      - name: GPU
+        round: 1
+        math: N*0.001
+
+    signals:
+      changes:
+        module: Client
+        socket: logData
