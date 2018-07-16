@@ -16,14 +16,20 @@ class GSMGPS(Module):
     def __init__(self, **kwargs):
         Module.__init__(self, **kwargs)
 
-        self.setDevice(self._cfg.get('dev', False))
-        self.setRate(self._cfg.get('rate', 115200))
-
         self._c = None
+
+    def getDevice(self):
+        return self._cfg.get('dev', False)
+
+    def getRate(self):
+        return self._cfg.get('rate', 115200)
 
     def start(self):
         Module.start(self)
         self._c = serial.Serial(self.getDevice(), self.getRate(), timeout=1.0)
+
+        self.powerOn()
+
         # Disabling echo
         self.execAT('ATE0')
 
@@ -46,6 +52,7 @@ class GSMGPS(Module):
         log.info('Power on the GSMGPS chip %s' % self.name())
         self.signal('power_on')
         # Waiting for init done
+        # TODO: Eternal wait if already powered on
         self.execAT('AT', '+CPIN: READY')
 
     def powerOff(self):
@@ -115,7 +122,6 @@ class GSMGPS(Module):
 
         # Configuring networking
         self.callSetAPN()
-        self.callSetAPNAuth()
 
         # Opening network connection
         self.callNetworkOpen()
@@ -148,7 +154,9 @@ class GSMGPS(Module):
         +NETOPEN: 0'''
         return self.execAT('AT+NETOPEN', '+NETOPEN:')
 
-    def callSendHTTPSRequest(self, url):
+    def callSendHTTPSRequest(self, url, data):
+        # TODO: /usr/lib/python2.7/httplib.py:755
+        pass
 
     def callNetworkClose(self):
         '''AT+NETCLOSE

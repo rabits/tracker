@@ -32,11 +32,12 @@ class Power(Module):
     def ignition(self, value = None):
         if value == None: # Acting like switch
             value = not self._ignition
-        elif self._ignition == value:
-            return
 
         if self._ignition_off_timer != None:
             self._ignition_off_timer.cancel()
+
+        if self._ignition == value:
+            return
 
         if value:
             log.info('Ignition started')

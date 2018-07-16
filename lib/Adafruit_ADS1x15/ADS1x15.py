@@ -75,10 +75,7 @@ ADS1x15_CONFIG_COMP_QUE_DISABLE = 0x0003
 class ADS1x15(object):
     """Base functionality for ADS1x15 analog to digital converters."""
 
-    def __init__(self, address=ADS1x15_DEFAULT_ADDRESS, bus=None, **kwargs):
-        if bus is None:
-            import smbus
-            bus = smbus.SMBus(1)
+    def __init__(self, address, bus, **kwargs):
         self._bus = bus
         self._address = address
 

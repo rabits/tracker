@@ -218,7 +218,7 @@ class Bluetooth(Module):
                         if dev.poll() is None:
                             log.warn('Unable to kill the audio routing application pid: %d' % dev.pid)
 
-                    log.debug('Audio routing application ended with code %d' % dev.poll())
+                    log.debug('Audio routing application ended with code %s' % dev.poll())
                     if dev.poll() != None and dev.poll() != 0:
                         log.warn('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
 
