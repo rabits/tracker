@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
+    <title>Tracker Dashboard</title>
+
+    <meta name="description" content="Tracker web dashboard to display all the available data" />
+    <meta name="author" content="Rabit &lt;home@rabits.org&gt;" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" integrity="sha256-ULjuiZ9iqqf97EETp/mZrnLusfOwISiI6AIL0IXShbc=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="icon" href="/favicon.ico?v=1" />
+
+    <style>
+      .far .fas {
+        width: 16px;
+        height: 16px;
+        vertical-align: text-bottom;
+      }
+
+      /*
+       * Sidebar
+       */
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100; /* Behind the navbar */
+        padding: 48px 0 0; /* Height of navbar */
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+      }
+
+      .sidebar-sticky {
+        position: relative;
+        top: 0;
+        height: calc(100vh - 48px);
+        padding-top: .5rem;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+      }
+
+      @supports ((position: -webkit-sticky) or (position: sticky)) {
+        .sidebar-sticky {
+          position: -webkit-sticky;
+          position: sticky;
+        }
+      }
+
+      .sidebar .nav-link {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .sidebar .nav-link {
+        margin-right: 4px;
+        color: #999;
+      }
+
+      .sidebar .nav-link.active {
+        color: #007bff;
+      }
+
+      .sidebar .nav-link:hover .fas .far,
+      .sidebar .nav-link.active .fas .far {
+        color: inherit;
+      }
+
+      .sidebar-heading {
+        font-size: .75rem;
+        text-transform: uppercase;
+      }
+
+      /*
+       * Content
+       */
+
+      [role="main"] {
+        padding-top: 48px; /* Space for fixed navbar */
+      }
+
+      /*
+       * Navbar
+       */
+
+      .navbar-brand {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+        font-size: 1rem;
+        background-color: rgba(0, 0, 0, .25);
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+      }
+
+      .navbar .form-control {
+        padding: .75rem 1rem;
+        border-width: 0;
+        border-radius: 0;
+      }
+
+      .form-control-dark {
+        color: #fff;
+        background-color: rgba(255, 255, 255, .1);
+        border-color: rgba(255, 255, 255, .1);
+      }
+
+      .form-control-dark:focus {
+        border-color: transparent;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+      }
+
+      /*
+       * Utilities
+       */
+
+      .border-top { border-top: 1px solid #e5e5e5; }
+      .border-bottom { border-bottom: 1px solid #e5e5e5; }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Tracker Dashboard</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <i class="fas fa-home"></i>
+                  Dashboard <span class="sr-only">(current)</span>
+                </a>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Available data</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <i class="far fa-plus-square"></i>
+              </a>
+            </h6>
+            <div id="devices_data_list" class="nav flex-column mb-2"></div>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Saved reports</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <i class="far fa-plus-square"></i>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="far fa-file-alt"></i>
+                  Default
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main id="dashboard_main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button id="dashboard_clean" class="btn btn-sm btn-outline-secondary">Clean</button>
+                <!--button class="btn btn-sm btn-outline-secondary">Export</button-->
+              </div>
+              <div class="dropdown">
+                <button id="dashboard_period" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="1d">
+                  <i class="far fa-clock"></i>
+                  1d
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#"><i class="far fa-clock"></i> 1d</a>
+                  <a class="dropdown-item" href="#"><i class="far fa-clock"></i> 3d</a>
+                  <a class="dropdown-item" href="#"><i class="far fa-calendar"></i> 1w</a>
+                  <a class="dropdown-item" href="#"><i class="far fa-calendar"></i> 2w</a>
+                  <a class="dropdown-item" href="#"><i class="far fa-calendar-alt"></i> 1m</a>
+                  <a class="dropdown-item" href="#"><i class="far fa-calendar-alt"></i> 6m</a>
+                  <a class="dropdown-item" href="#"><i class="far fa-calendar-plus"></i> 1y</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Libraries and scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js" integrity="sha256-rmZZb5ESAjCE4Al5RfENzQBpw1VbShzLes76aW8c+kc=" crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/6.1.0/highcharts.js"></script>
+    <script src="https://code.highcharts.com/6.1.0/modules/annotations.js"></script>
+    <script src="https://code.highcharts.com/6.1.0/modules/no-data-to-display.js"></script>
+
+    <!--script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1B6B-zgezUZTkAmHat62h3svu4fibFmI&callback=initMap"></script>
+    <script>
+      var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+        });
+      }
+    </script-->
+    <script>"use strict";
+// TODO: additional annotation for point
+// TODO: Graph combination with others
+$(function () {
+  // Change dropdown button text to selection
+  $('.dropdown-menu a').click(function() {
+    $('.dropdown-toggle:first-child').html($(this).html());
+    $('.dropdown-toggle:first-child').val($(this).text().trim());
+  });
+});
+$(function () {
+    /**
+     * In order to synchronize tooltips and crosshairs, override the
+     * built-in events with handlers defined on the parent element.
+     */
+    $('#data').bind('mousemove touchmove touchstart', function (e) {
+        var chart, point, i, event
+
+        for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+            chart = Highcharts.charts[i];
+            event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+            point = chart.series[0].searchPoint(event, true); // Get the hovered point
+
+            if (point) {
+                point.highlight(e);
+            }
+        }
+    });
+
+    /**
+     * Override the reset function, we don't need to hide the tooltips and crosshairs.
+     */
+    Highcharts.Pointer.prototype.reset = function () {
+        return undefined;
+    };
+
+    /**
+     * Highlight a point by showing tooltip, setting hover state and draw crosshair
+     */
+    Highcharts.Point.prototype.highlight = function (event) {
+        this.onMouseOver(); // Show the hover marker
+        this.series.chart.tooltip.refresh(this); // Show the tooltip
+        this.series.chart.xAxis[0].drawCrosshair(event, this); // Show the crosshair
+    };
+
+    /**
+     * Synchronize zooming through the setExtremes event handler.
+     */
+    function syncExtremes(e) {
+        if (e.trigger === 'syncExtremes') // Prevent feedback loop
+            return;
+
+        var thisChart = this.chart;
+
+        Highcharts.each(Highcharts.charts, function( chart ) {
+            if( ! chart || chart === thisChart )
+                return;
+
+            if( chart.xAxis[0].setExtremes ) { // It is null while updating
+                chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, { trigger: 'syncExtremes' });
+            }
+        });
+    }
+
+    // Clean button deselects selected headers
+    $('#dashboard_clean').click(function(obj) {
+        $.each($('#devices_data_list').treeview('getSelected'), function(i, node) {
+            $('#devices_data_list').treeview('unselectNode', node);
+        });
+    });
+
+    /**
+     * Remove chart from the dashboard
+     */
+    function removeChart(jquery_obj) {
+        jquery_obj.highcharts().destroy();
+        jquery_obj.remove();
+    }
+
+    // Get the data. The contents of the data file can be viewed at
+    // https://github.com/highcharts/highcharts/blob/master/samples/data/activity.json
+    $.getJSON('/api/v1/get/devices', function( ret ) {
+        $.each(ret.data, function( i, device ) {
+            $.getJSON('/api/v1/get/headers', {device_id: device.id}, function( ret ) {
+                // Sort data to build the right relative tree
+                ret.data.sort(function( a, b ) { return a.parent_id > b.parent_id });
+                var device_headers = {};
+                $.each(ret.data, function( i, header ) {
+                    device_headers[''+header.id] = { text: header.name, device: device, header: header };
+                });
+                $.each(ret.data.reverse(), function( i, header ) {
+                    if( header.parent_id ) {
+                        if( ! device_headers[''+header.parent_id].nodes )
+                            device_headers[''+header.parent_id].nodes = [];
+                        device_headers[''+header.parent_id].nodes.push(device_headers[''+header.id]);
+                        device_headers[''+header.parent_id].selectable = false;
+                        delete device_headers[''+header.id];
+                    }
+                });
+                console.log(device_headers);
+                var device_headers_keys = Object.keys(device_headers);
+                $('#devices_data_list').treeview({
+                    levels: 2,
+                    showTags: true,
+                    collapseIcon: 'fas fa-angle-down',
+                    expandIcon: 'fas fa-angle-right',
+                    multiSelect: true,
+                    data: [{text: device.name, selectable: false, nodes:device_headers_keys.map(function(k) { return device_headers[k] })}]
+                }).on('nodeSelected', function(event, hdata) {
+                    var period = $('#dashboard_period').val();
+                    var multiplier = parseInt(period);
+                    var interval = 0;
+                    switch( period.slice((''+multiplier).length).trim()[0] ) {
+                        case 'y': interval = 365*24*3600; break;
+                        case 'm': interval = 30*24*3600; break;
+                        case 'w': interval = 7*24*3600; break;
+                        case 'd': interval = 24*3600; break;
+                    }
+                    var maxtime = (new Date()).getTime()/1000.0;
+                    var mintime = maxtime - multiplier*interval;
+                    $.getJSON('/api/v1/get/data', { device_id: hdata.device.id, header_id: hdata.header.id, utime_from: mintime, utime_to: maxtime }, function( ret ) {
+                        var data = []
+                        if( ret.data ) {
+                            data = Highcharts.map(ret.data, function (val, j) {
+                                return [val.time*1000, val.value === null ? null : Number(val.value)];
+                            });
+                        }
+                        $('<div id="data_'+hdata.device.id+'_'+hdata.header.id+'" class="chart">')
+                            .appendTo('#dashboard_main')
+                            .highcharts({
+                                chart: {
+                                    height: '20%',
+                                    marginLeft: 40,
+                                    spacingTop: 20,
+                                    spacingBottom: 20,
+                                    zoomType: 'x'
+                                },
+                                title: {
+                                    text: hdata.header.name,
+                                    align: 'left',
+                                    margin: 0,
+                                    x: 30
+                                },
+                                credits: {
+                                    enabled: false
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                xAxis: {
+                                    crosshair: true,
+                                    type: 'datetime',
+                                    events: {
+                                        setExtremes: syncExtremes
+                                    },
+                                    max: maxtime*1000,
+                                    min: mintime*1000
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: null
+                                    }
+                                },
+                                tooltip: {
+                                    positioner: function () {
+                                        return {
+                                            x: this.chart.chartWidth - this.label.width, // right aligned
+                                            y: -1 // align to title
+                                        };
+                                    },
+                                    borderWidth: 0,
+                                    backgroundColor: 'none',
+                                    formatter: function() {
+                                        return this.y+'<br/>'+new Date(this.x).toLocaleString();
+                                    },
+                                    headerFormat: '',
+                                    shadow: false,
+                                    style: {
+                                        fontSize: '14pt'
+                                    }
+                                },
+                                time: { useUTC: false },
+                                series: [{
+                                    data: data,
+                                    name: hdata.header.name,
+                                    type: 'area',
+                                    step: hdata.header.data_type == 'boolean' ? 'left' : null,
+                                    color: Highcharts.getOptions().colors[i],
+                                    fillOpacity: 0.3
+                                }],
+                                annotations: [{
+                                    labelOptions: {
+                                        backgroundColor: 'rgba(255,255,255,0.5)',
+                                        verticalAlign: 'bottom',
+                                        y: 15,
+                                        allowOverlap: true
+                                    },
+                                    labels: [
+                                        {
+                                            point: {
+                                                xAxis: 0,
+                                                yAxis: 0,
+                                                x: 1528768035179,
+                                                y: 0
+                                            },
+                                            text: 'Heating the engine in the garage'
+                                        },
+                                        {
+                                            point: {
+                                                xAxis: 0,
+                                                yAxis: 0,
+                                                x: 1528768307794,
+                                                y: 0
+                                            },
+                                            text: 'Engine stops, service engine soon light is on'
+                                        },
+                                        {
+                                            point: {
+                                                xAxis: 0,
+                                                yAxis: 0,
+                                                x: 1528768111673,
+                                                y: 0
+                                            },
+                                            text: 'Switched to park and back to drive'
+                                        },
+                                        {
+                                            point: {
+                                                xAxis: 0,
+                                                yAxis: 0,
+                                                x: 1528768320998,
+                                                y: 0
+                                            },
+                                            text: 'Restarted the engine and going elsewere'
+                                        },
+                                    ]
+                                }]
+                        });
+                    });
+                }).on('nodeUnselected', function(event, hdata) {
+                    removeChart($('#dashboard_main').find('#data_'+hdata.device.id+'_'+hdata.header.id));
+                });
+            });
+        });
+    });
+});
+    </script>
+  </body>
+</html>
