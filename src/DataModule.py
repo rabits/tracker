@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import threading
+import time
 
 import Log as log
 from Module import Module
@@ -119,3 +120,8 @@ class DataModule(Module):
     def getRawDataValue(self, index):
         with self._raw_data_lock:
             return self._raw_data.get(index, None)
+
+    def _waitActive(self, timeout):
+        till = time.time() + timeout
+        while self._active and time.time() < till:
+            time.sleep(0.2)

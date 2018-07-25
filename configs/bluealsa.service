@@ -6,7 +6,10 @@ After=bluetooth.service
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/bluealsa -p a2dp-sink
+ExecStart=/usr/local/bin/bluealsa -p a2dp-sink
+Restart=always
+RestartSec=5
+TimeoutStopSec=15
 
 [Install]
 WantedBy=default.target

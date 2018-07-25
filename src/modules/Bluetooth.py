@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import subprocess
+import threading
 from gi.repository import GObject
 import dbus, dbus.service
 
@@ -65,14 +66,16 @@ class Bluetooth(Module):
 
         self._agent.setPin(self._cfg.get('pin', None))
 
+        self.setState(False) # Disabling interface to set the SSP
+        self.setSSP(False) # Secure Simple Pairing - if enabled will disable pin pairing (not supported) (not secure)
         self.setState(self._cfg.get('enabled', True))
         self.setDeviceClass('0x200420')
         self.setDeviceName(self._cfg.get('name', 'tracker-1'))
-        self.setSSP(False) # Secure Simple Pairing - if enabled will disable pin pairing (not supported) (not secure)
         self.setAFH(self._cfg.get('afh', True))
         self.setEncryption(self._cfg.get('encrypt', True))
         self.setVisibility(self._cfg.get('visible', False))
         self.setAuth(self._cfg.get('auth', False))
+        self.setFastConnection(self._cfg.get('fast', True))
 
         manager = dbus.Interface(self._bus.get_object(BUS_NAME, '/org/bluez'), AGENT_MANAGER_INTERFACE)
         manager.RegisterAgent('/tracker/agent', 'NoInputNoOutput')
@@ -91,12 +94,22 @@ class Bluetooth(Module):
     def stop(self):
         Module.stop(self)
         self._bus.remove_signal_receiver(self._listener)
-        for name in self._connected_devices.keys():
-            dev = self._connected_devices.pop(name)
-            dev.kill()
-            dev.poll()
+
+        for addr in self._connected_devices.keys():
+            self.stopDev(addr)
+
         manager = dbus.Interface(self._bus.get_object(BUS_NAME, '/org/bluez'), AGENT_MANAGER_INTERFACE)
         manager.UnregisterAgent('/tracker/agent')
+
+    def stopDev(self, addr):
+        dev = self._connected_devices.pop(addr)
+        dev['active'] = False
+        if dev['proc'].poll() is None:
+            dev['proc'].terminate()
+        if dev['proc'].poll() is None:
+            dev['proc'].kill()
+        if dev['proc'].poll() is None:
+            log.warn('Unable to kill the audio routing application pid: %d' % dev['proc'].pid)
 
     def disableBluetooth(self):
         log.debug('Disabling Bluetooth adapter %s' % self.name())
@@ -132,7 +145,7 @@ class Bluetooth(Module):
                 self.signal('audio_switch', value = False)
 
     def _exec(self, cmd):
-        return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return subprocess.Popen(cmd)
 
     def _exec_wait(self, cmd):
         ret = self._exec(cmd)
@@ -143,19 +156,19 @@ class Bluetooth(Module):
     def setState(self, val):
         log.info("Set device state to '%s'" % ('up' if val else 'down'))
         # TODO: Replace with Adapter1 Set "Power" property
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'up' if val else 'down'])
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'power', 'on' if val else 'off'])
 
     def setDeviceClass(self, btclass):
         log.info("Set device class to '%s'" % btclass)
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'class', btclass])
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'class', btclass])
 
     def setDeviceName(self, name):
         log.info("Set device name to '%s'" % name)
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'name', name])
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'name', name])
 
     def setEncryption(self, val):
         log.info("Set device encryption to '%s'" % ('encrypt' if val else 'noencrypt'))
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'encrypt' if val else 'noencrypt'])
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'linksec', 'on' if val else 'off'])
 
     def setVisibility(self, visible):
         log.info("Set device visibility to '%s'" % ('visible' if visible else 'invisible'))
@@ -163,15 +176,29 @@ class Bluetooth(Module):
 
     def setAuth(self, val):
         log.info("Set device authentication to '%s'" % ('enable' if val else 'disable'))
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'auth' if val else 'noauth'])
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'sc', 'on' if val else 'off'])
+
+    def setFastConnection(self, val):
+        log.info("Set fast connection to '%s'" % ('enable' if val else 'disable'))
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'fast-conn', 'on' if val else 'off'])
 
     def setAFH(self, val):
-        log.info("Set device AFH mode to '%s'" % ('enable' if val else 'disable'))
+        log.info("Set device Adaptive Frequency Hopping mode to '%s'" % ('enable' if val else 'disable'))
         self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'afhmode', '1' if val else '0'])
 
     def setSSP(self, val):
-        log.info("Set device SSP mode to '%s'" % ('enable' if val else 'disable'))
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'sspmode', '1' if val else '0'])
+        log.info("Set device Secure Simple Pairing mode to '%s'" % ('enable' if val else 'disable'))
+        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'ssp', 'on' if val else 'off'])
+
+    def _watchProcess(self, cmd, addr):
+        while self._connected_devices.get(addr, {}).get('active', False):
+            proc = self._exec(cmd)
+            self._connected_devices[addr]['proc'] = proc
+            ret = proc.wait()
+            if ret != 0:
+                log.warn('Failed process output: STDOUT: %s STDERR: %s' % proc.communicate())
+            else:
+                log.debug('Process output: STDOUT: %s STDERR: %s' % proc.communicate())
 
     def _devicePropertyChanged(self, property_name, value, path, interface, device_path):
         if property_name == PLAYER_INTERFACE:
@@ -199,7 +226,9 @@ class Bluetooth(Module):
                     self._last_device = device_path
 
                     log.debug('Connecting device audio routing')
-                    self._connected_devices[properties['Address']] = self._exec(['bluealsa-aplay', '--verbose', '-i', self._cfg.get('dev'), '--profile-a2dp', properties['Address']])
+                    thread = threading.Thread(target=self._watchProcess, args=(['bluealsa-aplay', '--verbose', '-i', self._cfg.get('dev'), properties['Address']], properties['Address']))
+                    self._connected_devices[properties['Address']] = { 'watcher': thread, 'proc': None, 'active': True }
+                    thread.start()
 
                     if len(self._connected_devices) == 1:
                         log.info('Connecting GPIO sound output')
@@ -212,15 +241,7 @@ class Bluetooth(Module):
 
                     log.info('Device: %s has disconnected: %s' % (properties.get('Name'), properties['Address']))
 
-                    dev = self._connected_devices.pop(properties['Address'])
-                    if dev.poll() is None:
-                        dev.kill()
-                        if dev.poll() is None:
-                            log.warn('Unable to kill the audio routing application pid: %d' % dev.pid)
-
-                    log.debug('Audio routing application ended with code %s' % dev.poll())
-                    if dev.poll() != None and dev.poll() != 0:
-                        log.warn('STDOUT: %s\n\nSTDERR: %s' % dev.communicate())
+                    self.stopDev(properties['Address'])
 
                     if len(self._connected_devices) < 1:
                         log.info('Disconnecting GPIO sound output')

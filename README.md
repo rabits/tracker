@@ -393,7 +393,7 @@ Connected by USB and has wide angle lens (100 deg in fact) but was modified to i
 
 ##### Issues
 
-* Found that to work correctly all such cameras requires set the uvcvideo quirks to `2`:
+* 1b3f:2202: Found that to work correctly all such cameras requires set the uvcvideo quirks to `2`:
   ```
   $ echo 2 | sudo tee /sys/module/uvcvideo/parameters/quirks
   ```

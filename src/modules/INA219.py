@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import time
-
 import Log as log
 from DataModule import DataModule
 
@@ -32,4 +30,4 @@ class INA219(DataModule):
 
                 self._processData(out)
 
-                time.sleep(self._cfg.get('update_delay', 1))
+                self._waitActive(self._cfg.get('update_delay', 1))

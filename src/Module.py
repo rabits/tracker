@@ -57,7 +57,7 @@ class Module(object):
 
             if not isinstance(inst, Module):
                 log.error('Wrong module instance: %s (signal: %s)' % (inst, s))
-                return # Wrong instance found
+                continue # Wrong instance found
 
             func_name = s.get('socket')
             if hasattr(inst, func_name) and callable(getattr(inst, func_name)):
@@ -65,7 +65,8 @@ class Module(object):
                 kwargs.update(s.get('parameters', {}))
                 if len(kwargs):
                     params = { k:v for k,v in kwargs.iteritems() if k in func.func_code.co_varnames }
-                    return func(**params)
-                return func()
+                    func(**params)
+                else:
+                    func()
             else:
                 log.error('Unable to find module instance function to execute the signal: %s::%s' % (inst, func_name) )
