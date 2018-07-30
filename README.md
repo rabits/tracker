@@ -393,13 +393,17 @@ Connected by USB and has wide angle lens (100 deg in fact) but was modified to i
 
 ##### Issues
 
-* 1b3f:2202: Found that to work correctly all such cameras requires set the uvcvideo quirks to `2`:
+* 1b3f:2202 : Found that to work correctly all such cameras requires set the uvcvideo quirks to `2`:
   ```
   $ echo 2 | sudo tee /sys/module/uvcvideo/parameters/quirks
   ```
   Or permanently:
   ```
   echo 'options uvcvideo quirks=0x2' | sudo tee /etc/modprobe.d/uvcvideo-camera.conf
+  ```
+  Or into kernel cmd line if there is no separated module:
+  ```
+  uvcvideo.quirks=0x2
   ```
 
 

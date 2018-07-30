@@ -1,0 +1,16 @@
+--- # Simple example for network module usage
+
+Network:
+  - name: network
+    ping_host: google.com # Host to tcp ping
+    ping_port: 80         # Port of the host to tcp ping
+    ping_retries: 3       # Ping retries
+    restart_retries: 3    # Maximum restarts at a time
+
+Power:
+  - name: power
+    ignition_off_timeout: 5
+    signals:
+      ignition_off:
+        - socket: restartNetworkOnNoConnection # When engine is stopped - let's check network and restart it if there is no connection
+          module: Network

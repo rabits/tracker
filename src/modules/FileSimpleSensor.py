@@ -11,7 +11,7 @@ class FileSimpleSensor(DataModule):
         return self._cfg.get('paths', [])
 
     def _readRawDataThread(self):
-        while self._active:
+        while self.isActive():
             # Reading values from files
             out = {}
             for i, path in enumerate(self.getPath()):
@@ -20,4 +20,4 @@ class FileSimpleSensor(DataModule):
 
             self._processData(out)
 
-            self._waitActive(self._cfg.get('update_delay', 1))
+            self.waitActive(self._cfg.get('update_delay', 1))

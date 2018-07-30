@@ -19,7 +19,7 @@ class INA219(DataModule):
         log.info('Connecting to I2C bus %d device address 0x%02x' % (self.getBusNumber(), self.getAddress()))
         import smbus
         with subfact_pi_ina219.INA219(self.getAddress(), smbus.SMBus(self.getBusNumber())) as ina:
-            while self._active:
+            while self.isActive():
                 # Reading values from the sensor
                 out = {
                     0: ina.getBusVoltageV(),
@@ -30,4 +30,4 @@ class INA219(DataModule):
 
                 self._processData(out)
 
-                self._waitActive(self._cfg.get('update_delay', 1))
+                self.waitActive(self._cfg.get('update_delay', 1))

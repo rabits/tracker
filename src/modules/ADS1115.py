@@ -26,10 +26,10 @@ class ADS1115(DataModule):
                 time.sleep(0.2)
 
             # Actual loop to get the data
-            while self._active:
+            while self.isActive():
                 # Reading values from the sensor
                 out = { i:adc.read_adc(i, gain=self._map.get(i, {}).get('gain', 1)) for i in range(4) }
 
                 self._processData(out)
 
-                self._waitActive(self._cfg.get('update_delay', 1))
+                self.waitActive(self._cfg.get('update_delay', 1))

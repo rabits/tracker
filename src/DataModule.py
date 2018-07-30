@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import threading
-import time
 
 import Log as log
 from Module import Module
@@ -14,7 +13,6 @@ class DataModule(Module):
     def __init__(self, **kwargs):
         Module.__init__(self, **kwargs)
 
-        self._active = False
         self._raw_data = {}
         self._raw_data_lock = threading.Lock()
         self._map_data = {}
@@ -25,13 +23,8 @@ class DataModule(Module):
     def start(self):
         Module.start(self)
         self._reinitMap()
-        self._active = True
         if not self._thread_control.is_alive():
             self._thread_control.start()
-
-    def stop(self):
-        Module.stop(self)
-        self._active = False
 
     def _reinitMap(self):
         self._map = self._cfg.get('map', {})
@@ -120,8 +113,3 @@ class DataModule(Module):
     def getRawDataValue(self, index):
         with self._raw_data_lock:
             return self._raw_data.get(index, None)
-
-    def _waitActive(self, timeout):
-        till = time.time() + timeout
-        while self._active and time.time() < till:
-            time.sleep(0.2)

@@ -26,7 +26,7 @@ class ALDL160(DataModule):
             in_sync = False
             out = {} # Prepared byte data for current frame
 
-            while self._active:
+            while self.isActive():
                 raw = c.read(9)
                 data = data[len(raw):] + ''.join([ '1' if b == self._ONE else '0' for b in raw ])
                 if len(raw) != 9:

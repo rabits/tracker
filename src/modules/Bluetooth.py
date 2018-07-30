@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import subprocess
 import threading
 from gi.repository import GObject
 import dbus, dbus.service
@@ -57,6 +56,7 @@ class Bluetooth(Module):
         self._bus = dbus.SystemBus()
         self._agent = Agent(self._bus, "/tracker/agent")
 
+        self._listener = None
         self._last_device = None
         self._resume_playing = None
         self._connected_devices = {}
@@ -99,7 +99,10 @@ class Bluetooth(Module):
             self.stopDev(addr)
 
         manager = dbus.Interface(self._bus.get_object(BUS_NAME, '/org/bluez'), AGENT_MANAGER_INTERFACE)
-        manager.UnregisterAgent('/tracker/agent')
+        try:
+            manager.UnregisterAgent('/tracker/agent')
+        except:
+            pass
 
     def stopDev(self, addr):
         dev = self._connected_devices.pop(addr)
@@ -144,55 +147,46 @@ class Bluetooth(Module):
                 log.warn('Unable to reconnect to the last connected device: %s' % e)
                 self.signal('audio_switch', value = False)
 
-    def _exec(self, cmd):
-        return subprocess.Popen(cmd)
-
-    def _exec_wait(self, cmd):
-        ret = self._exec(cmd)
-        if ret.wait() != 0:
-            log.error('Failed to execute command')
-            log.debug('STDOUT: %s\n\nSTDERR: %s' % ret.communicate())
-
     def setState(self, val):
         log.info("Set device state to '%s'" % ('up' if val else 'down'))
         # TODO: Replace with Adapter1 Set "Power" property
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'power', 'on' if val else 'off'])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'power', 'on' if val else 'off'])
 
     def setDeviceClass(self, btclass):
         log.info("Set device class to '%s'" % btclass)
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'class', btclass])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'class', btclass])
 
     def setDeviceName(self, name):
         log.info("Set device name to '%s'" % name)
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'name', name])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'name', name])
 
     def setEncryption(self, val):
         log.info("Set device encryption to '%s'" % ('encrypt' if val else 'noencrypt'))
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'linksec', 'on' if val else 'off'])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'linksec', 'on' if val else 'off'])
 
     def setVisibility(self, visible):
         log.info("Set device visibility to '%s'" % ('visible' if visible else 'invisible'))
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'piscan' if visible else 'noscan'])
+        self.execCommandWait(['sudo', 'hciconfig', self._cfg.get('dev'), 'piscan' if visible else 'noscan'])
 
     def setAuth(self, val):
         log.info("Set device authentication to '%s'" % ('enable' if val else 'disable'))
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'sc', 'on' if val else 'off'])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'sc', 'on' if val else 'off'])
 
     def setFastConnection(self, val):
         log.info("Set fast connection to '%s'" % ('enable' if val else 'disable'))
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'fast-conn', 'on' if val else 'off'])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'fast-conn', 'on' if val else 'off'])
 
     def setAFH(self, val):
         log.info("Set device Adaptive Frequency Hopping mode to '%s'" % ('enable' if val else 'disable'))
-        self._exec_wait(['sudo', 'hciconfig', self._cfg.get('dev'), 'afhmode', '1' if val else '0'])
+        self.execCommandWait(['sudo', 'hciconfig', self._cfg.get('dev'), 'afhmode', '1' if val else '0'])
 
     def setSSP(self, val):
         log.info("Set device Secure Simple Pairing mode to '%s'" % ('enable' if val else 'disable'))
-        self._exec_wait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'ssp', 'on' if val else 'off'])
+        self.execCommandWait(['sudo', 'btmgmt', '--index', self._cfg.get('dev')[-1], 'ssp', 'on' if val else 'off'])
 
     def _watchProcess(self, cmd, addr):
         while self._connected_devices.get(addr, {}).get('active', False):
-            proc = self._exec(cmd)
+            proc = self.execCommand(cmd)
             self._connected_devices[addr]['proc'] = proc
             ret = proc.wait()
             if ret != 0:

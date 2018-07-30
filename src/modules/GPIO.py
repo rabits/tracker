@@ -47,7 +47,15 @@ class GPIO(Module):
             log.info("Attaching GPIO listener %s to pin %d" % (name, item['pin']))
             self._pin_map[item['pin']] = name
             gpio.setup(item['pin'], gpio.IN)
-            gpio.add_event_detect(item['pin'], gpio.BOTH, callback=self._listenTrigger)
+            while self.isActive():
+                # Sometimes event detection is can't be set up - so need retries
+                try:
+                    gpio.add_event_detect(item['pin'], gpio.BOTH, callback=self._listenTrigger)
+                except RuntimeError:
+                    log.error('Detected unable to set event detection for GPIO %s, retrying...' % item['pin'])
+                    self.waitActive(1.0)
+                    continue
+                break
 
         for pin in self._pin_map:
             self._listenTrigger(pin)
